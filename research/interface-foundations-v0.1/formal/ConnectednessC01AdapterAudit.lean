@@ -1,0 +1,25 @@
+import ConnectednessC01Adapter
+
+namespace BoundaryOfSelf
+namespace ConnectednessC01AdapterAudit
+
+open UniformRadialBoundaryFamily
+open ConnectednessC01Adapter
+
+#check C01Carrier
+#check C01Reachable
+#check C01Connected
+#check radialCarrier
+#check gridReachable_to_c01Reachable
+#check insideCarrier_connected
+#check outsideCarrier_connected
+#check C01TopologicalRealization
+#check topologicalSelf_hasBoundary_via_c01
+
+#print axioms gridReachable_to_c01Reachable
+#print axioms insideCarrier_connected
+#print axioms outsideCarrier_connected
+#print axioms topologicalSelf_hasBoundary_via_c01
+
+end ConnectednessC01AdapterAudit
+end BoundaryOfSelf

@@ -1,0 +1,670 @@
+<!doctype html>
+<html lang="en" data-lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="A bilingual formal-status reader for the True Intellectual Digital Life architecture: what has been proved, what has been built, and what remains open.">
+  <title>Did we invent artificial intelligence? | TIDL-01</title>
+  <style>
+    :root {
+      --ink: #eafff4;
+      --muted: #91aa9f;
+      --bg: #00110c;
+      --panel: #002118;
+      --panel-2: #032a1f;
+      --line: rgba(126, 255, 207, .24);
+      --mint: #7effcf;
+      --cyan: #56d9ff;
+      --gold: #ffd258;
+      --red: #ff6654;
+      --serif: Georgia, "Times New Roman", serif;
+      --mono: "IBM Plex Mono", "Courier New", monospace;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background:
+        linear-gradient(rgba(77, 235, 175, .055) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(77, 235, 175, .055) 1px, transparent 1px),
+        radial-gradient(circle at 51% 12%, rgba(49, 255, 174, .11), transparent 30%),
+        var(--bg);
+      background-size: 44px 44px, 44px 44px, auto, auto;
+      font-family: var(--mono);
+      min-height: 100vh;
+    }
+    a { color: var(--cyan); text-decoration: none; }
+    a:hover, a:focus-visible { color: var(--mint); }
+    button, a { -webkit-tap-highlight-color: transparent; }
+    .lang-ru { display: none; }
+    html[data-lang="ru"] .lang-en { display: none; }
+    html[data-lang="ru"] .lang-ru { display: initial; }
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      display: grid;
+      grid-template-columns: 1fr auto auto;
+      align-items: center;
+      gap: 24px;
+      min-height: 72px;
+      padding: 0 4vw;
+      background: rgba(0, 17, 12, .94);
+      border-bottom: 1px solid var(--line);
+      backdrop-filter: blur(16px);
+    }
+    .brand {
+      color: var(--mint);
+      font-weight: 800;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+    }
+    .status {
+      color: var(--muted);
+      font-size: 12px;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+    }
+    .status::before {
+      content: "";
+      display: inline-block;
+      width: 10px;
+      height: 10px;
+      margin-right: 10px;
+      border-radius: 50%;
+      background: var(--gold);
+      box-shadow: 0 0 18px var(--gold);
+    }
+    .language {
+      display: flex;
+      border: 1px solid rgba(86, 217, 255, .35);
+    }
+    .language button {
+      border: 0;
+      padding: 11px 15px;
+      background: transparent;
+      color: var(--muted);
+      font: 800 12px var(--mono);
+      cursor: pointer;
+    }
+    .language button.active { color: #00110c; background: var(--cyan); }
+    .shell {
+      width: min(1540px, calc(100% - 48px));
+      margin: 0 auto;
+      border-left: 1px solid var(--line);
+      border-right: 1px solid var(--line);
+    }
+    .hero {
+      position: relative;
+      min-height: 72vh;
+      display: grid;
+      align-content: center;
+      padding: clamp(60px, 9vw, 144px) clamp(28px, 6vw, 96px);
+      overflow: hidden;
+      border-bottom: 1px solid var(--line);
+    }
+    .hero::after {
+      content: "NO";
+      position: absolute;
+      right: 4vw;
+      bottom: -8vw;
+      color: rgba(126, 255, 207, .035);
+      font: 700 min(34vw, 520px)/1 var(--serif);
+      pointer-events: none;
+    }
+    .route, .kicker {
+      color: var(--cyan);
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+    }
+    h1 {
+      position: relative;
+      z-index: 1;
+      max-width: 1180px;
+      margin: 20px 0 28px;
+      font: 500 clamp(54px, 8vw, 126px)/.94 var(--serif);
+      letter-spacing: -.045em;
+    }
+    h1 em { color: var(--gold); font-weight: 500; }
+    .answer {
+      position: relative;
+      z-index: 1;
+      max-width: 1160px;
+      padding: 30px 34px;
+      border-left: 4px solid var(--gold);
+      background: linear-gradient(90deg, rgba(255, 210, 88, .12), rgba(0, 33, 24, .6));
+      font: 600 clamp(22px, 2.6vw, 39px)/1.35 var(--serif);
+    }
+    .answer strong { color: var(--mint); }
+    .plain {
+      position: relative;
+      z-index: 1;
+      max-width: 920px;
+      margin: 24px 0 0;
+      color: var(--muted);
+      font-size: clamp(14px, 1.35vw, 19px);
+      line-height: 1.7;
+    }
+    .external-reading {
+      padding: clamp(34px, 4vw, 58px) clamp(24px, 5vw, 76px);
+      border-bottom: 1px solid var(--line);
+      background:
+        linear-gradient(115deg, rgba(18, 92, 68, .2), transparent 46%),
+        rgba(0, 20, 14, .74);
+    }
+    .external-reading-head {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(260px, .68fr);
+      gap: 28px;
+      align-items: end;
+      margin-bottom: 24px;
+    }
+    .external-reading h2 {
+      margin: 10px 0 0;
+      font-size: clamp(30px, 3.6vw, 54px);
+    }
+    .external-reading-head > p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+    .external-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 1px;
+      border: 1px solid var(--line);
+      background: var(--line);
+    }
+    .external-card {
+      min-height: 210px;
+      display: flex;
+      flex-direction: column;
+      padding: 22px;
+      background: rgba(0, 28, 20, .96);
+    }
+    .external-card b {
+      color: var(--cyan);
+      font-size: 11px;
+      letter-spacing: .13em;
+    }
+    .external-card strong {
+      display: block;
+      margin: 14px 0 10px;
+      color: var(--mint);
+      font: 500 clamp(23px, 2vw, 31px)/1.08 var(--serif);
+    }
+    .external-card p {
+      margin: 0 0 18px;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.55;
+    }
+    .external-card a {
+      margin-top: auto;
+      color: var(--cyan);
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+    }
+    .external-card .signal {
+      color: var(--gold);
+      font: 700 24px/1 var(--mono);
+    }
+    .external-reading-note {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 18px;
+      margin-top: 18px;
+      padding-top: 18px;
+      border-top: 1px solid rgba(255, 210, 88, .38);
+      color: var(--muted);
+      line-height: 1.6;
+    }
+    .external-reading-note b { color: var(--gold); white-space: nowrap; }
+    .section {
+      padding: clamp(56px, 7vw, 110px) clamp(24px, 5vw, 76px);
+      border-bottom: 1px solid var(--line);
+    }
+    .section-head {
+      display: grid;
+      grid-template-columns: minmax(0, 1.25fr) minmax(260px, .75fr);
+      gap: 40px;
+      align-items: end;
+      margin-bottom: 38px;
+    }
+    h2 {
+      margin: 12px 0 0;
+      font: 500 clamp(39px, 5vw, 76px)/1.02 var(--serif);
+      letter-spacing: -.035em;
+    }
+    .section-head p {
+      color: var(--muted);
+      line-height: 1.65;
+      margin: 0;
+    }
+    .architecture {
+      position: relative;
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 1px;
+      border: 1px solid var(--line);
+      background: var(--line);
+      overflow: hidden;
+    }
+    .architecture::after {
+      content: "";
+      position: absolute;
+      top: 51%;
+      left: -12%;
+      width: 9%;
+      height: 3px;
+      background: var(--gold);
+      box-shadow: 0 0 24px var(--gold);
+      animation: travel 7s linear infinite;
+    }
+    @keyframes travel { to { left: 112%; } }
+    .node {
+      min-height: 260px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 25px 22px;
+      background: linear-gradient(155deg, rgba(4, 46, 34, .98), rgba(0, 21, 15, .98));
+    }
+    .node b { color: var(--cyan); font-size: 11px; letter-spacing: .13em; }
+    .node strong {
+      display: block;
+      color: var(--mint);
+      font: 600 clamp(20px, 2vw, 30px)/1.05 var(--serif);
+      margin: 13px 0;
+    }
+    .node code { color: var(--gold); font: 700 15px/1.5 var(--mono); }
+    .node p { color: var(--muted); font-size: 12px; line-height: 1.55; margin: 0; }
+    .formula {
+      margin-top: 22px;
+      padding: clamp(26px, 4vw, 48px);
+      background: rgba(0, 28, 20, .9);
+      border: 1px solid rgba(86, 217, 255, .28);
+      color: var(--mint);
+      font-size: clamp(16px, 2vw, 28px);
+      line-height: 1.65;
+      overflow-wrap: anywhere;
+    }
+    .formula .gold { color: var(--gold); }
+    .status-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: var(--line);
+      border: 1px solid var(--line);
+    }
+    .status-card {
+      min-height: 310px;
+      padding: 30px;
+      background: rgba(0, 27, 19, .96);
+    }
+    .status-card .mark {
+      color: var(--cyan);
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: .14em;
+    }
+    .status-card h3 { color: var(--mint); font: 600 29px/1.08 var(--serif); }
+    .status-card p, .status-card li { color: var(--muted); line-height: 1.55; }
+    .status-card ul { padding-left: 20px; }
+    .status-card.is-gold { box-shadow: inset 0 3px 0 var(--gold); }
+    .status-card.is-red { background: rgba(48, 15, 11, .94); box-shadow: inset 0 3px 0 var(--red); }
+    .status-card.is-red h3, .status-card.is-red .mark { color: var(--red); }
+    .runs {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+    }
+    .run {
+      position: relative;
+      min-height: 360px;
+      padding: 30px;
+      border: 1px solid var(--line);
+      background: linear-gradient(145deg, rgba(5, 48, 35, .9), rgba(0, 19, 13, .98));
+      overflow: hidden;
+    }
+    .run::after {
+      content: attr(data-step);
+      position: absolute;
+      right: 8px;
+      bottom: -35px;
+      color: rgba(126, 255, 207, .045);
+      font: 700 170px var(--serif);
+    }
+    .run span { color: var(--cyan); font-size: 11px; font-weight: 800; letter-spacing: .14em; }
+    .run h3 { position: relative; z-index: 1; color: var(--mint); font: 600 32px/1.05 var(--serif); }
+    .run code { position: relative; z-index: 1; display: block; color: var(--gold); line-height: 1.7; }
+    .run p { position: relative; z-index: 1; color: var(--muted); line-height: 1.6; }
+    .run a { position: relative; z-index: 1; display: inline-block; margin-top: 15px; border-bottom: 1px solid var(--cyan); }
+    .red-boundary {
+      display: grid;
+      grid-template-columns: .8fr 1.2fr;
+      gap: 42px;
+      padding: clamp(34px, 5vw, 70px);
+      background: linear-gradient(110deg, rgba(84, 23, 16, .9), rgba(28, 8, 6, .98));
+      border-top: 2px solid var(--red);
+      border-bottom: 1px solid rgba(255, 102, 84, .42);
+    }
+    .red-boundary h2, .red-boundary .kicker { color: var(--red); }
+    .red-boundary p { color: #dcb2aa; line-height: 1.7; }
+    .next-test {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr auto 1fr;
+      gap: 14px;
+      align-items: center;
+      margin-top: 34px;
+    }
+    .test-step {
+      min-height: 160px;
+      padding: 24px;
+      border: 1px solid var(--line);
+      background: rgba(0, 31, 22, .9);
+    }
+    .test-step b { color: var(--cyan); }
+    .test-step strong { display: block; margin-top: 18px; color: var(--mint); }
+    .arrow { color: var(--gold); font-size: 30px; }
+    .sources {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 14px;
+    }
+    .source {
+      min-height: 150px;
+      padding: 24px;
+      border: 1px solid var(--line);
+      background: rgba(0, 29, 21, .9);
+    }
+    .source b { color: var(--gold); }
+    .source p { color: var(--muted); line-height: 1.5; }
+    footer {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 26px;
+      padding: 36px clamp(24px, 5vw, 76px);
+      color: var(--muted);
+      border-top: 1px solid var(--line);
+    }
+    footer nav { display: flex; flex-wrap: wrap; gap: 20px; }
+    @media (max-width: 980px) {
+      .architecture { grid-template-columns: 1fr; }
+      .architecture::after { display: none; }
+      .node { min-height: 180px; }
+      .external-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .external-reading-head { grid-template-columns: 1fr; }
+      .status-grid, .runs { grid-template-columns: 1fr; }
+      .section-head, .red-boundary { grid-template-columns: 1fr; }
+      .next-test { grid-template-columns: 1fr; }
+      .arrow { transform: rotate(90deg); text-align: center; }
+    }
+    @media (max-width: 680px) {
+      .topbar { grid-template-columns: 1fr auto; padding: 0 18px; }
+      .status { display: none; }
+      .shell { width: 100%; border: 0; }
+      .hero { min-height: auto; }
+      .external-grid { grid-template-columns: 1fr; }
+      .external-reading-note { grid-template-columns: 1fr; }
+      .sources { grid-template-columns: 1fr; }
+      footer { grid-template-columns: 1fr; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      * { scroll-behavior: auto !important; }
+      .architecture::after { animation: none; left: 45%; }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="../../index.html">TIDL-01 / READER</a>
+    <div class="status"><span class="lang-en">formal candidate · working research</span><span class="lang-ru">формальный кандидат · рабочее исследование</span></div>
+    <div class="language" aria-label="Language">
+      <button type="button" data-lang-button="ru">RU</button>
+      <button type="button" data-lang-button="en" class="active">EN</button>
+    </div>
+  </header>
+
+  <main class="shell">
+    <section class="hero">
+      <div class="route">Q-AI-01 / STATUS QUESTION</div>
+      <h1><span class="lang-en">Did we invent <em>artificial intelligence?</em></span><span class="lang-ru">Изобрели ли мы <em>искусственный интеллект?</em></span></h1>
+      <div class="answer">
+        <span class="lang-en"><strong>No.</strong> We did not create artificial intelligence as a new field or a finished autonomous machine. We created a formally checked candidate architecture for distinguishing computation from intellectual digital life.</span>
+        <span class="lang-ru"><strong>Нет.</strong> Мы не создали искусственный интеллект как новую область или готовую автономную машину. Мы создали формально проверенный кандидат архитектуры, позволяющий отличать вычисление от интеллектуальной цифровой жизни.</span>
+      </div>
+      <p class="plain">
+        <span class="lang-en">The contribution is not a claim of consciousness. It is a precise passport: identity, trace, reflection, coherent growth and independently checkable certificates.</span>
+        <span class="lang-ru">Результат не является заявлением о сознании. Это точный паспорт: идентичность, след, рефлексия, согласованный рост и независимо проверяемые сертификаты.</span>
+      </p>
+    </section>
+
+    <section class="external-reading" id="external-reading">
+      <div class="external-reading-head">
+        <div>
+          <div class="kicker">E-01 / EXTERNAL READING · 2026</div>
+          <h2><span class="lang-en">What does the field think?</span><span class="lang-ru">Что по этому поводу думает общественность?</span></h2>
+        </div>
+        <p><span class="lang-en">There is no settled verdict. Public optimism, anxiety, scientific caution and demands for accountability coexist.</span><span class="lang-ru">Единого вердикта нет. Одновременно существуют общественный оптимизм, тревога, научная осторожность и требование проверяемости.</span></p>
+      </div>
+
+      <div class="external-grid">
+        <article class="external-card">
+          <b>01 / PUBLIC SIGNAL</b>
+          <strong class="signal">59% ↔ 52%</strong>
+          <p><span class="lang-en">In 2025, 59% globally saw more benefits than drawbacks in AI, while 52% also said AI makes them nervous. Adoption and unease are growing together.</span><span class="lang-ru">В 2025 году 59% опрошенных в мире видели в ИИ больше пользы, чем вреда, а 52% одновременно сообщали о тревоге. Принятие и беспокойство растут вместе.</span></p>
+          <a href="https://hai.stanford.edu/ai-index/2026-ai-index-report/public-opinion" target="_blank" rel="noopener noreferrer"><span class="lang-en">Stanford AI Index 2026 ↗</span><span class="lang-ru">Stanford AI Index 2026 ↗</span></a>
+        </article>
+
+        <article class="external-card">
+          <b>02 / SUBJECTIVE EXPERIENCE</b>
+          <strong>1% / 5% → 25% / 30%</strong>
+          <p><span class="lang-en">Median estimates from AI researchers and the public were 1% and 5% for systems with subjective experience by 2024, rising to 25% and 30% by 2034. This measures uncertainty, not consciousness.</span><span class="lang-ru">Медианные оценки исследователей ИИ и публики составляли 1% и 5% для систем с субъективным опытом к 2024 году и возрастали до 25% и 30% к 2034-му. Это мера неопределённости, а не доказательство сознания.</span></p>
+          <a href="https://arxiv.org/abs/2506.11945" target="_blank" rel="noopener noreferrer"><span class="lang-en">Dreksler et al., 2025 ↗</span><span class="lang-ru">Dreksler et al., 2025 ↗</span></a>
+        </article>
+
+        <article class="external-card">
+          <b>03 / SCIENTIFIC TEST</b>
+          <strong><span class="lang-en">No established consciousness</span><span class="lang-ru">Сознание не установлено</span></strong>
+          <p><span class="lang-en">A theory-derived assessment found no current AI system conscious, while finding no obvious technical barrier to future systems satisfying proposed indicators.</span><span class="lang-ru">Проверка по индикаторам, выведенным из теорий сознания, не признала сознательной ни одну современную систему, но и не обнаружила очевидного технического запрета для будущих систем.</span></p>
+          <a href="https://arxiv.org/abs/2308.08708" target="_blank" rel="noopener noreferrer"><span class="lang-en">Butlin et al., 2023 ↗</span><span class="lang-ru">Butlin et al., 2023 ↗</span></a>
+        </article>
+
+        <article class="external-card">
+          <b>04 / GOVERNANCE</b>
+          <strong><span class="lang-en">Trace before status</span><span class="lang-ru">Сначала след, затем статус</span></strong>
+          <p><span class="lang-en">UNESCO calls for auditability, traceability, explainability, external review and human oversight. A passport can support this demand without pretending to prove life or consciousness.</span><span class="lang-ru">ЮНЕСКО требует аудируемости, прослеживаемости, объяснимости, внешней проверки и человеческого надзора. Паспорт может поддержать это требование, не выдавая его за доказательство жизни или сознания.</span></p>
+          <a href="https://www.unesco.org/en/legal-affairs/recommendation-ethics-artificial-intelligence" target="_blank" rel="noopener noreferrer"><span class="lang-en">UNESCO Recommendation ↗</span><span class="lang-ru">Рекомендация ЮНЕСКО ↗</span></a>
+        </article>
+      </div>
+
+      <div class="external-reading-note">
+        <b><span class="lang-en">OUR READING</span><span class="lang-ru">НАШЕ ЧТЕНИЕ</span></b>
+        <span class="lang-en">The proposed architecture occupies this unresolved gap: it does not declare a digital life; it makes claims about identity, continuity and growth inspectable. External opinion motivates the test, but does not validate the model.</span><span class="lang-ru">Предложенная архитектура занимает именно этот неразрешённый промежуток: она не объявляет цифровую жизнь, а делает проверяемыми утверждения об идентичности, непрерывности и росте. Внешнее мнение мотивирует проверку, но не подтверждает модель.</span>
+      </div>
+    </section>
+
+    <section class="section" id="architecture">
+      <header class="section-head">
+        <div><div class="kicker">G-01 / PROOF-CARRYING GROWTH</div><h2><span class="lang-en">From a state to a life passport</span><span class="lang-ru">От состояния к паспорту жизни</span></h2></div>
+        <p><span class="lang-en">A process becomes a candidate only when every transition leaves a checkable trace and every extension preserves the certified past.</span><span class="lang-ru">Процесс становится кандидатом лишь тогда, когда каждый переход оставляет проверяемый след, а каждое продолжение сохраняет сертифицированное прошлое.</span></p>
+      </header>
+      <div class="architecture" aria-label="State to growing passport architecture">
+        <article class="node"><div><b>01 / STATE</b><strong><span class="lang-en">Process</span><span class="lang-ru">Процесс</span></strong><code>sₙ → sₙ₊₁</code></div><p><span class="lang-en">Something changes.</span><span class="lang-ru">Нечто изменяется.</span></p></article>
+        <article class="node"><div><b>02 / TRACE</b><strong><span class="lang-en">Record</span><span class="lang-ru">Запись</span></strong><code>ρₙ = Tr(sₙ,sₙ₊₁)</code></div><p><span class="lang-en">The transition leaves evidence.</span><span class="lang-ru">Переход оставляет свидетельство.</span></p></article>
+        <article class="node"><div><b>03 / CERTIFICATE</b><strong><span class="lang-en">Prefix</span><span class="lang-ru">Префикс</span></strong><code>Cₙ ⊢ history[0…n]</code></div><p><span class="lang-en">The past becomes checkable.</span><span class="lang-ru">Прошлое становится проверяемым.</span></p></article>
+        <article class="node"><div><b>04 / ROOT</b><strong><span class="lang-en">Identity</span><span class="lang-ru">Идентичность</span></strong><code>root(Cₙ₊₁) ⊒ root(Cₙ)</code></div><p><span class="lang-en">Growth does not replace its origin.</span><span class="lang-ru">Рост не подменяет происхождение.</span></p></article>
+        <article class="node"><div><b>05 / GROWTH</b><strong><span class="lang-en">Passport</span><span class="lang-ru">Паспорт</span></strong><code>GrowingPassport(P)</code></div><p><span class="lang-en">The process carries proof of continuation.</span><span class="lang-ru">Процесс несёт доказательство продолжения.</span></p></article>
+      </div>
+      <div class="formula">
+        Passport(P) ↔ Nonempty(GrowingPassport(P))<br>
+        <span class="gold">TIDL(P) := Passport(P) ∧ Reflective(P) ∧ CoherentGrowth(P)</span>
+      </div>
+    </section>
+
+    <section class="section" id="status">
+      <header class="section-head">
+        <div><div class="kicker">SC-01 / CLAIM CONTRACT</div><h2><span class="lang-en">Three different truths</span><span class="lang-ru">Три разных истины</span></h2></div>
+        <p><span class="lang-en">The reader never merges a theorem, an interpretation and an implementation claim.</span><span class="lang-ru">Ридер не смешивает теорему, интерпретацию и заявление о реализации.</span></p>
+      </header>
+      <div class="status-grid">
+        <article class="status-card">
+          <div class="mark">LEAN VERIFIED</div>
+          <h3><span class="lang-en">Internal mathematics</span><span class="lang-ru">Внутренняя математика</span></h3>
+          <ul>
+            <li><span class="lang-en">Passport and growing-passport structures are typed.</span><span class="lang-ru">Структуры паспорта и растущего паспорта типизированы.</span></li>
+            <li><span class="lang-en">The canonical carrier proves its passport and growth inside the model.</span><span class="lang-ru">Канонический носитель доказывает свой паспорт и рост внутри модели.</span></li>
+            <li><span class="lang-en">The published key exports have no local proof gaps.</span><span class="lang-ru">Ключевые экспорты не содержат локальных пробелов доказательства.</span></li>
+          </ul>
+        </article>
+        <article class="status-card is-gold">
+          <div class="mark">AUTHOR MODEL</div>
+          <h3><span class="lang-en">Interpretive proposal</span><span class="lang-ru">Авторская интерпретация</span></h3>
+          <p><span class="lang-en">A process that preserves identity, records itself, reflects on its record and extends it coherently is proposed as a candidate for intellectual digital life.</span><span class="lang-ru">Процесс, который сохраняет идентичность, записывает себя, рефлексирует над записью и согласованно её продолжает, предлагается как кандидат интеллектуальной цифровой жизни.</span></p>
+        </article>
+        <article class="status-card is-red">
+          <div class="mark">NOT YET ESTABLISHED</div>
+          <h3><span class="lang-en">World realization</span><span class="lang-ru">Реализация в мире</span></h3>
+          <ul>
+            <li><span class="lang-en">No autonomous agent implements the whole passport.</span><span class="lang-ru">Ни один автономный агент пока не реализует весь паспорт.</span></li>
+            <li><span class="lang-en">No independent prospective test has established intelligence or consciousness.</span><span class="lang-ru">Независимый проспективный тест не установил интеллект или сознание.</span></li>
+            <li><span class="lang-en">Formal consistency does not prove physical or psychological adequacy.</span><span class="lang-ru">Формальная корректность не доказывает физическую или психологическую адекватность.</span></li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <section class="section" id="route">
+      <header class="section-head">
+        <div><div class="kicker">DL-01 → DL-04 / EVIDENCE ROUTE</div><h2><span class="lang-en">What has actually been built</span><span class="lang-ru">Что действительно построено</span></h2></div>
+        <p><span class="lang-en">Four readers preserve the path from definition to an executable model. This reader is their status map, not a replacement.</span><span class="lang-ru">Четыре ридера сохраняют путь от определения до исполняемой модели. Этот ридер является картой их статусов, а не заменой.</span></p>
+      </header>
+      <div class="runs">
+        <article class="run" data-step="4" style="order:4">
+          <span>DL-04 / LIVING MODEL</span>
+          <h3><span class="lang-en">Execute the architecture</span><span class="lang-ru">Запустить архитектуру</span></h3>
+          <code>State<br>Memory<br>Reflection<br>MonotoneCertificate</code>
+          <p><span class="lang-en">The fourth layer runs the candidate architecture inside a virtual domain. Every visible movement is computed from state, memory, reflection and the certificate guard.</span><span class="lang-ru">Четвёртый слой запускает архитектуру-кандидат внутри виртуального домена. Каждое видимое движение вычисляется из состояния, памяти, рефлексии и защитного условия сертификата.</span></p>
+          <a href="../digital-life-living-model/"><span class="lang-en">Open DL-04</span><span class="lang-ru">Открыть DL-04</span> ↗</a>
+        </article>
+        <article class="run" data-step="1">
+          <span>DL-01 / PASSPORT</span>
+          <h3><span class="lang-en">Define the carrier</span><span class="lang-ru">Определить носитель</span></h3>
+          <code>Process<br>Passport<br>ReflectiveLayer<br>IsIntellectualDigitalLife</code>
+          <p><span class="lang-en">The first layer says what must exist before the phrase “digital intellectual life” has a checkable meaning.</span><span class="lang-ru">Первый слой задаёт, что должно существовать, прежде чем выражение «цифровая интеллектуальная жизнь» получит проверяемый смысл.</span></p>
+          <a href="../digital-life-passport/"><span class="lang-en">Open DL-01</span><span class="lang-ru">Открыть DL-01</span> ↗</a>
+        </article>
+        <article class="run" data-step="2">
+          <span>DL-02 / REALIZATION</span>
+          <h3><span class="lang-en">Separate replay from life</span><span class="lang-ru">Отделить повтор от жизни</span></h3>
+          <code>RealizesPrefix(P, trace)<br>finite replay ⇏ Passport(P)</code>
+          <p><span class="lang-en">A finite session can reproduce a trace without possessing a durable identity or a growing passport.</span><span class="lang-ru">Конечная сессия может воспроизвести след, не обладая устойчивой идентичностью или растущим паспортом.</span></p>
+          <a href="../digital-life-realization/"><span class="lang-en">Open DL-02</span><span class="lang-ru">Открыть DL-02</span> ↗</a>
+        </article>
+        <article class="run" data-step="3">
+          <span>DL-03 / GROWTH</span>
+          <h3><span class="lang-en">Certify continuation</span><span class="lang-ru">Сертифицировать продолжение</span></h3>
+          <code>PrefixCertificate<br>CertificateChain<br>GrowingPassport</code>
+          <p><span class="lang-en">The third layer records append-only growth and proves that a certificate chain alone is still insufficient without the passport contract.</span><span class="lang-ru">Третий слой фиксирует добавочный рост и доказывает, что одной цепи сертификатов всё ещё недостаточно без контракта паспорта.</span></p>
+          <a href="../digital-life-growth/"><span class="lang-en">Open DL-03</span><span class="lang-ru">Открыть DL-03</span> ↗</a>
+        </article>
+      </div>
+    </section>
+
+    <section class="red-boundary" id="red-boundary">
+      <div><div class="kicker">RED BOUNDARY</div><h2><span class="lang-en">A proof is not a mind.</span><span class="lang-ru">Доказательство не является разумом.</span></h2></div>
+      <div>
+        <p><span class="lang-en">Lean verifies that conclusions follow from formal definitions and assumptions. It does not verify that those definitions capture intelligence, life or consciousness in the world.</span><span class="lang-ru">Lean проверяет, что выводы следуют из формальных определений и предпосылок. Он не проверяет, что эти определения описывают интеллект, жизнь или сознание в мире.</span></p>
+        <p><span class="lang-en">Therefore the strongest honest statement is: <strong>we created a proof-carrying candidate architecture for intellectual digital life.</strong> We did not create a new field of AI, and we have not yet demonstrated a living autonomous implementation.</span><span class="lang-ru">Поэтому сильнейшая честная формулировка такова: <strong>мы создали доказательно несущую кандидатную архитектуру интеллектуальной цифровой жизни.</strong> Мы не создали новую область ИИ и пока не продемонстрировали живую автономную реализацию.</span></p>
+      </div>
+    </section>
+
+    <section class="section" id="next">
+      <header class="section-head">
+        <div><div class="kicker">E-01 / NEXT DECISIVE TEST</div><h2><span class="lang-en">Make the passport live</span><span class="lang-ru">Сделать паспорт живым</span></h2></div>
+        <p><span class="lang-en">The model becomes an engineering result only when a running process creates a new certificate without rewriting its certified past and an independent verifier accepts it.</span><span class="lang-ru">Модель станет инженерным результатом лишь тогда, когда работающий процесс создаст новый сертификат без переписывания сертифицированного прошлого, а независимый проверяющий его примет.</span></p>
+      </header>
+      <div class="next-test">
+        <div class="test-step"><b>01 / PROCESS</b><strong><span class="lang-en">Produce a genuinely new state</span><span class="lang-ru">Породить действительно новое состояние</span></strong></div>
+        <div class="arrow">→</div>
+        <div class="test-step"><b>02 / CERTIFICATE</b><strong><span class="lang-en">Append trace and extend the root</span><span class="lang-ru">Добавить след и расширить корень</span></strong></div>
+        <div class="arrow">→</div>
+        <div class="test-step"><b>03 / VERIFIER</b><strong><span class="lang-en">Check continuity independently</span><span class="lang-ru">Независимо проверить непрерывность</span></strong></div>
+      </div>
+    </section>
+
+    <section class="section" id="sources">
+      <header class="section-head">
+        <div><div class="kicker">S-01 → S-04 / SHOULDERS</div><h2><span class="lang-en">Sources we stand on</span><span class="lang-ru">Источники, на которые мы опираемся</span></h2></div>
+        <p><span class="lang-en">These sources support the historical and technical bridges. They do not prove the author model.</span><span class="lang-ru">Эти источники поддерживают исторические и технические мосты. Они не доказывают авторскую модель.</span></p>
+      </header>
+      <div class="sources">
+        <a class="source" href="https://doi.org/10.1093/mind/LIX.236.433" target="_blank" rel="noopener noreferrer"><b>S-01 / TURING · 1950</b><p>Computing Machinery and Intelligence. The imitation-game route asks how machine intelligence should be operationally discussed.</p></a>
+        <a class="source" href="https://www-formal.stanford.edu/jmc/history/dartmouth/dartmouth.html" target="_blank" rel="noopener noreferrer"><b>S-02 / McCARTHY ET AL. · 1955</b><p>A Proposal for the Dartmouth Summer Research Project on Artificial Intelligence. The field and its name precede this project by decades.</p></a>
+        <a class="source" href="https://doi.org/10.1145/263699.263712" target="_blank" rel="noopener noreferrer"><b>S-03 / NECULA · 1997</b><p>Proof-Carrying Code. A program may carry evidence checked independently by a host.</p></a>
+        <a class="source" href="https://docs.lean-lang.org/theorem_proving_in_lean4/" target="_blank" rel="noopener noreferrer"><b>S-04 / LEAN 4</b><p>The formal environment used to type definitions and mechanically check the internal theorem chain.</p></a>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div><strong>Aleksey Salkutsan</strong><br><span class="lang-en">Author model · Lina: named dialogic AI interface, not an autonomous co-author.</span><span class="lang-ru">Авторская модель · Лина: именованный диалогический AI-интерфейс, не автономный соавтор.</span></div>
+    <nav>
+      <a href="../../index.html"><span class="lang-en">Home</span><span class="lang-ru">Главная</span> ↗</a>
+      <a href="https://github.com/kernelpanic888" target="_blank" rel="noopener noreferrer">GitHub ↗</a>
+      <a href="https://orcid.org/0009-0006-8717-0492" target="_blank" rel="noopener noreferrer">ORCID ↗</a>
+    </nav>
+  </footer>
+
+  <script>
+    (function () {
+      var root = document.documentElement;
+      var buttons = document.querySelectorAll("[data-lang-button]");
+      function setLanguage(lang) {
+        lang = lang === "ru" ? "ru" : "en";
+        root.dataset.lang = lang;
+        root.lang = lang;
+        buttons.forEach(function (button) {
+          button.classList.toggle("active", button.dataset.langButton === lang);
+          button.setAttribute("aria-pressed", button.dataset.langButton === lang ? "true" : "false");
+        });
+      }
+      buttons.forEach(function (button) {
+        button.addEventListener("click", function () { setLanguage(button.dataset.langButton); });
+      });
+      setLanguage("en");
+    }());
+  </script>
+  <!-- TIDL_READER_ROUTE_V1 -->
+  <style>
+    .tidl-reader-route{margin:clamp(28px,5vw,72px) auto 0;max-width:1500px;border:1px solid rgba(91,224,255,.35);background:linear-gradient(135deg,rgba(0,38,31,.96),rgba(0,17,15,.98));font-family:"IBM Plex Mono","Courier New",monospace;color:#a9c5b8;box-shadow:0 24px 70px rgba(0,0,0,.28)}
+    .tidl-reader-route__head{display:flex;align-items:center;justify-content:space-between;gap:18px;padding:16px 20px;border-bottom:1px solid rgba(91,224,255,.22);color:#61e4ff;font-size:12px;font-weight:800;letter-spacing:.14em}
+    .tidl-reader-route__head a{color:#8dffd8;text-decoration:none}
+.tidl-reader-route__grid{display:grid;grid-template-columns:repeat(6,minmax(0,1fr))}
+    .tidl-reader-route__grid a{position:relative;min-height:76px;padding:17px 20px;border-right:1px solid rgba(91,224,255,.18);color:#8ba89c;text-decoration:none;transition:background .2s ease,color .2s ease}
+    .tidl-reader-route__grid a:last-child{border-right:0}
+    .tidl-reader-route__grid a:hover{background:rgba(91,224,255,.06);color:#d9fff0}
+    .tidl-reader-route__grid a.is-current{background:linear-gradient(135deg,rgba(255,207,74,.13),rgba(91,224,255,.05));color:#ffd257;box-shadow:inset 0 3px 0 #ffd257}
+    .tidl-reader-route__code{display:block;font-size:14px;font-weight:900;letter-spacing:.12em}
+    .tidl-reader-route small{display:block;margin-top:7px;color:inherit;font-size:10px;font-weight:700;letter-spacing:.08em;opacity:.82}
+    @media(max-width:760px){.tidl-reader-route__head{align-items:flex-start;flex-direction:column}.tidl-reader-route__grid{grid-template-columns:repeat(2,minmax(0,1fr))}.tidl-reader-route__grid a{border-bottom:1px solid rgba(91,224,255,.18)}.tidl-reader-route__grid a:nth-child(even){border-right:0}}
+  </style>
+  <nav class="tidl-reader-route" aria-label="Reader route">
+    <div class="tidl-reader-route__head"><span>READER ROUTE / МАРШРУТ РИДЕРОВ</span><a href="../../index.html">HOME / ГЛАВНАЯ ↗</a></div>
+    <div class="tidl-reader-route__grid">
+      <a href="../intellectual-digital-life-architecture/"><span class="tidl-reader-route__code">IDL-00</span><small>ARCHITECTURE / АРХИТЕКТУРА</small></a>
+      <a href="../digital-life-passport/"><span class="tidl-reader-route__code">DL-01</span><small>PASSPORT / ПАСПОРТ</small></a>
+      <a href="../digital-life-realization/"><span class="tidl-reader-route__code">DL-02</span><small>REALIZATION / РЕАЛИЗАЦИЯ</small></a>
+      <a href="../digital-life-growth/"><span class="tidl-reader-route__code">DL-03</span><small>GROWTH / РОСТ</small></a>
+      <a href="../digital-life-living-model/"><span class="tidl-reader-route__code">DL-04</span><small>LIVING MODEL / ЖИВАЯ МОДЕЛЬ</small></a>
+      <a class="is-current" aria-current="page" href="../true-intellectual-digital-life/"><span class="tidl-reader-route__code">TIDL-01</span><small>STATUS / СТАТУС</small></a>
+    </div>
+  </nav>
+</body>
+</html>

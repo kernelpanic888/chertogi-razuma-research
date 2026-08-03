@@ -1,0 +1,21 @@
+import DominantCoordinateMetricPrelude
+
+namespace BoundaryOfSelf
+namespace DominantCoordinateMetricPreludeAudit
+
+open DominantCoordinateMetricPrelude
+
+#check target_has_unit_coordinate
+#check dominant_coordinate_ge_one
+#check inwardRounded_abs_eq
+#check inwardRounded_abs_le
+#check inwardRounded_abs_gap_lt
+#check radial_bracket_affine_error
+
+#print axioms target_has_unit_coordinate
+#print axioms dominant_coordinate_ge_one
+#print axioms inwardRounded_abs_gap_lt
+#print axioms radial_bracket_affine_error
+
+end DominantCoordinateMetricPreludeAudit
+end BoundaryOfSelf

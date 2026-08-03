@@ -1,0 +1,37 @@
+import InterpolatedSignedCoordinates
+
+namespace BoundaryOfSelf
+namespace InterpolatedSignedCoordinatesAudit
+
+open InterpolatedSignedCoordinates
+
+#check centeredX
+#check centeredY
+#check centered_square
+#check centered_radius
+#check centered_unit_edge
+#check weighted_square_identity
+#check weighted_vector_square_identity
+#check interpolation_radius_algebra
+#check innerWeight
+#check outerWeight
+#check interpolatedXNumerator
+#check interpolatedYNumerator
+#check SignedRationalPoint
+#check interpolatedSignedPoint
+#check squaredRadiusNumerator
+#check targetCircleNumerator
+#check interpolation_raw_radius_identity
+#check interpolation_squared_radius_deficit_exact
+
+#print axioms centered_square
+#print axioms centered_radius
+#print axioms centered_unit_edge
+#print axioms weighted_square_identity
+#print axioms weighted_vector_square_identity
+#print axioms interpolation_radius_algebra
+#print axioms interpolation_raw_radius_identity
+#print axioms interpolation_squared_radius_deficit_exact
+
+end InterpolatedSignedCoordinatesAudit
+end BoundaryOfSelf

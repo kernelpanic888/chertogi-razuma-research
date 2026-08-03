@@ -1,0 +1,8 @@
+import IntrinsicNonradialShearRationalMeasurementTable
+
+open BoundaryOfSelf.IntrinsicNonradialShearRationalMeasurementTable
+
+#print axioms rationalMeasurementTable_length
+#print axioms forwardRationalSample_coverage
+#print axioms rationalMeasurementTable_certifies_noisy_reading
+#print axioms rationalMeasurementTable_enters_F8C28_interval

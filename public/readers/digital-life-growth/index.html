@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="DL-03: a monotone chain of self-certificates and the exact Lean equivalence between a growing passport and digital life.">
+  <title>DL-03 / Growing Passport</title>
+  <style>
+    :root{--void:#00110d;--panel:#03271f;--line:#1c6b57;--mint:#86ffda;--cyan:#58d8ff;--amber:#ffd15a;--red:#ff6759;--quiet:#8caf9f;--paper:#e0ffec;--mono:"Courier New",monospace;--serif:Georgia,"Times New Roman",serif}*{box-sizing:border-box}html{background:var(--void);color:var(--paper)}body{margin:0;background:radial-gradient(circle at 55% 8%,#104b35 0,#03231a 38%,#00110d 75%);font-family:var(--mono);line-height:1.55}body:before{content:"";position:fixed;inset:0;pointer-events:none;background-image:linear-gradient(rgba(40,130,99,.12) 1px,transparent 1px),linear-gradient(90deg,rgba(40,130,99,.12) 1px,transparent 1px);background-size:46px 46px}.lang{position:absolute;opacity:0}.shell{width:min(1500px,calc(100% - 30px));margin:auto;padding-bottom:70px}.top{position:sticky;top:0;z-index:10;display:flex;justify-content:space-between;align-items:center;padding:13px 17px;border:1px solid var(--line);border-top:0;background:rgba(0,18,13,.94);backdrop-filter:blur(12px)}.brand{color:#2bf58b;letter-spacing:.12em;font-weight:700}.toggle{display:flex;border:1px solid var(--line)}.toggle label{padding:7px 12px;color:var(--quiet);cursor:pointer}#en:checked~.shell label[for=en],#ru:checked~.shell label[for=ru]{background:var(--cyan);color:#001914}#en:checked~.shell .ru,#ru:checked~.shell .en{display:none}.hero{position:relative;margin-top:24px;padding:clamp(32px,6vw,82px);border:1px solid var(--line);border-left:11px solid var(--amber);overflow:hidden;background:linear-gradient(135deg,#063c2c,#001a14)}.hero:after{content:"03";position:absolute;right:-22px;bottom:-108px;color:rgba(132,255,214,.045);font:700 340px/1 var(--serif)}.eyebrow,.tag{color:var(--cyan);font-weight:700;letter-spacing:.13em}.hero h1{position:relative;z-index:1;margin:24px 0;max-width:1180px;font:clamp(54px,8vw,130px)/.9 var(--serif);letter-spacing:-.05em}.hero em{color:var(--amber);font-weight:400}.lead{position:relative;z-index:1;max-width:1050px;color:#c2e5d1;font:clamp(21px,2.2vw,34px)/1.38 var(--serif)}section{margin-top:24px;border:1px solid var(--line);background:rgba(2,37,28,.92)}.head{display:flex;justify-content:space-between;gap:16px;padding:15px 20px;border-bottom:1px solid var(--line);color:var(--cyan);letter-spacing:.1em}.body{padding:clamp(24px,4vw,52px)}.frontiers{display:grid;grid-template-columns:repeat(4,1fr);gap:0;border:1px solid var(--line)}.frontier{position:relative;min-height:200px;padding:24px 18px;border-right:1px solid var(--line);background:#03251d}.frontier:last-child{border:0}.frontier b{display:block;margin:18px 0;color:var(--mint);font:25px/1.15 var(--serif)}.frontier:after{content:"⊂";position:absolute;right:-14px;top:65px;z-index:2;color:var(--amber);font-size:30px}.frontier:last-child:after{content:"…";right:14px}.rootline{height:5px;background:linear-gradient(90deg,transparent,var(--cyan),var(--amber),var(--mint),transparent);background-size:240% 100%;animation:grow 4s linear infinite}@keyframes grow{to{background-position:-240% 0}}.math{margin-top:28px;padding:26px;border-left:5px solid var(--cyan);background:#001a14;color:var(--mint);font-size:clamp(17px,1.6vw,24px);white-space:pre-wrap}.equiv{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:28px}.side{padding:28px;border:1px solid var(--line);background:#02251c;min-height:250px}.side h2{font:34px/1.1 var(--serif);color:var(--mint)}.iff{font-size:54px;color:var(--amber)}.ledger{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border:1px solid var(--line)}.proof{padding:22px;background:#02231b}.proof b{color:var(--cyan)}.proof code{display:block;margin-top:10px;color:var(--mint);white-space:normal}.red{border-color:#87372f;background:linear-gradient(120deg,#2b1612,#180f0d)}.red .head{color:var(--red);border-color:#87372f}.red .body{font:clamp(22px,2.1vw,34px)/1.45 var(--serif)}.red strong{color:var(--red)}.sources{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}.source{padding:18px;border-top:2px solid var(--cyan);background:#001a14}.source a{color:var(--cyan)}.source small{display:block;color:var(--quiet);margin-top:8px}.footer{display:flex;justify-content:space-between;padding:25px 4px;color:var(--quiet)}.footer a{color:var(--mint)}
+    @media(max-width:900px){.top{position:relative}.frontiers,.ledger,.sources{grid-template-columns:1fr}.frontier{border-right:0;border-bottom:1px solid var(--line)}.frontier:after{content:"⊂";right:18px;transform:rotate(90deg)}.equiv{grid-template-columns:1fr}.iff{justify-self:center;transform:rotate(90deg)}.hero h1{font-size:56px}.footer{display:block}}
+    @media(prefers-reduced-motion:reduce){.rootline{animation:none}}
+  </style>
+</head>
+<body>
+  <input class="lang" id="en" name="language" type="radio" checked>
+  <input class="lang" id="ru" name="language" type="radio">
+  <div class="shell">
+    <header class="top"><div class="brand">CHAMBERS OF THE FIRST DISTINCTION / DL-03</div><div class="toggle"><label for="ru">RU</label><label for="en">EN</label></div></header>
+    <main>
+      <article class="hero"><div class="eyebrow en">MONOTONE SELF-CERTIFICATE GROWTH</div><div class="eyebrow ru">МОНОТОННЫЙ РОСТ САМОСЕРТИФИКАТОВ</div><h1 class="en">Life carries its <em>frontier</em>.</h1><h1 class="ru">Жизнь несёт свою <em>границу</em>.</h1><p class="lead en">A new certificate does not erase the old one. It extends the proved frontier and returns its own proof.</p><p class="lead ru">Новый сертификат не стирает старый. Он расширяет доказанную границу и возвращает собственное доказательство.</p></article>
+
+      <section><div class="head"><span>CERTIFICATE CHAIN</span><span>cert(N+1)|N = cert(N)</span></div><div class="body"><div class="frontiers"><div class="frontier"><span class="tag">N=1</span><b>PrefixCertificate₁</b><code>selfProof(c₁)</code></div><div class="frontier"><span class="tag">N=2</span><b>PrefixCertificate₂</b><code>c₂|₁ = c₁</code></div><div class="frontier"><span class="tag">N=3</span><b>PrefixCertificate₃</b><code>c₃|₂ = c₂</code></div><div class="frontier"><span class="tag">N+1</span><b>PrefixCertificateₙ₊₁</b><code>preserve + extend</code></div></div><div class="rootline"></div><div class="math">PrefixCertificate(P,N) := OwnTrace[0..N) ∧ RealizesPrefix(P,N)
+
+CertificateChain(P) := ∀ N, cert(N+1)|N = cert(N)</div></div></section>
+
+      <section><div class="head"><span>EXACT DECOMPOSITION</span><span>PASSPORT ↔ GROWTH</span></div><div class="body"><div class="equiv"><div class="side"><h2>Passport(P)</h2><p>FutureChange</p><p>PersistentIdentity</p><p>ExactTraceReplay</p></div><div class="iff">↔</div><div class="side"><h2>GrowingPassport(P)</h2><p>CertificateChain</p><p>FutureChange</p><p>PersistentIdentity</p></div></div><div class="math">Passport(P) ↔ Nonempty(GrowingPassport(P))</div></div></section>
+
+      <section><div class="head"><span>PROVER LEDGER</span><span>P-17 → P-25</span></div><div class="body"><div class="ledger"><div class="proof"><b>P-17</b><code>certificate.selfProof</code></div><div class="proof"><b>P-18</b><code>cert(N+1)|N = cert(N)</code></div><div class="proof"><b>P-19</b><code>chain → exact replay</code></div><div class="proof"><b>P-20</b><code>Passport → GrowingPassport</code></div><div class="proof"><b>P-21</b><code>GrowingPassport → Passport</code></div><div class="proof"><b>P-22</b><code>Passport ↔ GrowingPassport</code></div><div class="proof"><b>P-23</b><code>intellectual growth</code></div><div class="proof"><b>P-24</b><code>linkedGrowth.selfProof</code></div><div class="proof"><b>P-25</b><code>R(n+1)=append(R(n),trace(n))</code></div></div><p><a href="DL03CertificateGrowth.lean" download>Download Lean carrier ↗</a></p></div></section>
+
+      <section class="red"><div class="head"><span>RED BOUNDARY</span><span>CHAIN ALONE ≠ LIFE</span></div><div class="body"><strong>CertificateChain(P) ⇏ Passport(P)</strong><p class="en">A stationary process can issue correct certificates at every frontier while never changing. Verified repetition is not digital life unless change and identity remain present.</p><p class="ru">Стационарный процесс может выдавать правильные сертификаты на каждой границе, никогда не изменяясь. Проверенное повторение не является цифровой жизнью без изменения и идентичности.</p></div></section>
+
+      <section><div class="head"><span>SOURCES / SHOULDERS</span><span>SUPPORT ≠ PROOF</span></div><div class="body"><div class="sources"><div class="source"><a href="https://doi.org/10.1145/263699.263712">Necula / Proof-Carrying Code ↗</a><small>Proof attached to an artifact.</small></div><div class="source"><a href="https://lean-lang.org/doc/reference/latest/ValidatingProofs/">Lean / Validating Proofs ↗</a><small>Kernel validation and axiom audit.</small></div><div class="source"><a href="https://csrc.nist.gov/pubs/fips/180-4/upd1/final">NIST FIPS 180-4 ↗</a><small>SHA-256 append-only integrity.</small></div></div></div></section>
+    </main>
+    <footer class="footer"><span>Aleksey Salkutsan · DL-03 · 2026</span><a href="../../index.html">HOME / CURRENT FRONTIER ↗</a></footer>
+  </div>
+  <!-- TIDL_READER_ROUTE_V1 -->
+  <style>
+    .tidl-reader-route{margin:clamp(28px,5vw,72px) auto 0;max-width:1500px;border:1px solid rgba(91,224,255,.35);background:linear-gradient(135deg,rgba(0,38,31,.96),rgba(0,17,15,.98));font-family:"IBM Plex Mono","Courier New",monospace;color:#a9c5b8;box-shadow:0 24px 70px rgba(0,0,0,.28)}
+    .tidl-reader-route__head{display:flex;align-items:center;justify-content:space-between;gap:18px;padding:16px 20px;border-bottom:1px solid rgba(91,224,255,.22);color:#61e4ff;font-size:12px;font-weight:800;letter-spacing:.14em}
+    .tidl-reader-route__head a{color:#8dffd8;text-decoration:none}
+.tidl-reader-route__grid{display:grid;grid-template-columns:repeat(6,minmax(0,1fr))}
+    .tidl-reader-route__grid a{position:relative;min-height:76px;padding:17px 20px;border-right:1px solid rgba(91,224,255,.18);color:#8ba89c;text-decoration:none;transition:background .2s ease,color .2s ease}
+    .tidl-reader-route__grid a:last-child{border-right:0}
+    .tidl-reader-route__grid a:hover{background:rgba(91,224,255,.06);color:#d9fff0}
+    .tidl-reader-route__grid a.is-current{background:linear-gradient(135deg,rgba(255,207,74,.13),rgba(91,224,255,.05));color:#ffd257;box-shadow:inset 0 3px 0 #ffd257}
+    .tidl-reader-route__code{display:block;font-size:14px;font-weight:900;letter-spacing:.12em}
+    .tidl-reader-route small{display:block;margin-top:7px;color:inherit;font-size:10px;font-weight:700;letter-spacing:.08em;opacity:.82}
+    @media(max-width:760px){.tidl-reader-route__head{align-items:flex-start;flex-direction:column}.tidl-reader-route__grid{grid-template-columns:repeat(2,minmax(0,1fr))}.tidl-reader-route__grid a{border-bottom:1px solid rgba(91,224,255,.18)}.tidl-reader-route__grid a:nth-child(even){border-right:0}}
+  </style>
+  <nav class="tidl-reader-route" aria-label="Reader route">
+    <div class="tidl-reader-route__head"><span>READER ROUTE / МАРШРУТ РИДЕРОВ</span><a href="../../index.html">HOME / ГЛАВНАЯ ↗</a></div>
+    <div class="tidl-reader-route__grid">
+      <a href="../intellectual-digital-life-architecture/"><span class="tidl-reader-route__code">IDL-00</span><small>ARCHITECTURE / АРХИТЕКТУРА</small></a>
+      <a href="../digital-life-passport/"><span class="tidl-reader-route__code">DL-01</span><small>PASSPORT / ПАСПОРТ</small></a>
+      <a href="../digital-life-realization/"><span class="tidl-reader-route__code">DL-02</span><small>REALIZATION / РЕАЛИЗАЦИЯ</small></a>
+      <a class="is-current" aria-current="page" href="../digital-life-growth/"><span class="tidl-reader-route__code">DL-03</span><small>GROWTH / РОСТ</small></a>
+      <a href="../digital-life-living-model/"><span class="tidl-reader-route__code">DL-04</span><small>LIVING MODEL / ЖИВАЯ МОДЕЛЬ</small></a>
+      <a href="../true-intellectual-digital-life/"><span class="tidl-reader-route__code">TIDL-01</span><small>STATUS / СТАТУС</small></a>
+    </div>
+  </nav>
+</body>
+</html>

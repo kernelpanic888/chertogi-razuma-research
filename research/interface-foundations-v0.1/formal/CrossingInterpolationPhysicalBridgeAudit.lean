@@ -1,0 +1,20 @@
+import CrossingInterpolationPhysicalBridge
+
+namespace BoundaryOfSelf
+namespace CrossingInterpolationPhysicalBridgeAudit
+
+open CrossingInterpolationPhysicalBridge
+
+#check edgePhysicalInterpolation
+#check edgePhysicalInterpolation_x
+#check edgePhysicalInterpolation_y
+#check firstRealEndpoint_self_eq_physical
+#check segmentRealPoint_zero_self_eq_physical
+#check edgePhysicalInterpolation_parameter_mem
+
+#print axioms firstRealEndpoint_self_eq_physical
+#print axioms segmentRealPoint_zero_self_eq_physical
+#print axioms edgePhysicalInterpolation_parameter_mem
+
+end CrossingInterpolationPhysicalBridgeAudit
+end BoundaryOfSelf

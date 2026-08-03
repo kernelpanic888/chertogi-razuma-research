@@ -1,0 +1,40 @@
+trace_id=P1-AC-VERIFICATION-12
+captured_date=2026-07-31
+candidate=P1-AC-01
+deployment=NONE
+public_p0_changed=NO
+
+node_version=v25.9.0
+unit_command=node --test tests/aggregate-counter.test.mjs
+unit_tests=8
+unit_pass=8
+unit_fail=0
+
+blind_command=node tests/blind-harness.mjs
+blind_test_id=P1-AC-BLIND-01
+blind_seed=0x51f17a3d
+blind_cases=768
+blind_accepted=630
+blind_retained_days=35
+blind_forbidden_markers_found=0/10
+blind_candidate_stderr=empty
+blind_verdict=PASS
+blind_boundary=ENGINEERING_BLACK_BOX_NOT_EXTERNAL_EMPIRICAL_VALIDATION
+
+lean_version=4.32.1
+lean_command=lean formal/AggregateCounter.lean
+lean_exit_code=0
+lean_sanitize_metadata_noninterference_axioms=NONE
+lean_process_metadata_noninterference_axioms=NONE
+lean_satInc_is_bounded_axioms=propext
+lean_pageView_record_is_bounded_axioms=propext
+
+protocol_sha256=0675427e04f4a4b4d7728171d2fb2236355f0057c0b0730726492d6eea2cd09d
+counter_sha256=6f156dcf917b6269bfd869806255799c179ce2d552050a302976299fcd6a1d58
+cli_sha256=13f9076c1f12021be66ac8d18f0fa32f17c008dd3165af67908017025c31a124
+unit_test_sha256=507646d401bb48368ff617c235688b3c8f177ffc7bb93bb3f5ab7c71df8969e6
+blind_harness_sha256=357ce9e78d06f6aa7f7d998752880527bea618d2c67dfbf6d0247fc30e1e7045
+lean_source_sha256=d8a3c97a21709a2e893c3634634d2ffb86e4e5042210d09af141510132a33b41
+
+verdict=VERIFIED_RESEARCH_CANDIDATE_NOT_DEPLOYED
+red_boundary=PROVIDER_AND_FUTURE_NETWORK_ADAPTER_NOT_PROVED

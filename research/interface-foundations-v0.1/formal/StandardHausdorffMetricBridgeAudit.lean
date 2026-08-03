@@ -1,0 +1,27 @@
+import StandardHausdorffMetricBridge
+
+namespace BoundaryOfSelf
+namespace StandardHausdorffMetricBridgeAudit
+
+open StandardHausdorffMetricBridge
+
+#check AmbientPlane
+#check planeEmbedding
+#check planeEmbedding_injective
+#check dist_planeEmbedding_eq_euclideanDistance
+#check targetCircleCarrier
+#check contourCarrier
+#check targetCircleCarrier_nonempty
+#check contourCarrier_nonempty
+#check standard_hausdorffDist_le
+#check standard_hausdorffDist_le_four_div
+#check standard_hausdorffDist_eventually_lt
+
+#print axioms dist_planeEmbedding_eq_euclideanDistance
+#print axioms targetCircleCarrier_nonempty
+#print axioms contourCarrier_nonempty
+#print axioms standard_hausdorffDist_le
+#print axioms standard_hausdorffDist_eventually_lt
+
+end StandardHausdorffMetricBridgeAudit
+end BoundaryOfSelf

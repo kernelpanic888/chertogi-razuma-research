@@ -1,0 +1,54 @@
+{
+  "schema": "IFBS31F/1",
+  "releaseId": "first-distinction-50",
+  "hashAlgorithm": "sha256",
+  "signatureAlgorithm": "ed25519",
+  "signerKeyId": "sha256:5882500236bed30c64bd45f2a71b3dbe03acb2b45309f82f8022fe2d33bf69bc",
+  "artifacts": [
+    {
+      "path": "verification/f8c31e/fixture.ifbs",
+      "bytes": 1873,
+      "sha256": "sha256:6d35fe539e13219963f816d4d4db57681669c2fe09b609b167017d3ce4eb32d5"
+    },
+    {
+      "path": "verification/f8c31e/verify.mjs",
+      "bytes": 4894,
+      "sha256": "sha256:b28e5126072924f5b0de9e7d74091d83d712a656965a150ec4c3a4cc84414e36"
+    },
+    {
+      "path": "research/interface-foundations-v0.1/formal/IntrinsicNonradialShearCanonicalReplay.lean",
+      "bytes": 8231,
+      "sha256": "sha256:4ee91e207c7cb3eb66d2cc12dc64630b02da9d4c3b78499314e9cbcb6a875d93"
+    },
+    {
+      "path": "research/interface-foundations-v0.1/formal/IntrinsicNonradialShearCanonicalReplayAudit.lean",
+      "bytes": 289,
+      "sha256": "sha256:4e9e317fc664a3aef8d03919611d52c91371c9c72c78d177984c6b0033ae8e43"
+    },
+    {
+      "path": "research/interface-foundations-v0.1/formal/IntrinsicNonradialShearContentAddressedRelease.lean",
+      "bytes": 4697,
+      "sha256": "sha256:ccb2c0941161536b5fd26184940677d101baec2356e077eb3f646df342f2b770"
+    },
+    {
+      "path": "research/interface-foundations-v0.1/formal/IntrinsicNonradialShearContentAddressedReleaseAudit.lean",
+      "bytes": 393,
+      "sha256": "sha256:3afd18e0133a3c5a90574a78fa9fc21c438af79b72461abd66bbf18daa6a6e3c"
+    },
+    {
+      "path": "verification/f8c31f/verify-release.mjs",
+      "bytes": 5233,
+      "sha256": "sha256:7fecd43fe9e0b057312162bffcb821c2eeee77fe8394181f7216c09fe709ecad"
+    },
+    {
+      "path": "research/interface-foundations-v0.1/INTRINSIC_NONRADIAL_SHEAR_CONTENT_ADDRESSED_RELEASE.md",
+      "bytes": 2178,
+      "sha256": "sha256:d1287a4d19ee716a9d7117e92a8ddc591d4b0ca34d967d5c4f56da659f403310"
+    },
+    {
+      "path": "research/interface-foundations-v0.1/INTRINSIC_NONRADIAL_SHEAR_CONTENT_ADDRESSED_RELEASE_PASSPORT.md",
+      "bytes": 1258,
+      "sha256": "sha256:49c5c651d08e0ec8dd39df3c9b358e06b59a5bc5d82cb76338325a09255fdeb0"
+    }
+  ]
+}

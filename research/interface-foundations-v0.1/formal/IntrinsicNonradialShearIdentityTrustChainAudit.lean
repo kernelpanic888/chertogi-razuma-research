@@ -1,0 +1,11 @@
+import IntrinsicNonradialShearIdentityTrustChain
+
+open BoundaryOfSelf.IntrinsicNonradialShearIdentityTrustChain
+
+#print axioms rotation_activates_new_key
+#print axioms rotation_revokes_old_key
+#print axioms accepted_rotation_trusts_new_key
+#print axioms accepted_rotation_rejects_old_key
+#print axioms next_release_trusted_after_rotation
+#print axioms old_key_release_rejected_after_rotation
+#print axioms author_recognized_iff

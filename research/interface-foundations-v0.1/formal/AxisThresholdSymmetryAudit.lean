@@ -1,0 +1,36 @@
+import AxisThresholdSymmetry
+
+namespace BoundaryOfSelf
+namespace AxisThresholdSymmetryAudit
+
+open AxisThresholdSymmetry
+
+#check reflectX
+#check swapAxes
+#check reflectX_involutive
+#check swapAxes_involutive
+#check reflectX_radialNumerator
+#check swapAxes_radialNumerator
+#check reflectX_inside_iff
+#check swapAxes_inside_iff
+#check reflectX_unitAdjacent
+#check swapAxes_unitAdjacent
+#check reflectXCrossing
+#check swapAxesCrossing
+#check FourAxisCrossings
+#check exists_four_axis_crossings
+#check four_axis_crossings_belong_to_global_orbit
+#check exists_four_axis_crossings_on_global_orbit
+
+#print axioms reflectX_involutive
+#print axioms swapAxes_involutive
+#print axioms reflectX_radialNumerator
+#print axioms swapAxes_radialNumerator
+#print axioms reflectX_unitAdjacent
+#print axioms swapAxes_unitAdjacent
+#print axioms exists_four_axis_crossings
+#print axioms four_axis_crossings_belong_to_global_orbit
+#print axioms exists_four_axis_crossings_on_global_orbit
+
+end AxisThresholdSymmetryAudit
+end BoundaryOfSelf

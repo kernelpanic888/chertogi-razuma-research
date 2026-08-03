@@ -1,0 +1,9 @@
+{
+  "schema": "IFBS31F-SIGNATURE/1",
+  "manifest": "verification/f8c31f/release-manifest.json",
+  "manifestSha256": "sha256:3d4b7307d5bcfbdf26105f534105dc92d997a820bc398d097fa9748280dfef89",
+  "signatureAlgorithm": "ed25519",
+  "signerKeyId": "sha256:5882500236bed30c64bd45f2a71b3dbe03acb2b45309f82f8022fe2d33bf69bc",
+  "publicKey": "verification/f8c31f/release-public-key.pem",
+  "signature": "verification/f8c31f/release-signature.base64"
+}

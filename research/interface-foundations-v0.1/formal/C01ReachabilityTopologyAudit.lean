@@ -1,0 +1,31 @@
+import C01ReachabilityTopology
+
+namespace BoundaryOfSelf
+namespace C01ReachabilityTopologyAudit
+
+open C01ReachabilityTopology
+
+#check AdmissibleState
+#check reachableClosure
+#check subset_reachableClosure
+#check reachableClosure_mono
+#check reachableClosure_idempotent
+#check reachableClosure_empty
+#check reachableClosure_union
+#check reachabilityTopology
+#check c01Connected_implies_isConnected
+#check properRegion_hasBoundary_via_c01
+#check topologicalSelf_hasBoundary_via_c01
+#check insideReachabilityTopology_connected
+#check outsideReachabilityTopology_connected
+
+#print axioms reachableClosure_idempotent
+#print axioms reachabilityTopology
+#print axioms c01Connected_implies_isConnected
+#print axioms properRegion_hasBoundary_via_c01
+#print axioms topologicalSelf_hasBoundary_via_c01
+#print axioms insideReachabilityTopology_connected
+#print axioms outsideReachabilityTopology_connected
+
+end C01ReachabilityTopologyAudit
+end BoundaryOfSelf

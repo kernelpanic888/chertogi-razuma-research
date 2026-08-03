@@ -1,0 +1,23 @@
+import BiLipschitzBoundaryTransport
+
+open Filter
+
+open BoundaryOfSelf
+open BoundaryOfSelf.AbstractBoundaryApproximation
+open BoundaryOfSelf.BiLipschitzBoundaryTransport
+
+#check ControlledEquiv
+#check compact_hausdorffDist_le_iff_witnesses
+#check hausdorffDist_transport_le
+#check transportBoundaryModel
+#check transportInterfaceApproximation
+#check transportComputableBoundaryModel
+#check transported_model_error_le
+#check transported_model_converges_to_actual_frontier
+
+#print axioms compact_hausdorffDist_le_iff_witnesses
+#print axioms hausdorffDist_transport_le
+#print axioms transportBoundaryModel
+#print axioms transportInterfaceApproximation
+#print axioms transported_model_error_le
+#print axioms transported_model_converges_to_actual_frontier

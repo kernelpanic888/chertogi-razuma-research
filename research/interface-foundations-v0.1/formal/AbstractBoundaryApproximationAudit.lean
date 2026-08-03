@@ -1,0 +1,27 @@
+import AbstractBoundaryApproximation
+
+open Filter
+
+open BoundaryOfSelf
+open BoundaryOfSelf.AbstractBoundaryApproximation
+open StandardHausdorffMetricBridge
+open ConcreteRadialContourTraversal
+open CompactHausdorffAttainment
+open BoundaryOfSelf.BoundarySeparationInvariant
+
+#check SideLabelInvariant
+#check BoundaryModel
+#check InterfaceApproximation
+#check InterfaceApproximation.hausdorffEDist_ne_top
+#check InterfaceApproximation.hausdorff_tendsto_zero
+#check ComputableBoundaryModel
+#check ComputableBoundaryModel.converges_to_actual_frontier
+#check radialBoundaryModel
+#check radialInterfaceApproximation
+#check radialComputableBoundaryModel
+#check radial_abstract_convergence
+
+#print axioms InterfaceApproximation.hausdorffEDist_ne_top
+#print axioms InterfaceApproximation.hausdorff_tendsto_zero
+#print axioms ComputableBoundaryModel.converges_to_actual_frontier
+#print axioms radial_abstract_convergence

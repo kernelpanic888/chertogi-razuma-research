@@ -1,0 +1,25 @@
+import DominantAxisLocalSegment
+
+namespace BoundaryOfSelf
+namespace DominantAxisLocalSegmentAudit
+
+open DominantAxisLocalSegment
+
+#check swapTarget
+#check swapTarget_swapTarget
+#check swapTarget_onTargetCircle
+#check verticalFacingCrossing
+#check verticalFacingCrossing_axis
+#check verticalFacingCrossing_direction
+#check dominantFacingCrossing
+#check dominantFacingCrossing_is_horizontal_or_vertical
+#check dominantFacingCrossing_on_orbit
+#check target_has_dominant_local_segment_on_global_orbit
+
+#print axioms swapTarget_onTargetCircle
+#print axioms verticalFacingCrossing_direction
+#print axioms dominantFacingCrossing_on_orbit
+#print axioms target_has_dominant_local_segment_on_global_orbit
+
+end DominantAxisLocalSegmentAudit
+end BoundaryOfSelf

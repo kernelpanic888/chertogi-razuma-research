@@ -1,0 +1,24 @@
+import OneSidedEuclideanContourBound
+
+open BoundaryOfSelf
+open BoundaryOfSelf.OneSidedEuclideanContourBound
+
+#check squaredRadius_eq_zero_iff
+#check radialCircleWitness_on_circle
+#check squaredDistance_scaled_self
+#check squaredDistance_radialCircleWitness
+#check euclideanDistance_radialCircleWitness
+#check radial_distance_square_le_deficit
+#check euclideanDistance_to_circle_le_sqrt_deficit
+#check sqrt_radial_bound_eq_euclideanEnvelope
+#check local_segment_every_real_point_has_circle_witness
+#check one_sided_euclidean_epsilon
+
+#print axioms radialCircleWitness_on_circle
+#print axioms squaredDistance_radialCircleWitness
+#print axioms euclideanDistance_radialCircleWitness
+#print axioms radial_distance_square_le_deficit
+#print axioms euclideanDistance_to_circle_le_sqrt_deficit
+#print axioms sqrt_radial_bound_eq_euclideanEnvelope
+#print axioms local_segment_every_real_point_has_circle_witness
+#print axioms one_sided_euclidean_epsilon

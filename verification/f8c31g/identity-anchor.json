@@ -1,0 +1,9 @@
+{
+  "schema": "IFBS31G-ANCHOR/1",
+  "subjectName": "Aleksey Salkutsan",
+  "subjectId": "https://orcid.org/0009-0006-8717-0492",
+  "rootKeyId": "sha256:81c28c607adf6a8f40cd17718922b0e9f37edf1cb26e709d4484a5cd894b04c2",
+  "activeReleaseKeyId": "sha256:39716d519f1908a4810ac9b0d33f99abf130bfbad7b4ba31e3eda4eb3a71ee0a",
+  "sequence": 0,
+  "externalWitness": null
+}

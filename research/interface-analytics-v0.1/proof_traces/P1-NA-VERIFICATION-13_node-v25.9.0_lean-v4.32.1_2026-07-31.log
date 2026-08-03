@@ -1,0 +1,33 @@
+trace_id=P1-NA-VERIFICATION-13
+captured_date=2026-07-31
+candidate=P1-NA-01
+dependency=P1-AC-01
+deployment=NONE
+public_p0_changed=NO
+
+node_version=v25.9.0
+node_command=node --test tests/network-adapter.test.mjs
+node_tests=8
+node_pass=8
+node_fail=0
+capability_trap=PASS
+forbidden_request_properties=headers,cf,ip,userAgent,referrer,cookie,visitorId
+daily_budget_test=PASS
+rejected_state_identity=UNCHANGED
+
+lean_version=4.32.1
+lean_command=lean formal/AnonymousAdmission.lean
+lean_exit_code=0
+actor_indistinguishability_axioms=NONE
+admitted_work_is_globally_bounded_axioms=propext
+accepted_increment_respects_budget_axioms=NONE
+
+protocol_sha256=50c434ae731e13d043b665d66bff873a4d1b321cea5e41054db008987d42e238
+adapter_sha256=d0d1b3cc4f43f2ee4ea6ae4d2aeb3a0eb1cd617d237d03a2668cfa82d048a8c0
+test_sha256=cca1856bc13b008e1038765b4811faa6d59e66a39ebbfe52ee9c4eda93db8778
+lean_sha256=d632391deb7708b340b9959215018fd44fc81b1635eff00a2ddd75723b3135c2
+
+verdict=VERIFIED_RESEARCH_CANDIDATE_NOT_DEPLOYED
+privacy_claim=NO_AUTHOR_IDENTITY_OR_REQUEST_METADATA_CAPABILITY
+availability_claim=GLOBAL_DAILY_WORK_BOUND
+red_boundary=NO_HUMAN_BOT_DISTINCTION_AND_NO_PROVIDER_LOG_CLAIM

@@ -1,0 +1,9 @@
+import IntrinsicNonradialShearExternalIdentityWitness
+
+open BoundaryOfSelf.IntrinsicNonradialShearExternalIdentityWitness
+
+#print axioms accepted_witness_has_matching_root
+#print axioms self_witness_rejected
+#print axioms wrong_observation_rejected
+#print axioms recognized_author_requires_external_witness
+#print axioms recognized_author_requires_valid_anchor_signature

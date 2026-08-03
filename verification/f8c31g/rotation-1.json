@@ -1,0 +1,11 @@
+{
+  "schema": "IFBS31G-ROTATION/1",
+  "sequence": 1,
+  "subjectId": "https://orcid.org/0009-0006-8717-0492",
+  "rootKeyId": "sha256:81c28c607adf6a8f40cd17718922b0e9f37edf1cb26e709d4484a5cd894b04c2",
+  "fromKeyId": "sha256:39716d519f1908a4810ac9b0d33f99abf130bfbad7b4ba31e3eda4eb3a71ee0a",
+  "toKeyId": "sha256:a2a71e0945ae03a08fe97a4bbb518a3dda70f5453548a0aeefd20c85e644b6d0",
+  "previousReleaseDigest": "sha256:846c985b67a45eb99ec0cdd979d78980eba88b5b8cb48d59c6676dfd6b9ba45f",
+  "revokesFromAtSequence": 2,
+  "reason": "scheduled-key-rotation"
+}

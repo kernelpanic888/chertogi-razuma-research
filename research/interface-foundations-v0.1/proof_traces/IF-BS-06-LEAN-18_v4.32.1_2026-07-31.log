@@ -1,0 +1,5 @@
+warning: failed to query latest release, using existing version 'leanprover/lean4:v4.32.1'
+'BoundaryOfSelf.RationalBoundaryLimit.embedded_boundary_gap_numerator_is_one' depends on axioms: [propext, Quot.sound]
+'BoundaryOfSelf.RationalBoundaryLimit.cellWidth_lt_iff' depends on axioms: [propext, Quot.sound]
+'BoundaryOfSelf.RationalBoundaryLimit.rational_epsilon_limit' depends on axioms: [propext, Quot.sound]
+'BoundaryOfSelf.RationalBoundaryLimit.boundary_band_below_epsilon' depends on axioms: [propext, Quot.sound]

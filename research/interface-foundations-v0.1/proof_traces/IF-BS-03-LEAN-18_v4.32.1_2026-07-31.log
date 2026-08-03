@@ -1,0 +1,5 @@
+warning: failed to query latest release, using existing version 'leanprover/lean4:v4.32.1'
+'BoundaryOfSelf.FiniteChamber.indiscrete_isConnected' depends on axioms: [propext, Classical.choice, Quot.sound]
+'BoundaryOfSelf.FiniteChamber.chamberRegion_isProper' depends on axioms: [propext]
+'BoundaryOfSelf.FiniteChamber.chamberRegion_hasBoundary' depends on axioms: [propext, Classical.choice, Quot.sound]
+'BoundaryOfSelf.FiniteChamber.frontier_eq_planckTouchBand' depends on axioms: [propext, Quot.sound]

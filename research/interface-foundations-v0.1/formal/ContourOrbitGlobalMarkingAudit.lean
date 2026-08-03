@@ -1,0 +1,28 @@
+import ContourOrbitGlobalMarking
+
+namespace BoundaryOfSelf
+namespace ContourOrbitGlobalMarkingAudit
+
+open ContourOrbitGlobalMarking
+
+#check HorizontalEdgeMarked
+#check VerticalEdgeMarked
+#check HorizontalCoordinateMarked
+#check VerticalCoordinateMarked
+#check horizontalEdgeMarked_iff_sideMarked
+#check verticalEdgeMarked_iff_sideMarked
+#check orbitRectangularMarking
+#check orbitMarking_south
+#check orbitMarking_east
+#check orbitMarking_north
+#check orbitMarking_west
+#check orbitRectangularMarking_closed
+#check orbitPotential
+
+#print axioms horizontalEdgeMarked_iff_sideMarked
+#print axioms verticalEdgeMarked_iff_sideMarked
+#print axioms orbitRectangularMarking_closed
+#print axioms orbitPotential
+
+end ContourOrbitGlobalMarkingAudit
+end BoundaryOfSelf

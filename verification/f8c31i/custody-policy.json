@@ -1,0 +1,13 @@
+{
+  "schema": "IFBS31I-CUSTODY/1",
+  "profile": "encrypted-offline-file",
+  "algorithm": "ed25519",
+  "privateKeyEncoding": "encrypted-pkcs8-pem",
+  "cipher": "aes-256-cbc",
+  "directoryMode": "0700",
+  "privateKeyMode": "0600",
+  "minimumPassphraseCharacters": 24,
+  "workspaceStorageAllowed": false,
+  "overwriteAllowed": false,
+  "passphraseStoredInReceipt": false
+}

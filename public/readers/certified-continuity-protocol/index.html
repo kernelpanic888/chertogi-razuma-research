@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="CR-01: a bilingual research reader for admissibility-certified cryptographic continuity and rollback/fork evidence.">
+  <meta name="color-scheme" content="dark">
+  <title>CR-01 · Certified Continuity Protocol Candidate</title>
+  <style>
+    :root{--void:#00140f;--deep:#002219;--panel:#032d22;--line:#155947;--mint:#7fffd4;--green:#19ef84;--cyan:#59d9ff;--yellow:#ffd257;--red:#ff6557;--quiet:#8faf9f;--paper:#dcffed;--mono:"IBM Plex Mono","SFMono-Regular",Consolas,monospace;--serif:Georgia,"Times New Roman",serif}
+    *{box-sizing:border-box}html{scroll-behavior:smooth;background:var(--void)}body{margin:0;color:var(--paper);background:linear-gradient(rgba(23,94,72,.18) 1px,transparent 1px),linear-gradient(90deg,rgba(23,94,72,.18) 1px,transparent 1px),radial-gradient(circle at 50% 18%,#073d2c 0,#001a13 43%,#000d0a 100%);background-size:48px 48px,48px 48px,auto;font:17px/1.62 var(--mono)}a{color:var(--cyan);text-decoration:none;border-bottom:1px solid rgba(89,217,255,.44)}a:hover,a:focus-visible{color:#a9ecff;border-color:currentColor}button{font:inherit}.shell{width:min(1500px,calc(100% - 34px));margin:auto}.top{position:sticky;z-index:20;top:0;border-bottom:1px solid var(--line);background:rgba(0,18,13,.94);backdrop-filter:blur(15px)}.top__inner{min-height:78px;display:flex;align-items:center;gap:25px;justify-content:space-between}.brand,.status,.eyebrow,.tag,.formula-label,.source-id{font-weight:800;letter-spacing:.13em;text-transform:uppercase}.brand{color:var(--green);font-size:14px}.status{color:var(--quiet);font-size:12px}.status::before{content:"";display:inline-block;width:10px;height:10px;margin-right:12px;border-radius:50%;background:var(--yellow);box-shadow:0 0 20px var(--yellow)}.langs{display:flex;border:1px solid var(--line)}.langs button{border:0;padding:13px 17px;color:var(--quiet);background:transparent;font-weight:900;cursor:pointer}.langs button[aria-pressed=true]{color:#00140f;background:var(--cyan)}.hero{padding:78px 0 38px}.hero__line{border:1px solid var(--line);border-left:10px solid var(--yellow);padding:clamp(28px,5vw,70px);background:linear-gradient(115deg,rgba(5,75,54,.82),rgba(0,25,18,.88));position:relative;overflow:hidden}.hero__line::after{content:"CR";position:absolute;right:-10px;bottom:-100px;color:rgba(127,255,212,.035);font:260px/1 var(--serif)}.eyebrow{color:var(--cyan);font-size:13px}.hero h1{max-width:1100px;margin:18px 0 14px;font:700 clamp(48px,8vw,116px)/.94 var(--serif);letter-spacing:-.045em}.hero h1 em{color:var(--yellow);font-weight:400}.lead{max-width:1060px;margin:0;color:#b7d5c6;font:clamp(20px,2.2vw,31px)/1.45 var(--serif)}.verdict{margin-top:30px;display:grid;grid-template-columns:1fr auto;gap:26px;align-items:end;border-top:1px solid var(--line);padding-top:24px}.verdict strong{color:var(--mint);font:700 clamp(24px,3vw,42px)/1.2 var(--serif)}.tag{font-size:11px;color:var(--yellow);border:1px solid #695a1b;padding:10px 14px;background:#1e1a08}.section{margin:34px 0;border:1px solid var(--line);background:rgba(0,34,25,.9)}.section__head{padding:25px 31px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;gap:20px;align-items:baseline}.section__head h2{margin:0;font:700 clamp(31px,4vw,61px)/1.04 var(--serif)}.section__head span{color:var(--quiet);font-size:12px;letter-spacing:.1em;text-transform:uppercase}.section__body{padding:clamp(24px,4vw,54px)}.answer{font:700 clamp(25px,3.3vw,48px)/1.3 var(--serif);max-width:1250px;margin:0}.answer b{color:var(--yellow)}.answer-note{max-width:1060px;color:#a8c6b7;font-size:16px}.math{margin:30px 0 0;padding:25px 29px;border-left:4px solid var(--cyan);background:#001a14;overflow:auto}.formula-label{color:var(--cyan);font-size:11px}.formula{margin-top:13px;color:var(--mint);font-size:clamp(16px,2vw,26px);line-height:1.7;white-space:nowrap}.map{display:grid;grid-template-columns:minmax(0,1.55fr) minmax(310px,.7fr);border-top:1px solid var(--line)}.stage{position:relative;min-height:680px;overflow:hidden;background:radial-gradient(circle at 50% 46%,rgba(15,120,82,.35),rgba(0,20,15,.92) 62%)}#continuity-map{display:block;width:100%;height:680px}.stage__caption{position:absolute;left:24px;bottom:22px;padding:12px 15px;background:rgba(0,19,14,.88);border-left:3px solid var(--yellow);color:var(--quiet);font-size:12px}.muscles{display:grid;grid-template-columns:1fr;border-left:1px solid var(--line)}.muscle{padding:25px;border-bottom:1px solid var(--line)}.muscle:last-child{border-bottom:0}.muscle b{display:block;color:var(--mint);font-size:19px}.muscle p{margin:8px 0;color:var(--quiet);font-size:13px}.muscle a{font-size:12px;font-weight:800;letter-spacing:.08em}.brain{background:linear-gradient(125deg,rgba(255,210,87,.12),rgba(0,42,31,.8))}.brain b{color:var(--yellow)}.grid{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--line);border-left:1px solid var(--line)}.card{min-height:245px;padding:27px;border-right:1px solid var(--line);border-bottom:1px solid var(--line)}.card h3{margin:8px 0 12px;font:700 28px/1.1 var(--serif)}.card p{color:var(--quiet);font-size:14px}.card .source-id{color:var(--cyan);font-size:11px}.card--red{background:rgba(85,19,14,.36)}.card--red h3,.card--red .source-id{color:var(--red)}.route{display:grid;grid-template-columns:repeat(5,1fr);border:1px solid var(--line);margin-top:30px}.route__step{position:relative;min-height:170px;padding:23px;border-right:1px solid var(--line)}.route__step:last-child{border:0}.route__step:not(:last-child)::after{content:"→";position:absolute;right:-12px;top:62px;z-index:2;color:var(--cyan);background:var(--deep);padding:2px}.route__step b{display:block;color:var(--yellow);font-size:17px}.route__step small{display:block;margin-top:11px;color:var(--quiet)}.prior{overflow:auto}.prior table{width:100%;border-collapse:collapse;min-width:850px}.prior th,.prior td{padding:18px 20px;border:1px solid var(--line);vertical-align:top;text-align:left}.prior th{color:var(--cyan);font-size:12px;letter-spacing:.1em;text-transform:uppercase}.prior td{color:#a9c8b8;font-size:14px}.prior strong{color:var(--paper)}.redline{border-color:#763127;background:linear-gradient(120deg,rgba(80,20,14,.72),rgba(26,10,8,.9))}.redline .section__head{border-color:#763127}.redline h2{color:var(--red)}.redgrid{display:grid;grid-template-columns:repeat(4,1fr)}.redgrid div{padding:24px;border-right:1px solid #763127}.redgrid div:last-child{border:0}.redgrid b{display:block;color:#ff8c80}.redgrid p{color:#d9aba4;font-size:14px}.sources{display:grid;grid-template-columns:repeat(2,1fr);gap:0;border-top:1px solid var(--line)}.source{padding:22px 25px;border-right:1px solid var(--line);border-bottom:1px solid var(--line)}.source:nth-child(even){border-right:0}.source p{margin:6px 0;color:var(--quiet);font-size:13px}.source-id{color:var(--yellow);font-size:10px}.footer{display:flex;justify-content:space-between;gap:25px;align-items:center;padding:36px 0 70px;color:var(--quiet);font-size:12px}.footer__links{display:flex;flex-wrap:wrap;gap:18px}.ru{display:none}body[data-lang=ru] .en{display:none}body[data-lang=ru] .ru{display:initial}body[data-lang=ru] div.ru,body[data-lang=ru] p.ru{display:block}
+    @media(max-width:1050px){.map{grid-template-columns:1fr}.muscles{grid-template-columns:repeat(2,1fr);border-left:0;border-top:1px solid var(--line)}.muscle{border-right:1px solid var(--line)}.grid{grid-template-columns:repeat(2,1fr)}.route{grid-template-columns:1fr 1fr}.route__step{border-bottom:1px solid var(--line)}.route__step::after{display:none}.redgrid{grid-template-columns:1fr 1fr}}
+    @media(max-width:680px){body{font-size:15px;background-size:32px 32px}.shell{width:min(100% - 20px,1500px)}.top__inner{min-height:66px}.status{display:none}.hero{padding-top:30px}.hero__line{padding:28px 22px}.verdict{grid-template-columns:1fr}.section__head{align-items:flex-start;flex-direction:column;padding:21px}.section__body{padding:21px}.map,.grid,.route,.redgrid,.sources,.muscles{display:block}.stage{min-height:480px}#continuity-map{height:480px}.muscle,.card,.route__step,.redgrid div,.source{border-right:0;border-bottom:1px solid var(--line)}.footer{align-items:flex-start;flex-direction:column}.formula{font-size:14px}}
+    @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+  </style>
+</head>
+<body data-lang="en">
+  <header class="top">
+    <div class="shell top__inner">
+      <a class="brand" href="../../index.html">CR-01 / CERTIFIED CONTINUITY</a>
+      <div class="status"><span class="en">PROTOCOL CANDIDATE · OPEN RESEARCH</span><span class="ru">КАНДИДАТ ПРОТОКОЛА · ОТКРЫТОЕ ИССЛЕДОВАНИЕ</span></div>
+      <div class="langs" aria-label="Language"><button type="button" data-language="ru" aria-pressed="false">RU</button><button type="button" data-language="en" aria-pressed="true">EN</button></div>
+    </div>
+  </header>
+
+  <main class="shell">
+    <section class="hero">
+      <div class="hero__line">
+        <div class="eyebrow en">CR-01 · INDEPENDENT READER · 2026</div><div class="eyebrow ru">CR-01 · НЕЗАВИСИМЫЙ РИДЕР · 2026</div>
+        <h1 class="en">Can continuity become a <em>cryptographic object?</em></h1>
+        <h1 class="ru">Может ли непрерывность стать <em>криптографическим объектом?</em></h1>
+        <p class="lead en">Standard cryptography protects messages and keys. This candidate asks whether every admitted change of a persistent digital identity can also carry a machine-verifiable certificate, a parent trace and observable fork evidence.</p>
+        <p class="lead ru">Стандартная криптография защищает сообщения и ключи. Этот кандидат спрашивает: может ли каждое допустимое изменение устойчивой цифровой личности нести машинно проверяемый сертификат, родительский след и наблюдаемое свидетельство развилки?</p>
+        <div class="verdict"><strong class="en">Not a new cipher. A testable continuity layer over standard cryptography.</strong><strong class="ru">Не новый шифр. Проверяемый слой непрерывности над стандартной криптографией.</strong><span class="tag">STATUS / CANDIDATE v0.1</span></div>
+      </div>
+    </section>
+
+    <section class="section" id="answer">
+      <header class="section__head"><h2 class="en">The precise claim</h2><h2 class="ru">Точное утверждение</h2><span>CLAIM BOUNDARY / 01</span></header>
+      <div class="section__body">
+        <p class="answer en">We do not replace AES, AEAD, HKDF, signatures or ratchets. We add one question before a state is accepted: <b>is this transition admissible, attached to the observed parent, and independently auditable?</b></p>
+        <p class="answer ru">Мы не заменяем AES, AEAD, HKDF, подписи или храповики. Перед принятием состояния мы добавляем один вопрос: <b>допустим ли этот переход, привязан ли он к наблюдаемому родителю и доступен ли независимой проверке?</b></p>
+        <p class="answer-note en">The hypothesis is narrower than “a Salkutsan cipher”. The animated DL-04 trajectory remains a visualization of state dynamics; it is neither entropy nor a keystream. The candidate contribution is the signed admissibility certificate and authenticated continuity transcript.</p>
+        <p class="answer-note ru">Гипотеза уже, чем «шифр Салкуцана». Анимированная траектория DL-04 остаётся визуализацией динамики состояния; это не энтропия и не поток ключей. Кандидатный вклад — подписанный сертификат допустимости и аутентифицированный журнал непрерывности.</p>
+        <div class="math"><div class="formula-label">STATE / CERTIFICATE / KEY / TRACE</div><div class="formula">Σₙ=(id,n,qₙ,Kₙ,hₙ)<br>Cₙ₊₁=Sign(id,n+1,hₙ,H(qₙ₊₁),Admit(qₙ,uₙ,qₙ₊₁))<br>Kₙ₊₁=HKDF(Kₙ,H(Cₙ₊₁∥hₙ∥n))<br>hₙ₊₁=H(hₙ∥headerₙ₊₁∥Cₙ₊₁∥ciphertextₙ₊₁∥tagₙ₊₁)</div></div>
+      </div>
+    </section>
+
+    <section class="section" id="map">
+      <header class="section__head"><h2 class="en">Muscles and brain</h2><h2 class="ru">Мышцы и голова</h2><span>ONE CONTINUITY MAP / 02</span></header>
+      <div class="map">
+        <div class="stage"><canvas id="continuity-map" aria-label="Animated continuity, rollback and fork map"></canvas><div class="stage__caption en">green = admitted chain · red = rejected rollback/fork · gold = certified transition</div><div class="stage__caption ru">зелёный = допустимая цепь · красный = откат/развилка · золото = сертифицированный переход</div></div>
+        <aside class="muscles">
+          <div class="muscle"><b>AEAD / AES-GCM</b><p class="en">Confidentiality and ciphertext integrity stay with reviewed standards.</p><p class="ru">Конфиденциальность и целостность шифротекста остаются за проверенными стандартами.</p><a href="https://csrc.nist.gov/pubs/sp/800/38/d/final" target="_blank" rel="noopener noreferrer">NIST SP 800-38D ↗</a></div>
+          <div class="muscle"><b>HKDF / key schedule</b><p class="en">Key derivation is standard. The certificate is context, not homemade cryptographic strength.</p><p class="ru">Вывод ключа стандартный. Сертификат задаёт контекст, а не самодельную криптографическую стойкость.</p><a href="https://www.rfc-editor.org/rfc/rfc5869" target="_blank" rel="noopener noreferrer">RFC 5869 ↗</a></div>
+          <div class="muscle"><b>RATCHET / transcript</b><p class="en">Signal and MLS are prior art for evolving keys, transcript binding and recovery properties.</p><p class="ru">Signal и MLS — предшествующие решения для эволюции ключей, связывания журнала и свойств восстановления.</p><a href="https://www.rfc-editor.org/rfc/rfc9420/" target="_blank" rel="noopener noreferrer">RFC 9420 ↗</a></div>
+          <div class="muscle"><b>APPEND-ONLY PROOF</b><p class="en">Merkle consistency proofs show how a history can expose equivocation when witnesses compare views.</p><p class="ru">Доказательства согласованности Меркла показывают, как история выявляет подмену, когда свидетели сравнивают представления.</p><a href="https://www.rfc-editor.org/rfc/rfc9162.html" target="_blank" rel="noopener noreferrer">RFC 9162 ↗</a></div>
+          <div class="muscle brain"><b>OUR HEAD / Admit</b><p class="en">A machine-checkable predicate binds identity, parent, epoch and state transition before acceptance.</p><p class="ru">Машинно проверяемый предикат связывает личность, родителя, эпоху и переход состояния до принятия.</p><a href="https://github.com/kernelpanic888/Salkutsan-Certified-Continuity-Protocol" target="_blank" rel="noopener noreferrer">REFERENCE CODE ↗</a></div>
+        </aside>
+      </div>
+    </section>
+
+    <section class="section" id="protocol">
+      <header class="section__head"><h2 class="en">Acceptance route</h2><h2 class="ru">Маршрут принятия</h2><span>SCCP / 03</span></header>
+      <div class="section__body">
+        <div class="route">
+          <div class="route__step"><b>01 / OBSERVE</b><small class="en">Read current id, epoch and authenticated head.</small><small class="ru">Прочитать текущие id, эпоху и аутентифицированную вершину.</small></div>
+          <div class="route__step"><b>02 / ADMIT</b><small class="en">Evaluate the domain predicate over old state, input and candidate state.</small><small class="ru">Проверить доменный предикат над старым состоянием, входом и кандидатом.</small></div>
+          <div class="route__step"><b>03 / CERTIFY</b><small class="en">Sign identity, next epoch, parent head and state commitment.</small><small class="ru">Подписать личность, следующую эпоху, родительскую вершину и коммитмент состояния.</small></div>
+          <div class="route__step"><b>04 / PROTECT</b><small class="en">Derive context key; encrypt and authenticate with standard AEAD.</small><small class="ru">Вывести контекстный ключ; зашифровать и аутентифицировать стандартным AEAD.</small></div>
+          <div class="route__step"><b>05 / APPEND</b><small class="en">Hash the complete record into the next continuity head.</small><small class="ru">Включить полную запись хешированием в следующую вершину непрерывности.</small></div>
+        </div>
+        <div class="grid" style="margin-top:30px">
+          <article class="card"><span class="source-id">PROPERTY / LOCAL</span><h3 class="en">Rollback rejection</h3><h3 class="ru">Отказ отката</h3><p class="en">A receiver at epoch n accepts only n+1 attached to its current head. A stale snapshot is rejected locally.</p><p class="ru">Получатель в эпохе n принимает только n+1, привязанную к текущей вершине. Устаревший снимок локально отклоняется.</p></article>
+          <article class="card"><span class="source-id">PROPERTY / OBSERVATIONAL</span><h3 class="en">Fork evidence</h3><h3 class="ru">Свидетельство развилки</h3><p class="en">Two distinct certified heads with one identity, parent and epoch form explicit evidence. Global discovery still requires witnesses or a public log.</p><p class="ru">Две разные сертифицированные вершины с одной личностью, родителем и эпохой образуют явное свидетельство. Для глобального обнаружения всё ещё нужны свидетели или публичный журнал.</p></article>
+          <article class="card"><span class="source-id">PROPERTY / FORMAL</span><h3 class="en">Prefix continuity</h3><h3 class="ru">Непрерывность префикса</h3><p class="en">The Lean slice proves strict epoch growth and rejection of rollback under the stated successor relation. It does not prove real-world cryptographic security.</p><p class="ru">Lean-срез доказывает строгий рост эпох и отказ отката при заданном отношении наследования. Он не доказывает реальную криптографическую безопасность.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="prior-art">
+      <header class="section__head"><h2 class="en">Prior-art boundary</h2><h2 class="ru">Граница предшествующих решений</h2><span>SHOULDERS / 04</span></header>
+      <div class="section__body prior">
+        <table>
+          <thead><tr><th class="en">Shoulder</th><th class="ru">Опора</th><th class="en">Already established</th><th class="ru">Уже существует</th><th class="en">What remains ours to test</th><th class="ru">Что остаётся проверить нам</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Signal / libsignal</strong><br><a href="https://github.com/signalapp/libsignal" target="_blank" rel="noopener noreferrer">repository ↗</a></td><td colspan="2" class="en">Double Ratchet and production messaging primitives.</td><td colspan="2" class="ru">Double Ratchet и промышленные примитивы обмена сообщениями.</td><td><span class="en">Not claimed: inventing a ratchet.</span><span class="ru">Не заявляем изобретение храповика.</span></td></tr>
+            <tr><td><strong>MLS / OpenMLS</strong><br><a href="https://github.com/openmls/openmls" target="_blank" rel="noopener noreferrer">repository ↗</a></td><td colspan="2" class="en">Transcript hashes, key schedule, group state and standardized transitions.</td><td colspan="2" class="ru">Хеши журнала, расписание ключей, групповое состояние и стандартизованные переходы.</td><td><span class="en">Per-transition domain admissibility tied to persistent identity.</span><span class="ru">Доменная допустимость каждого перехода, связанная с устойчивой личностью.</span></td></tr>
+            <tr><td><strong>Certificate Transparency</strong><br><a href="https://www.rfc-editor.org/rfc/rfc9162.html" target="_blank" rel="noopener noreferrer">RFC 9162 ↗</a></td><td colspan="2" class="en">Append-only Merkle inclusion and consistency evidence.</td><td colspan="2" class="ru">Включение и согласованность append-only журнала Меркла.</td><td><span class="en">Compact witness protocol for private identity histories.</span><span class="ru">Компактный протокол свидетелей для приватных историй личности.</span></td></tr>
+            <tr><td><strong>HACL* / libcrux</strong><br><a href="https://github.com/hacl-star/hacl-star" target="_blank" rel="noopener noreferrer">HACL* ↗</a> · <a href="https://github.com/cryspen/libcrux" target="_blank" rel="noopener noreferrer">libcrux ↗</a></td><td colspan="2" class="en">Verified implementations of established primitives.</td><td colspan="2" class="ru">Проверенные реализации известных примитивов.</td><td><span class="en">Compose, do not replace; later refine the reference implementation.</span><span class="ru">Комбинировать, а не заменять; позже уточнить эталонную реализацию.</span></td></tr>
+            <tr><td><strong>Wycheproof</strong><br><a href="https://github.com/C2SP/wycheproof" target="_blank" rel="noopener noreferrer">test vectors ↗</a></td><td colspan="2" class="en">Adversarial test vectors for common cryptographic failures.</td><td colspan="2" class="ru">Состязательные тест-векторы для типичных криптографических ошибок.</td><td><span class="en">Add protocol-level rollback, fork and certificate mutation corpus.</span><span class="ru">Добавить корпус мутаций отката, развилки и сертификатов на уровне протокола.</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="section redline" id="red-boundary">
+      <header class="section__head"><h2 class="en">Red boundary</h2><h2 class="ru">Красная граница</h2><span>DO NOT MERGE / 05</span></header>
+      <div class="redgrid">
+        <div><b class="en">NOT A CIPHER</b><b class="ru">НЕ ШИФР</b><p class="en">The DL-04 state trajectory is not a key, nonce, RNG or keystream.</p><p class="ru">Траектория DL-04 — не ключ, nonce, ГСЧ или поток ключей.</p></div>
+        <div><b class="en">NO GLOBAL FORK MAGIC</b><b class="ru">НЕТ МАГИИ ГЛОБАЛЬНОЙ РАЗВИЛКИ</b><p class="en">A private fork is detectable only after conflicting views meet.</p><p class="ru">Приватная развилка обнаруживается только после встречи конфликтующих представлений.</p></div>
+        <div><b class="en">NO ENDPOINT IMMUNITY</b><b class="ru">НЕТ НЕУЯЗВИМОСТИ КОНЦЕВОЙ ТОЧКИ</b><p class="en">Compromised devices, key exfiltration, side channels and weak randomness remain threats.</p><p class="ru">Компрометация устройства, утечка ключей, побочные каналы и слабая случайность остаются угрозами.</p></div>
+        <div><b class="en">NO PRODUCTION CLAIM</b><b class="ru">НЕ ГОТОВО К ПРОДАКШЕНУ</b><p class="en">v0.1 is review code and a falsifiable research object, not a security product.</p><p class="ru">v0.1 — код для проверки и опровержимый исследовательский объект, а не защитный продукт.</p></div>
+      </div>
+    </section>
+
+    <section class="section" id="sources">
+      <header class="section__head"><h2 class="en">Source registry</h2><h2 class="ru">Реестр источников</h2><span>S-01 → S-10 / 06</span></header>
+      <div class="sources">
+        <div class="source"><span class="source-id">S-01 / STANDARD</span><p>NIST FIPS 197 · Advanced Encryption Standard.</p><a href="https://csrc.nist.gov/pubs/fips/197/final" target="_blank" rel="noopener noreferrer">PRIMARY SOURCE ↗</a></div>
+        <div class="source"><span class="source-id">S-02 / STANDARD</span><p>NIST SP 800-38D · Galois/Counter Mode.</p><a href="https://csrc.nist.gov/pubs/sp/800/38/d/final" target="_blank" rel="noopener noreferrer">PRIMARY SOURCE ↗</a></div>
+        <div class="source"><span class="source-id">S-03 / STANDARD</span><p>RFC 5869 · HKDF.</p><a href="https://www.rfc-editor.org/rfc/rfc5869" target="_blank" rel="noopener noreferrer">PRIMARY SOURCE ↗</a></div>
+        <div class="source"><span class="source-id">S-04 / STANDARD</span><p>RFC 9420 · Messaging Layer Security.</p><a href="https://www.rfc-editor.org/rfc/rfc9420/" target="_blank" rel="noopener noreferrer">PRIMARY SOURCE ↗</a></div>
+        <div class="source"><span class="source-id">S-05 / STANDARD</span><p>RFC 9162 · Certificate Transparency v2.</p><a href="https://www.rfc-editor.org/rfc/rfc9162.html" target="_blank" rel="noopener noreferrer">PRIMARY SOURCE ↗</a></div>
+        <div class="source"><span class="source-id">S-06 / IMPLEMENTATION</span><p>Signal · libsignal.</p><a href="https://github.com/signalapp/libsignal" target="_blank" rel="noopener noreferrer">REPOSITORY ↗</a></div>
+        <div class="source"><span class="source-id">S-07 / IMPLEMENTATION</span><p>OpenMLS · RFC 9420 implementation.</p><a href="https://github.com/openmls/openmls" target="_blank" rel="noopener noreferrer">REPOSITORY ↗</a></div>
+        <div class="source"><span class="source-id">S-08 / VERIFICATION</span><p>HACL* and Project Everest.</p><a href="https://github.com/hacl-star/hacl-star" target="_blank" rel="noopener noreferrer">REPOSITORY ↗</a></div>
+        <div class="source"><span class="source-id">S-09 / VERIFICATION</span><p>libcrux · formally verified cryptography in Rust.</p><a href="https://github.com/cryspen/libcrux" target="_blank" rel="noopener noreferrer">REPOSITORY ↗</a></div>
+        <div class="source"><span class="source-id">S-10 / ADVERSARIAL TEST</span><p>C2SP / Wycheproof.</p><a href="https://github.com/C2SP/wycheproof" target="_blank" rel="noopener noreferrer">REPOSITORY ↗</a></div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="shell footer"><div><span class="en">Author: Salkutsan Aleksey Anatolievich · independent protocol candidate.</span><span class="ru">Автор: Салкуцан Алексей Анатольевич · независимый кандидат протокола.</span></div><div class="footer__links"><a href="https://github.com/kernelpanic888/Salkutsan-Certified-Continuity-Protocol" target="_blank" rel="noopener noreferrer">CODE ↗</a><a href="https://github.com/kernelpanic888/Salkutsan-Certified-Continuity-Protocol/releases/tag/sccp-v0.1.0" target="_blank" rel="noopener noreferrer">RELEASE v0.1.0 ↗</a><a href="../../index.html">MAIN MAP ↖</a></div></footer>
+
+  <script>
+    (()=>{
+      const body=document.body,buttons=[...document.querySelectorAll("[data-language]")];
+      function setLanguage(language){body.dataset.lang=language;document.documentElement.lang=language;buttons.forEach(button=>button.setAttribute("aria-pressed",String(button.dataset.language===language)))}
+      buttons.forEach(button=>button.addEventListener("click",()=>setLanguage(button.dataset.language)));setLanguage("en");
+
+      const canvas=document.getElementById("continuity-map"),context=canvas.getContext("2d"),reduced=matchMedia("(prefers-reduced-motion: reduce)").matches;
+      let width=0,height=0,ratio=1,start=performance.now();
+      function resize(){const box=canvas.getBoundingClientRect();ratio=Math.min(devicePixelRatio||1,2);width=box.width;height=box.height;canvas.width=Math.round(width*ratio);canvas.height=Math.round(height*ratio);context.setTransform(ratio,0,0,ratio,0,0)}
+      new ResizeObserver(resize).observe(canvas);resize();
+      function point(index,total){const x=width*(.12+index*(.72/(total-1))),wave=Math.sin(index*1.14)*height*.12;return{x,y:height*.49+wave}}
+      function draw(now){context.clearRect(0,0,width,height);const total=7,time=reduced?1800:(now-start),phase=(time/950)%total;
+        context.strokeStyle="rgba(76,199,159,.16)";context.lineWidth=1;for(let ring=1;ring<6;ring++){context.beginPath();context.ellipse(width*.5,height*.5,width*.08*ring,height*.07*ring,0,0,Math.PI*2);context.stroke()}
+        context.strokeStyle="rgba(89,217,255,.24)";context.beginPath();for(let i=0;i<total;i++){const p=point(i,total);i?context.lineTo(p.x,p.y):context.moveTo(p.x,p.y)}context.stroke();
+        for(let i=0;i<total;i++){const p=point(i,total),active=Math.abs(phase-i)<.7;context.beginPath();context.arc(p.x,p.y,active?11:7,0,Math.PI*2);context.fillStyle=active?"#ffd257":"#7fffd4";context.fill();context.strokeStyle="#0a4b38";context.lineWidth=5;context.stroke();context.fillStyle="#9ab8aa";context.font="700 12px monospace";context.fillText(`Σ${i}`,p.x-9,p.y+32)}
+        const parent=point(3,total),fork={x:parent.x+width*.16,y:parent.y-height*.24};context.setLineDash([7,8]);context.strokeStyle="rgba(255,101,87,.72)";context.beginPath();context.moveTo(parent.x,parent.y);context.lineTo(fork.x,fork.y);context.stroke();context.setLineDash([]);context.beginPath();context.arc(fork.x,fork.y,9,0,Math.PI*2);context.strokeStyle="#ff6557";context.lineWidth=3;context.stroke();context.fillStyle="#ff8b80";context.fillText("FORK EVIDENCE",fork.x+17,fork.y+5);
+        const rollback=point(5,total),back=point(2,total);context.strokeStyle="rgba(255,101,87,.5)";context.beginPath();context.moveTo(rollback.x,rollback.y);context.quadraticCurveTo(width*.5,height*.9,back.x,back.y+20);context.stroke();context.fillStyle="#ff8b80";context.fillText("ROLLBACK REJECT",width*.42,height*.86);
+        context.fillStyle="#ffd257";context.font="800 13px monospace";context.fillText("Cₙ₊₁ / ADMISSIBILITY CERTIFICATE",width*.29,height*.14);
+        if(!reduced)requestAnimationFrame(draw)}requestAnimationFrame(draw);
+    })();
+  </script>
+</body>
+</html>

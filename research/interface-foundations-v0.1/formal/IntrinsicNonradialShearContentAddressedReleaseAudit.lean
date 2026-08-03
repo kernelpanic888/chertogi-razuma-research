@@ -1,0 +1,10 @@
+import IntrinsicNonradialShearContentAddressedRelease
+
+open BoundaryOfSelf.IntrinsicNonradialShearContentAddressedRelease
+
+#print axioms contentAccepted_sound
+#print axioms contentAccepted_signature_irrelevant
+#print axioms provenanceAccepted_observedArtifacts_irrelevant
+#print axioms releaseAccepted_eq_true_iff
+#print axioms releaseAccepted_content
+#print axioms releaseAccepted_provenance

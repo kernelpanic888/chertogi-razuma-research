@@ -1,0 +1,30 @@
+import ContourOrbitPotentialSeparation
+
+namespace BoundaryOfSelf
+namespace ContourOrbitPotentialSeparationAudit
+
+open ContourOrbitPotentialSeparation
+
+#check SelectedOrbit
+#check OrbitGeometricMark
+#check orbitCut_iff_geometricMark
+#check unitAdjacent_has_canonical_edge
+#check orbitGridColor
+#check markedUnitAdjacent_endpoints_differ
+#check unmarkedUnitAdjacent_preserves_color
+#check cutAvoidingStep_preserves_color
+#check cutAvoidingReachable_preserves_color
+#check orbitSides_have_different_colors
+#check contourOrbitCut_separates
+#check contourOrbitCut_is_full
+
+#print axioms unitAdjacent_has_canonical_edge
+#print axioms markedUnitAdjacent_endpoints_differ
+#print axioms unmarkedUnitAdjacent_preserves_color
+#print axioms cutAvoidingStep_preserves_color
+#print axioms orbitSides_have_different_colors
+#print axioms contourOrbitCut_separates
+#print axioms contourOrbitCut_is_full
+
+end ContourOrbitPotentialSeparationAudit
+end BoundaryOfSelf

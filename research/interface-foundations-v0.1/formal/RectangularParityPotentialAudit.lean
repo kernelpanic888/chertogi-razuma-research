@@ -1,0 +1,34 @@
+import RectangularParityPotential
+
+namespace BoundaryOfSelf
+namespace RectangularParityPotentialAudit
+
+open RectangularParityPotential
+
+#check bxor
+#check prefixParity
+#check RectangularEdgeMarking
+#check CellEven
+#check ClosedOn
+#check vertexPotential
+#check verticalPotential_gradient
+#check horizontalTransport
+#check horizontalPotential_gradient
+#check RectangularPotentialWitness
+#check closedMarking_hasPotential
+#check RelationReachable
+#check relationReachable_preserves_color
+#check no_color_preserving_path_across
+#check marked_horizontal_endpoints_differ
+#check marked_vertical_endpoints_differ
+
+#print axioms horizontalTransport
+#print axioms horizontalPotential_gradient
+#print axioms closedMarking_hasPotential
+#print axioms relationReachable_preserves_color
+#print axioms no_color_preserving_path_across
+#print axioms marked_horizontal_endpoints_differ
+#print axioms marked_vertical_endpoints_differ
+
+end RectangularParityPotentialAudit
+end BoundaryOfSelf

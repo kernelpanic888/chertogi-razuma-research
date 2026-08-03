@@ -1,0 +1,10 @@
+{
+  "schema": "IFBS31G-RELEASE/1",
+  "releaseId": "first-distinction-50",
+  "sequence": 1,
+  "signerKeyId": "sha256:39716d519f1908a4810ac9b0d33f99abf130bfbad7b4ba31e3eda4eb3a71ee0a",
+  "contentPath": "verification/f8c31f/release-manifest.json",
+  "contentAddress": "sha256:3d4b7307d5bcfbdf26105f534105dc92d997a820bc398d097fa9748280dfef89",
+  "previousReleaseDigest": null,
+  "rotationDigest": null
+}

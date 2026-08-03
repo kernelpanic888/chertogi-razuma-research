@@ -1,0 +1,24 @@
+trace_id=IF-FD-01-LEAN-15
+captured_date=2026-07-31
+candidate=IF-FD-01
+lean_version=4.32.1
+command=lean formal/FirstDistinctionBeing.lean
+exit_code=0
+sorryAx=ABSENT
+
+interface_is_distinction_axioms=propext,Quot.sound
+being_excludes_absolute_merge_axioms=propext,Quot.sound
+interface_excludes_planck_touch_axioms=NONE
+planck_touch_excludes_absolute_merge_axioms=NONE
+witnessed_event_refutes_global_indistinguishability_axioms=NONE
+physical_guard_excludes_planck_touch_axioms=NONE
+death_presupposes_a_state_axioms=NONE
+death_is_not_absolute_nonbeing_axioms=NONE
+
+bridge_sha256=fd3dcb55d3be8be3e8a043073314e220fde999e888cc3e4d1edb59f011d1df69
+lean_sha256=794f3833782cca99d7dbc0f88ef98a6ed07bd86586207466033fe43035e62776
+
+verdict=VERIFIED_FORMAL_BRIDGE_AUTHOR_MODEL
+physical_claim=NOT_ESTABLISHED
+cosmological_origin_claim=NOT_ESTABLISHED
+quote_attribution=NOT_ESTABLISHED

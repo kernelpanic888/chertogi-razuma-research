@@ -1,0 +1,27 @@
+import ControlledEquivComposition
+
+namespace BoundaryOfSelf
+namespace ControlledEquivCompositionAudit
+
+open ControlledEquivComposition
+
+#check composeControlled
+#check composeControlled_apply
+#check composeControlled_symm_apply
+#check composeControlled_associative_apply
+#check composeControlled_associative_forwardConstant
+#check composeControlled_associative_inverseConstant
+#check composed_model_error_le
+#check composed_model_converges_to_actual_frontier
+#check composed_model_interface_is_actual_frontier
+
+#print axioms composeControlled
+#print axioms composeControlled_associative_apply
+#print axioms composeControlled_associative_forwardConstant
+#print axioms composeControlled_associative_inverseConstant
+#print axioms composed_model_error_le
+#print axioms composed_model_converges_to_actual_frontier
+#print axioms composed_model_interface_is_actual_frontier
+
+end ControlledEquivCompositionAudit
+end BoundaryOfSelf

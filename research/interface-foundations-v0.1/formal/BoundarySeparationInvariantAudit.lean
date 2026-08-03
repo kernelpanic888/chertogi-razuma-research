@@ -1,0 +1,29 @@
+import BoundarySeparationInvariant
+
+namespace BoundaryOfSelf
+namespace BoundarySeparationInvariantAudit
+
+open BoundarySeparationInvariant
+
+#check identityRegion
+#check identityInterface
+#check identityExterior
+#check targetCircleCarrier_eq_identityInterface
+#check closedTargetCarrier_eq_identityInterface
+#check identityRegion_frontier
+#check identityRegion_isProper
+#check SeparationInvariant
+#check radial_identity_separation
+#check contour_approximates_identity_frontier
+#check identityFrontierHausdorffSequence
+#check identityFrontierHausdorffSequence_tendsto_zero
+
+#print axioms targetCircleCarrier_eq_identityInterface
+#print axioms identityRegion_frontier
+#print axioms identityRegion_isProper
+#print axioms radial_identity_separation
+#print axioms contour_approximates_identity_frontier
+#print axioms identityFrontierHausdorffSequence_tendsto_zero
+
+end BoundarySeparationInvariantAudit
+end BoundaryOfSelf

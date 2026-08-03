@@ -1,0 +1,12 @@
+{
+  "schema": "IFBS31H-POLICY/1",
+  "subjectName": "Aleksey Salkutsan",
+  "subjectId": "https://orcid.org/0009-0006-8717-0492",
+  "hashAlgorithm": "sha256",
+  "publicKeyEncoding": "spki-pem",
+  "forbiddenWitnessHosts": [
+    "chertogi-razuma-research.kernelpanic888.chatgpt.site"
+  ],
+  "networkAccess": false,
+  "privateKeyInput": false
+}

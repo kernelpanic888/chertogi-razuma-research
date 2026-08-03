@@ -1,0 +1,24 @@
+import IntrinsicNonradialShearRealizableCertificate
+
+open scoped Topology RealInnerProductSpace
+open Set Filter
+
+namespace BoundaryOfSelf.IntrinsicNonradialShearRealizableCertificate
+
+noncomputable def audit_diamond_lower := @diamond_lower_certificate
+noncomputable def audit_certified_lower := @certifiedDiamond_lower_certificate
+noncomputable def audit_inverse_regularity := @certifiedDiamond_inverse_regularity_bound
+noncomputable def audit_mesh_no_worse := @certifiedDiamondInverseMeshTerm_le_relaxed
+noncomputable def audit_half_strict := @half_amplitude_inverseMeshTerm_strict
+noncomputable def audit_forward_finite := @exists_forward_diamond_finiteCertificate
+noncomputable def audit_inverse_finite := @exists_inverse_diamond_finiteCertificate
+
+#print axioms audit_diamond_lower
+#print axioms audit_certified_lower
+#print axioms audit_inverse_regularity
+#print axioms audit_mesh_no_worse
+#print axioms audit_half_strict
+#print axioms audit_forward_finite
+#print axioms audit_inverse_finite
+
+end BoundaryOfSelf.IntrinsicNonradialShearRealizableCertificate

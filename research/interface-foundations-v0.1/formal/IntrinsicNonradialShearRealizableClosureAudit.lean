@@ -1,0 +1,18 @@
+import IntrinsicNonradialShearRealizableClosure
+
+open scoped Topology RealInnerProductSpace
+open Set Filter
+
+namespace BoundaryOfSelf.IntrinsicNonradialShearRealizableClosure
+
+noncomputable def audit_endpoint_bridge := @exists_base_with_chordSlope
+noncomputable def audit_strict_interior := @strictDiamondRecord_is_realisable
+noncomputable def audit_reverse_inclusion := @directionalDiamondBand_subset_realisableClosure
+noncomputable def audit_exact_closure := realizableClosure_eq_directionalDiamondBand
+
+#print axioms audit_endpoint_bridge
+#print axioms audit_strict_interior
+#print axioms audit_reverse_inclusion
+#print axioms audit_exact_closure
+
+end BoundaryOfSelf.IntrinsicNonradialShearRealizableClosure

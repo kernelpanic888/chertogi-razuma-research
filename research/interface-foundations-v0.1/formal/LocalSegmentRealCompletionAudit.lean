@@ -1,0 +1,28 @@
+import LocalSegmentRealCompletion
+
+open BoundaryOfSelf
+open BoundaryOfSelf.LocalSegmentRealCompletion
+
+#check realParameter_mem_unitInterval
+#check rational_trace_compatibility
+#check continuous_realSegmentPoint_x
+#check continuous_realSegmentPoint_y
+#check continuous_realSegmentResidual
+#check first_radius_deficit_exact
+#check second_radius_deficit_exact
+#check endpoint_squaredDistance_exact
+#check endpoint_squaredDistance_le
+#check real_segment_radius_deficit_exact
+#check real_segment_residual_nonneg
+#check real_segment_residual_le_three
+#check local_segment_every_real_point_exact_and_bounded
+#check three_inverse_cell_square_epsilon
+
+#print axioms rational_trace_compatibility
+#print axioms continuous_realSegmentPoint_x
+#print axioms continuous_realSegmentResidual
+#print axioms endpoint_squaredDistance_le
+#print axioms real_segment_radius_deficit_exact
+#print axioms real_segment_residual_le_three
+#print axioms local_segment_every_real_point_exact_and_bounded
+#print axioms three_inverse_cell_square_epsilon

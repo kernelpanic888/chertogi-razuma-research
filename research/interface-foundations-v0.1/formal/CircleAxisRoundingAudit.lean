@@ -1,0 +1,33 @@
+import CircleAxisRounding
+
+namespace BoundaryOfSelf
+namespace CircleAxisRoundingAudit
+
+open CircleAxisRounding
+
+#check inwardOffset
+#check inwardAxis
+#check inwardRoundedCoordinate
+#check targetAxis
+#check target_y_abs_le_radius
+#check inwardOffset_cast_le
+#check inwardOffset_lt_add_one
+#check inwardOffset_le_two_mul
+#check inwardAxis_center_distance
+#check inwardOffset_square_le_threshold
+#check targetAxis_le_four_mul
+#check target_axis_center_inside
+#check inwardRoundedCoordinate_error
+#check target_axis_coordinate_error
+#check target_has_four_axis_crossings
+#check target_has_four_axis_crossings_on_global_orbit
+
+#print axioms inwardAxis_center_distance
+#print axioms inwardOffset_square_le_threshold
+#print axioms target_axis_center_inside
+#print axioms inwardRoundedCoordinate_error
+#print axioms target_has_four_axis_crossings
+#print axioms target_has_four_axis_crossings_on_global_orbit
+
+end CircleAxisRoundingAudit
+end BoundaryOfSelf

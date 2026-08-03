@@ -1,0 +1,9 @@
+{
+  "schema": "IFBS31H-WITNESS/1",
+  "subjectName": "Aleksey Salkutsan",
+  "subjectId": "https://orcid.org/0009-0006-8717-0492",
+  "rootKeyId": "<sha256:PUBLIC-SPKI-FINGERPRINT>",
+  "observedRootKeyId": "<sha256:PUBLIC-SPKI-FINGERPRINT>",
+  "publicationUri": "<https://author-controlled.example/root-fingerprint>",
+  "sourceIndependent": true
+}

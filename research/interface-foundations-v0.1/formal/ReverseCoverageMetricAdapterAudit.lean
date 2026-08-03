@@ -1,0 +1,20 @@
+import ReverseCoverageMetricAdapter
+
+open BoundaryOfSelf
+open BoundaryOfSelf.ReverseCoverageMetricAdapter
+
+#check planar_cauchy_schwarz
+#check coordinateNorm_triangle
+#check euclideanDistance_comm
+#check euclideanDistance_triangle
+#check ReverseCoverageMesh
+#check ReverseCoverageWitness
+#check reverseCoverage_of_mesh
+#check BidirectionalCircleApproximation
+#check bidirectionalCircleApproximation_of_mesh
+
+#print axioms planar_cauchy_schwarz
+#print axioms coordinateNorm_triangle
+#print axioms euclideanDistance_triangle
+#print axioms reverseCoverage_of_mesh
+#print axioms bidirectionalCircleApproximation_of_mesh

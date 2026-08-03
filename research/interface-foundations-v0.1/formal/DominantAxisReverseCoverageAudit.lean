@@ -1,0 +1,17 @@
+import DominantAxisReverseCoverage
+
+namespace BoundaryOfSelf
+namespace DominantAxisReverseCoverageAudit
+
+open DominantAxisReverseCoverage
+
+#check target_has_contour_witness_four_div
+#check dominant_axis_reverseCoverage
+#check dominant_axis_bidirectional_approximation
+
+#print axioms target_has_contour_witness_four_div
+#print axioms dominant_axis_reverseCoverage
+#print axioms dominant_axis_bidirectional_approximation
+
+end DominantAxisReverseCoverageAudit
+end BoundaryOfSelf

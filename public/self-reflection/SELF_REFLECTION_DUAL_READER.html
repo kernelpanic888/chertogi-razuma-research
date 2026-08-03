@@ -1,0 +1,510 @@
+<!doctype html>
+<html lang="ru" data-lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="A bilingual, source-backed research page about self-reflection that changes the next step.">
+  <title>От саморефлексии к методологии / From Self-Reflection to Methodology</title>
+  <style>
+    :root {
+      --field: #001b10;
+      --panel: rgba(0, 23, 14, .93);
+      --ink: #d9f8df;
+      --muted: #91c7a1;
+      --bright: #e8ffee;
+      --green: #00ed72;
+      --yellow: #ffd451;
+      --red: #ff6d63;
+      --cyan: #63d9ff;
+      --blue: #8cb4ff;
+      --mint: #7fffb1;
+      --line: rgba(0, 237, 114, .30);
+      --mono: "SFMono-Regular", "Cascadia Mono", "IBM Plex Mono", "Courier New", monospace;
+      --serif: "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Georgia, serif;
+      --sans: "Avenir Next", "Gill Sans", "Trebuchet MS", sans-serif;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; background: var(--field); }
+    body {
+      min-width: 320px;
+      margin: 0;
+      color: var(--ink);
+      background:
+        linear-gradient(rgba(0, 237, 114, .075) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 237, 114, .075) 1px, transparent 1px),
+        radial-gradient(circle at 88% 4%, rgba(0, 237, 114, .10), transparent 34rem),
+        var(--field);
+      background-size: 42px 42px, 42px 42px, auto, auto;
+      font-family: var(--sans);
+      line-height: 1.62;
+    }
+
+    a { color: #63ff9f; text-decoration-color: rgba(99, 255, 159, .58); text-underline-offset: .15em; }
+    a:hover { color: var(--yellow); }
+    .shell { width: min(1080px, calc(100% - 32px)); margin: 0 auto; }
+    .masthead { padding: 42px 0 35px; border-bottom: 1px solid var(--line); }
+    .topline { display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+    .stamp, .eyebrow, .meta, .route-code, .nav-link, .formula-label, .status {
+      font: 800 13px/1.32 var(--mono);
+      letter-spacing: .075em;
+      text-transform: uppercase;
+    }
+    .stamp { padding: 10px 14px; border-left: 5px solid var(--green); background: rgba(0, 10, 6, .86); color: #d7ffe1; }
+    .toolbar { display: flex; flex-wrap: wrap; gap: 8px; }
+    button {
+      appearance: none;
+      padding: 9px 12px;
+      border: 1px solid rgba(0, 237, 114, .54);
+      color: #d7ffe1;
+      background: rgba(0, 17, 10, .95);
+      cursor: pointer;
+      font: 800 12px/1 var(--mono);
+    }
+    button[aria-pressed="true"] { color: var(--field); border-color: var(--green); background: var(--green); }
+    .print-button { color: var(--yellow); border-color: rgba(255, 212, 81, .66); }
+
+    [data-pane] { display: block; }
+    [data-lang="ru"] [data-pane="en"], [data-lang="en"] [data-pane="ru"] { display: none; }
+    h1 {
+      max-width: 900px;
+      margin: 38px 0 15px;
+      color: var(--bright);
+      font: 400 clamp(43px, 8vw, 84px)/.96 var(--serif);
+      letter-spacing: -.052em;
+    }
+    h2 {
+      max-width: 900px;
+      margin: 0 0 17px;
+      color: var(--bright);
+      font: 400 clamp(31px, 4.5vw, 49px)/1.04 var(--serif);
+      letter-spacing: -.032em;
+    }
+    h3 { margin: 0 0 10px; color: var(--green); font: 800 14px/1.42 var(--mono); letter-spacing: .04em; }
+    p { max-width: 900px; margin: 0 0 16px; }
+    .subtitle { max-width: 805px; color: var(--muted); font-size: clamp(18px, 2.2vw, 24px); }
+    .meta, .eyebrow { color: var(--green); }
+    .meta { margin: 24px 0 0; }
+    .legend { display: flex; flex-wrap: wrap; gap: 8px; margin: 18px 0 0; }
+    .legend span { padding: 7px 9px; border: 1px solid currentColor; background: rgba(0, 17, 10, .78); font: 800 11px/1.15 var(--mono); letter-spacing: .035em; }
+    .legend .evidence { color: var(--green); }
+    .legend .method { color: var(--cyan); }
+    .legend .data { color: var(--blue); }
+    .legend .authorial { color: var(--yellow); }
+    .legend .transition { color: var(--mint); }
+    .legend .boundary { color: var(--red); }
+    .doc-nav { display: flex; flex-wrap: wrap; gap: 9px; margin: 31px 0 2px; }
+    .doc-nav a { padding: 9px 11px; border: 1px solid rgba(0, 237, 114, .52); background: rgba(0, 17, 10, .86); color: #d7ffe1; text-decoration: none; font: 800 12px/1 var(--mono); letter-spacing: .045em; }
+    .doc-nav a:hover { color: var(--field); border-color: var(--green); background: var(--green); }
+
+    main { padding: 48px 0 74px; }
+    section { margin-bottom: 56px; scroll-margin-top: 24px; }
+    .lead { max-width: 940px; font: 400 clamp(22px, 2.7vw, 31px)/1.38 var(--serif); }
+    .grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+    .card, .reading-box, .formula, .route-map, .warning, .input-log, .source-card, .tree-node {
+      border: 1px solid var(--line);
+      background: var(--panel);
+    }
+    .card, .reading-box, .warning, .input-log { padding: 22px; }
+    .external { border-top: 4px solid var(--green); }
+    .card.method { border-top: 4px solid var(--cyan); }
+    .card.data { border-top: 4px solid var(--blue); }
+    .candidate { border-top: 4px solid var(--yellow); }
+    .card.transition { border-top: 4px solid var(--mint); }
+    .open { border-top: 4px solid var(--red); }
+    .card.method h3 { color: var(--cyan); }
+    .card.data h3 { color: var(--blue); }
+    .candidate h3 { color: var(--yellow); }
+    .card.transition h3 { color: var(--mint); }
+    .open h3 { color: var(--red); }
+    .reading-box { margin: 22px 0; border-left: 4px solid var(--green); color: var(--muted); }
+    .reading-box strong { color: var(--bright); }
+    .warning { border-left: 5px solid var(--red); background: rgba(44, 7, 4, .78); color: #ffd7d1; }
+    .warning strong { color: var(--red); }
+
+    .formula { margin: 22px 0; padding: 24px; overflow-x: auto; color: var(--bright); font: 700 clamp(18px, 3vw, 30px)/1.58 var(--mono); }
+    .formula-label { display: block; margin-bottom: 12px; color: var(--yellow); font-size: .46em; }
+    .formula small { display: block; margin-top: 11px; color: var(--muted); font: 500 .55em/1.58 var(--sans); }
+    .cite, .source-link { color: var(--yellow); border-bottom: 1px dotted currentColor; text-decoration: none; font: 800 .84em var(--mono); white-space: nowrap; }
+    .cite::after, .source-link::after { content: " ↗"; font-size: .78em; }
+
+    .difference-table { width: 100%; margin: 20px 0 0; border-collapse: collapse; font-size: 15px; }
+    .difference-table th, .difference-table td { padding: 14px 15px; border: 1px solid var(--line); vertical-align: top; text-align: left; }
+    .difference-table th { width: 32%; color: var(--yellow); background: rgba(255, 212, 81, .08); font: 800 13px/1.45 var(--mono); }
+    .difference-table td { color: var(--muted); }
+
+    .route-map { padding: clamp(21px, 4vw, 37px); background: linear-gradient(135deg, rgba(0, 237, 114, .08), rgba(255, 212, 81, .08)); }
+    .route-intro { color: var(--muted); }
+    .route-tree { display: grid; justify-items: center; gap: 13px; max-width: 820px; margin: 29px auto 0; }
+    .tree-node { width: min(100%, 690px); padding: 19px 20px; }
+    .tree-node.observe { border-color: var(--green); }
+    .tree-node.distinguish { border-color: var(--yellow); }
+    .tree-node.feedback { border-color: var(--mint); }
+    .tree-node.target { border-color: var(--red); }
+    .tree-arrow { position: relative; width: 1px; height: 25px; background: var(--green); }
+    .tree-arrow::after { content: ""; position: absolute; left: -4px; bottom: -1px; width: 7px; height: 7px; border-right: 1px solid var(--green); border-bottom: 1px solid var(--green); transform: rotate(45deg); }
+    .tree-code { display: block; margin-bottom: 7px; color: var(--yellow); }
+    .red-dot { display: inline-grid; width: 13px; height: 13px; margin-right: 8px; border-radius: 50%; background: var(--red); box-shadow: 0 0 0 5px rgba(255, 109, 99, .15); vertical-align: middle; }
+
+    .step-list { max-width: 940px; margin: 23px 0 0; padding: 0; list-style: none; counter-reset: steps; }
+    .step-list li { position: relative; min-height: 58px; padding: 0 0 22px 61px; counter-increment: steps; }
+    .step-list li::before { content: counter(steps, decimal-leading-zero); position: absolute; top: 0; left: 0; display: grid; width: 39px; height: 39px; place-items: center; border: 1px solid var(--yellow); color: var(--yellow); background: rgba(0, 23, 14, .98); font: 800 12px/1 var(--mono); }
+
+    .input-log { margin-top: 22px; }
+    .input-log ol { margin: 16px 0 0; padding-left: 23px; }
+    .input-log li { margin-bottom: 11px; color: var(--muted); }
+    .input-log strong { color: var(--bright); }
+    .source-deck { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
+    .source-card summary { cursor: pointer; padding: 16px 18px; color: #d7ffe1; font: 800 14px/1.45 var(--mono); }
+    .source-card p { margin: 0; padding: 0 18px 18px; color: var(--muted); }
+    .references ol { max-width: 940px; margin: 20px 0 0; padding-left: 26px; }
+    .references li { margin-bottom: 14px; padding-left: 4px; }
+    .footer { padding: 24px 0 46px; border-top: 1px solid var(--line); color: var(--muted); font-size: 14px; }
+    .footer strong { color: var(--bright); }
+
+    @media (max-width: 720px) {
+      .shell { width: min(100% - 24px, 1080px); }
+      .masthead { padding-top: 27px; }
+      .grid, .source-deck { grid-template-columns: 1fr; }
+      .difference-table, .difference-table tbody, .difference-table tr, .difference-table th, .difference-table td { display: block; width: 100%; }
+      .difference-table th { border-bottom: 0; }
+      .toolbar { width: 100%; }
+      button { flex: 1; }
+    }
+
+    @page { size: A4 portrait; margin: 14mm 22mm 18mm; background: #001b10; }
+    @media print {
+      html, body, body * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+      html, body { background: transparent !important; }
+      body { position: relative; color: var(--ink) !important; }
+      body::before {
+        content: "";
+        position: fixed;
+        top: -14mm;
+        right: -22mm;
+        bottom: -18mm;
+        left: -22mm;
+        z-index: 0;
+        background:
+          linear-gradient(rgba(0, 237, 114, .075) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(0, 237, 114, .075) 1px, transparent 1px),
+          #001b10;
+        background-size: 42px 42px, 42px 42px, auto;
+      }
+      body > header, body > main, body > footer { position: relative; z-index: 1; }
+      .shell { width: auto; margin: 0; padding: 0; }
+      .toolbar, .doc-nav { display: none !important; }
+      .masthead { padding: 0 0 9mm; }
+      h1, h2, h3 { break-after: avoid-page; page-break-after: avoid; }
+      h1 { font-size: 39pt; }
+      h2 { font-size: 25pt; }
+      .card, .reading-box, .formula, .route-map, .warning, .input-log, .source-card, .tree-node, .step-list li, .difference-table tr {
+        break-inside: avoid-page;
+        page-break-inside: avoid;
+      }
+      .route-map { padding: 7mm !important; }
+      .route-tree { gap: 8px; margin-top: 12px; }
+      .tree-node { padding: 9px 11px; }
+      .tree-arrow { height: 13px; }
+      .source-card { margin-bottom: 8px; }
+      .card.method { border-top-color: #63d9ff !important; }
+      .card.data { border-top-color: #8cb4ff !important; }
+      .card.transition { border-top-color: #7fffb1 !important; }
+      .card.method h3 { color: #63d9ff !important; }
+      .card.data h3 { color: #8cb4ff !important; }
+      .card.transition h3 { color: #7fffb1 !important; }
+    }
+  </style>
+</head>
+<body>
+  <header class="masthead">
+    <div class="shell">
+      <div class="topline">
+        <div class="stamp">RESEARCH NOTE / 16.07.2026</div>
+        <div class="toolbar" aria-label="Document controls">
+          <button type="button" data-lang-target="ru" aria-pressed="true">RU</button>
+          <button type="button" data-lang-target="en" aria-pressed="false">EN</button>
+          <button class="print-button" type="button" onclick="window.print()">PDF / PRINT</button>
+        </div>
+      </div>
+
+      <div data-pane="ru">
+        <div class="eyebrow">РАЗВЕРНУТАЯ ИССЛЕДОВАТЕЛЬСКАЯ ВЕРСИЯ</div>
+        <h1>От саморефлексии к методологии</h1>
+        <p class="subtitle">Не разговор с собой ради разговора, а способ увидеть собственный маршрут: что произошло, какое различие появилось, что можно показать среде и какое действие теперь проверяемо.</p>
+        <p class="meta">Вопрос автора · внешние исследования встроены в текст · рабочая модель отделена от факта и от личного решения</p>
+        <div class="legend" aria-label="Легенда уровней утверждений"><span class="evidence">ЗЕЛЁНЫЙ / ОПОРА</span><span class="method">ЦИАН / ИНСТРУМЕНТ</span><span class="data">СИНИЙ / ДАННЫЕ</span><span class="authorial">ЖЁЛТЫЙ / МОДЕЛЬ</span><span class="transition">МЯТНЫЙ / ПЕРЕХОД</span><span class="boundary">КРАСНЫЙ / ГРАНИЦА</span></div>
+      </div>
+      <div data-pane="en">
+        <div class="eyebrow">FULL RESEARCH EDITION</div>
+        <h1>From Self-Reflection to Methodology</h1>
+        <p class="subtitle">Not a conversation with oneself for its own sake, but a way to read a route: what happened, what difference appeared, what can be shown to the environment, and which action is now testable.</p>
+        <p class="meta">Author's question · external research embedded in the text · working model separated from fact and from personal decision</p>
+        <div class="legend" aria-label="Claim-level legend"><span class="evidence">GREEN / EVIDENCE</span><span class="method">CYAN / INSTRUMENT</span><span class="data">BLUE / DATA</span><span class="authorial">YELLOW / MODEL</span><span class="transition">MINT / TRANSITION</span><span class="boundary">RED / BOUNDARY</span></div>
+      </div>
+
+      <nav class="doc-nav" data-pane="ru" aria-label="Навигация по документу">
+        <a href="#ru-question">Вопрос</a><a href="#ru-boundary">Граница</a><a href="#ru-inputs">Входы</a><a href="#ru-test">Проверка</a><a href="#ru-sources">Источники</a>
+      </nav>
+      <nav class="doc-nav" data-pane="en" aria-label="Document navigation">
+        <a href="#en-question">Question</a><a href="#en-boundary">Boundary</a><a href="#en-inputs">Inputs</a><a href="#en-test">Test</a><a href="#en-sources">Sources</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="shell">
+    <article data-pane="ru">
+      <section id="ru-question">
+        <div class="eyebrow">01 / ВОПРОС ДО ФОРМУЛЫ</div>
+        <h2>Когда размышление о себе становится саморефлексией?</h2>
+        <p class="lead">Не тогда, когда человек долго думает о себе. А тогда, когда он различает факт, собственную интерпретацию и следующий проверяемый ход.</p>
+        <div class="grid">
+          <div class="card external"><h3>ВНЕШНЯЯ ОПОРА / ДВЕ РАЗНЫЕ ВЕЛИЧИНЫ</h3><p>Шкала SRIS разделяет склонность к саморефлексии и ясность понимания себя, то есть «как часто я всматриваюсь» и «насколько я понимаю, почему поступаю так». Это не одно и то же. <a class="cite" href="https://doi.org/10.2224/sbp.2002.30.8.821" target="_blank" rel="noopener">[1]</a></p></div>
+          <div class="card candidate"><h3>АВТОРСКАЯ РАБОЧАЯ МОДЕЛЬ</h3><p>Саморефлексия - не оценка личности и не поиск правильного чувства. Это чтение собственного маршрута так, чтобы следующий ход отличался от предыдущего не силой желания, а опорой на замеченное различие.</p></div>
+        </div>
+        <div class="reading-box"><strong>Суть без формулы:</strong> мысль «со мной что-то не так» сама по себе ничего не объясняет. Вопрос, который открывает маршрут: <strong>«Что именно произошло, что я из этого понял и что из-за этого изменю?»</strong></div>
+      </section>
+
+      <section id="ru-boundary">
+        <div class="eyebrow">02 / ГРАНИЦА: РЕФЛЕКСИЯ НЕ РАВНА РУМИНАЦИИ</div>
+        <h2>Одно и то же внимание к себе может вести в разные стороны.</h2>
+        <p>Исследования различают рефлексию и руминацию. Руминация - повторяющееся самофокусирование вокруг угрозы, потери или несправедливости; рефлексия ближе к любопытству и поиску понимания. Это различение нельзя превращать в диагноз, но без него статья была бы нечестной. <a class="cite" href="https://doi.org/10.1037/0022-3514.76.2.284" target="_blank" rel="noopener">[2]</a></p>
+        <table class="difference-table">
+          <tr><th>Если вопрос звучит так</th><td>«Почему я опять такой?» - он легко возвращает к приговору о себе.</td></tr>
+          <tr><th>Если вопрос звучит так</th><td>«Какой факт я повторяю? Какую связь я ещё не проверил? Что изменится в следующем ходе?» - он оставляет путь к проверке.</td></tr>
+          <tr><th>Честная граница</th><td>Сам вопрос не гарантирует облегчения, работу, успех или психологическое благополучие. Он делает различие между описанием и переходом видимым.</td></tr>
+        </table>
+        <div class="grid" style="margin-top:16px">
+          <div class="card external"><h3>ВНЕШНИЙ ФАКТ / ДИСТАНЦИЯ</h3><p>В серии исследований самодистанцированная перспектива при разборе негативного опыта была связана с меньшей эмоциональной реактивностью и меньшей склонностью к повторному пересказу события. Результаты не делают её универсальным лечением и во многом получены на студенческих выборках. <a class="cite" href="https://pmc.ncbi.nlm.nih.gov/articles/PMC2881638/" target="_blank" rel="noopener">[3]</a></p></div>
+          <div class="card open"><h3>КРАСНАЯ ГРАНИЦА / НЕ ПУТАТЬ С ПОМОЩЬЮ</h3><p>Если размышление зацикливается, усиливает безнадёжность, лишает сна или безопасности, задача не в том, чтобы лучше вести журнал. Нужна живая профессиональная или экстренная поддержка.</p></div>
+        </div>
+      </section>
+
+      <section id="ru-inputs">
+        <div class="eyebrow">03 / ГОТОВЫЕ ВХОДЯЩИЕ ДАННЫЕ</div>
+        <h2>У нас уже есть не «теория из воздуха», а четыре разных типа входов.</h2>
+        <p>Они не складываются в один показатель ценности человека. Каждый отвечает на свой вопрос и должен оставаться на своём месте.</p>
+        <div class="formula" aria-label="Authorial route model">
+          <span class="formula-label">АВТОРСКАЯ КАРТА / НЕ ПСИХОЛОГИЧЕСКИЙ ЗАКОН</span>
+          событие → различие → след → ответ → следующий ход
+          <small>Событие - наблюдаемое изменение; различие - что стало иным; след - то, что может быть показано; ответ - данные или реакция среды; следующий ход - ограниченное действие, которое зависит от полученного ответа.</small>
+        </div>
+        <div class="grid">
+          <div class="card method"><h3>01 / ИНСТРУМЕНТ ИЗ ЛИТЕРАТУРЫ</h3><p>SRIS - валидированный самоотчётный инструмент: в классической версии он включает 20 утверждений и различает саморефлексию и инсайт. Его нельзя использовать как диагноз, оценку ума или универсальный прогноз. Текст пунктов и право на применение нужно брать у первоисточника и проверять отдельно. <a class="cite" href="https://www.sbp-journal.com/index.php/sbp/article/download/1219/1209" target="_blank" rel="noopener">[1]</a></p></div>
+          <div class="card data"><h3>02 / ОТКРЫТЫЕ ИССЛЕДОВАТЕЛЬСКИЕ ДАННЫЕ</h3><p>Для RPQ опубликована открытая статья и отдельный набор данных Figshare. В исследовании участвовал 501 студент; авторы предложили краткую 10-пунктовую и расширенную 30-пунктовую версии. Это данные о рефлексивной практике в конкретной выборке, не норма для «всех людей». <a class="cite" href="https://pmc.ncbi.nlm.nih.gov/articles/PMC10859078/" target="_blank" rel="noopener">[4]</a> <a class="cite" href="https://doi.org/10.6084/m9.figshare.22776251.v1" target="_blank" rel="noopener">[5]</a></p></div>
+          <div class="card candidate"><h3>03 / РАБОЧИЙ ЖУРНАЛ АВТОРА</h3><p>Не анкета о личности, а журнал маршрута: дата, задача, реальное действие, читаемый след, полученный ответ, внешние условия и следующий малый ход. Это авторский носитель для проверки гипотезы, а не валидированный тест.</p></div>
+          <div class="card transition"><h3>04 / ПЛАН ДЕЙСТВИЯ</h3><p>Формат «если X, то Y» изучается как implementation intention. Он не отменяет условия среды, но превращает намерение в наблюдаемую связку с конкретным сигналом. Метанализ 94 независимых тестов обнаружил положительный эффект в изучавшихся задачах, но не даёт обещания результата в любой жизни. <a class="cite" href="https://doi.org/10.1016/S0065-2601(06)38002-1" target="_blank" rel="noopener">[6]</a></p></div>
+        </div>
+        <div class="input-log">
+          <h3>МИНИМАЛЬНЫЙ ЖУРНАЛ МАРШРУТА / МОЖНО НАЧАТЬ СЕГОДНЯ</h3>
+          <ol>
+            <li><strong>Наблюдение:</strong> что реально произошло, без объяснения причин.</li>
+            <li><strong>Различие:</strong> что теперь не совпадает с ожиданием или предыдущим состоянием.</li>
+            <li><strong>След:</strong> ссылка, письмо, макет, решение, скрин, заметка, ответ - то, что можно показать.</li>
+            <li><strong>Ответ среды:</strong> данные, вопрос, отказ с причиной, тишина как факт, приглашение или измеримый эффект.</li>
+            <li><strong>Условный ход:</strong> «если придёт X, я сделаю Y». Если X не приходит, это тоже записывается как данные, а не как приговор.</li>
+          </ol>
+        </div>
+      </section>
+
+      <section id="ru-test">
+        <div class="eyebrow">04 / ПРОВЕРЯЕМЫЙ МАРШРУТ</div>
+        <h2>Саморефлексия становится переходом только после ответа.</h2>
+        <p>Диагностика без изменения следующего хода остаётся описанием. Это не недостаток: хорошее описание иногда само является нужным результатом. Но переход начинается только там, где оно меняет действие.</p>
+        <div class="route-map">
+          <p class="route-intro">Ни один узел не обязан быть идеальным. Достаточно, чтобы маршрут был честно виден и чтобы следующая проверка была меньше, чем весь вопрос о жизни.</p>
+          <div class="route-tree">
+            <div class="tree-node observe"><span class="tree-code">01 / НАБЛЮДЕНИЕ</span><strong>Назови факт.</strong><br>Не «я провалился», а «после трёх обращений ответа не было».</div>
+            <div class="tree-arrow" aria-hidden="true"></div>
+            <div class="tree-node distinguish"><span class="tree-code">02 / РАЗЛИЧИЕ</span><strong>Отдели факт от своей версии причин.</strong><br>«Нет ответа» и «я никому не нужен» - разные утверждения.</div>
+            <div class="tree-arrow" aria-hidden="true"></div>
+            <div class="tree-node feedback"><span class="tree-code">03 / СЛЕД И ОТВЕТ</span><strong>Покажи минимальный след тому, кто способен его прочитать.</strong><br>Запроси не оценку личности, а ответ, нужный для маршрута.</div>
+            <div class="tree-arrow" aria-hidden="true"></div>
+            <div class="tree-node target"><span class="tree-code"><span class="red-dot"></span>04 / КРАСНАЯ ТОЧКА</span><strong>Запиши один условный следующий ход.</strong><br>Здесь пока неизвестно, сработает ли действие. Но оно перестало быть случайным.</div>
+          </div>
+        </div>
+        <ol class="step-list">
+          <li><strong>Не спрашивай «что со мной?» первым вопросом.</strong> Сначала спроси: «какой участок маршрута не даёт перехода?»</li>
+          <li><strong>Выбери один факт.</strong> Он должен быть проверяемым через след или ответ, а не только через внутреннее ощущение.</li>
+          <li><strong>Сформулируй вопрос к среде.</strong> Например: «что в этом примере непонятно?», «какого доказательства не хватает?», «какой риск вы видите?»</li>
+          <li><strong>Запиши ответ буквально.</strong> Не переводи его сразу в общий вывод о себе.</li>
+          <li><strong>Сделай следующий ход условным.</strong> Тогда саморефлексия становится не архивом переживаний, а схемой обратной связи.</li>
+        </ol>
+        <div class="reading-box"><strong>Что уже можно проверить в исследовании:</strong> сравнить записи маршрута во времени и спросить не «насколько человек хорош», а <strong>после какого типа ответа чаще появляется новый различимый ход</strong>. Это вопрос для будущего протокола, а не вывод этой статьи.</div>
+      </section>
+
+      <section>
+        <div class="eyebrow">05 / ЧТО МЫ МОЖЕМ УТВЕРЖДАТЬ</div>
+        <h2>Опора должна быть сильнее красивой фразы.</h2>
+        <div class="grid">
+          <div class="card external"><h3>МОЖНО УТВЕРЖДАТЬ</h3><p>Исследования различают саморефлексию, инсайт и руминацию; у этих конструкций есть отдельные инструменты и разные связи с благополучием. В одной кросс-секционной выборке из 121 студента инсайт был положительным статистическим предиктором всех шести измеренных аспектов благополучия, а руминация - отрицательным предиктором некоторых из них. Это ассоциация в конкретной выборке, не причинный закон. <a class="cite" href="https://pubmed.ncbi.nlm.nih.gov/21290929/" target="_blank" rel="noopener">[7]</a></p></div>
+          <div class="card open"><h3>НЕЛЬЗЯ УТВЕРЖДАТЬ</h3><p>Что больше самоанализа автоматически делает человека счастливее, продуктивнее или глубже. Что журнал маршрута лечит депрессию. Что отсутствие результата доказывает недостаток усилий. Что один опросник описывает человека целиком.</p></div>
+        </div>
+        <div class="warning"><strong>Красная граница:</strong> этот текст не заменяет психотерапию, медицинскую помощь, практическую поддержку, деньги, отдых или безопасность. Он предлагает только один узкий исследовательский интерфейс: не спутать внутренний приговор с проверяемым разрывом в маршруте.</div>
+      </section>
+
+      <section id="ru-sources" class="references">
+        <div class="eyebrow">06 / ИСТОЧНИКИ И УРОВНИ УТВЕРЖДЕНИЙ</div>
+        <h2>Источники не лежат грузом в конце: они держат конкретные узлы.</h2>
+        <div class="source-deck">
+          <details class="source-card"><summary>[1] SRIS: саморефлексия и инсайт</summary><p>Первичный источник инструмента SRIS. Поддерживает различение саморефлексии и инсайта, но не превращает шкалу в диагностику личности. <a class="source-link" href="https://doi.org/10.2224/sbp.2002.30.8.821" target="_blank" rel="noopener">Открыть DOI</a></p></details>
+          <details class="source-card"><summary>[2] Руминация и рефлексия</summary><p>Классическая работа, различающая два мотивационно разных вида самофокусирования. <a class="source-link" href="https://doi.org/10.1037/0022-3514.76.2.284" target="_blank" rel="noopener">Открыть DOI</a></p></details>
+          <details class="source-card"><summary>[3] Самодистанцирование</summary><p>Открытая статья о самодистанцированной перспективе и адаптивной саморефлексии; важны ограничения выборок и дизайна. <a class="source-link" href="https://pmc.ncbi.nlm.nih.gov/articles/PMC2881638/" target="_blank" rel="noopener">Открыть PMC</a></p></details>
+          <details class="source-card"><summary>[4–5] RPQ и открытые данные</summary><p>Открытая статья о Reflective Practice Questionnaire и публичный набор Figshare. Это наиболее готовый внешний набор для методической репликации, но не для универсальных выводов о людях. <a class="source-link" href="https://doi.org/10.7717/peerj.16879" target="_blank" rel="noopener">Статья</a> · <a class="source-link" href="https://doi.org/10.6084/m9.figshare.22776251.v1" target="_blank" rel="noopener">Данные</a></p></details>
+          <details class="source-card"><summary>[6] Если X, то Y</summary><p>Метанализ implementation intentions: готовое намерение не гарантирует действие, а условный план помогает связать сигнал и ответ в изучавшихся задачах. <a class="source-link" href="https://doi.org/10.1016/S0065-2601(06)38002-1" target="_blank" rel="noopener">Открыть DOI</a></p></details>
+          <details class="source-card"><summary>[7] Благополучие: ограниченный вывод</summary><p>Кросс-секционное исследование 121 студента: инсайт, руминация и рефлексия имели разные связи с показателями благополучия. Не причинное доказательство. <a class="source-link" href="https://pubmed.ncbi.nlm.nih.gov/21290929/" target="_blank" rel="noopener">Открыть PubMed</a></p></details>
+        </div>
+        <ol>
+          <li>Grant, A. M., Franklin, J., &amp; Langford, P. (2002). <em>The Self-Reflection and Insight Scale: A New Measure of Private Self-Consciousness.</em> Social Behavior and Personality, 30(8), 821-836. <a class="source-link" href="https://doi.org/10.2224/sbp.2002.30.8.821" target="_blank" rel="noopener">DOI</a></li>
+          <li>Trapnell, P. D., &amp; Campbell, J. D. (1999). <em>Private self-consciousness and the five-factor model of personality: Distinguishing rumination from reflection.</em> Journal of Personality and Social Psychology, 76(2), 284-304. <a class="source-link" href="https://doi.org/10.1037/0022-3514.76.2.284" target="_blank" rel="noopener">DOI</a></li>
+          <li>Ayduk, O., &amp; Kross, E. (2010). <em>From a distance: Implications of spontaneous self-distancing for adaptive self-reflection.</em> Journal of Personality and Social Psychology. <a class="source-link" href="https://pmc.ncbi.nlm.nih.gov/articles/PMC2881638/" target="_blank" rel="noopener">PMC</a></li>
+          <li>Rogers, S. L., et al. (2024). <em>Further development of the Reflective Practice Questionnaire.</em> PeerJ, 12, e16879. <a class="source-link" href="https://doi.org/10.7717/peerj.16879" target="_blank" rel="noopener">DOI</a></li>
+          <li>Rogers, S. (2023). <em>Further development of the Reflective Practice Questionnaire (data).</em> Figshare. <a class="source-link" href="https://doi.org/10.6084/m9.figshare.22776251.v1" target="_blank" rel="noopener">Dataset</a></li>
+          <li>Gollwitzer, P. M., &amp; Sheeran, P. (2006). <em>Implementation intentions and goal achievement: A meta-analysis of effects and processes.</em> Advances in Experimental Social Psychology, 38, 69-119. <a class="source-link" href="https://doi.org/10.1016/S0065-2601(06)38002-1" target="_blank" rel="noopener">DOI</a></li>
+          <li>Harrington, R., &amp; Loffredo, D. A. (2011). <em>Insight, rumination, and self-reflection as predictors of well-being.</em> The Journal of Psychology, 145(1), 39-57. <a class="source-link" href="https://doi.org/10.1080/00223980.2010.528072" target="_blank" rel="noopener">DOI</a></li>
+        </ol>
+      </section>
+    </article>
+
+    <article data-pane="en">
+      <section id="en-question">
+        <div class="eyebrow">01 / THE QUESTION BEFORE THE FORMULA</div>
+        <h2>When does thinking about oneself become self-reflection?</h2>
+        <p class="lead">Not when a person thinks about themselves for a long time. It begins when they distinguish a fact, their interpretation of it, and a next move that can be tested.</p>
+        <div class="grid">
+          <div class="card external"><h3>EXTERNAL ANCHOR / TWO DIFFERENT VARIABLES</h3><p>The SRIS separates a tendency toward self-reflection from clarity of self-understanding: “how often I look inward” is not the same as “how well I understand why I act this way.” <a class="cite" href="https://doi.org/10.2224/sbp.2002.30.8.821" target="_blank" rel="noopener">[1]</a></p></div>
+          <div class="card candidate"><h3>AUTHORIAL WORKING MODEL</h3><p>Self-reflection is neither a rating of the self nor a hunt for the correct feeling. It is a way of reading one’s route so that the next move differs from the previous one through a noticed distinction, not merely through greater willpower.</p></div>
+        </div>
+        <div class="reading-box"><strong>Plain-language reading:</strong> the thought “something is wrong with me” explains nothing by itself. The route-opening question is: <strong>“What happened, what did I learn from it, and what will I change because of it?”</strong></div>
+      </section>
+
+      <section id="en-boundary">
+        <div class="eyebrow">02 / THE BOUNDARY: REFLECTION IS NOT RUMINATION</div>
+        <h2>The same attention to the self can lead in different directions.</h2>
+        <p>Research distinguishes reflection from rumination. Rumination is repetitive self-focus around threat, loss, or injustice; reflection is closer to curiosity and a search for understanding. This distinction must not be turned into a diagnosis, but omitting it would make the article dishonest. <a class="cite" href="https://doi.org/10.1037/0022-3514.76.2.284" target="_blank" rel="noopener">[2]</a></p>
+        <table class="difference-table">
+          <tr><th>If the question sounds like this</th><td>“Why am I like this again?” it can easily return to a verdict on the self.</td></tr>
+          <tr><th>If the question sounds like this</th><td>“What fact am I repeating? Which connection have I not tested? What changes in the next move?” it preserves a route to verification.</td></tr>
+          <tr><th>Honest boundary</th><td>The question itself does not guarantee relief, work, success, or well-being. It makes the difference between description and transition visible.</td></tr>
+        </table>
+        <div class="grid" style="margin-top:16px">
+          <div class="card external"><h3>EXTERNAL EVIDENCE / DISTANCE</h3><p>Across a series of studies, self-distanced reflection on negative experience was associated with lower emotional reactivity and less repetitive recounting. These findings do not make it a universal treatment and were often obtained in student samples. <a class="cite" href="https://pmc.ncbi.nlm.nih.gov/articles/PMC2881638/" target="_blank" rel="noopener">[3]</a></p></div>
+          <div class="card open"><h3>RED BOUNDARY / DO NOT CONFUSE WITH HELP</h3><p>If reflection becomes circular, intensifies hopelessness, removes sleep, or affects safety, the task is not to keep a better journal. Live professional or emergency support is needed.</p></div>
+        </div>
+      </section>
+
+      <section id="en-inputs">
+        <div class="eyebrow">03 / READY INPUT DATA</div>
+        <h2>We do not start with a theory from nowhere. Four different inputs already exist.</h2>
+        <p>They do not collapse into one score of human worth. Each answers a different question and must remain in its own place.</p>
+        <div class="formula" aria-label="Authorial route model">
+          <span class="formula-label">AUTHORIAL MAP / NOT A PSYCHOLOGICAL LAW</span>
+          event → distinction → trace → response → next move
+          <small>Event - an observable change; distinction - what became different; trace - what can be shown; response - data or environmental reaction; next move - a bounded action that depends on the response received.</small>
+        </div>
+        <div class="grid">
+          <div class="card method"><h3>01 / LITERATURE INSTRUMENT</h3><p>SRIS is a validated self-report instrument. In its classic version it contains 20 statements and distinguishes self-reflection from insight. It cannot be used as a diagnosis, an intelligence score, or a universal forecast. Item text and permissions for use must be checked at the primary source. <a class="cite" href="https://www.sbp-journal.com/index.php/sbp/article/download/1219/1209" target="_blank" rel="noopener">[1]</a></p></div>
+          <div class="card data"><h3>02 / OPEN RESEARCH DATA</h3><p>An open RPQ article and a separate Figshare dataset are available. The study included 501 university students and proposed brief 10-item and extended 30-item versions. These are data on reflective practice in a specific sample, not a norm for “all people.” <a class="cite" href="https://pmc.ncbi.nlm.nih.gov/articles/PMC10859078/" target="_blank" rel="noopener">[4]</a> <a class="cite" href="https://doi.org/10.6084/m9.figshare.22776251.v1" target="_blank" rel="noopener">[5]</a></p></div>
+          <div class="card candidate"><h3>03 / OUR WORKING LOG</h3><p>Not a personality questionnaire, but a route log: date, task, actual action, readable trace, received response, external conditions, and the next small move. This is our authorial carrier for testing a hypothesis, not a validated assessment.</p></div>
+          <div class="card transition"><h3>04 / ACTION PLAN</h3><p>The “if X, then Y” format is studied as an implementation intention. It does not cancel environmental conditions, but it turns an intention into an observable link with a particular cue. A meta-analysis of 94 independent tests found a positive effect in the studied tasks, not a promise of an outcome in every life. <a class="cite" href="https://doi.org/10.1016/S0065-2601(06)38002-1" target="_blank" rel="noopener">[6]</a></p></div>
+        </div>
+        <div class="input-log">
+          <h3>MINIMUM ROUTE LOG / CAN START TODAY</h3>
+          <ol>
+            <li><strong>Observation:</strong> what happened in fact, without explaining its causes.</li>
+            <li><strong>Distinction:</strong> what no longer matches an expectation or a previous state.</li>
+            <li><strong>Trace:</strong> a link, letter, design, solution, screenshot, note, or response that can be shown.</li>
+            <li><strong>Environmental response:</strong> data, a question, a reasoned rejection, silence as a fact, an invitation, or a measurable effect.</li>
+            <li><strong>Conditional move:</strong> “if X arrives, I will do Y.” If X does not arrive, that is recorded as data rather than a verdict.</li>
+          </ol>
+        </div>
+      </section>
+
+      <section id="en-test">
+        <div class="eyebrow">04 / A TESTABLE ROUTE</div>
+        <h2>Self-reflection becomes a transition only after a response.</h2>
+        <p>Diagnosis without a changed next move remains description. That is not a defect: a good description can itself be the needed result. But a transition begins only where it changes action.</p>
+        <div class="route-map">
+          <p class="route-intro">No node needs to be perfect. It is enough that the route is honestly visible and that the next test is smaller than the entire question of one’s life.</p>
+          <div class="route-tree">
+            <div class="tree-node observe"><span class="tree-code">01 / OBSERVATION</span><strong>Name the fact.</strong><br>Not “I failed,” but “there was no reply after three approaches.”</div>
+            <div class="tree-arrow" aria-hidden="true"></div>
+            <div class="tree-node distinguish"><span class="tree-code">02 / DISTINCTION</span><strong>Separate the fact from your account of its causes.</strong><br>“No reply” and “nobody needs me” are different claims.</div>
+            <div class="tree-arrow" aria-hidden="true"></div>
+            <div class="tree-node feedback"><span class="tree-code">03 / TRACE AND RESPONSE</span><strong>Show a minimal trace to someone able to read it.</strong><br>Ask not for a verdict on the self, but for the response the route needs.</div>
+            <div class="tree-arrow" aria-hidden="true"></div>
+            <div class="tree-node target"><span class="tree-code"><span class="red-dot"></span>04 / RED POINT</span><strong>Write one conditional next move.</strong><br>It is not yet known whether the action will work. But it has stopped being random.</div>
+          </div>
+        </div>
+        <ol class="step-list">
+          <li><strong>Do not ask “what is wrong with me?” first.</strong> Ask first: “which part of the route does not make a transition?”</li>
+          <li><strong>Choose one fact.</strong> It should be testable through a trace or response, not solely through an inner feeling.</li>
+          <li><strong>Formulate a question to the environment.</strong> For example: “what is unclear here?”, “what evidence is missing?”, or “what risk do you see?”</li>
+          <li><strong>Record the response literally.</strong> Do not translate it at once into a global conclusion about yourself.</li>
+          <li><strong>Make the next move conditional.</strong> This turns self-reflection from an archive of feelings into a feedback structure.</li>
+        </ol>
+        <div class="reading-box"><strong>What can already be tested in research:</strong> compare route logs over time and ask not “how good is a person?” but <strong>after which kind of response does a new distinguishable move more often appear?</strong> That is a question for a future protocol, not a conclusion of this article.</div>
+      </section>
+
+      <section>
+        <div class="eyebrow">05 / WHAT WE CAN CLAIM</div>
+        <h2>Evidence must be stronger than a beautiful sentence.</h2>
+        <div class="grid">
+          <div class="card external"><h3>WE CAN CLAIM</h3><p>Research distinguishes self-reflection, insight, and rumination; separate instruments exist and the constructs show different relations to well-being. In one cross-sectional sample of 121 college students, insight was a positive statistical predictor of all six measured well-being dimensions, while rumination was a negative predictor of some. This is an association in a specific sample, not a causal law. <a class="cite" href="https://pubmed.ncbi.nlm.nih.gov/21290929/" target="_blank" rel="noopener">[7]</a></p></div>
+          <div class="card open"><h3>WE CANNOT CLAIM</h3><p>That more self-analysis automatically makes a person happier, more productive, or deeper. That a route log treats depression. That missing results prove insufficient effort. That one questionnaire describes a whole person.</p></div>
+        </div>
+        <div class="warning"><strong>Red boundary:</strong> this text does not replace psychotherapy, medical care, practical support, money, rest, or safety. It offers only one narrow research interface: do not confuse an inner verdict with a testable rupture in a route.</div>
+      </section>
+
+      <section id="en-sources" class="references">
+        <div class="eyebrow">06 / SOURCES AND CLAIM LEVELS</div>
+        <h2>Sources do not sit as cargo at the end. They support particular nodes.</h2>
+        <div class="source-deck">
+          <details class="source-card"><summary>[1] SRIS: self-reflection and insight</summary><p>Primary SRIS source. It supports the distinction between self-reflection and insight, not a personality diagnosis. <a class="source-link" href="https://doi.org/10.2224/sbp.2002.30.8.821" target="_blank" rel="noopener">Open DOI</a></p></details>
+          <details class="source-card"><summary>[2] Rumination and reflection</summary><p>A classical study separating two motivationally distinct forms of self-focus. <a class="source-link" href="https://doi.org/10.1037/0022-3514.76.2.284" target="_blank" rel="noopener">Open DOI</a></p></details>
+          <details class="source-card"><summary>[3] Self-distancing</summary><p>Open article on self-distanced perspective and adaptive self-reflection; its samples and design limits remain important. <a class="source-link" href="https://pmc.ncbi.nlm.nih.gov/articles/PMC2881638/" target="_blank" rel="noopener">Open PMC</a></p></details>
+          <details class="source-card"><summary>[4–5] RPQ and open data</summary><p>An open Reflective Practice Questionnaire article and a public Figshare dataset. This is the most ready external dataset for methodological replication, not for universal conclusions about people. <a class="source-link" href="https://doi.org/10.7717/peerj.16879" target="_blank" rel="noopener">Article</a> · <a class="source-link" href="https://doi.org/10.6084/m9.figshare.22776251.v1" target="_blank" rel="noopener">Data</a></p></details>
+          <details class="source-card"><summary>[6] If X, then Y</summary><p>Meta-analysis of implementation intentions: a goal does not guarantee action, and conditional planning helps link a cue with a response in studied tasks. <a class="source-link" href="https://doi.org/10.1016/S0065-2601(06)38002-1" target="_blank" rel="noopener">Open DOI</a></p></details>
+          <details class="source-card"><summary>[7] Well-being: a limited result</summary><p>Cross-sectional study of 121 college students: insight, rumination, and reflection showed different relations to well-being. It is not causal proof. <a class="source-link" href="https://pubmed.ncbi.nlm.nih.gov/21290929/" target="_blank" rel="noopener">Open PubMed</a></p></details>
+        </div>
+        <ol>
+          <li>Grant, A. M., Franklin, J., &amp; Langford, P. (2002). <em>The Self-Reflection and Insight Scale: A New Measure of Private Self-Consciousness.</em> Social Behavior and Personality, 30(8), 821-836. <a class="source-link" href="https://doi.org/10.2224/sbp.2002.30.8.821" target="_blank" rel="noopener">DOI</a></li>
+          <li>Trapnell, P. D., &amp; Campbell, J. D. (1999). <em>Private self-consciousness and the five-factor model of personality: Distinguishing rumination from reflection.</em> Journal of Personality and Social Psychology, 76(2), 284-304. <a class="source-link" href="https://doi.org/10.1037/0022-3514.76.2.284" target="_blank" rel="noopener">DOI</a></li>
+          <li>Ayduk, O., &amp; Kross, E. (2010). <em>From a distance: Implications of spontaneous self-distancing for adaptive self-reflection.</em> Journal of Personality and Social Psychology. <a class="source-link" href="https://pmc.ncbi.nlm.nih.gov/articles/PMC2881638/" target="_blank" rel="noopener">PMC</a></li>
+          <li>Rogers, S. L., et al. (2024). <em>Further development of the Reflective Practice Questionnaire.</em> PeerJ, 12, e16879. <a class="source-link" href="https://doi.org/10.7717/peerj.16879" target="_blank" rel="noopener">DOI</a></li>
+          <li>Rogers, S. (2023). <em>Further development of the Reflective Practice Questionnaire (data).</em> Figshare. <a class="source-link" href="https://doi.org/10.6084/m9.figshare.22776251.v1" target="_blank" rel="noopener">Dataset</a></li>
+          <li>Gollwitzer, P. M., &amp; Sheeran, P. (2006). <em>Implementation intentions and goal achievement: A meta-analysis of effects and processes.</em> Advances in Experimental Social Psychology, 38, 69-119. <a class="source-link" href="https://doi.org/10.1016/S0065-2601(06)38002-1" target="_blank" rel="noopener">DOI</a></li>
+          <li>Harrington, R., &amp; Loffredo, D. A. (2011). <em>Insight, rumination, and self-reflection as predictors of well-being.</em> The Journal of Psychology, 145(1), 39-57. <a class="source-link" href="https://doi.org/10.1080/00223980.2010.528072" target="_blank" rel="noopener">DOI</a></li>
+        </ol>
+      </section>
+    </article>
+  </main>
+
+  <footer class="shell footer">
+    <div data-pane="ru"><strong>Авторская рамка:</strong> внешний факт → рабочая модель → проверяемый следующий шаг → честная граница → источник. Саморефлексия здесь не оценивает человека: она помогает отличить факт от приговора и вернуть маршрут к ответу.</div>
+    <div data-pane="en"><strong>Authorial frame:</strong> external fact → working model → testable next move → honest boundary → source. Self-reflection here does not rate a person: it helps separate fact from verdict and return a route to response.</div>
+  </footer>
+
+  <script>
+    (function () {
+      const root = document.documentElement;
+      const buttons = document.querySelectorAll('[data-lang-target]');
+      function setLanguage(lang) {
+        root.dataset.lang = lang;
+        root.lang = lang;
+        buttons.forEach(function (button) {
+          button.setAttribute('aria-pressed', String(button.dataset.langTarget === lang));
+        });
+        try { localStorage.setItem('self-reflection-reader-language', lang); } catch (error) {}
+      }
+      buttons.forEach(function (button) {
+        button.addEventListener('click', function () { setLanguage(button.dataset.langTarget); });
+      });
+      try {
+        const saved = localStorage.getItem('self-reflection-reader-language');
+        if (saved === 'ru' || saved === 'en') setLanguage(saved);
+      } catch (error) {}
+    }());
+  </script>
+</body>
+</html>

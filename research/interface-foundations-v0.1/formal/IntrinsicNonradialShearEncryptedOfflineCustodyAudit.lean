@@ -1,0 +1,10 @@
+import IntrinsicNonradialShearEncryptedOfflineCustody
+
+open BoundaryOfSelf.IntrinsicNonradialShearEncryptedOfflineCustody
+
+#print axioms accepted_custody_is_outside_release
+#print axioms accepted_custody_is_encrypted
+#print axioms workspace_custody_rejected
+#print axioms plaintext_custody_rejected
+#print axioms colocated_passphrase_rejected
+#print axioms ready_ceremony_has_safe_custody

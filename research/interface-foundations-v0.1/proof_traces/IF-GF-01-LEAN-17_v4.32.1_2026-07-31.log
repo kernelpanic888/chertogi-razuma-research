@@ -1,0 +1,7 @@
+warning: failed to query latest release, using existing version 'leanprover/lean4:v4.32.1'
+'RealityField.localPole_excludes_absoluteMerge' does not depend on any axioms
+'RealityField.resolved_excludes_localPole' does not depend on any axioms
+'RealityField.twoTurnReturn_keeps_oneTurn_nontrivial' does not depend on any axioms
+'RealityField.invariant_change_forces_nonadmissibility' does not depend on any axioms
+'RealityField.monopole_is_external_to_thisPhysics' does not depend on any axioms
+'RealityField.monopole_refutes_thisPhysics' does not depend on any axioms

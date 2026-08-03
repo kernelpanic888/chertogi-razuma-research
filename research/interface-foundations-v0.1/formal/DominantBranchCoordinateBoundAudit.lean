@@ -1,0 +1,23 @@
+import DominantBranchCoordinateBound
+
+namespace BoundaryOfSelf
+namespace DominantBranchCoordinateBoundAudit
+
+open DominantBranchCoordinateBound
+
+#check right_edge_coordinate_bounds
+#check left_edge_coordinate_bounds
+#check top_edge_coordinate_bounds
+#check bottom_edge_coordinate_bounds
+#check euclideanDistance_le_four_div
+#check euclideanDistance_le_four_div_swapped
+
+#print axioms right_edge_coordinate_bounds
+#print axioms left_edge_coordinate_bounds
+#print axioms top_edge_coordinate_bounds
+#print axioms bottom_edge_coordinate_bounds
+#print axioms euclideanDistance_le_four_div
+#print axioms euclideanDistance_le_four_div_swapped
+
+end DominantBranchCoordinateBoundAudit
+end BoundaryOfSelf

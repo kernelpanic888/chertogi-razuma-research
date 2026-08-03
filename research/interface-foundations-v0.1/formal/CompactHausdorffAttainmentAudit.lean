@@ -1,0 +1,28 @@
+import CompactHausdorffAttainment
+
+namespace BoundaryOfSelf
+namespace CompactHausdorffAttainmentAudit
+
+open CompactHausdorffAttainment
+
+#check closedTargetCarrier
+#check closedContourCarrier
+#check targetCircleCarrier_subset_closedBall
+#check closedTargetCarrier_compact
+#check contourCarrier_subset_closedBall
+#check closedContourCarrier_compact
+#check closed_carriers_hausdorffDist_eq
+#check closed_carriers_hausdorffDist_le
+#check compact_hausdorffDist_le_iff_witnesses
+#check closed_carriers_hausdorffDist_le_iff_witnesses
+#check standardHausdorffSequence
+#check standardHausdorffSequence_tendsto_zero
+
+#print axioms closedTargetCarrier_compact
+#print axioms closedContourCarrier_compact
+#print axioms compact_hausdorffDist_le_iff_witnesses
+#print axioms closed_carriers_hausdorffDist_le_iff_witnesses
+#print axioms standardHausdorffSequence_tendsto_zero
+
+end CompactHausdorffAttainmentAudit
+end BoundaryOfSelf

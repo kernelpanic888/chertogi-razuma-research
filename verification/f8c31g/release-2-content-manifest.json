@@ -1,0 +1,32 @@
+{
+  "schema": "IFBS31G-CONTENT/1",
+  "releaseId": "first-distinction-51",
+  "hashAlgorithm": "sha256",
+  "artifacts": [
+    {
+      "path": "research/interface-foundations-v0.1/formal/IntrinsicNonradialShearIdentityTrustChain.lean",
+      "bytes": 4795,
+      "sha256": "sha256:3eb38bb589821e1e6bd5fb30a6d876123cfe9b7e6473a89ed59b16501823e3a3"
+    },
+    {
+      "path": "research/interface-foundations-v0.1/formal/IntrinsicNonradialShearIdentityTrustChainAudit.lean",
+      "bytes": 428,
+      "sha256": "sha256:fd4154d0d7659151a019611a58b5228a0b5c40f778ab58cf37806d7548d93d51"
+    },
+    {
+      "path": "verification/f8c31g/verify-trust-chain.mjs",
+      "bytes": 9496,
+      "sha256": "sha256:dc8775166af845d423322ca68e72037a649cf8ecfd183792ae75a634138efe2e"
+    },
+    {
+      "path": "research/interface-foundations-v0.1/INTRINSIC_NONRADIAL_SHEAR_IDENTITY_TRUST_CHAIN.md",
+      "bytes": 2193,
+      "sha256": "sha256:f21088c4a5aad14f79827e2b277524d53f77e7c0e96dffe887c568347d88f619"
+    },
+    {
+      "path": "research/interface-foundations-v0.1/INTRINSIC_NONRADIAL_SHEAR_IDENTITY_TRUST_CHAIN_PASSPORT.md",
+      "bytes": 1429,
+      "sha256": "sha256:1d7123612e1973c93ed8401c89698ebb19545946d67b81e9f0ae64ca9eb43a49"
+    }
+  ]
+}

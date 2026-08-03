@@ -1,0 +1,8 @@
+import IntrinsicNonradialShearStereographicMetricTransport
+
+open BoundaryOfSelf.IntrinsicNonradialShearStereographicMetricTransport
+
+#print axioms stereographicDiamondLift_dist_le_ten
+#print axioms exists_liftedRationalNode_close
+#print axioms liftedRationalGrid_is_deltaNet
+#print axioms exactDiamondMeshRadius_tendsto_zero

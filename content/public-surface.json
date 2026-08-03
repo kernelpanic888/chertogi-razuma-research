@@ -1,0 +1,228 @@
+{
+  "schemaVersion": 1,
+  "access": "public",
+  "policy": "exactly one active room; workbench rooms physically excluded",
+  "activeRoom": {
+    "id": "IF-0.1",
+    "title": "Почему существует нечто, а не ничто?",
+    "path": "/index.html"
+  },
+  "includedResearchFiles": [
+    "public/index.html",
+    "public/guarded-reciprocal-selector/GUARDED_RECIPROCAL_SELECTOR_DUAL_READER.html",
+    "public/connectedness-c01/FIELD_OF_NEAREST_GOALS_DUAL_READER.html",
+    "public/self-reflection/SELF_REFLECTION_DUAL_READER.html",
+    "public/zenodo-boundary-trace-dual-reader/ZENODO_BOUNDARY_TRACE_DUAL_READER.html"
+  ],
+  "excludedRoomCount": 12,
+  "blindTest": {
+    "protocol": "IF-P01B",
+    "result": "predictive_success",
+    "aggregateFullNrmse": 0.5486935233897565,
+    "aggregateNullNrmse": 1.1309806624429397
+  },
+  "officialPublications": [
+    {
+      "orcidPutCode": 221796030,
+      "title": "Guarded Reciprocal Selector. A working mathematical model for choosing among cooperation, verification, defence, and restoration. The route separates the suspicion generator from the action selector and moves from external game-theoretic support to testable obligations.",
+      "type": "software",
+      "publicationDate": "2026-07-25",
+      "doi": "10.5281/zenodo.21569629",
+      "workUrl": "https://zenodo.org/doi/10.5281/zenodo.21569629",
+      "localReader": true,
+      "localReaderPath": "guarded-reciprocal-selector/GUARDED_RECIPROCAL_SELECTOR_DUAL_READER.html"
+    },
+    {
+      "orcidPutCode": 221096491,
+      "title": "Connectedness (C-01): A Self-Contained Research Reader and Working Journal",
+      "type": "preprint",
+      "publicationDate": "2026-07-18",
+      "doi": "10.5281/zenodo.21430887",
+      "workUrl": "https://zenodo.org/doi/10.5281/zenodo.21430887",
+      "localReader": true,
+      "localReaderPath": "connectedness-c01/FIELD_OF_NEAREST_GOALS_DUAL_READER.html"
+    },
+    {
+      "orcidPutCode": 220940934,
+      "title": "From Self-Reflection to Methodology",
+      "type": "software",
+      "publicationDate": "2026-07-17",
+      "doi": "10.5281/zenodo.21402247",
+      "workUrl": "https://zenodo.org/doi/10.5281/zenodo.21402247",
+      "localReader": true,
+      "localReaderPath": "self-reflection/SELF_REFLECTION_DUAL_READER.html"
+    },
+    {
+      "orcidPutCode": 220907903,
+      "title": "Interfaces of Life and Observability  A full methodological account and a parameterized modification of the Drake equation.",
+      "type": "software",
+      "publicationDate": "2026-07-16",
+      "doi": "10.5281/zenodo.21398900",
+      "workUrl": "https://zenodo.org/doi/10.5281/zenodo.21398900",
+      "localReader": true,
+      "localReaderPath": "zenodo-boundary-trace-dual-reader/ZENODO_BOUNDARY_TRACE_DUAL_READER.html"
+    },
+    {
+      "orcidPutCode": 219022334,
+      "title": "The Elusive Graviton Candidate: searching for Q_G^Σ through canonical external domains, time topology, and the 97+ guard",
+      "type": "preprint",
+      "publicationDate": "2026-06-28",
+      "doi": "10.5281/zenodo.21011196",
+      "workUrl": "https://zenodo.org/doi/10.5281/zenodo.21011196",
+      "localReader": false,
+      "localReaderPath": null
+    },
+    {
+      "orcidPutCode": 218898658,
+      "title": "Self-Model Block Universe or Photon Theory of Time or Theory of Interface Intelligences",
+      "type": "preprint",
+      "publicationDate": "2026-06-26",
+      "doi": "10.5281/zenodo.20938776",
+      "workUrl": "https://zenodo.org/doi/10.5281/zenodo.20938776",
+      "localReader": false,
+      "localReaderPath": null
+    },
+    {
+      "orcidPutCode": 218286033,
+      "title": "TMI-Lean Formal Library (TLFL) 0.1: Formal Library for Interface-Event Theory in Lean 4",
+      "type": "software",
+      "publicationDate": "2026-06-20",
+      "doi": "10.5281/zenodo.20773095",
+      "workUrl": "https://zenodo.org/doi/10.5281/zenodo.20773095",
+      "localReader": false,
+      "localReaderPath": null
+    },
+    {
+      "orcidPutCode": 218034564,
+      "title": "TMI Intelligence Theory: Formal Kernel, Recoverability Physics, and Review-Ready Evidence Branch",
+      "type": "preprint",
+      "publicationDate": "2026-06-17",
+      "doi": "10.5281/zenodo.20737699",
+      "workUrl": "https://zenodo.org/doi/10.5281/zenodo.20737699",
+      "localReader": false,
+      "localReaderPath": null
+    },
+    {
+      "orcidPutCode": 216373054,
+      "title": "Codex_operator as a TMI Workspace Interface",
+      "type": "preprint",
+      "publicationDate": "2026-06-01",
+      "doi": "10.5281/zenodo.20489264",
+      "workUrl": "https://zenodo.org/doi/10.5281/zenodo.20489264",
+      "localReader": false,
+      "localReaderPath": null
+    },
+    {
+      "orcidPutCode": 215820864,
+      "title": "The Primary Interface Hypothesis: From Undifferentiatedness to Information",
+      "type": "preprint",
+      "publicationDate": "2026-05-26",
+      "doi": "10.5281/zenodo.20402194",
+      "workUrl": "https://zenodo.org/doi/10.5281/zenodo.20402194",
+      "localReader": false,
+      "localReaderPath": null
+    },
+    {
+      "orcidPutCode": 214566108,
+      "title": "Interface-Event Formalism for DevOps and SRE: Mathematical Modeling of Operational Transitions, Statuses, Records, and Failures",
+      "type": "preprint",
+      "publicationDate": "2026-05-13",
+      "doi": "10.5281/zenodo.20171599",
+      "workUrl": "https://zenodo.org/doi/10.5281/zenodo.20171599",
+      "localReader": false,
+      "localReaderPath": null
+    },
+    {
+      "orcidPutCode": 213888916,
+      "title": "Cloud-QPU Validation after the Redesigned TMI-QC Core",
+      "type": "report",
+      "publicationDate": "2026-05-11",
+      "doi": "10.5281/zenodo.20058751",
+      "workUrl": "https://doi.org/10.5281/zenodo.20116169",
+      "localReader": false,
+      "localReaderPath": null
+    },
+    {
+      "orcidPutCode": 214274416,
+      "title": "Measurement and Decoherence as Interface Events",
+      "type": "preprint",
+      "publicationDate": "2026-05-11",
+      "doi": "10.5281/zenodo.20120149",
+      "workUrl": "https://zenodo.org/doi/10.5281/zenodo.20120149",
+      "localReader": false,
+      "localReaderPath": null
+    },
+    {
+      "orcidPutCode": 213685539,
+      "title": "Theory of Manifold Interfaces: Regularized Effective Physical Layer, Observable Consequences, and Constraints",
+      "type": "preprint",
+      "publicationDate": "2026-05-05",
+      "doi": "10.5281/zenodo.20031369",
+      "workUrl": "https://zenodo.org/doi/10.5281/zenodo.20031369",
+      "localReader": false,
+      "localReaderPath": null
+    },
+    {
+      "orcidPutCode": 213643085,
+      "title": "Black Holes in the Theory of Manifold Interfaces",
+      "type": "preprint",
+      "publicationDate": "2026-05-04",
+      "doi": "10.5281/zenodo.20025626",
+      "workUrl": "https://zenodo.org/doi/10.5281/zenodo.20025626",
+      "localReader": false,
+      "localReaderPath": null
+    },
+    {
+      "orcidPutCode": 213643232,
+      "title": "Interface-Field Architecture for the Unification of Fundamental Interactions",
+      "type": "preprint",
+      "publicationDate": "2026-05-04",
+      "doi": "10.5281/zenodo.20025731",
+      "workUrl": "https://zenodo.org/doi/10.5281/zenodo.20025731",
+      "localReader": false,
+      "localReaderPath": null
+    },
+    {
+      "orcidPutCode": 213643153,
+      "title": "The Dark Sector as an Interface Field. A Module of the Theory of Manifold Interfaces",
+      "type": "preprint",
+      "publicationDate": "2026-05-04",
+      "doi": "10.5281/zenodo.20025682",
+      "workUrl": "https://zenodo.org/doi/10.5281/zenodo.20025682",
+      "localReader": false,
+      "localReaderPath": null
+    },
+    {
+      "orcidPutCode": 213578721,
+      "title": "Theory of Manifold Interfaces TMI-QG-2.0: A Minimal Predictive Model of Interface-Induced Geometric Decoherence",
+      "type": "preprint",
+      "publicationDate": "2026-05-03",
+      "doi": "10.5281/zenodo.20013976",
+      "workUrl": "https://zenodo.org/doi/10.5281/zenodo.20013976",
+      "localReader": false,
+      "localReaderPath": null
+    },
+    {
+      "orcidPutCode": 213561962,
+      "title": "Mathematical Abstraction of the Theory of Manifold Interfaces",
+      "type": "preprint",
+      "publicationDate": "2026-05-02",
+      "doi": "10.5281/zenodo.19978895",
+      "workUrl": "https://zenodo.org/doi/10.5281/zenodo.19978895",
+      "localReader": false,
+      "localReaderPath": null
+    },
+    {
+      "orcidPutCode": 213561024,
+      "title": "Theory of Manifold Interfaces. A Cautious Interface Approach to Quantum Gravity",
+      "type": "preprint",
+      "publicationDate": "2026-05-02",
+      "doi": "10.5281/zenodo.19988505",
+      "workUrl": "https://zenodo.org/doi/10.5281/zenodo.19988505",
+      "localReader": false,
+      "localReaderPath": null
+    }
+  ],
+  "orcid": "0009-0006-8717-0492",
+  "orcidSyncedAt": "2026-07-30"
+}

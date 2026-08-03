@@ -1,0 +1,5 @@
+warning: failed to query latest release, using existing version 'leanprover/lean4:v4.32.1'
+'BoundaryOfSelf.properRegion_hasBoundary' depends on axioms: [propext, Classical.choice, Quot.sound]
+'BoundaryOfSelf.boundarylessRegion_is_empty_or_whole' does not depend on any axioms
+'BoundaryOfSelf.selfRecord_contains_first_distinction' does not depend on any axioms
+'BoundaryOfSelf.selfRecord_is_proper' does not depend on any axioms

@@ -1,0 +1,31 @@
+import FiniteControlledChain
+
+namespace BoundaryOfSelf
+namespace FiniteControlledChainAudit
+
+open FiniteControlledChain
+
+#check composeControlledList
+#check composeControlledList_forwardConstant
+#check composeControlledList_inverseConstant
+#check composeControlledList_append_apply
+#check finite_chain_model_error_le
+#check finite_chain_model_converges_to_actual_frontier
+#check prefixControlledEquiv_forwardConstant
+#check prefix_model_error_le
+#check bounded_prefix_scaled_envelope_tendsto_zero
+#check bounded_prefix_moving_error_tendsto_zero
+#check prefix_interface_is_actual_frontier
+
+#print axioms composeControlledList_forwardConstant
+#print axioms composeControlledList_inverseConstant
+#print axioms composeControlledList_append_apply
+#print axioms finite_chain_model_error_le
+#print axioms finite_chain_model_converges_to_actual_frontier
+#print axioms prefixControlledEquiv_forwardConstant
+#print axioms bounded_prefix_scaled_envelope_tendsto_zero
+#print axioms bounded_prefix_moving_error_tendsto_zero
+#print axioms prefix_interface_is_actual_frontier
+
+end FiniteControlledChainAudit
+end BoundaryOfSelf

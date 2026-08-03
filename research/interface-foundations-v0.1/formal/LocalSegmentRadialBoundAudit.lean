@@ -1,0 +1,50 @@
+import LocalSegmentRadialBound
+
+namespace BoundaryOfSelf
+namespace LocalSegmentRadialBoundAudit
+
+open LocalSegmentRadialBound
+
+#check uncenteredXNumerator
+#check uncenteredYNumerator
+#check interpolatedXNumerator_eq_uncentered
+#check interpolatedYNumerator_eq_uncentered
+#check weighted_between
+#check InCellCoordinates
+#check oriented_side_points_in_cell
+#check side_crossing_x_bounds
+#check side_crossing_y_bounds
+#check common_fraction_distance_le
+#check commonSquaredSeparation
+#check same_cell_common_separation_le
+#check common_centered_separation_exact
+#check common_first_radius_identity
+#check common_second_radius_identity
+#check segmentPoint
+#check segmentResidualNumerator
+#check segment_squared_radius_deficit_exact
+#check commonFirstResidual_le_scaleSquare
+#check commonSecondResidual_le_scaleSquare
+#check weighted_segment_residual_le_three
+#check same_cell_segment_residual_le
+#check threeSquaredCellWidth
+#check segmentRadialResidual
+#check same_cell_segment_residual_fraction_le
+#check three_squared_cell_width_limit
+#check segmentEdge
+#check local_segment_every_rational_point_exact_and_bounded
+#check local_segment_radial_bound_limit
+
+#print axioms interpolatedXNumerator_eq_uncentered
+#print axioms weighted_between
+#print axioms same_cell_common_separation_le
+#print axioms common_centered_separation_exact
+#print axioms segment_squared_radius_deficit_exact
+#print axioms weighted_segment_residual_le_three
+#print axioms same_cell_segment_residual_fraction_le
+#print axioms three_squared_cell_width_limit
+#print axioms local_segment_every_rational_point_exact_and_bounded
+#print axioms local_segment_radial_bound_limit
+
+end LocalSegmentRadialBoundAudit
+end BoundaryOfSelf

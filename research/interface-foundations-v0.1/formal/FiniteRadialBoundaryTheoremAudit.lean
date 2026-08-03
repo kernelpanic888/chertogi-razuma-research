@@ -1,0 +1,22 @@
+import FiniteRadialBoundaryTheorem
+
+namespace BoundaryOfSelf
+namespace FiniteRadialBoundaryTheoremAudit
+
+open FiniteRadialBoundaryTheorem
+
+#check EveryContourStateCloses
+#check everyContourStateCloses
+#check SameGeometricOrbitCut
+#check any_two_orbits_have_same_geometric_cut
+#check FiniteRadialBoundaryCertificate
+#check finiteRadialBoundaryCertificate
+#check finite_radial_boundary_is_single_geometric_contour
+
+#print axioms everyContourStateCloses
+#print axioms any_two_orbits_have_same_geometric_cut
+#print axioms finiteRadialBoundaryCertificate
+#print axioms finite_radial_boundary_is_single_geometric_contour
+
+end FiniteRadialBoundaryTheoremAudit
+end BoundaryOfSelf

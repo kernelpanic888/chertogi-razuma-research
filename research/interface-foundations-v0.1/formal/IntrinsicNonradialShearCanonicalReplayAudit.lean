@@ -1,0 +1,8 @@
+import IntrinsicNonradialShearCanonicalReplay
+
+open BoundaryOfSelf.IntrinsicNonradialShearCanonicalReplay
+
+#print axioms CanonicalRational.decode_encode
+#print axioms generated_wireRow_replayAccepted
+#print axioms replayWireEnvelopeAccepted_sound
+#print axioms generated_render_replayable

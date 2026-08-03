@@ -1,0 +1,27 @@
+import IntrinsicNonradialShearRealizableBlowUp
+
+open scoped Topology RealInnerProductSpace
+open Set Filter
+
+namespace BoundaryOfSelf.IntrinsicNonradialShearRealizableBlowUp
+
+noncomputable def audit_directed_chord_bound :=
+  @chord_normalizedSlope_le_directionalDiamond
+noncomputable def audit_closed_outer_hull :=
+  realizableClosure_subset_directionalDiamond
+noncomputable def audit_compact_diamond := directionalDiamondBand_compact
+noncomputable def audit_relaxed_poles_excluded :=
+  relaxed_poles_not_realisable_limits
+noncomputable def audit_upper_diagonal_limit := attainableUpperPole_mem_closure
+noncomputable def audit_lower_diagonal_limit := attainableLowerPole_mem_closure
+noncomputable def audit_boundary_arc := @directionalBoundaryTarget_mem_closure
+
+#print axioms audit_directed_chord_bound
+#print axioms audit_closed_outer_hull
+#print axioms audit_compact_diamond
+#print axioms audit_relaxed_poles_excluded
+#print axioms audit_upper_diagonal_limit
+#print axioms audit_lower_diagonal_limit
+#print axioms audit_boundary_arc
+
+end BoundaryOfSelf.IntrinsicNonradialShearRealizableBlowUp

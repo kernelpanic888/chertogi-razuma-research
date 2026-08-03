@@ -1,0 +1,1459 @@
+<!doctype html>
+<html lang="ru" class="lang-ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark">
+  <title>Селектор охраняемой взаимности / Guarded Reciprocal Selector</title>
+  <style>
+    :root {
+      --ink: #dbffe7;
+      --muted: #82b995;
+      --paper: #001d10;
+      --paper-2: #002615;
+      --grid: rgba(0, 237, 114, .105);
+      --green: #00ed72;
+      --cyan: #63d9ff;
+      --blue: #8cb4ff;
+      --yellow: #ffd451;
+      --mint: #7fffb1;
+      --red: #ff6d63;
+      --line: rgba(127, 255, 177, .31);
+      --serif: "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Georgia, serif;
+      --mono: "SFMono-Regular", Menlo, Monaco, Consolas, monospace;
+      --shadow: 0 18px 60px rgba(0, 0, 0, .25);
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background:
+        linear-gradient(var(--grid) 1px, transparent 1px),
+        linear-gradient(90deg, var(--grid) 1px, transparent 1px),
+        radial-gradient(circle at 75% 8%, rgba(0, 237, 114, .08), transparent 30rem),
+        var(--paper);
+      background-size: 42px 42px, 42px 42px, auto, auto;
+      font: 18px/1.58 var(--serif);
+    }
+
+    a { color: inherit; text-underline-offset: .22em; }
+    button, input { font: inherit; }
+    .en { display: none; }
+    .lang-en .ru { display: none; }
+    .lang-en .en { display: inline; }
+    .lang-en .block-lang.en { display: block; }
+
+    .shell {
+      width: min(1480px, calc(100% - 40px));
+      margin: 0 auto;
+      padding: 30px 0 72px;
+    }
+
+    .topbar {
+      position: sticky;
+      z-index: 20;
+      top: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 48px;
+      padding: 12px 14px 12px 20px;
+      border: 1px solid rgba(0, 237, 114, .48);
+      background: rgba(0, 29, 16, .91);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(14px);
+    }
+
+    .topbar strong,
+    .eyebrow,
+    .tag,
+    .state,
+    .node-id,
+    .formula,
+    .mono,
+    .source-role,
+    .route-index {
+      font-family: var(--mono);
+    }
+
+    .topbar strong {
+      color: var(--green);
+      font-size: .82rem;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+
+    .controls { display: flex; gap: 8px; }
+    .control {
+      cursor: pointer;
+      min-width: 58px;
+      padding: 8px 13px;
+      color: var(--ink);
+      border: 1px solid var(--green);
+      background: #002414;
+      font: 700 .78rem var(--mono);
+      letter-spacing: .06em;
+      text-transform: uppercase;
+    }
+    .control:hover, .control:focus-visible {
+      color: var(--paper);
+      background: var(--green);
+      outline: none;
+    }
+
+    header.hero {
+      display: grid;
+      grid-template-columns: minmax(0, 1.45fr) minmax(280px, .55fr);
+      gap: 36px;
+      align-items: end;
+      padding: 36px 0 50px;
+      border-bottom: 1px solid var(--line);
+    }
+    h1, h2, h3, p { margin-top: 0; }
+    h1 {
+      max-width: 13ch;
+      margin-bottom: 20px;
+      color: var(--ink);
+      font-size: clamp(3.3rem, 8vw, 7.7rem);
+      font-weight: 600;
+      line-height: .86;
+      letter-spacing: -.055em;
+    }
+    h1 em { color: var(--green); font-style: normal; }
+    .dek { max-width: 68ch; color: var(--muted); font-size: 1.13rem; }
+    .status-card {
+      padding: 24px;
+      border: 1px solid var(--yellow);
+      background: rgba(255, 212, 81, .06);
+    }
+    .status-card .state { color: var(--yellow); }
+    .status-card strong { display: block; margin: 12px 0 6px; font-size: 1.5rem; }
+
+    .legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin: 28px 0 70px;
+    }
+    .tag {
+      padding: 7px 11px;
+      border: 1px solid currentColor;
+      font-size: .72rem;
+      letter-spacing: .04em;
+      text-transform: uppercase;
+    }
+    .green { color: var(--green); }
+    .cyan { color: var(--cyan); }
+    .yellow { color: var(--yellow); }
+    .red { color: var(--red); }
+    .blue { color: var(--blue); }
+
+    section { scroll-margin-top: 90px; }
+    .section-head {
+      display: grid;
+      grid-template-columns: 110px minmax(0, 1fr);
+      gap: 22px;
+      align-items: baseline;
+      margin: 90px 0 30px;
+    }
+    .route-index {
+      color: var(--green);
+      font-size: .82rem;
+      letter-spacing: .08em;
+    }
+    .section-head h2 {
+      margin: 0;
+      font-size: clamp(2.1rem, 5vw, 4.5rem);
+      font-weight: 500;
+      line-height: 1;
+      letter-spacing: -.035em;
+    }
+
+    .question {
+      position: relative;
+      padding: clamp(26px, 5vw, 58px);
+      border: 1px solid var(--cyan);
+      background: linear-gradient(135deg, rgba(99, 217, 255, .09), rgba(0, 29, 16, .72));
+      box-shadow: var(--shadow);
+    }
+    .question::before {
+      content: "";
+      position: absolute;
+      top: -1px;
+      left: 36px;
+      width: 90px;
+      height: 5px;
+      background: var(--cyan);
+    }
+    .question h2 {
+      max-width: 25ch;
+      margin: 18px 0 20px;
+      font-size: clamp(2rem, 5vw, 4.8rem);
+      font-weight: 500;
+      line-height: 1.05;
+      letter-spacing: -.035em;
+    }
+    .question .short {
+      max-width: 55ch;
+      color: var(--cyan);
+      font: 700 1rem/1.5 var(--mono);
+    }
+
+    .node-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 22px;
+    }
+    .node {
+      position: relative;
+      min-width: 0;
+      padding: 28px;
+      border: 1px solid var(--line);
+      background: rgba(0, 26, 14, .86);
+    }
+    .node.claim { border-color: var(--yellow); }
+    .node.external { border-color: var(--green); }
+    .node.transition { border-color: var(--mint); }
+    .node.tool { border-color: var(--cyan); }
+    .node.boundary { border-color: var(--red); background: rgba(255, 109, 99, .055); }
+    .node::after {
+      content: "";
+      position: absolute;
+      right: 18px;
+      bottom: -8px;
+      width: 16px;
+      height: 16px;
+      border-right: 1px solid currentColor;
+      border-bottom: 1px solid currentColor;
+      transform: rotate(45deg);
+      background: var(--paper);
+    }
+    .node.boundary::after { display: none; }
+    .node-id {
+      color: var(--muted);
+      font-size: .76rem;
+      letter-spacing: .07em;
+      text-transform: uppercase;
+    }
+    .node h3 {
+      margin: 12px 0 14px;
+      font-size: clamp(1.55rem, 3vw, 2.5rem);
+      font-weight: 500;
+      line-height: 1.08;
+    }
+    .node p:last-child { margin-bottom: 0; }
+    .node .source-link { color: var(--green); font-family: var(--mono); font-size: .78rem; }
+    .boundary-link { color: var(--red); font: .77rem var(--mono); }
+
+    .formula {
+      overflow-x: auto;
+      margin: 18px 0;
+      padding: 16px 18px;
+      color: var(--mint);
+      border-left: 3px solid var(--mint);
+      background: rgba(127, 255, 177, .055);
+      font-size: clamp(.88rem, 1.8vw, 1.05rem);
+      white-space: nowrap;
+    }
+    .formula.yellow-formula { color: var(--yellow); border-color: var(--yellow); }
+    .formula.cyan-formula { color: var(--cyan); border-color: var(--cyan); }
+
+    .next-point {
+      display: grid;
+      grid-template-columns: 130px minmax(0, 1fr);
+      gap: 22px;
+      align-items: start;
+      margin: 22px 0;
+      padding: 22px 26px;
+      color: var(--mint);
+      border: 1px solid var(--mint);
+      background: rgba(127, 255, 177, .045);
+    }
+    .next-point strong {
+      font: 700 .78rem var(--mono);
+      letter-spacing: .07em;
+    }
+    .next-point p { margin: 0; }
+
+    .route {
+      position: relative;
+      display: grid;
+      grid-template-columns: 140px minmax(0, 1fr);
+      gap: 34px;
+      margin: 30px 0;
+    }
+    .route-axis {
+      position: relative;
+      min-height: 100%;
+    }
+    .route-axis::before {
+      content: "";
+      position: absolute;
+      left: 50%;
+      top: 18px;
+      bottom: 18px;
+      width: 1px;
+      background: linear-gradient(to top, var(--green), var(--yellow), var(--red));
+    }
+    .route-axis span {
+      position: sticky;
+      top: 100px;
+      display: block;
+      padding-top: 24px;
+      color: var(--muted);
+      font: 700 .7rem/1.4 var(--mono);
+      text-align: center;
+      text-transform: uppercase;
+      writing-mode: vertical-rl;
+      transform: rotate(180deg);
+    }
+    .route-body { display: grid; gap: 22px; }
+
+    nav#reader-map {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+    }
+    .map-link {
+      display: flex;
+      min-height: 100px;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 16px;
+      text-decoration: none;
+      border: 1px solid var(--line);
+      background: rgba(0, 34, 19, .85);
+    }
+    .map-link:hover, .map-link:focus-visible {
+      border-color: var(--green);
+      outline: none;
+      transform: translateY(-2px);
+    }
+    .map-link b { font: .78rem var(--mono); color: var(--green); }
+    .map-link small { color: var(--muted); }
+
+    .lab {
+      display: grid;
+      grid-template-columns: minmax(280px, .8fr) minmax(340px, 1.2fr);
+      gap: 18px;
+      padding: 22px;
+      border: 1px solid var(--cyan);
+      background: rgba(0, 26, 14, .93);
+      box-shadow: var(--shadow);
+    }
+    .lab > * { min-width: 0; }
+    .lab-controls { display: grid; gap: 18px; }
+    .stress-profile {
+      overflow: hidden;
+      padding: 12px 14px;
+      border: 1px solid var(--red);
+      background: rgba(255, 109, 99, .065);
+    }
+    .stress-profile b {
+      display: block;
+      margin-bottom: 7px;
+      color: var(--red);
+      font: 800 .76rem var(--mono);
+      letter-spacing: .04em;
+      text-transform: uppercase;
+    }
+    .stress-profile p {
+      margin-bottom: 8px;
+      color: var(--muted);
+      font: .73rem/1.5 var(--mono);
+    }
+    .stress-profile .formula {
+      margin: 12px 0;
+      padding: 12px;
+      font-size: clamp(.68rem, 1.15vw, .88rem);
+      white-space: normal;
+      overflow-wrap: anywhere;
+    }
+    .preset-button {
+      cursor: pointer;
+      padding: 7px 10px;
+      color: var(--red);
+      border: 1px solid var(--red);
+      background: transparent;
+      font: 700 .69rem var(--mono);
+    }
+    .preset-button:hover, .preset-button:focus-visible {
+      color: var(--paper);
+      background: var(--red);
+      outline: none;
+    }
+    .slider-row label {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 8px;
+      color: var(--muted);
+      font: .78rem var(--mono);
+    }
+    input[type="range"] {
+      width: 100%;
+      accent-color: var(--cyan);
+    }
+    .check-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--muted);
+      font: .78rem var(--mono);
+    }
+    .lab-output {
+      display: flex;
+      min-height: 560px;
+      flex-direction: column;
+      gap: 18px;
+      padding: 20px;
+      border: 1px solid var(--yellow);
+      background: rgba(255, 212, 81, .045);
+    }
+    .lab-result {
+      display: grid;
+      grid-template-columns: 130px minmax(0, 1fr);
+      gap: 20px;
+      align-items: center;
+      padding-bottom: 18px;
+      border-bottom: 1px solid var(--line);
+    }
+    .action-letter {
+      color: var(--yellow);
+      font: 700 clamp(3.5rem, 6vw, 5.8rem)/.85 var(--mono);
+    }
+    .action-name {
+      margin: 12px 0;
+      font-size: clamp(1.55rem, 2.7vw, 2.5rem);
+      line-height: 1;
+    }
+    .lab-readout {
+      color: var(--muted);
+      font: .78rem/1.65 var(--mono);
+    }
+    .geometry-title {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      color: var(--muted);
+      font: 700 .72rem var(--mono);
+      letter-spacing: .05em;
+      text-transform: uppercase;
+    }
+    .radar-wrap {
+      position: relative;
+      overflow: hidden;
+      min-height: 290px;
+      border: 1px solid rgba(99, 217, 255, .32);
+      background:
+        radial-gradient(circle at 50% 50%, rgba(99, 217, 255, .08), transparent 52%),
+        rgba(0, 20, 11, .54);
+    }
+    .radar {
+      display: block;
+      width: 100%;
+      height: 290px;
+    }
+    .radar .guide {
+      fill: none;
+      stroke: rgba(127, 255, 177, .16);
+      stroke-width: 1;
+    }
+    .radar .axis {
+      stroke: rgba(127, 255, 177, .46);
+      stroke-width: 1.2;
+    }
+    .radar .shape {
+      fill: rgba(99, 217, 255, .15);
+      stroke: var(--cyan);
+      stroke-width: 2.5;
+      transition: points .2s ease;
+    }
+    .radar .axis-dot {
+      fill: var(--cyan);
+      stroke: var(--paper);
+      stroke-width: 2;
+    }
+    .radar .axis-value {
+      fill: var(--cyan);
+      font: 700 13px var(--mono);
+    }
+    .radar .axis-label {
+      fill: var(--ink);
+      font: 700 12px var(--mono);
+      letter-spacing: .03em;
+    }
+    .radar .center-dot { fill: var(--yellow); }
+    .decision-geometry {
+      padding: 18px 0 4px;
+    }
+    .decision-track {
+      position: relative;
+      height: 44px;
+      margin: 20px 0 12px;
+      border: 1px solid rgba(219, 255, 231, .42);
+      background: rgba(0, 15, 8, .8);
+    }
+    .decision-zone {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      display: grid;
+      place-items: center;
+      overflow: hidden;
+      color: var(--paper);
+      font: 800 .72rem var(--mono);
+      transition: left .18s ease, width .18s ease;
+    }
+    .decision-zone.c-zone { left: 0; background: var(--green); }
+    .decision-zone.v-zone { background: var(--yellow); }
+    .decision-zone.d-zone { background: var(--red); }
+    .track-boundary {
+      position: absolute;
+      top: -12px;
+      bottom: -12px;
+      width: 2px;
+      background: var(--ink);
+      box-shadow: 0 0 0 2px var(--paper);
+      transition: left .18s ease;
+    }
+    .track-boundary::before {
+      content: attr(data-label);
+      position: absolute;
+      bottom: calc(100% + 5px);
+      left: 50%;
+      color: var(--ink);
+      font: 700 .66rem var(--mono);
+      transform: translateX(-50%);
+    }
+    .track-point {
+      position: absolute;
+      z-index: 3;
+      top: 50%;
+      width: 19px;
+      height: 19px;
+      border: 3px solid var(--paper);
+      border-radius: 50%;
+      background: var(--cyan);
+      box-shadow: 0 0 0 2px var(--cyan), 0 0 22px rgba(99, 217, 255, .7);
+      transform: translate(-50%, -50%);
+      transition: left .18s ease;
+    }
+    .track-point::after {
+      content: "p";
+      position: absolute;
+      top: calc(100% + 7px);
+      left: 50%;
+      color: var(--cyan);
+      font: 800 .7rem var(--mono);
+      transform: translateX(-50%);
+    }
+    .influence-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 8px;
+      margin-top: 22px;
+    }
+    .influence {
+      min-height: 78px;
+      padding: 10px 12px;
+      border-left: 2px solid var(--line);
+      background: rgba(127, 255, 177, .035);
+      color: var(--muted);
+      font: .69rem/1.45 var(--mono);
+    }
+    .influence b {
+      display: block;
+      margin-bottom: 5px;
+      color: var(--mint);
+    }
+    .influence strong { color: var(--cyan); }
+    .lab-equation {
+      padding: 12px 14px;
+      color: var(--yellow);
+      border-left: 2px solid var(--yellow);
+      background: rgba(255, 212, 81, .045);
+      font: .7rem/1.6 var(--mono);
+    }
+    .lab-boundary-link {
+      margin-top: auto;
+      font: .72rem var(--mono);
+    }
+
+    .journal {
+      display: grid;
+      gap: 12px;
+    }
+    .journal details {
+      border: 1px solid var(--line);
+      background: rgba(0, 26, 14, .78);
+    }
+    .journal summary {
+      cursor: pointer;
+      padding: 16px 18px;
+      color: var(--mint);
+      font: 700 .82rem var(--mono);
+    }
+    .journal .entry { padding: 2px 18px 18px; }
+    .journal .entry p { margin-bottom: 10px; }
+
+    .source-ledger {
+      display: grid;
+      gap: 10px;
+    }
+    .source-item {
+      display: grid;
+      grid-template-columns: 150px minmax(0, 1fr);
+      gap: 18px;
+      padding: 16px;
+      border-bottom: 1px solid var(--line);
+    }
+    .source-role { color: var(--green); font-size: .72rem; text-transform: uppercase; }
+
+    .passport {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(280px, .45fr);
+      gap: 20px;
+      padding: 26px;
+      border: 1px solid var(--blue);
+      background: rgba(140, 180, 255, .055);
+    }
+    .status-strip {
+      display: flex;
+      flex-wrap: wrap;
+      align-content: flex-start;
+      gap: 8px;
+    }
+    .status-strip span {
+      padding: 7px 9px;
+      border: 1px solid var(--blue);
+      color: var(--blue);
+      font: .68rem var(--mono);
+    }
+
+    .boundary-register {
+      display: grid;
+      gap: 12px;
+    }
+    .boundary-register .node h3 { color: var(--red); font-size: 1.4rem; }
+
+    .closing {
+      margin: 70px 0 34px;
+      padding: clamp(28px, 6vw, 70px);
+      text-align: center;
+      border: 1px solid var(--green);
+      background: linear-gradient(180deg, rgba(0, 237, 114, .09), rgba(0, 29, 16, .7));
+    }
+    .closing h2 {
+      margin: 0 auto 18px;
+      max-width: 18ch;
+      font-size: clamp(2.5rem, 6vw, 6rem);
+      font-weight: 500;
+      line-height: .95;
+    }
+    footer {
+      padding-top: 26px;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      font: .78rem var(--mono);
+    }
+
+    @media (max-width: 900px) {
+      .shell { width: min(100% - 24px, 760px); }
+      header.hero, .node-grid, .lab, .passport { grid-template-columns: 1fr; }
+      nav#reader-map { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .route { grid-template-columns: 54px minmax(0, 1fr); gap: 14px; }
+      .section-head { grid-template-columns: 1fr; gap: 8px; }
+      .next-point, .source-item { grid-template-columns: 1fr; gap: 8px; }
+    }
+    @media (max-width: 560px) {
+      body { font-size: 16px; }
+      .shell { width: min(100% - 16px, 520px); padding-top: 10px; }
+      .topbar { top: 4px; margin-bottom: 28px; }
+      .topbar strong { max-width: 20ch; }
+      .control { min-width: 48px; padding: 8px; }
+      header.hero { padding-top: 12px; }
+      h1 { font-size: clamp(3rem, 18vw, 5rem); }
+      nav#reader-map { grid-template-columns: 1fr; }
+      .question, .node, .lab, .passport { padding: 20px; }
+      .route { grid-template-columns: 34px minmax(0, 1fr); }
+      .route-axis span { font-size: .58rem; }
+      .lab-result { grid-template-columns: 90px minmax(0, 1fr); }
+      .influence-grid { grid-template-columns: 1fr; }
+      .radar, .radar-wrap { min-height: 290px; height: 290px; }
+    }
+  </style>
+</head>
+<body>
+  <main class="shell">
+    <div class="topbar">
+      <strong>
+        <span class="ru">TЛФЛ / рабочий ридер / GRS-01</span>
+        <span class="en">TLFL / working reader / GRS-01</span>
+      </strong>
+      <div class="controls">
+        <button class="control" id="lang-toggle" type="button" aria-label="Переключить язык">EN</button>
+        <button class="control" type="button" onclick="document.getElementById('reader-map').scrollIntoView()">
+          <span class="ru">Карта</span><span class="en">Map</span>
+        </button>
+      </div>
+    </div>
+
+    <header class="hero">
+      <div>
+        <div class="eyebrow green">
+          <span class="ru">Селектор выбора как формальный узел</span>
+          <span class="en">Choice selector as a formal node</span>
+        </div>
+        <h1><em>Guarded</em> Reciprocal Selector</h1>
+        <p class="dek">
+          <span class="ru">Рабочая математическая модель выбора между сотрудничеством, проверкой, защитой и восстановлением связи. Маршрут отделяет генератор подозрения от селектора действия и ведёт от внешней игровой опоры к проверяемым обязательствам.</span>
+          <span class="en">A working mathematical model for choosing among cooperation, verification, defence, and restoration. The route separates the suspicion generator from the action selector and moves from external game-theoretic support to testable obligations.</span>
+        </p>
+      </div>
+      <aside class="status-card">
+        <span class="state">
+          <span class="ru">ТЕКУЩИЙ СТАТУС</span>
+          <span class="en">CURRENT STATUS</span>
+        </span>
+        <strong>
+          <span class="ru">Исследовательская заметка → рабочий журнал → кандидат для форка TLFL</span>
+          <span class="en">Research note → working journal → TLFL fork candidate</span>
+        </strong>
+        <span class="muted">
+          <span class="ru">Дата среза: 25.07.2026</span>
+          <span class="en">Snapshot date: 25 Jul 2026</span>
+        </span>
+      </aside>
+    </header>
+
+    <div class="legend" aria-label="Legend">
+      <span class="tag green"><span class="ru">зелёный: внешняя опора</span><span class="en">green: external support</span></span>
+      <span class="tag yellow"><span class="ru">жёлтый: рабочая модель</span><span class="en">yellow: working model</span></span>
+      <span class="tag cyan"><span class="ru">голубой: активный вопрос</span><span class="en">cyan: active question</span></span>
+      <span class="tag red"><span class="ru">красный: граница утверждения</span><span class="en">red: claim boundary</span></span>
+    </div>
+
+    <section id="q-gr-01" class="question">
+      <div class="node-id cyan">Q-GR-01 / OPEN QUESTION</div>
+      <h2>
+        <span class="ru">Как выбирать действие, если один и тот же след может быть шумом, ошибкой модели или настоящим нарушением?</span>
+        <span class="en">How should an action be selected when the same trace may be noise, model error, or a genuine violation?</span>
+      </h2>
+      <p class="short">
+        <span class="ru">Короткая форма: как не дать подозрению захватить селектор, сохранив его способность обнаруживать угрозу?</span>
+        <span class="en">Short form: how can suspicion be prevented from capturing the selector while preserving its ability to detect a threat?</span>
+      </p>
+      <p>
+        <a href="#a-gr-05">↓ <span class="ru">рабочий ответ A-GR-05</span><span class="en">working reply A-GR-05</span></a>
+        ·
+        <a class="boundary-link" href="#b-gr-06">↓ B-GR-06</a>
+      </p>
+    </section>
+
+    <div class="section-head">
+      <span class="route-index">00 / MAP</span>
+      <h2><span class="ru">Карта ридера</span><span class="en">Reader map</span></h2>
+    </div>
+    <nav id="reader-map" aria-label="Reader map">
+      <a class="map-link" href="#a-gr-01"><b>A-GR-01</b><span><span class="ru">Игровая внешняя опора</span><span class="en">External game-theoretic support</span></span></a>
+      <a class="map-link" href="#a-gr-02"><b>A-GR-02</b><span><span class="ru">Поле и селектор</span><span class="en">Field and selector</span></span></a>
+      <a class="map-link" href="#a-gr-03"><b>A-GR-03</b><span><span class="ru">След и апостериорное состояние</span><span class="en">Trace and posterior state</span></span></a>
+      <a class="map-link" href="#a-gr-04"><b>A-GR-04</b><span><span class="ru">Цена решения и ценность проверки</span><span class="en">Decision cost and value of verification</span></span></a>
+      <a class="map-link" href="#a-gr-05"><b>A-GR-05</b><span><span class="ru">Охраняемая взаимность</span><span class="en">Guarded reciprocity</span></span></a>
+      <a class="map-link" href="#a-gr-06"><b>A-GR-06</b><span><span class="ru">Проверяемые инварианты</span><span class="en">Testable invariants</span></span></a>
+      <a class="map-link" href="#a-gr-07"><b>A-GR-07</b><span><span class="ru">Четырёхосевая геометрия</span><span class="en">Four-axis geometry</span></span></a>
+      <a class="map-link" href="#a-gr-08"><b>A-GR-08</b><span><span class="ru">Параноидальный стресс-профиль</span><span class="en">Paranoid stress profile</span></span></a>
+<a href="#a-gr-09">A-GR-09 · риск-ядро</a>
+      <a class="map-link" href="#j-gr-01"><b>J-GR-01</b><small><span class="ru">внешняя игра → свойство</span><span class="en">external game → property</span></small></a>
+      <a class="map-link" href="#j-gr-02"><b>J-GR-02</b><small><span class="ru">поле → интерфейс</span><span class="en">field → interface</span></small></a>
+      <a class="map-link" href="#j-gr-03"><b>J-GR-03</b><small><span class="ru">след → причины</span><span class="en">trace → causes</span></small></a>
+      <a class="map-link" href="#j-gr-04"><b>J-GR-04</b><small><span class="ru">стоимость → проверка</span><span class="en">cost → verification</span></small></a>
+      <a class="map-link" href="#j-gr-05"><b>J-GR-05</b><small><span class="ru">пороги → действие</span><span class="en">thresholds → action</span></small></a>
+      <a class="map-link" href="#j-gr-06"><b>J-GR-06</b><small><span class="ru">кандидат → теоремы</span><span class="en">candidate → theorem targets</span></small></a>
+      <a class="map-link" href="#j-gr-07"><b>J-GR-07</b><small><span class="ru">параметры → геометрия</span><span class="en">parameters → geometry</span></small></a>
+      <a class="map-link" href="#j-gr-08"><b>J-GR-08</b><small><span class="ru">смещение → стресс-тест</span><span class="en">bias → stress test</span></small></a>
+<a href="#j-gr-09">J-GR-09 · Lean-аудит</a>
+    </nav>
+
+    <div class="section-head">
+      <span class="route-index">01 / SUPPORT</span>
+      <h2><span class="ru">Внешняя опора</span><span class="en">External support</span></h2>
+    </div>
+    <section id="a-gr-01" class="node external">
+      <div class="node-id">A-GR-01 / EXTERNAL FACT</div>
+      <h3>
+        <span class="ru">Устойчивая стратегия соединяет сотрудничество, ответ и возврат</span>
+        <span class="en">A robust strategy joins cooperation, response, and return</span>
+      </h3>
+      <p>
+        <span class="ru">В повторяющейся дилемме заключённого стратегия Tit for Tat начинает с сотрудничества, отвечает на прошлый ход партнёра и допускает немедленное возвращение к сотрудничеству. Современная репликация турниров Аксельрода подтверждает её силу в исходной среде и выделяет четыре свойства: сотрудничество, ответность, прощение и простоту.</span>
+        <span class="en">In the iterated Prisoner’s Dilemma, Tit for Tat starts by cooperating, responds to the partner’s previous move, and permits an immediate return to cooperation. A modern replication of Axelrod’s tournaments confirms its strength in the original environment and identifies four properties: cooperation, retaliation, forgiveness, and simplicity.</span>
+      </p>
+      <p>
+        <a class="source-link" href="https://ncase.me/trust/" target="_blank" rel="noreferrer">↗ Nicky Case / The Evolution of Trust</a><br>
+        <a class="source-link" href="https://arxiv.org/abs/2510.15438" target="_blank" rel="noreferrer">↗ Axelrod replication / arXiv:2510.15438</a>
+      </p>
+      <p><a class="boundary-link" href="#b-gr-01">↓ B-GR-01</a></p>
+    </section>
+
+    <div class="next-point">
+      <strong>NEXT POINT 01</strong>
+      <p>
+        <span class="ru">Выделить из успешной игровой стратегии не готовый ответ, а интерфейс выбора: входной след, множество допустимых действий, правило ответа и канал возврата.</span>
+        <span class="en">Extract from the successful game strategy not a ready-made answer but a choice interface: an incoming trace, an admissible action set, a response rule, and a return channel.</span>
+      </p>
+    </div>
+
+    <div class="section-head">
+      <span class="route-index">02 / MODEL</span>
+      <h2><span class="ru">Рабочая карта</span><span class="en">Working map</span></h2>
+    </div>
+
+    <div class="route">
+      <div class="route-axis"><span><span class="ru">прошлое ↓ · движение · будущее ↑</span><span class="en">past ↓ · movement · future ↑</span></span></div>
+      <div class="route-body">
+        <section id="a-gr-02" class="node claim">
+          <div class="node-id">A-GR-02 / WORKING MODEL</div>
+          <h3><span class="ru">Форк TLFL несёт поле; селектор выбирает один переход</span><span class="en">A TLFL fork carries the field; the selector chooses one transition</span></h3>
+          <div class="formula">Cₜ = (Bₜ, Ξₜ, δₜ, Kₜ, Qₜ)</div>
+          <div class="formula">Gᵣ(Cₜ) = { C′ | ∃a, ξ : C′ = T(Cₜ,a,ξ), d(Cₜ,C′) ≤ r, C′ ∈ Kₜ, Qₜ(Cₜ,C′) }</div>
+          <div class="formula yellow-formula">gₜ = π(Cₜ, Gᵣ(Cₜ))</div>
+          <p>
+            <span class="ru">Состояние Cₜ хранит границу Bₜ, шум Ξₜ, локальный допуск δₜ, множество ограничений Kₜ и критерий качества Qₜ. Поле Gᵣ строит ближайшие допустимые продолжения. Селектор π возвращает один переход gₜ. Формальная реализация развивается в отдельном форке от TMI-Lean-Formal-Library.</span>
+            <span class="en">State Cₜ stores boundary Bₜ, noise Ξₜ, local tolerance δₜ, constraint set Kₜ, and quality criterion Qₜ. Field Gᵣ constructs nearby admissible continuations. Selector π returns one transition gₜ. The formal implementation is developed in a separate fork of TMI-Lean-Formal-Library.</span>
+          </p>
+          <p><a class="source-link" href="https://github.com/kernelpanic888/TMI-Lean-Formal-Library" target="_blank" rel="noreferrer">↗ kernelpanic888/TMI-Lean-Formal-Library</a> · <a href="#formal-carrier">↓ <span class="ru">локальный формальный носитель</span><span class="en">local formal carrier</span></a> · <a class="boundary-link" href="#b-gr-02">↓ B-GR-02</a></p>
+        </section>
+
+        <div class="next-point">
+          <strong>NEXT POINT 02</strong>
+          <p>
+            <span class="ru">Отделить генератор кандидатов от решающего узла: подозрение расширяет область проверки, но действие выбирает селектор.</span>
+            <span class="en">Separate the candidate generator from the decision node: suspicion expands the inspection region, while the selector chooses the action.</span>
+          </p>
+        </div>
+
+        <section id="a-gr-03" class="node transition">
+          <div class="node-id">A-GR-03 / TESTABLE TRANSITION</div>
+          <h3><span class="ru">Один след разворачивается в конкурирующие причины</span><span class="en">One trace unfolds into competing causes</span></h3>
+          <div class="formula">Z = { N, S, E, B }</div>
+          <div class="formula">pₜ(z) = P(Z = z | e₁:ₜ)</div>
+          <div class="formula">pₜᵉˣᵗ = pₜ(E) + pₜ(B)</div>
+          <div class="formula cyan-formula">pₜ₊₁(z) = P(eₜ₊₁ | z)pₜ(z) / Σz′ P(eₜ₊₁ | z′)pₜ(z′)</div>
+          <p>
+            <span class="ru">Причины N, S, E, B означают соответственно обычное состояние, внутреннюю ошибку модели, внешнее нарушение и совместный случай. Новый след обновляет распределение причин, а не получает готовый ярлык.</span>
+            <span class="en">Causes N, S, E, and B denote ordinary state, internal model error, external violation, and the joint case. A new trace updates a distribution over causes rather than receiving a preassigned label.</span>
+          </p>
+          <p>
+            <a class="source-link" href="https://pmc.ncbi.nlm.nih.gov/articles/PMC11104374/" target="_blank" rel="noreferrer">↗ Bayesian belief updating / source role: external fact</a>
+            · <a class="boundary-link" href="#b-gr-03">↓ B-GR-03</a>
+          </p>
+        </section>
+
+        <div class="next-point">
+          <strong>NEXT POINT 03</strong>
+          <p>
+            <span class="ru">Привязать каждое действие к цене двух противоположных ошибок: пропустить нарушение и принять шум за нарушение.</span>
+            <span class="en">Attach every action to the cost of two opposing errors: missing a violation and mistaking noise for a violation.</span>
+          </p>
+        </div>
+
+        <section id="a-gr-04" class="node transition">
+          <div class="node-id">A-GR-04 / DECISION COST</div>
+          <h3><span class="ru">Проверка становится самостоятельным действием</span><span class="en">Verification becomes an action in its own right</span></h3>
+          <div class="formula">A = { C, V, D, R }</div>
+          <div class="formula">L(C) = pᵉˣᵗ · C_FN</div>
+          <div class="formula">L(D) = (1 − pᵉˣᵗ) · C_FP + C_R</div>
+          <div class="formula cyan-formula">L(V) = C_V + Eₑ[minₐ L(a | Cₜ,e)]</div>
+          <p>
+            <span class="ru">Действия C, V, D, R обозначают сотрудничество, проверку, защиту и восстановление. Проверка приобретает собственную стоимость C_V и собственную ценность: ожидаемое уменьшение будущей ошибки выбора.</span>
+            <span class="en">Actions C, V, D, and R denote cooperation, verification, defence, and restoration. Verification has its own cost C_V and its own value: the expected reduction of future selection error.</span>
+          </p>
+          <p>
+            <a class="source-link" href="https://www.nist.gov/publications/zero-trust-architecture" target="_blank" rel="noreferrer">↗ NIST Zero Trust / source role: terminology and control analogy</a>
+            · <a class="boundary-link" href="#b-gr-04">↓ B-GR-04</a>
+          </p>
+        </section>
+
+        <div class="next-point">
+          <strong>NEXT POINT 04</strong>
+          <p>
+            <span class="ru">Собрать четыре действия в один селектор с шумозависимыми порогами и отдельным порогом возврата.</span>
+            <span class="en">Combine the four actions into one selector with noise-sensitive thresholds and a separate return threshold.</span>
+          </p>
+        </div>
+
+        <section id="a-gr-05" class="node claim">
+          <div class="node-id">A-GR-05 / CANDIDATE CONSTRUCTION</div>
+          <h3><span class="ru">Селектор охраняемой взаимности</span><span class="en">Guarded Reciprocal Selector</span></h3>
+          <div class="formula">τV(Ξ) &lt; τD(Ξ), τD(Ξ) = τD⁰ + λΞ, τR &lt; τD</div>
+          <div class="formula yellow-formula">πGR = lex argmin C′∈Gᵣ(Cₜ) ( I(C′), J(C′), −IG(C′), d(Cₜ,C′) )</div>
+          <p>
+            <span class="ru">Селектор сначала сохраняет инварианты I, затем минимизирует ожидаемую цену J, затем предпочитает информационный выигрыш IG и только после этого выбирает ближайший переход. Рост шума поднимает порог защиты; отдельный порог τR создаёт гистерезис и делает возврат самостоятельным переходом.</span>
+            <span class="en">The selector first preserves invariants I, then minimizes expected cost J, then prefers information gain IG, and only then chooses the nearest transition. Rising noise raises the defence threshold; a separate threshold τR creates hysteresis and makes restoration an explicit transition.</span>
+          </p>
+          <p><a href="#selector-lab">↓ <span class="ru">проверить поведение в лаборатории</span><span class="en">inspect behavior in the lab</span></a> · <a class="boundary-link" href="#b-gr-05">↓ B-GR-05</a></p>
+        </section>
+
+        <div class="next-point">
+          <strong>NEXT POINT 05</strong>
+          <p>
+            <span class="ru">Проверить селектор на граничных случаях: пустой след, рост шума, сильное подтверждение, сильное опровержение и состояние после защиты.</span>
+            <span class="en">Test the selector on boundary cases: empty evidence, rising noise, strong confirmation, strong disconfirmation, and the post-defence state.</span>
+          </p>
+        </div>
+
+        <section id="a-gr-06" class="node tool">
+          <div class="node-id">A-GR-06 / THEOREM TARGETS</div>
+          <h3><span class="ru">Пять инвариантов превращают карту в проверяемую программу</span><span class="en">Five invariants turn the map into a testable program</span></h3>
+          <div class="formula">gₜ ∈ Gᵣ(Cₜ)</div>
+          <div class="formula">Bₜ(gₜ) = true</div>
+          <div class="formula">Λ(e) = 1 ⇒ oddsₜ₊₁ = oddsₜ</div>
+          <div class="formula">Λ(e) &lt; 1 ⇒ pₜ₊₁ᵉˣᵗ &lt; pₜᵉˣᵗ</div>
+          <div class="formula">D →◇ R</div>
+          <p>
+            <span class="ru">Цели проверки фиксируют принадлежность выбранного состояния полю, сохранение границы, нейтральность неинформативного следа, понижение внешней гипотезы при опровергающем следе и достижимость восстановления после защиты.</span>
+            <span class="en">The proof targets establish field membership of the selected state, boundary preservation, neutrality of uninformative evidence, reduction of the external hypothesis under disconfirming evidence, and reachability of restoration after defence.</span>
+          </p>
+          <p><a class="boundary-link" href="#b-gr-06">↓ B-GR-06</a></p>
+        </section>
+      </div>
+    </div>
+
+    <div class="next-point">
+      <strong>NEXT POINT 06</strong>
+      <p>
+        <span class="ru">Формализовать минимальный случай: конечное множество причин, конечное множество действий, фиксированные стоимости и доказательство первых четырёх инвариантов без новых аксиом.</span>
+        <span class="en">Formalize the minimal case: finite cause and action sets, fixed costs, and proofs of the first four invariants without new axioms.</span>
+      </p>
+    </div>
+
+    <div class="section-head">
+      <span class="route-index">03 / LAB</span>
+      <h2><span class="ru">Лаборатория селектора</span><span class="en">Selector lab</span></h2>
+    </div>
+    <section id="selector-lab" class="lab">
+      <div>
+        <div id="a-gr-07" class="node-id cyan">A-GR-07 / INTERACTIVE GEOMETRY / πGR</div>
+        <h3><span class="ru">Положите текущий след на карту</span><span class="en">Place the current trace on the map</span></h3>
+        <p>
+          <span class="ru">Четыре ползунка образуют четыре оси одного состояния. Голубой ромб показывает их совместную конфигурацию. Ниже точка p движется по перестраиваемым зонам решения.</span>
+          <span class="en">Four sliders form four axes of one state. The cyan diamond displays their joint configuration. Below it, point p moves through decision zones whose boundaries are themselves recomputed.</span>
+        </p>
+        <div class="lab-controls">
+          <div id="a-gr-08" class="stress-profile">
+            <b><span class="ru">A-GR-08 / СТРЕСС-ЭТАЛОН</span><span class="en">A-GR-08 / STRESS BENCHMARK</span></b>
+            <p>
+              <span class="ru">Параноидально смещённый вход: угроза и цена пропуска завышены; шум и цена ложной тревоги занижены.</span>
+              <span class="en">Paranoid-biased input: threat and miss cost are overweighted; noise and false-alarm cost are underweighted.</span>
+            </p>
+            <div class="formula">⟨pᵉˣᵗ, Ξ, C_FN, C_FP⟩ = ⟨0.85, 0.20, 0.95, 0.15⟩</div>
+            <button id="stress-preset" class="preset-button" type="button">
+              <span class="ru">Вернуть стресс-профиль</span><span class="en">Restore stress profile</span>
+            </button>
+            <p class="lab-boundary-link"><a class="boundary-link" href="#b-gr-08">↓ B-GR-08</a></p>
+          </div>
+          <div class="slider-row">
+            <label for="p-ext"><span><span class="ru">внешнее нарушение pᵉˣᵗ</span><span class="en">external violation pᵉˣᵗ</span></span><output id="p-ext-out">0.85</output></label>
+            <input id="p-ext" type="range" min="0" max="100" value="85">
+          </div>
+          <div class="slider-row">
+            <label for="noise"><span><span class="ru">шум Ξ</span><span class="en">noise Ξ</span></span><output id="noise-out">0.20</output></label>
+            <input id="noise" type="range" min="0" max="100" value="20">
+          </div>
+          <div class="slider-row">
+            <label for="fn-cost"><span><span class="ru">цена пропуска C_FN</span><span class="en">miss cost C_FN</span></span><output id="fn-cost-out">0.95</output></label>
+            <input id="fn-cost" type="range" min="10" max="100" value="95">
+          </div>
+          <div class="slider-row">
+            <label for="fp-cost"><span><span class="ru">цена ложной тревоги C_FP</span><span class="en">false-alarm cost C_FP</span></span><output id="fp-cost-out">0.15</output></label>
+            <input id="fp-cost" type="range" min="10" max="100" value="15">
+          </div>
+          <label class="check-row">
+            <input id="defended" type="checkbox">
+            <span><span class="ru">система уже находится в состоянии защиты</span><span class="en">the system is already in the defended state</span></span>
+          </label>
+        </div>
+      </div>
+      <div class="lab-output" aria-live="polite">
+        <div class="lab-result">
+          <div class="action-letter" id="action-letter">V</div>
+          <div>
+            <div class="node-id"><span class="ru">ВЫБРАННОЕ ДЕЙСТВИЕ</span><span class="en">SELECTED ACTION</span></div>
+            <div class="action-name ru" id="action-name-ru">Проверка</div>
+            <div class="action-name en" id="action-name-en">Verification</div>
+          </div>
+        </div>
+
+        <div class="geometry-title">
+          <span><span class="ru">4 ОСИ / ОБЩЕЕ СОСТОЯНИЕ</span><span class="en">4 AXES / JOINT STATE</span></span>
+          <span id="radar-vector">⟨0.85, 0.20, 0.95, 0.15⟩</span>
+        </div>
+        <div class="radar-wrap">
+          <svg class="radar" viewBox="0 0 480 330" role="img" aria-labelledby="radar-title radar-desc">
+            <title id="radar-title">Four-axis selector state</title>
+            <desc id="radar-desc">External probability, noise, miss cost and false-alarm cost connected as a live diamond.</desc>
+            <polygon class="guide" points="240,48 362,165 240,282 118,165"></polygon>
+            <polygon class="guide" points="240,77 332,165 240,253 148,165"></polygon>
+            <polygon class="guide" points="240,107 301,165 240,223 179,165"></polygon>
+            <polygon class="guide" points="240,136 271,165 240,194 209,165"></polygon>
+            <line class="axis" x1="240" y1="165" x2="240" y2="48"></line>
+            <line class="axis" x1="240" y1="165" x2="362" y2="165"></line>
+            <line class="axis" x1="240" y1="165" x2="240" y2="282"></line>
+            <line class="axis" x1="240" y1="165" x2="118" y2="165"></line>
+            <polygon id="radar-shape" class="shape" points="240,66 264,165 240,183 124,165"></polygon>
+            <circle class="center-dot" cx="240" cy="165" r="4"></circle>
+            <circle id="radar-p-dot" class="axis-dot" cx="240" cy="66" r="6"></circle>
+            <circle id="radar-noise-dot" class="axis-dot" cx="264" cy="165" r="6"></circle>
+            <circle id="radar-fp-dot" class="axis-dot" cx="240" cy="183" r="6"></circle>
+            <circle id="radar-fn-dot" class="axis-dot" cx="124" cy="165" r="6"></circle>
+
+            <text class="axis-label" x="240" y="22" text-anchor="middle">pᵉˣᵗ ↑</text>
+            <text class="axis-value" id="radar-p-value" x="240" y="40" text-anchor="middle">0.85</text>
+            <text class="axis-label" x="400" y="159" text-anchor="middle">Ξ →</text>
+            <text class="axis-value" id="radar-noise-value" x="400" y="178" text-anchor="middle">0.20</text>
+            <text class="axis-label" x="240" y="309" text-anchor="middle">C_FP ↓</text>
+            <text class="axis-value" id="radar-fp-value" x="240" y="326" text-anchor="middle">0.15</text>
+            <text class="axis-label" x="76" y="159" text-anchor="middle">← C_FN</text>
+            <text class="axis-value" id="radar-fn-value" x="76" y="178" text-anchor="middle">0.95</text>
+          </svg>
+        </div>
+
+        <div class="decision-geometry">
+          <div class="geometry-title">
+            <span><span class="ru">ГЕОМЕТРИЯ РЕШЕНИЯ</span><span class="en">DECISION GEOMETRY</span></span>
+            <span><span class="ru">границы двигаются</span><span class="en">boundaries move</span></span>
+          </div>
+          <div class="decision-track">
+            <div id="zone-c" class="decision-zone c-zone">C</div>
+            <div id="zone-v" class="decision-zone v-zone">V</div>
+            <div id="zone-d" class="decision-zone d-zone">D</div>
+            <div id="boundary-v" class="track-boundary" data-label="τV"></div>
+            <div id="boundary-d" class="track-boundary" data-label="τD"></div>
+            <div id="track-point" class="track-point"></div>
+          </div>
+          <div class="lab-readout" id="lab-readout"></div>
+        </div>
+
+        <div class="influence-grid">
+          <div class="influence"><b>pᵉˣᵗ</b><span class="ru">двигает голубую точку</span><span class="en">moves the cyan point</span><br><strong id="effect-p">0.85 → point</strong></div>
+          <div class="influence"><b>Ξ</b><span class="ru">раздвигает пороги вправо</span><span class="en">pushes thresholds right</span><br><strong id="effect-noise">+0.20 → τV, τD</strong></div>
+          <div class="influence"><b>C_FN</b><span class="ru">приближает границу защиты</span><span class="en">pulls the defence boundary left</span><br><strong id="effect-fn">+0.95 → −τD</strong></div>
+          <div class="influence"><b>C_FP</b><span class="ru">отодвигает ложную защиту</span><span class="en">pushes false defence away</span><br><strong id="effect-fp">+0.15 → +τV, +τD</strong></div>
+        </div>
+
+        <div class="lab-equation">
+          τV = 0.17 + 0.16Ξ + 0.08C_FP<br>
+          τD = 0.48 + 0.26Ξ + 0.12C_FP − 0.12C_FN<br>
+          τR = τV − 0.09
+        </div>
+        <div class="lab-boundary-link"><a class="boundary-link" href="#b-gr-07">↓ B-GR-07</a></div>
+      </div>
+    </section>
+
+    <div class="next-point">
+      <strong>NEXT POINT 07</strong>
+      <p>
+        <span class="ru">Связать визуальный выход с формальным choose и доказать: для каждого конечного входа буква C, V, D или R на карте совпадает с результатом селектора.</span>
+        <span class="en">Connect the visual output to formal choose and prove that for every finite input the displayed C, V, D, or R equals the selector result.</span>
+      </p>
+    </div>
+
+    <div class="section-head">
+      <span class="route-index">04 / CARRIER</span>
+      <h2><span class="ru">Формальный интерфейс</span><span class="en">Formal interface</span></h2>
+    </div>
+    <section id="a-gr-09" class="panel" style="border:1px solid #22e67a; margin:2rem 0; padding:1.5rem;">
+  <p class="eyebrow">A-GR-09 · ПРОВЕРЕННЫЙ КАНДИДАТ / VERIFIED CANDIDATE</p>
+  <h2>Порог выводится из явной функции потерь</h2>
+  <p><strong>Внешняя опора.</strong> Байесовское правило выбирает действие, минимизирующее ожидаемую потерю. <a href="https://web.stanford.edu/class/msande226/2025/lectures/lecture16_bayesian.pdf" target="_blank" rel="noopener">↗ Stanford MS&amp;E 226, lecture 16</a> <span class="muted">(роль: внешний математический факт)</span>.</p>
+  <div class="formula">L(C)=p·C_FN &nbsp;&nbsp; L(D)=(1-p)·C_FP</div>
+  <div class="formula">score=p·(C_FN+C_FP)−C_FP</div>
+  <div class="formula">π_risk(x)=D ↔ score(x)≥0 ↔ L(D)≤L(C)</div>
+  <p><strong>Проверяемый переход.</strong> Бинарное ядро вычисляет границу непосредственно из стоимости ложного пропуска и ложной тревоги.</p>
+  <p><strong>Lean принял пять обязательств:</strong> эквивалентность порога и сравнения потерь; минимальность ожидаемой потери; строгий выигрыш над порогом 1/2 на замороженном синтетическом наборе; устойчивость решения C и D при ненулевом запасе до границы.</p>
+  <pre><code>riskSelector_defend_iff_loss_le
+riskSelector_minimizes_expectedLoss
+benchmark_strict_improvement
+defend_stable_of_margin
+cooperate_stable_of_margin</code></pre>
+  <p><strong>Аудит:</strong> сборка принята; <code>sorry</code>/<code>admit</code> отсутствуют; <code>#print axioms</code> показывает только <code>propext</code>, <code>Classical.choice</code>, <code>Quot.sound</code>.</p>
+  <nav aria-label="GR-09 route"><a href="#q-gr-09">↓ следующий вопрос</a> · <a href="#j-gr-09">↓ запись журнала</a> · <a href="#b-gr-09">↓ B-GR-09 / граница</a> · <a href="#src-gr-09">↓ источники</a></nav>
+</section>
+
+<section id="q-gr-09" class="panel" style="border:1px solid #28c7d9; margin:2rem 0; padding:1.5rem;">
+  <p class="eyebrow">Q-GR-09 · OPEN QUESTION</p>
+  <h2>Как расширить доказанное бинарное ядро до действий V и R?</h2>
+  <p>Нужно заранее зафиксировать потери проверки и восстановления, схему журнала событий и правило разбиения данных, а уже затем сравнить полный селектор с простым пороговым baseline.</p>
+  <p><strong>NEXT POINT:</strong> определить <code>L(V)</code> и <code>L(R)</code> как проверяемые функции и заморозить формат одного набора событий до настройки коэффициентов.</p>
+  <p><a href="#a-gr-09">↑ к доказанному ядру</a> · <a href="#b-gr-09">↓ к границе утверждения</a></p>
+</section>
+
+<section id="formal-carrier" class="node tool">
+      <div class="node-id">LOCAL CARRIER / TLFL_WANDERING_GOAL_FIELD.lean</div>
+      <h3><span class="ru">Интерфейс кандидата в форке TLFL</span><span class="en">Candidate interface in the TLFL fork</span></h3>
+      <pre class="formula"><code>structure FieldOfNearestGoalsFrame
+    (Context Action Noise : Type) where
+  transition    : Context → Action → Noise → Context
+  actionAllowed : Context → Action → Prop
+  noiseAllowed  : Context → Noise → Prop
+  boundary      : Context → Prop
+  quality       : Context → Context → Prop
+  nearby        : Context → Context → Prop
+
+def FieldOfNearestGoalsSelection
+    (frame : FieldOfNearestGoalsFrame Context Action Noise)
+    (choose : Context → Context) : Prop :=
+  ∀ current, FieldOfNearestGoals frame current (choose current)</code></pre>
+      <p>
+        <span class="ru">Форк наследует канонический импорт <span class="mono">TMI.Library</span>. Новый модуль-кандидат подключается через конкретные типы причин и действий, функцию перехода T и селектор choose; его сборка и аудит проходят отдельно до любого предложения переноса в upstream.</span>
+        <span class="en">The fork inherits the canonical <span class="mono">TMI.Library</span> import. A new candidate module connects through concrete cause and action types, transition function T, and selector choose; its build and audit remain separate before any proposal to promote it upstream.</span>
+      </p>
+      <p><a class="source-link" href="https://github.com/kernelpanic888/TMI-Lean-Formal-Library" target="_blank" rel="noreferrer">↗ upstream TLFL</a> · <a href="#a-gr-02">↑ A-GR-02</a> · <a href="#a-gr-06">↑ A-GR-06</a></p>
+    </section>
+
+    <div class="section-head">
+      <span class="route-index">05 / JOURNAL</span>
+      <h2><span class="ru">Рабочий журнал</span><span class="en">Working journal</span></h2>
+    </div>
+    <section class="journal" aria-label="Working journal">
+      <details id="j-gr-01">
+        <summary>J-GR-01 · <span class="ru">Игра преобразована в интерфейс свойств</span><span class="en">The game was transformed into a property interface</span></summary>
+        <div class="entry">
+          <p><span class="ru">Статус: внешний факт связан с A-GR-01; в рабочую модель перенесены сотрудничество, ответность, возврат и простота.</span><span class="en">Status: the external fact is linked to A-GR-01; cooperation, responsiveness, return, and simplicity were carried into the working model.</span></p>
+          <p><strong>NEXT QUESTION:</strong> <span class="ru">Как выразить эти свойства через конечный набор действий?</span><span class="en">How can these properties be expressed through a finite action set?</span></p>
+          <p><a href="#a-gr-01">↑ A-GR-01</a></p>
+        </div>
+      </details>
+      <details id="j-gr-02">
+        <summary>J-GR-02 · <span class="ru">Поле отделено от селектора</span><span class="en">The field was separated from the selector</span></summary>
+        <div class="entry">
+          <p><span class="ru">Статус: существующий локальный Lean-интерфейс сопоставлен с состоянием Cₜ, полем Gᵣ и выбором π; носителем реализации выбран отдельный форк TLFL.</span><span class="en">Status: the existing local Lean interface was matched with state Cₜ, field Gᵣ, and choice π; a separate TLFL fork was selected as the implementation carrier.</span></p>
+          <p><strong>NEXT QUESTION:</strong> <span class="ru">Какой минимальный тип данных хранит конкурирующие причины следа?</span><span class="en">What minimal data type stores competing causes of a trace?</span></p>
+          <p><a href="#a-gr-02">↑ A-GR-02</a></p>
+        </div>
+      </details>
+      <details id="j-gr-03">
+        <summary>J-GR-03 · <span class="ru">След развёрнут в распределение причин</span><span class="en">The trace was unfolded into a cause distribution</span></summary>
+        <div class="entry">
+          <p><span class="ru">Статус: введены четыре конкурирующие причины и нормализованное обновление апостериорного состояния.</span><span class="en">Status: four competing causes and a normalized posterior update were introduced.</span></p>
+          <p><strong>NEXT QUESTION:</strong> <span class="ru">Какие правдоподобия обеспечивают калибровку на выбранном корпусе случаев?</span><span class="en">Which likelihoods provide calibration on the selected case corpus?</span></p>
+          <p><a href="#a-gr-03">↑ A-GR-03</a></p>
+        </div>
+      </details>
+      <details id="j-gr-04">
+        <summary>J-GR-04 · <span class="ru">Проверка получила собственную цену и ценность</span><span class="en">Verification received its own cost and value</span></summary>
+        <div class="entry">
+          <p><span class="ru">Статус: сотрудничество, проверка, защита и восстановление включены в единое пространство решений.</span><span class="en">Status: cooperation, verification, defence, and restoration were placed in one decision space.</span></p>
+          <p><strong>NEXT QUESTION:</strong> <span class="ru">Как вычислять информационный выигрыш проверки для конечной модели?</span><span class="en">How should the information gain of verification be computed for the finite model?</span></p>
+          <p><a href="#a-gr-04">↑ A-GR-04</a></p>
+        </div>
+      </details>
+      <details id="j-gr-05">
+        <summary>J-GR-05 · <span class="ru">Пороговый маршрут собран в один селектор</span><span class="en">The threshold route was assembled into one selector</span></summary>
+        <div class="entry">
+          <p><span class="ru">Статус: пороги зависят от шума; восстановление выделено отдельным переходом; лексикографический порядок сохраняет приоритет инвариантов.</span><span class="en">Status: thresholds depend on noise; restoration is an explicit transition; lexicographic order preserves invariant priority.</span></p>
+          <p><strong>NEXT QUESTION:</strong> <span class="ru">Какие условия гарантируют отсутствие дребезга между защитой и восстановлением?</span><span class="en">Which conditions guarantee the absence of oscillation between defence and restoration?</span></p>
+          <p><a href="#a-gr-05">↑ A-GR-05</a></p>
+        </div>
+      </details>
+      <details id="j-gr-06">
+        <summary>J-GR-06 · <span class="ru">Выделены цели формальной проверки</span><span class="en">Formal proof targets were isolated</span></summary>
+        <div class="entry">
+          <p><span class="ru">Статус: пять свойств записаны отдельно от конструкции и образуют очередь доказательств.</span><span class="en">Status: five properties were stated separately from the construction and form a proof queue.</span></p>
+          <p><strong>NEXT QUESTION:</strong> <span class="ru">Доказываются ли первые четыре свойства для конечного кандидата без дополнительных аксиом?</span><span class="en">Can the first four properties be proved for the finite candidate without additional axioms?</span></p>
+          <p><a href="#a-gr-06">↑ A-GR-06</a></p>
+        </div>
+      </details>
+      <details id="j-gr-07">
+        <summary>J-GR-07 · <span class="ru">Четыре параметра получили общую геометрию</span><span class="en">Four parameters received a joint geometry</span></summary>
+        <div class="entry">
+          <p><span class="ru">Статус: pᵉˣᵗ, Ξ, C_FN и C_FP отображаются на четырёх осях; pᵉˣᵗ двигает точку, а три остальных параметра перестраивают пороги решения.</span><span class="en">Status: pᵉˣᵗ, Ξ, C_FN, and C_FP are displayed on four axes; pᵉˣᵗ moves the point while the other three parameters reshape the decision thresholds.</span></p>
+          <p><strong>NEXT QUESTION:</strong> <span class="ru">Совпадает ли визуальная классификация с формальным choose на всех конечных входах?</span><span class="en">Does the visual classification agree with formal choose on every finite input?</span></p>
+          <p><a href="#a-gr-07">↑ A-GR-07</a></p>
+        </div>
+      </details>
+      <details id="j-gr-08">
+        <summary>J-GR-08 · <span class="ru">Параноидальное смещение превращено в стресс-профиль</span><span class="en">Paranoid bias was turned into a stress profile</span></summary>
+        <div class="entry">
+          <p><span class="ru">Статус: лаборатория по умолчанию получает угрозоцентричный вход ⟨0.85, 0.20, 0.95, 0.15⟩ и показывает, как он переводит селектор в защиту.</span><span class="en">Status: by default the lab receives threat-centered input ⟨0.85, 0.20, 0.95, 0.15⟩ and displays how it moves the selector into defence.</span></p>
+          <p><strong>NEXT QUESTION:</strong> <span class="ru">Возвращается ли селектор к проверке и сотрудничеству после последовательности опровергающих следов?</span><span class="en">Does the selector return to verification and cooperation after a sequence of disconfirming traces?</span></p>
+          <p><a href="#a-gr-08">↑ A-GR-08</a></p>
+        </div>
+      </details>
+    </section>
+
+    <div class="section-head">
+      <span class="route-index">06 / SOURCES</span>
+      <h2><span class="ru">Реестр источников</span><span class="en">Source ledger</span></h2>
+    </div>
+    <section id="sources" class="source-ledger">
+      <div class="source-item">
+        <span class="source-role">A-GR-01 · FACT</span>
+        <span><a href="https://ncase.me/trust/" target="_blank" rel="noreferrer">↗ The Evolution of Trust</a> · <a href="https://arxiv.org/abs/2510.15438" target="_blank" rel="noreferrer">↗ Axelrod replication</a><br><span class="ru">Роль: внешний игровой факт и терминология свойств стратегии.</span><span class="en">Role: external game-theoretic fact and terminology for strategy properties.</span></span>
+      </div>
+      <div class="source-item">
+        <span class="source-role">A-GR-02 · CARRIER</span>
+        <span><a href="https://github.com/kernelpanic888/TMI-Lean-Formal-Library" target="_blank" rel="noreferrer">↗ kernelpanic888/TMI-Lean-Formal-Library</a> · <a href="#formal-carrier">↓ TLFL_WANDERING_GOAL_FIELD.lean snapshot</a><br><span class="ru">Роль: внешний upstream форка и локальный формальный носитель интерфейса поля; встроенный снимок.</span><span class="en">Role: external fork upstream and local formal carrier for the field interface; embedded snapshot.</span></span>
+      </div>
+      <div class="source-item">
+        <span class="source-role">A-GR-03 · FACT</span>
+        <span><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC11104374/" target="_blank" rel="noreferrer">↗ Belief updating and paranoia research</a><br><span class="ru">Роль: внешний факт о вероятностном обновлении убеждений; формула модели является авторским кандидатом.</span><span class="en">Role: external fact about probabilistic belief updating; the model formula is an authorial candidate.</span></span>
+      </div>
+      <div class="source-item">
+        <span class="source-role">A-GR-04 · ANALOGY</span>
+        <span><a href="https://www.nist.gov/publications/zero-trust-architecture" target="_blank" rel="noreferrer">↗ NIST Zero Trust Architecture</a><br><span class="ru">Роль: терминология проверки и аналогия управления доступом.</span><span class="en">Role: verification terminology and access-control analogy.</span></span>
+      </div>
+      <div class="source-item">
+        <span class="source-role">A-GR-05 · THEORY</span>
+        <span><a href="https://www.sciencedirect.com/science/article/pii/S0022519399909098" target="_blank" rel="noreferrer">↗ Win-Stay, Lose-Shift</a><br><span class="ru">Роль: внешний теоретико-игровой пример правила с возвратом; GRS остаётся отдельной конструкцией.</span><span class="en">Role: external game-theoretic example of a rule with return; GRS remains a separate construction.</span></span>
+      </div>
+      <div class="source-item">
+        <span class="source-role">A-GR-06 · LOCAL</span>
+        <span><a href="#formal-carrier">↓ <span class="ru">формальный интерфейс</span><span class="en">formal interface</span></a><br><span class="ru">Роль: цели проверки выведены из рабочей конструкции; новая внешняя теорема здесь не используется.</span><span class="en">Role: proof targets are derived from the working construction; no new external theorem is used here.</span></span>
+      </div>
+      <div class="source-item">
+        <span class="source-role">A-GR-07 · MODEL</span>
+        <span><a href="#a-gr-07">↓ <span class="ru">четырёхосевая лаборатория</span><span class="en">four-axis lab</span></a><br><span class="ru">Роль: авторская визуальная проекция формул A-GR-04 и A-GR-05; новая внешняя теорема не используется.</span><span class="en">Role: authorial visual projection of formulas A-GR-04 and A-GR-05; no new external theorem is used.</span></span>
+      </div>
+      <div class="source-item">
+        <span class="source-role">A-GR-08 · STRESS</span>
+        <span><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC11104374/" target="_blank" rel="noreferrer">↗ Bayesian belief updating and paranoia</a> · <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC4838082/" target="_blank" rel="noreferrer">↗ Jumping-to-conclusions meta-analysis</a><br><span class="ru">Роль: внешняя терминология смещённого обновления и поспешного вывода. Числа стресс-профиля являются авторскими тестовыми параметрами.</span><span class="en">Role: external terminology for biased updating and premature inference. Stress-profile numbers are authorial test parameters.</span></span>
+      </div>
+      <div class="source-item">
+        <span class="source-role">J-GR-01…08</span>
+        <span><a href="#j-gr-01">↓ J-GR-01</a> · <a href="#j-gr-02">↓ J-GR-02</a> · <a href="#j-gr-03">↓ J-GR-03</a> · <a href="#j-gr-04">↓ J-GR-04</a> · <a href="#j-gr-05">↓ J-GR-05</a> · <a href="#j-gr-06">↓ J-GR-06</a> · <a href="#j-gr-07">↓ J-GR-07</a> · <a href="#j-gr-08">↓ J-GR-08</a><br><span class="ru">Роль: журнал преобразований; каждый ход ссылается на соответствующий материальный блок и его источник.</span><span class="en">Role: transformation journal; every move links to its material block and source.</span></span>
+      </div>
+      <div class="source-item">
+        <span class="source-role">CONTEXT</span>
+        <span><a href="https://discovery.ucl.ac.uk/id/eprint/1331363/" target="_blank" rel="noreferrer">↗ Epistemic Vigilance</a> · <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC4838082/" target="_blank" rel="noreferrer">↗ Jumping-to-conclusions meta-analysis</a> · <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC6941901/" target="_blank" rel="noreferrer">↗ High Reliability Organizations</a><br><span class="ru">Роль: смежная терминология бдительности, поспешного вывода и организационной надёжности.</span><span class="en">Role: adjacent terminology for vigilance, premature inference, and organizational reliability.</span></span>
+      </div>
+    </section>
+
+    <div class="section-head">
+      <span class="route-index">07 / PASSPORT</span>
+      <h2>PASSPORT / CURRENT STATE</h2>
+    </div>
+    <section id="j-gr-09" class="panel" style="margin:2rem 0; padding:1.5rem;">
+  <p class="eyebrow">J-GR-09 · 26.07.2026 · MATERIAL MOVE</p>
+  <h2>От ручного порога к проверяемому риск-ядру</h2>
+  <p>Создан отдельный охраняемый Lean-кандидат; исходный TLFL-носитель не изменён. Кандидат компилируется, проходит no-sorry-аудит и формально связывает действие с минимумом ожидаемой потери.</p>
+  <p>Синтетический benchmark служит только исполнимым примером и не заменяет внешнюю валидацию. Следующая работа вынесена в <a href="#q-gr-09">Q-GR-09</a>.</p>
+  <p><strong>AUTHOR NOTE / не математический факт:</strong> автор отметил, что ему нравится этот способ совместной интеллектуальной работы.</p>
+  <p><a href="#a-gr-09">↑ A-GR-09</a> · <a href="#b-gr-09">↓ B-GR-09</a></p>
+</section>
+
+<section id="src-gr-09" class="panel" style="margin:2rem 0; padding:1.5rem;">
+  <p class="eyebrow">SOURCE LEDGER · GR-09 ADDENDUM</p>
+  <ul>
+    <li><a href="https://web.stanford.edu/class/msande226/2025/lectures/lecture16_bayesian.pdf" target="_blank" rel="noopener">↗ Stanford MS&amp;E 226, Bayesian inference and decision making</a> — роль: внешний факт; выбор действия через минимум ожидаемой потери.</li>
+    <li><a href="https://www.stat.berkeley.edu/~bartlett/papers/bw-crouhl-06.pdf" target="_blank" rel="noopener">↗ Bartlett &amp; Wegkamp, Classification with a Reject Option Using a Hinge Loss</a> — роль: внешний факт и маршрут расширения; отдельное действие отказа/проверки включается через явную стоимость.</li>
+    <li><a href="#a-gr-09">↓ GuardedReciprocalRiskSelectorCandidate snapshot</a> — роль: локальный формальный носитель; существенные определения и имена теорем встроены в A-GR-09.</li>
+  </ul>
+</section>
+
+<section id="work-passport" class="passport">
+<div class="status-chip" style="border-left:3px solid #22e67a; padding:.75rem 1rem; margin:1rem 0;">26.07.2026 · A-GR-09 · J-GR-09: бинарное риск-ядро собрано и прошло Lean/no-sorry/#print axioms; эмпирическая калибровка остаётся открытой.</div>
+      <div>
+        <div class="node-id blue">IMMOVABLE CORE</div>
+        <h3><span class="ru">Селектор выбора отделён от генератора подозрения</span><span class="en">The choice selector is separated from the suspicion generator</span></h3>
+        <p>
+          <span class="ru">Текущий корпус соединяет внешний игровой факт, upstream TMI-Lean-Formal-Library, форк-кандидат и интерфейс поля ближайших целей через транспорт инварианта: допустимость перехода сохраняется от Gᵣ к выбранному gₜ.</span>
+          <span class="en">The current corpus connects an external game-theoretic fact, upstream TMI-Lean-Formal-Library, the candidate fork, and the nearest-goal field interface through invariant transport: transition admissibility is preserved from Gᵣ to selected gₜ.</span>
+        </p>
+      </div>
+      <div class="status-strip" aria-label="Status strip">
+        <span>NOTE</span><span>WORKING JOURNAL</span><span>FORK CANDIDATE</span>
+        <span>A-GR-01</span><span>A-GR-02</span><span>A-GR-03</span>
+        <span>A-GR-04</span><span>A-GR-05</span><span>A-GR-06</span>
+        <span>A-GR-07</span>
+        <span>A-GR-08</span>
+        <span>J-GR-01</span><span>J-GR-02</span><span>J-GR-03</span>
+        <span>J-GR-04</span><span>J-GR-05</span><span>J-GR-06</span>
+        <span>J-GR-07</span>
+        <span>J-GR-08</span>
+      </div>
+    </section>
+
+    <div class="section-head">
+      <span class="route-index">08 / BOUNDARY</span>
+      <h2>BOUNDARY REGISTER</h2>
+    </div>
+    <section id="boundary-register" class="boundary-register">
+<article id="b-gr-09" class="boundary" style="border:1px solid #ff5a52; margin:1rem 0; padding:1rem;">
+  <p class="eyebrow">B-GR-09 · CLAIM BOUNDARY</p>
+  <p>Формальный результат относится только к бинарным действиям C/D и рациональной функции потерь. Два синтетических случая не доказывают качество на реальных журналах, превосходство над PID или иным baseline, сходимость полного селектора, корректность прежних коэффициентов для V/R либо психологическую или клиническую интерпретацию.</p>
+  <p>Четырёхдействийная модель остаётся кандидатом до явных <code>L(V)</code>, <code>L(R)</code>, замороженного набора данных и внешней проверки.</p>
+  <p><a href="#a-gr-09">↑ обратно к A-GR-09</a> · <a href="#q-gr-09">↑ Q-GR-09</a></p>
+</article>
+
+      <article id="b-gr-01" class="node boundary">
+        <div class="node-id red">B-GR-01 / CLAIM BOUNDARY</div>
+        <h3><span class="ru">Граница игровой опоры</span><span class="en">Boundary of game-theoretic support</span></h3>
+        <p><span class="ru">Успех Tit for Tat в конкретной турнирной среде не доказывает оптимальность GRS во всех средах и не переносит игровую стратегию в психологическую или организационную область без отдельной модели.</span><span class="en">Tit for Tat’s success in a specific tournament environment does not prove GRS optimal in every environment and does not transfer a game strategy into psychological or organizational domains without a separate model.</span></p>
+        <a href="#a-gr-01">↑ A-GR-01</a>
+      </article>
+      <article id="b-gr-02" class="node boundary">
+        <div class="node-id red">B-GR-02 / CLAIM BOUNDARY</div>
+        <h3><span class="ru">Граница локального носителя</span><span class="en">Boundary of the local carrier</span></h3>
+        <p><span class="ru">Upstream задаёт базовую TLFL-библиотеку, а локальный интерфейс задаёт форму поля и выбора. Указание форка фиксирует маршрут разработки, но само по себе не подтверждает существование опубликованной ветки, реализации GRS или доказательств её инвариантов.</span><span class="en">Upstream supplies the base TLFL library, while the local interface specifies the shape of field and choice. Naming the fork fixes the development route but does not by itself confirm a published branch, a GRS implementation, or proofs of its invariants.</span></p>
+        <a href="#a-gr-02">↑ A-GR-02</a>
+      </article>
+      <article id="b-gr-03" class="node boundary">
+        <div class="node-id red">B-GR-03 / CLAIM BOUNDARY</div>
+        <h3><span class="ru">Граница апостериорной модели</span><span class="en">Boundary of the posterior model</span></h3>
+        <p><span class="ru">Набор причин Z и их правдоподобия являются рабочей декомпозицией. Без калибровочного корпуса численные значения pᵉˣᵗ не имеют эмпирической интерпретации.</span><span class="en">Cause set Z and its likelihoods are a working decomposition. Without a calibration corpus, numerical values of pᵉˣᵗ have no empirical interpretation.</span></p>
+        <a href="#a-gr-03">↑ A-GR-03</a>
+      </article>
+      <article id="b-gr-04" class="node boundary">
+        <div class="node-id red">B-GR-04 / CLAIM BOUNDARY</div>
+        <h3><span class="ru">Граница функции потерь</span><span class="en">Boundary of the loss function</span></h3>
+        <p><span class="ru">Стоимость действий зависит от области применения. NIST служит аналогией контролируемой проверки и не является доказательством выбранной функции потерь.</span><span class="en">Action costs depend on the application domain. NIST serves as a controlled-verification analogy and is not a proof of the selected loss function.</span></p>
+        <a href="#a-gr-04">↑ A-GR-04</a>
+      </article>
+      <article id="b-gr-05" class="node boundary">
+        <div class="node-id red">B-GR-05 / CLAIM BOUNDARY</div>
+        <h3><span class="ru">Граница конструкции GRS</span><span class="en">Boundary of the GRS construction</span></h3>
+        <p><span class="ru">Лексикографический селектор и пороги являются математическим кандидатом. Интерактивная лаборатория иллюстрирует правило и не заменяет доказательство корректности, сходимости или оптимальности.</span><span class="en">The lexicographic selector and thresholds are a mathematical candidate. The interactive lab illustrates the rule and does not replace proofs of correctness, convergence, or optimality.</span></p>
+        <a href="#a-gr-05">↑ A-GR-05</a>
+      </article>
+      <article id="b-gr-06" class="node boundary">
+        <div class="node-id red">B-GR-06 / CLAIM BOUNDARY</div>
+        <h3><span class="ru">Граница текущего результата</span><span class="en">Boundary of the current result</span></h3>
+        <p><span class="ru">Пять инвариантов являются целями доказательства. До их реализации и проверки формальным верификатором ридер фиксирует архитектуру кандидата, а не завершённую теорему и не универсальную модель человеческого поведения.</span><span class="en">The five invariants are proof targets. Until they are implemented and accepted by a formal verifier, the reader records a candidate architecture rather than a completed theorem or a universal model of human behavior.</span></p>
+        <a href="#a-gr-06">↑ A-GR-06</a> · <a href="#q-gr-01">↑ Q-GR-01</a>
+      </article>
+      <article id="b-gr-07" class="node boundary">
+        <div class="node-id red">B-GR-07 / CLAIM BOUNDARY</div>
+        <h3><span class="ru">Граница четырёхосевой проекции</span><span class="en">Boundary of the four-axis projection</span></h3>
+        <p><span class="ru">Ромб показывает совместное состояние четырёх нормированных параметров, а цветная линия показывает пороговое решение. Геометрическая близость точек внутри ромба сама по себе не задаёт расстояние между решениями и не является доказательством корректности селектора.</span><span class="en">The diamond displays the joint state of four normalized parameters, while the colored line displays the threshold decision. Geometric proximity inside the diamond does not by itself define distance between decisions and is not a proof of selector correctness.</span></p>
+        <a href="#a-gr-07">↑ A-GR-07</a>
+      </article>
+      <article id="b-gr-08" class="node boundary">
+        <div class="node-id red">B-GR-08 / CLAIM BOUNDARY</div>
+        <h3><span class="ru">Граница стресс-эталона</span><span class="en">Boundary of the stress benchmark</span></h3>
+        <p><span class="ru">Профиль ⟨0.85, 0.20, 0.95, 0.15⟩ является намеренно смещённым тестовым входом, а не клинической оценкой, эмпирической нормой или истинной вероятностью нарушения. Он проверяет устойчивость селектора к захвату угрозоцентричным входом.</span><span class="en">Profile ⟨0.85, 0.20, 0.95, 0.15⟩ is a deliberately biased test input, not a clinical assessment, empirical norm, or true violation probability. It tests selector robustness against capture by threat-centered input.</span></p>
+        <a href="#a-gr-08">↑ A-GR-08</a>
+      </article>
+    </section>
+
+    <section class="closing">
+      <div class="node-id green">NEXT POINT / FORMAL CANDIDATE</div>
+      <h2><span class="ru">Сначала конечный селектор. Потом обобщение.</span><span class="en">Finite selector first. Generalization second.</span></h2>
+      <p>
+        <span class="ru">Следующий безопасный ход: в отдельной ветке форка добавить модуль GRS с конечными типами Z и A, реализовать пороговый choose и доказать принадлежность Gᵣ, сохранение Bₜ, нейтральность Λ=1 и монотонность при Λ&lt;1.</span>
+        <span class="en">Next safe move: add a GRS module on a separate fork branch with finite types Z and A, implement threshold-based choose, and prove Gᵣ membership, preservation of Bₜ, neutrality at Λ=1, and monotonicity for Λ&lt;1.</span>
+      </p>
+    </section>
+
+    <script>
+      (() => {
+        const root = document.documentElement;
+        const langButton = document.getElementById("lang-toggle");
+        const controls = ["p-ext", "noise", "fn-cost", "fp-cost"].map(id => document.getElementById(id));
+        const defended = document.getElementById("defended");
+        const stressPreset = document.getElementById("stress-preset");
+        const names = {
+          C: ["Сотрудничество", "Cooperation"],
+          V: ["Проверка", "Verification"],
+          D: ["Защита", "Defence"],
+          R: ["Восстановление", "Restoration"]
+        };
+
+        function setLanguage(lang) {
+          root.classList.toggle("lang-ru", lang === "ru");
+          root.classList.toggle("lang-en", lang === "en");
+          root.lang = lang;
+          langButton.textContent = lang === "ru" ? "EN" : "RU";
+          langButton.setAttribute("aria-label", lang === "ru" ? "Switch to English" : "Переключить на русский");
+          render();
+        }
+
+        function value(id) {
+          return Number(document.getElementById(id).value) / 100;
+        }
+
+        function render() {
+          const p = value("p-ext");
+          const noise = value("noise");
+          const fn = value("fn-cost");
+          const fp = value("fp-cost");
+          const tauV = Math.min(.58, .17 + .16 * noise + .08 * fp);
+          const tauD = Math.min(.92, .48 + .26 * noise + .12 * fp - .12 * fn);
+          const tauR = Math.max(.05, tauV - .09);
+          let action;
+
+          if (defended.checked && p <= tauR) action = "R";
+          else if (p < tauV) action = "C";
+          else if (p < tauD) action = "V";
+          else action = "D";
+
+          document.getElementById("p-ext-out").value = p.toFixed(2);
+          document.getElementById("noise-out").value = noise.toFixed(2);
+          document.getElementById("fn-cost-out").value = fn.toFixed(2);
+          document.getElementById("fp-cost-out").value = fp.toFixed(2);
+          document.getElementById("action-letter").textContent = action;
+          document.getElementById("action-name-ru").textContent = names[action][0];
+          document.getElementById("action-name-en").textContent = names[action][1];
+          const cx = 240;
+          const cy = 165;
+          const verticalRadius = 117;
+          const horizontalRadius = 122;
+          const radarPoints = [
+            `${cx},${cy - verticalRadius * p}`,
+            `${cx + horizontalRadius * noise},${cy}`,
+            `${cx},${cy + verticalRadius * fp}`,
+            `${cx - horizontalRadius * fn},${cy}`
+          ];
+          document.getElementById("radar-shape").setAttribute("points", radarPoints.join(" "));
+          document.getElementById("radar-p-dot").setAttribute("cy", cy - verticalRadius * p);
+          document.getElementById("radar-noise-dot").setAttribute("cx", cx + horizontalRadius * noise);
+          document.getElementById("radar-fp-dot").setAttribute("cy", cy + verticalRadius * fp);
+          document.getElementById("radar-fn-dot").setAttribute("cx", cx - horizontalRadius * fn);
+          document.getElementById("radar-p-value").textContent = p.toFixed(2);
+          document.getElementById("radar-noise-value").textContent = noise.toFixed(2);
+          document.getElementById("radar-fn-value").textContent = fn.toFixed(2);
+          document.getElementById("radar-fp-value").textContent = fp.toFixed(2);
+          document.getElementById("radar-vector").textContent = `⟨${p.toFixed(2)}, ${noise.toFixed(2)}, ${fn.toFixed(2)}, ${fp.toFixed(2)}⟩`;
+
+          document.getElementById("zone-c").style.width = `${tauV * 100}%`;
+          document.getElementById("zone-v").style.left = `${tauV * 100}%`;
+          document.getElementById("zone-v").style.width = `${(tauD - tauV) * 100}%`;
+          document.getElementById("zone-d").style.left = `${tauD * 100}%`;
+          document.getElementById("zone-d").style.width = `${(1 - tauD) * 100}%`;
+          document.getElementById("boundary-v").style.left = `${tauV * 100}%`;
+          document.getElementById("boundary-d").style.left = `${tauD * 100}%`;
+          document.getElementById("track-point").style.left = `${p * 100}%`;
+          document.getElementById("effect-p").textContent = `${p.toFixed(2)} → point`;
+          document.getElementById("effect-noise").textContent = `+${noise.toFixed(2)} → τV, τD`;
+          document.getElementById("effect-fn").textContent = `+${fn.toFixed(2)} → −τD`;
+          document.getElementById("effect-fp").textContent = `+${fp.toFixed(2)} → +τV, +τD`;
+
+          const ru = `pᵉˣᵗ=${p.toFixed(2)} · τV=${tauV.toFixed(2)} · τD=${tauD.toFixed(2)} · τR=${tauR.toFixed(2)} · маршрут=${action}`;
+          const en = `pᵉˣᵗ=${p.toFixed(2)} · τV=${tauV.toFixed(2)} · τD=${tauD.toFixed(2)} · τR=${tauR.toFixed(2)} · route=${action}`;
+          document.getElementById("lab-readout").textContent = root.lang === "ru" ? ru : en;
+        }
+
+        langButton.addEventListener("click", () => setLanguage(root.lang === "ru" ? "en" : "ru"));
+        stressPreset.addEventListener("click", () => {
+          document.getElementById("p-ext").value = 85;
+          document.getElementById("noise").value = 20;
+          document.getElementById("fn-cost").value = 95;
+          document.getElementById("fp-cost").value = 15;
+          defended.checked = false;
+          render();
+        });
+        controls.forEach(control => control.addEventListener("input", render));
+        defended.addEventListener("change", render);
+        render();
+      })();
+    </script>
+
+    <footer>Автор / Author: Салкуцан Алексей = Salkutsan Aleksey</footer>
+  </main>
+</body>
+</html>

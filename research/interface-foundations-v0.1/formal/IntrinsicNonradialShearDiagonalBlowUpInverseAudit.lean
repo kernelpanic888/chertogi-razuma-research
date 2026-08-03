@@ -1,0 +1,24 @@
+import IntrinsicNonradialShearDiagonalBlowUpInverse
+
+open scoped Topology RealInnerProductSpace
+open Set Filter
+
+namespace BoundaryOfSelf.IntrinsicNonradialShearDiagonalBlowUpInverse
+
+open IntrinsicNonradialShearDiagonalBlowUp
+
+noncomputable def audit_chamber_record := @chamber_unit_and_slope
+noncomputable def audit_exact_relaxed_envelope := @relaxed_envelope_exact
+noncomputable def audit_inverse_bounds := @inverseBlowUpSq_bounds
+noncomputable def audit_inverse_extrema := inverseBlowUpSq_exact_extrema
+noncomputable def audit_inverse_regularity := @inverse_regularity_bound
+noncomputable def audit_finite_inverse_certificate := @exists_inverseBlowUpSq_finiteCertificate
+
+#print axioms audit_chamber_record
+#print axioms audit_exact_relaxed_envelope
+#print axioms audit_inverse_bounds
+#print axioms audit_inverse_extrema
+#print axioms audit_inverse_regularity
+#print axioms audit_finite_inverse_certificate
+
+end BoundaryOfSelf.IntrinsicNonradialShearDiagonalBlowUpInverse

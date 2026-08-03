@@ -1,0 +1,25 @@
+import IsometricBoundaryTransport
+
+open Filter
+
+open BoundaryOfSelf
+open BoundaryOfSelf.AbstractBoundaryApproximation
+open BoundaryOfSelf.IsometricBoundaryTransport
+
+#check transportSet
+#check transportSet_nonempty
+#check transportSet_disjoint
+#check transportSet_frontier
+#check transportSet_hausdorffDist
+#check transportBoundaryModel
+#check transportInterfaceApproximation
+#check transportComputableBoundaryModel
+#check transported_model_exact_error
+#check transported_model_converges_to_actual_frontier
+
+#print axioms transportSet_frontier
+#print axioms transportSet_hausdorffDist
+#print axioms transportBoundaryModel
+#print axioms transportInterfaceApproximation
+#print axioms transported_model_exact_error
+#print axioms transported_model_converges_to_actual_frontier

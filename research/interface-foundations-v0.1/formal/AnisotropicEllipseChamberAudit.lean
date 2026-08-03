@@ -1,0 +1,26 @@
+import AnisotropicEllipseChamber
+
+namespace BoundaryOfSelf
+namespace AnisotropicEllipseChamberAudit
+
+open AnisotropicEllipseChamber
+
+#check anisotropicLinearEquiv
+#check anisotropic_norm_le_two
+#check anisotropic_inverse_norm_le_one
+#check anisotropic_forward_lipschitz
+#check anisotropic_inverse_lipschitz
+#check mem_ellipseInterface_iff
+#check ellipse_actual_frontier_equation
+#check ellipse_model_error_le
+#check ellipse_model_converges_to_actual_frontier
+
+#print axioms anisotropic_norm_le_two
+#print axioms anisotropic_inverse_norm_le_one
+#print axioms mem_ellipseInterface_iff
+#print axioms ellipse_actual_frontier_equation
+#print axioms ellipse_model_error_le
+#print axioms ellipse_model_converges_to_actual_frontier
+
+end AnisotropicEllipseChamberAudit
+end BoundaryOfSelf

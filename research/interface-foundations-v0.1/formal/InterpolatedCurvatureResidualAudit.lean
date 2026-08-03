@@ -1,0 +1,26 @@
+import InterpolatedCurvatureResidual
+
+namespace BoundaryOfSelf
+namespace InterpolatedCurvatureResidualAudit
+
+open InterpolatedCurvatureResidual
+
+#check squaredCellWidth
+#check curvatureResidualNumerator
+#check curvatureResidualDenominator
+#check curvatureResidual
+#check splitProduct_le_square
+#check curvatureResidual_le_squaredCellWidth
+#check squared_cell_width_limit
+#check interpolated_curvature_residual_limit
+#check InterpolatedEdgeRefinementCertificate
+#check interpolatedEdgeRefinementCertificate
+
+#print axioms splitProduct_le_square
+#print axioms curvatureResidual_le_squaredCellWidth
+#print axioms squared_cell_width_limit
+#print axioms interpolated_curvature_residual_limit
+#print axioms interpolatedEdgeRefinementCertificate
+
+end InterpolatedCurvatureResidualAudit
+end BoundaryOfSelf

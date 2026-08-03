@@ -1,0 +1,27 @@
+import MinimalSeparatingContourOrbit
+
+namespace BoundaryOfSelf
+namespace MinimalSeparatingContourOrbitAudit
+
+open MinimalSeparatingContourOrbit
+
+#check CutAvoidingStep
+#check SeparatesSides
+#check separating_subcut_contains_every_crossing
+#check FullThresholdCut
+#check fullThresholdCut_separates
+#check InclusionMinimalThresholdCut
+#check radialThresholdCut_isInclusionMinimal
+#check contourStateBridge
+#check contourStateBridge_spec
+#check OrbitCut
+#check separating_contour_orbit_contains_every_crossing
+
+#print axioms separating_subcut_contains_every_crossing
+#print axioms fullThresholdCut_separates
+#print axioms radialThresholdCut_isInclusionMinimal
+#print axioms contourStateBridge_spec
+#print axioms separating_contour_orbit_contains_every_crossing
+
+end MinimalSeparatingContourOrbitAudit
+end BoundaryOfSelf

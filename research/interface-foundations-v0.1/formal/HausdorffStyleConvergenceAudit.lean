@@ -1,0 +1,22 @@
+import HausdorffStyleConvergence
+
+namespace BoundaryOfSelf
+namespace HausdorffStyleConvergenceAudit
+
+open HausdorffStyleConvergence
+
+#check hausdorffEnvelope
+#check HausdorffStyleApproximation
+#check euclideanEnvelope_le_hausdorffEnvelope
+#check hausdorffStyleApproximation_mono
+#check dominant_axis_hausdorff_style
+#check hausdorffEnvelope_eventually_lt
+#check finite_contours_converge_hausdorff_style
+
+#print axioms euclideanEnvelope_le_hausdorffEnvelope
+#print axioms dominant_axis_hausdorff_style
+#print axioms hausdorffEnvelope_eventually_lt
+#print axioms finite_contours_converge_hausdorff_style
+
+end HausdorffStyleConvergenceAudit
+end BoundaryOfSelf

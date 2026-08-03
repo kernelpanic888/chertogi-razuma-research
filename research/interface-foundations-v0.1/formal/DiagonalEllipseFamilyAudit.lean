@@ -1,0 +1,26 @@
+import DiagonalEllipseFamily
+
+namespace BoundaryOfSelf
+namespace DiagonalEllipseFamilyAudit
+
+open DiagonalEllipseFamily
+
+#check diagonalLinearEquiv
+#check diagonal_norm_le_max
+#check diagonal_inverse_norm_le_max
+#check diagonal_forward_lipschitz
+#check diagonal_inverse_lipschitz
+#check mem_diagonalEllipseInterface_iff
+#check diagonal_ellipse_actual_frontier_equation
+#check diagonal_ellipse_model_error_le
+#check diagonal_ellipse_model_converges_to_actual_frontier
+
+#print axioms diagonal_norm_le_max
+#print axioms diagonal_inverse_norm_le_max
+#print axioms mem_diagonalEllipseInterface_iff
+#print axioms diagonal_ellipse_actual_frontier_equation
+#print axioms diagonal_ellipse_model_error_le
+#print axioms diagonal_ellipse_model_converges_to_actual_frontier
+
+end DiagonalEllipseFamilyAudit
+end BoundaryOfSelf

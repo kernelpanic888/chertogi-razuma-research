@@ -1,0 +1,28 @@
+import OrbitCrossingLocalSegment
+
+namespace BoundaryOfSelf
+namespace OrbitCrossingLocalSegmentAudit
+
+open OrbitCrossingLocalSegment
+
+#check localSegmentOfState
+#check segmentVertexOfState
+#check segmentEdgeOfState
+#check segmentEdgeOfState_inner_eq
+#check segmentEdgeOfState_outer_eq
+#check OrbitLocalSegmentWitness
+#check orbitCut_has_local_segment
+#check signFacingCrossing
+#check signFacingCrossing_axis
+#check signFacingCrossing_direction
+#check signFacingCrossing_on_orbit
+#check target_has_signFacing_local_segment_on_global_orbit
+
+#print axioms segmentEdgeOfState_inner_eq
+#print axioms segmentEdgeOfState_outer_eq
+#print axioms orbitCut_has_local_segment
+#print axioms signFacingCrossing_direction
+#print axioms target_has_signFacing_local_segment_on_global_orbit
+
+end OrbitCrossingLocalSegmentAudit
+end BoundaryOfSelf

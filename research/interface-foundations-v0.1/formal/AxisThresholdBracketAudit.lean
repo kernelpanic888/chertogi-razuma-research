@@ -1,0 +1,20 @@
+import AxisThresholdBracket
+
+open BoundaryOfSelf
+open BoundaryOfSelf.AxisThresholdBracket
+
+#check rightScanSample_zero
+#check rightScanSample_boundary
+#check right_boundary_outside
+#check rightScanSample_adjacent_of_successor
+#check RightRowBracket
+#check RightRowBracket.edge
+#check exists_right_row_bracket
+#check exists_right_row_oriented_crossing
+#check right_row_crossing_belongs_to_global_orbit
+
+#print axioms right_boundary_outside
+#print axioms rightScanSample_adjacent_of_successor
+#print axioms exists_right_row_bracket
+#print axioms exists_right_row_oriented_crossing
+#print axioms right_row_crossing_belongs_to_global_orbit

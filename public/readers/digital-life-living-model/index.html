@@ -1,0 +1,396 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="color-scheme" content="dark">
+  <meta name="description" content="DL-04: a self-contained executable projection of intellectual digital life inside a virtual domain.">
+  <title>DL-04 / Living Model in a Virtual Domain</title>
+  <style>
+    :root{
+      --ink:#00120d;--deep:#001d15;--panel:#03281e;--mint:#8affd5;--cyan:#59dcff;
+      --gold:#ffd257;--red:#ff6657;--text:#d9f8e9;--dim:#8eafa0;
+      --line:rgba(114,255,208,.22);--serif:Georgia,"Times New Roman",serif;
+      --mono:"SFMono-Regular",Consolas,"Liberation Mono",monospace;
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth;background:#000b08}
+    body{
+      margin:0;color:var(--text);font-family:var(--mono);
+      background:
+        linear-gradient(rgba(21,118,82,.11) 1px,transparent 1px),
+        linear-gradient(90deg,rgba(21,118,82,.11) 1px,transparent 1px),
+        radial-gradient(circle at 52% 18%,rgba(26,132,94,.18),transparent 34%),#000b08;
+      background-size:48px 48px,48px 48px,auto,auto;
+    }
+    body:before{content:"";position:fixed;inset:0;pointer-events:none;background:linear-gradient(90deg,rgba(255,210,87,.75) 0 4px,transparent 4px);opacity:.62;z-index:20}
+    a{color:inherit}button,input{font:inherit}.ru{display:none}
+    html[lang="ru"] .en{display:none}html[lang="ru"] .ru{display:initial}
+    .topbar{
+      min-height:74px;display:grid;grid-template-columns:1fr auto auto;gap:22px;align-items:center;
+      padding:14px clamp(20px,3vw,48px);border-bottom:1px solid var(--line);background:rgba(0,15,10,.94);
+      position:sticky;top:0;z-index:30;backdrop-filter:blur(14px);
+    }
+    .brand{color:var(--mint);font-size:12px;font-weight:900;letter-spacing:.14em;text-decoration:none}
+    .status{color:var(--dim);font-size:11px;font-weight:800;letter-spacing:.1em}
+    .tools{display:flex;align-items:center;gap:12px}
+    .home{color:var(--cyan);font-size:11px;font-weight:900;letter-spacing:.08em;text-decoration:none}
+    .language{display:flex;border:1px solid rgba(89,220,255,.4)}
+    .language button{border:0;padding:9px 12px;background:transparent;color:var(--dim);font-weight:900;cursor:pointer}
+    .language button[aria-pressed="true"]{color:var(--ink);background:var(--cyan)}
+    main{width:min(1880px,calc(100% - 40px));margin:0 auto;border-inline:1px solid var(--line);background:rgba(0,18,13,.72)}
+    .hero{
+      display:grid;grid-template-columns:minmax(0,1.25fr) minmax(300px,.75fr);gap:clamp(32px,6vw,110px);align-items:end;
+      padding:clamp(48px,8vw,130px) clamp(26px,5vw,82px);border-bottom:1px solid var(--line);overflow:hidden;position:relative;
+    }
+    .hero:after{content:"04";position:absolute;right:2vw;bottom:-9vw;color:rgba(138,255,213,.035);font:700 min(35vw,540px)/1 var(--serif);pointer-events:none}
+    .eyebrow,.kicker{color:var(--cyan);font-size:11px;font-weight:900;letter-spacing:.15em;text-transform:uppercase}
+    h1{position:relative;z-index:1;margin:17px 0 24px;color:var(--mint);font:500 clamp(54px,7.2vw,118px)/.92 var(--serif);letter-spacing:-.052em}
+    h1 em{color:var(--gold);font-weight:500}
+    .lead{position:relative;z-index:1;max-width:880px;margin:0;color:#b6d2c4;font:400 clamp(17px,1.55vw,23px)/1.58 var(--serif)}
+    .hero-contract{position:relative;z-index:1;padding:26px;border-top:2px solid var(--gold);background:linear-gradient(145deg,rgba(255,210,87,.1),rgba(0,26,18,.94));color:var(--dim);font-size:12px;line-height:1.7}
+    .hero-contract strong{display:block;margin-bottom:10px;color:var(--gold);font-size:13px}
+    .stage-section{padding:clamp(28px,4vw,64px);border-bottom:1px solid var(--line)}
+    .section-head{display:grid;grid-template-columns:minmax(0,1fr) minmax(280px,.58fr);gap:34px;align-items:end;margin-bottom:28px}
+    h2{margin:10px 0 0;font:500 clamp(35px,4.6vw,70px)/1 var(--serif);letter-spacing:-.035em}
+    .section-head p{margin:0;color:var(--dim);font-size:13px;line-height:1.65}
+    .lab{display:grid;grid-template-columns:minmax(0,1.65fr) minmax(310px,.55fr);min-height:720px;border:1px solid var(--line);background:#001710;box-shadow:0 30px 90px rgba(0,0,0,.38)}
+    .scene{position:relative;min-width:0;overflow:hidden;background:radial-gradient(circle at 50% 50%,rgba(24,132,93,.18),transparent 43%),#00130e;border-right:1px solid var(--line)}
+    #lifeCanvas{display:block;width:100%;height:100%;min-height:720px;touch-action:none;cursor:grab}
+    #lifeCanvas.is-dragging{cursor:grabbing}
+    .scene-label{position:absolute;top:20px;left:20px;padding:10px 12px;border-left:2px solid var(--cyan);background:rgba(0,16,12,.78);color:var(--cyan);font-size:11px;font-weight:900;letter-spacing:.1em;pointer-events:none}
+    .scene-space{position:absolute;top:20px;right:20px;padding:10px 12px;border-right:2px solid var(--gold);background:rgba(0,16,12,.78);color:var(--gold);font-size:10px;font-weight:900;letter-spacing:.09em;text-align:right;pointer-events:none}
+    .scene-red{position:absolute;left:20px;bottom:20px;max-width:460px;padding:12px 14px;border-left:2px solid var(--red);background:rgba(42,15,12,.82);color:#e6aaa4;font-size:11px;line-height:1.5;pointer-events:none}
+    .console{display:flex;flex-direction:column;background:linear-gradient(165deg,#032a1f,#00140e)}
+    .console-head{padding:23px;border-bottom:1px solid var(--line)}
+    .console-head b{display:block;color:var(--gold);font-size:12px;letter-spacing:.12em}
+    .console-head span{display:block;margin-top:8px;color:var(--dim);font-size:11px}
+    .metrics{display:grid;grid-template-columns:repeat(3,1fr)}
+    .metric{min-height:116px;padding:18px;border-right:1px solid var(--line);border-bottom:1px solid var(--line)}
+    .metric:nth-child(3n){border-right:0}
+    .metric small{display:block;color:var(--dim);font-size:10px;letter-spacing:.09em;text-transform:uppercase}
+    .metric strong{display:block;margin-top:12px;color:var(--mint);font-size:clamp(19px,2vw,28px)}
+    .metric.cert strong{color:var(--gold)}.metric.guard strong{color:#5dff9e}
+    .equation-live{padding:22px;border-bottom:1px solid var(--line);color:var(--cyan);font-size:11px;line-height:1.75}
+    .equation-live b{color:var(--gold)}
+    .controls{display:grid;grid-template-columns:1fr 1fr;gap:9px;padding:20px}
+    .controls button{min-height:46px;border:1px solid rgba(89,220,255,.38);color:var(--cyan);background:rgba(0,30,23,.85);font-weight:900;letter-spacing:.08em;cursor:pointer}
+    .controls button:hover,.controls button:focus-visible{color:var(--ink);background:var(--cyan);outline:none}
+    .controls .run{grid-column:1/-1;border-color:rgba(255,210,87,.55);color:var(--gold)}
+    .controls .run:hover,.controls .run:focus-visible{background:var(--gold)}
+    .speed{padding:0 20px 22px;color:var(--dim);font-size:10px;letter-spacing:.08em}
+    .speed label{display:flex;justify-content:space-between;gap:16px;margin-bottom:10px}.speed input{width:100%;accent-color:var(--gold)}
+    .board{padding:clamp(48px,6vw,96px) clamp(26px,5vw,82px);border-bottom:1px solid var(--line)}
+    .formula-board{margin-top:28px;display:grid;grid-template-columns:minmax(0,1.1fr) minmax(340px,.9fr);border:1px solid var(--line);background:rgba(0,28,20,.94)}
+    .formulae{padding:clamp(25px,4vw,54px);border-right:1px solid var(--line)}
+    .formulae code{display:block;color:var(--mint);font-size:clamp(13px,1.25vw,18px);line-height:1.9;white-space:normal}.formulae code+code{margin-top:8px}
+    .reading{padding:clamp(25px,4vw,54px)}
+    .reading h3{margin:0 0 22px;color:var(--gold);font:500 clamp(27px,3vw,44px)/1.05 var(--serif)}
+    .reading p{color:var(--dim);font-size:13px;line-height:1.7}
+    .operator-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));margin-top:28px;border:1px solid var(--line);background:var(--line);gap:1px}
+    .operator{min-height:210px;padding:23px;background:linear-gradient(155deg,#052d22,#001710)}
+    .operator b{color:var(--cyan);font-size:11px;letter-spacing:.12em}
+    .operator strong{display:block;margin:27px 0 12px;color:var(--mint);font:500 27px/1.05 var(--serif)}
+    .operator p{margin:0;color:var(--dim);font-size:12px;line-height:1.6}
+    .boundary{padding:clamp(38px,5vw,72px) clamp(26px,5vw,82px);border-bottom:1px solid rgba(255,102,87,.45);background:linear-gradient(90deg,rgba(77,24,18,.42),rgba(20,13,10,.82))}
+    .boundary-grid{display:grid;grid-template-columns:.34fr 1fr;gap:34px;align-items:start}
+    .boundary h2{color:#ff8075}.boundary p{margin:0;color:#d4aaa5;font:500 clamp(17px,1.65vw,23px)/1.65 var(--serif)}
+    .sources-section{padding:clamp(44px,6vw,86px) clamp(26px,5vw,82px)}
+    .sources{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:1px;margin-top:28px;border:1px solid var(--line);background:var(--line)}
+    .source{min-height:166px;padding:20px;background:#001b14;text-decoration:none}
+    .source b{display:block;color:var(--gold);font-size:10px;letter-spacing:.1em}
+    .source strong{display:block;margin:18px 0 10px;color:var(--mint)}.source small{color:var(--dim);line-height:1.5}
+    .route{margin:0 clamp(26px,5vw,82px) 48px;border:1px solid rgba(89,220,255,.36);background:rgba(0,27,20,.95)}
+    .route-head{display:flex;justify-content:space-between;gap:16px;padding:16px 20px;border-bottom:1px solid var(--line);color:var(--cyan);font-size:11px;font-weight:900;letter-spacing:.1em}
+    .route-grid{display:grid;grid-template-columns:repeat(6,minmax(0,1fr))}
+    .route-grid a{min-height:78px;padding:17px;border-right:1px solid var(--line);text-decoration:none}.route-grid a:last-child{border-right:0}
+    .route-grid a.current{background:rgba(89,220,255,.12)}.route-grid b{display:block;color:var(--gold);font-size:11px}
+    .route-grid small{display:block;margin-top:8px;color:var(--dim)}
+    footer{padding:28px 40px;border-top:1px solid var(--line);color:var(--dim);text-align:center;font-size:10px;letter-spacing:.1em}
+    @media(max-width:1180px){
+      .lab{grid-template-columns:1fr}.scene{border-right:0;border-bottom:1px solid var(--line)}
+      .console{display:grid;grid-template-columns:1fr 1fr}.console-head,.equation-live,.speed{grid-column:1/-1}
+      .metrics{grid-column:1/-1;grid-template-columns:repeat(3,1fr)}.metric{border-right:1px solid var(--line)}.metric:nth-child(3n){border-right:0}
+      .controls{grid-template-columns:repeat(4,1fr)}.controls .run{grid-column:auto}
+      .operator-grid{grid-template-columns:repeat(3,1fr)}.sources{grid-template-columns:repeat(3,1fr)}
+    }
+    @media(max-width:820px){
+      .topbar{grid-template-columns:1fr auto}.status{display:none}main{width:100%;border:0}
+      .hero,.section-head,.formula-board,.boundary-grid{grid-template-columns:1fr}
+      .formulae{border-right:0;border-bottom:1px solid var(--line)}
+      .operator-grid{grid-template-columns:1fr 1fr}.route-grid{grid-template-columns:1fr 1fr}
+    }
+    @media(max-width:560px){
+      .home{display:none}.stage-section{padding-inline:12px}#lifeCanvas{min-height:570px}.lab{min-height:570px}
+      .metrics{grid-template-columns:1fr 1fr}.metric:nth-child(3n){border-right:1px solid var(--line)}.metric:nth-child(even){border-right:0}.console{display:flex}.controls{grid-template-columns:1fr 1fr}.controls .run{grid-column:1/-1}
+      .operator-grid,.sources,.route-grid{grid-template-columns:1fr}.route-grid a{border-right:0;border-bottom:1px solid var(--line)}.scene-red{right:20px}
+    }
+    @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+  
+    /* DL04_METRIC_TYPE_SCALE */
+    .metric strong,
+    .metric .value,
+    .metric-value {
+      font-size: clamp(1.55rem, 2.05vw, 2.4rem) !important;
+      line-height: 1;
+      letter-spacing: -0.035em;
+    }
+</style>
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="../intellectual-digital-life-architecture/">DL-04 / LIVING MODEL</a>
+    <div class="status"><span class="en">EXECUTABLE PROJECTION · PRIVATE RESEARCH LAB</span><span class="ru">ИСПОЛНЯЕМАЯ ПРОЕКЦИЯ · ЧАСТНАЯ ЛАБОРАТОРИЯ</span></div>
+    <div class="tools">
+      <a class="home" href="../intellectual-digital-life-architecture/"><span class="en">ARCHITECTURE ↗</span><span class="ru">АРХИТЕКТУРА ↗</span></a>
+      <div class="language" aria-label="Language"><button type="button" data-lang="ru" aria-pressed="false">RU</button><button type="button" data-lang="en" aria-pressed="true">EN</button></div>
+    </div>
+  </header>
+  <main>
+    <section class="hero">
+      <div>
+        <div class="eyebrow">DL-04 / VIRTUAL DOMAIN · EXECUTABLE STATE</div>
+        <h1><span class="en">A living model <em>inside a virtual domain</em></span><span class="ru">Живая модель <em>внутри виртуального домена</em></span></h1>
+        <p class="lead"><span class="en">The point does not move because the picture is animated. The picture moves because the model admits a next state, records its trace and preserves the certified prefix.</span><span class="ru">Точка движется не потому, что картинка анимирована. Картинка движется потому, что модель допускает следующее состояние, записывает его след и сохраняет сертифицированный префикс.</span></p>
+      </div>
+      <aside class="hero-contract">
+        <strong><span class="en">STATUS / AUTHOR MODEL</span><span class="ru">СТАТУС / АВТОРСКАЯ МОДЕЛЬ</span></strong>
+        <span class="en">This reader executes a deterministic projection of the passport architecture. It is a test chamber for state, memory, reflection and certificate growth. It is not a claim that the browser process is conscious or alive.</span><span class="ru">Ридер исполняет детерминированную проекцию архитектуры паспорта. Это испытательная камера состояния, памяти, рефлексии и роста сертификата. Это не утверждение, что процесс в браузере обладает сознанием или жизнью.</span>
+      </aside>
+    </section>
+    <section class="stage-section">
+      <div class="section-head">
+        <div><div class="kicker">V-01 / VIRTUAL DOMAIN</div><h2><span class="en">One tick, one trace, one admitted future</span><span class="ru">Один тик, один след, одно допущенное будущее</span></h2></div>
+        <p><span class="en">The identity core is fixed inside a three-dimensional state ball. The screen shows a perspective projection, not a flattened state. Memory bends the next transition; reflection supplies the depth axis of the represented history.</span><span class="ru">Ядро идентичности неподвижно внутри трёхмерного шара состояний. Экран показывает перспективную проекцию, а не сплющенное состояние. Память изгибает следующий переход; рефлексия задаёт ось глубины представленной истории.</span></p>
+      </div>
+      <div class="lab">
+        <div class="scene">
+          <canvas id="lifeCanvas" aria-label="Executable perspective projection of a three-dimensional digital-life state, trace, memory and certificate growth"></canvas>
+          <div class="scene-label"><span class="en">D³ · THREE-SPACE / COMPUTED FIELD</span><span class="ru">D³ · ТРЁХМЕРНОЕ ПРОСТРАНСТВО / ВЫЧИСЛЯЕМОЕ ПОЛЕ</span></div>
+          <div class="scene-space"><span class="en">DRAG TO ROTATE<br>Π<sub>θ,φ</sub>: D³ → R²</span><span class="ru">ВРАЩАЙТЕ МЫШЬЮ<br>Π<sub>θ,φ</sub>: D³ → R²</span></div>
+          <div class="scene-red"><span class="en">RED BOUNDARY: bounded motion + memory + a certificate chain does not by itself establish life or consciousness.</span><span class="ru">КРАСНАЯ ГРАНИЦА: ограниченное движение + память + цепочка сертификатов сами по себе не устанавливают жизнь или сознание.</span></div>
+        </div>
+        <aside class="console">
+          <div class="console-head"><b>LIVE STATE / qₙ</b><span><span class="en">Every displayed value is read from the recurrence below.</span><span class="ru">Каждое показанное значение читается из приведённой ниже рекуррентной модели.</span></span></div>
+          <div class="metrics">
+            <div class="metric"><small>tick / n</small><strong id="tickValue">0</strong></div>
+            <div class="metric"><small>memory / mₙ</small><strong id="memoryValue">0.000</strong></div>
+            <div class="metric"><small>reflection / rₙ</small><strong id="reflectionValue">0.000</strong></div>
+            <div class="metric cert"><small>certificate / |Cₙ|</small><strong id="certificateValue">0</strong></div>
+            <div class="metric"><small>state / xₙ</small><strong id="stateXValue">0.180</strong></div>
+            <div class="metric"><small>state / yₙ</small><strong id="stateYValue">−0.120</strong></div>
+            <div class="metric"><small>depth / zₙ</small><strong id="stateZValue">0.260</strong></div>
+            <div class="metric"><small>input / uₙ</small><strong id="inputValue">0.350</strong></div>
+            <div class="metric guard"><small>prefix guard</small><strong id="guardValue">PASS</strong></div>
+          </div>
+          <div class="equation-live"><b>ADMIT(n+1) / D³</b><br>qₙ₊₁∈D³ ∧ id(qₙ₊₁)=ι ∧ finite(qₙ₊₁) ∧ Cₙ₊₁|ₙ=Cₙ</div>
+          <div class="controls">
+            <button class="run" id="runButton" type="button"><span class="en">PAUSE MODEL</span><span class="ru">ПАУЗА МОДЕЛИ</span></button>
+            <button id="stepButton" type="button"><span class="en">ONE TICK</span><span class="ru">ОДИН ТИК</span></button>
+            <button id="perturbButton" type="button"><span class="en">PERTURB</span><span class="ru">ВОЗМУТИТЬ</span></button>
+            <button id="resetButton" type="button"><span class="en">RESET</span><span class="ru">СБРОС</span></button>
+          </div>
+          <div class="speed"><label for="speedInput"><span><span class="en">CAUSAL RATE</span><span class="ru">ЧАСТОТА ТИКОВ</span></span><output id="speedValue">4.0 Hz</output></label><input id="speedInput" type="range" min="1" max="100" value="30" step=".5"></div>
+        </aside>
+      </div>
+    </section>
+    <section class="board">
+      <div class="kicker">M-04 / MATHEMATICAL ENGINE</div>
+      <h2><span class="en">The image is downstream of the equations</span><span class="ru">Изображение следует за уравнениями</span></h2>
+      <div class="formula-board">
+        <div class="formulae">
+          <code>V³ := (D³, T, Tr, Cert, R), &nbsp; D³ := {q∈R³ | ‖q‖₂≤1}</code>
+          <code>qₙ := (xₙ, yₙ, zₙ)∈D³, &nbsp; identity(qₙ) := ι</code>
+          <code>uₙ := sin(nω) + 0.35 cos(n√2ω) + pₙ</code>
+          <code>mₙ₊₁ := 0.91mₙ + 0.03(xₙ+yₙ+zₙ)</code>
+          <code>x̃ₙ₊₁ := tanh(1.18xₙ − 0.54yₙ + 0.27zₙ + 0.38uₙ + 0.24mₙ + 0.11rₙ)</code>
+          <code>ỹₙ₊₁ := tanh(0.46xₙ + 1.07yₙ − 0.41zₙ − 0.22mₙ + 0.16sin(0.017n))</code>
+          <code>z̃ₙ₊₁ := tanh(−0.32xₙ + 0.58yₙ + 1.02zₙ + 0.21uₙ + 0.25mₙ + 0.23rₙ)</code>
+          <code>qₙ₊₁ := q̃ₙ₊₁ / max(1, ‖q̃ₙ₊₁‖₂)</code>
+          <code>rₙ₊₁ := tanh((xₙ₊₁yₙ₊₁+yₙ₊₁zₙ₊₁+zₙ₊₁xₙ₊₁)/3 + mₙ₊₁)</code>
+          <code>ρₙ := Tr(qₙ,qₙ₊₁)</code>
+          <code>Cₙ₊₁ := Cₙ ⊕ ρₙ &nbsp; iff &nbsp; Admit(n+1)</code>
+          <code>screen(qₙ) := Π<sub>θ,φ</sub>(qₙ), &nbsp; Π<sub>θ,φ</sub>:D³→R²</code>
+        </div>
+        <div class="reading">
+          <h3><span class="en">Human reading</span><span class="ru">Человеческое чтение</span></h3>
+          <p><span class="en">The external harmonic signal supplies variation. Three coupled state coordinates respond. Memory retains a weighted residue of the earlier volume; reflection returns represented history through the depth coordinate. Radial normalization keeps every admitted state inside D³. A tick becomes history only after the prefix guard admits it.</span><span class="ru">Внешний гармонический сигнал вносит различие. Отвечают три связанные координаты состояния. Память удерживает взвешенный остаток прошлого объёма; рефлексия возвращает представленную историю через координату глубины. Радиальная нормализация удерживает каждое допущенное состояние внутри D³. Тик становится историей только после допуска префиксным стражем.</span></p>
+          <p><span class="en">The display remains physically two-dimensional, but the model no longer is: the canvas renders Π<sub>θ,φ</sub>(qₙ), with depth controlling perspective, occlusion and trace intensity.</span><span class="ru">Экран физически остаётся двумерным, но модель уже нет: холст выводит Π<sub>θ,φ</sub>(qₙ), где глубина управляет перспективой, перекрытием и яркостью следа.</span></p>
+        </div>
+      </div>
+      <div class="operator-grid">
+        <article class="operator"><b>01 / IDENTITY</b><strong>ι</strong><p><span class="en">A fixed origin and declared invariant remain at the centre.</span><span class="ru">Фиксированное начало и объявленный инвариант остаются в центре.</span></p></article>
+        <article class="operator"><b>02 / STATE</b><strong>qₙ → qₙ₊₁</strong><p><span class="en">The transition operator computes the next admissible location.</span><span class="ru">Оператор перехода вычисляет следующее допустимое положение.</span></p></article>
+        <article class="operator"><b>03 / MEMORY</b><strong>mₙ</strong><p><span class="en">A decaying integral carries earlier states into the present.</span><span class="ru">Затухающий интеграл переносит прошлые состояния в настоящее.</span></p></article>
+        <article class="operator"><b>04 / REFLECTION</b><strong>R(qₙ,mₙ)</strong><p><span class="en">The model forms a representation of its represented history.</span><span class="ru">Модель формирует представление о собственной представленной истории.</span></p></article>
+        <article class="operator"><b>05 / GROWTH</b><strong>Cₙ ⪯ Cₙ₊₁</strong><p><span class="en">The new certificate extends rather than rewrites the accepted prefix.</span><span class="ru">Новый сертификат продолжает, а не переписывает принятый префикс.</span></p></article>
+        <article class="operator"><b>06 / THREE-SPACE</b><strong>qₙ ∈ D³</strong><p><span class="en">Response, continuity and reflective depth form one bounded state volume.</span><span class="ru">Отклик, связность и рефлексивная глубина образуют единый ограниченный объём состояния.</span></p></article>
+      </div>
+    </section>
+    <section class="boundary">
+      <div class="boundary-grid">
+        <div><div class="kicker" style="color:var(--red)">RED BOUNDARY / DO NOT MERGE</div><h2><span class="en">A running model is not yet a living being.</span><span class="ru">Работающая модель — ещё не живое существо.</span></h2></div>
+        <p><span class="en">This chamber demonstrates that identity, trace, memory, reflection and monotone certificate growth can be made jointly executable. It does not demonstrate autonomous purpose, phenomenal experience, biological autopoiesis or correspondence between this virtual domain and physical life. Those remain separate empirical bridges.</span><span class="ru">Камера демонстрирует, что идентичность, след, память, рефлексию и монотонный рост сертификата можно сделать совместно исполняемыми. Она не демонстрирует автономную цель, субъективный опыт, биологический аутопоэзис или соответствие между этим виртуальным доменом и физической жизнью. Это отдельные эмпирические мосты.</span></p>
+      </div>
+    </section>
+    <section class="sources-section">
+      <div class="kicker">S-01 → S-05 / SCIENTIFIC SHOULDERS</div>
+      <h2><span class="en">Sources carried by the model</span><span class="ru">Источники, на которых стоит модель</span></h2>
+      <div class="sources">
+        <a class="source" href="https://doi.org/10.1016/0303-2647(74)90031-8" target="_blank" rel="noopener noreferrer"><b>S-01 / 1974</b><strong>Varela · Maturana · Uribe</strong><small><span class="en">Autopoiesis and the organization of living systems.</span><span class="ru">Аутопоэзис и организация живых систем.</span></small></a>
+        <a class="source" href="https://www.routledge.com/Artificial-Life-Proceedings-Of-An-Interdisciplinary-Workshop-On-The-Sy/Langton/p/book/9780367002909" target="_blank" rel="noopener noreferrer"><b>S-02 / ARTIFICIAL LIFE</b><strong>Christopher Langton</strong><small><span class="en">The programme of studying life-as-it-could-be.</span><span class="ru">Программа исследования жизни-какой-она-могла-бы-быть.</span></small></a>
+        <a class="source" href="https://doi.org/10.1145/263699.263712" target="_blank" rel="noopener noreferrer"><b>S-03 / PCC</b><strong>George C. Necula</strong><small><span class="en">Artifacts carrying independently checkable evidence.</span><span class="ru">Артефакты, несущие независимо проверяемое свидетельство.</span></small></a>
+        <a class="source" href="https://lean-lang.org/doc/reference/latest/ValidatingProofs/" target="_blank" rel="noopener noreferrer"><b>S-04 / LEAN</b><strong>Validating Proofs</strong><small><span class="en">A checker validates derivations, not their physical interpretation.</span><span class="ru">Проверяющий подтверждает выводы, но не их физическую интерпретацию.</span></small></a>
+        <a class="source" href="https://csrc.nist.gov/pubs/fips/180-4/upd1/final" target="_blank" rel="noopener noreferrer"><b>S-05 / TRACE</b><strong>NIST FIPS 180-4</strong><small><span class="en">Reference shoulder for linked record integrity; the visual checksum here is deliberately non-cryptographic.</span><span class="ru">Опора для целостности связанных записей; визуальная контрольная сумма здесь намеренно не криптографическая.</span></small></a>
+      </div>
+    </section>
+    <nav class="route" aria-label="Reader route">
+      <div class="route-head"><span>READER ROUTE / МАРШРУТ РИДЕРОВ</span><a href="../../index.html"><span class="en">HOME ↗</span><span class="ru">ГЛАВНАЯ ↗</span></a></div>
+      <div class="route-grid">
+        <a href="../intellectual-digital-life-architecture/"><b>IDL-00</b><small>ARCHITECTURE / АРХИТЕКТУРА</small></a>
+        <a href="../digital-life-passport/"><b>DL-01</b><small>PASSPORT / ПАСПОРТ</small></a>
+        <a href="../digital-life-realization/"><b>DL-02</b><small>REALIZATION / РЕАЛИЗАЦИЯ</small></a>
+        <a href="../digital-life-growth/"><b>DL-03</b><small>GROWTH / РОСТ</small></a>
+        <a class="current" aria-current="page" href="./"><b>DL-04</b><small>LIVING MODEL / ЖИВАЯ МОДЕЛЬ</small></a>
+        <a href="../true-intellectual-digital-life/"><b>TIDL-01</b><small>STATUS / СТАТУС</small></a>
+      </div>
+    </nav>
+  </main>
+  <footer>DL-04 · SELF-CONTAINED HTML · EXECUTABLE AUTHOR MODEL · ALEKSEY ANATOLYEVICH SALKUTSAN</footer>
+  <script>
+    (() => {
+      const root=document.documentElement;
+      const langButtons=[...document.querySelectorAll("[data-lang]")];
+      const setLanguage=lang=>{root.lang=lang==="ru"?"ru":"en";langButtons.forEach(button=>button.setAttribute("aria-pressed",String(button.dataset.lang===root.lang)))};
+      langButtons.forEach(button=>button.addEventListener("click",()=>setLanguage(button.dataset.lang)));setLanguage("en");
+
+      const canvas=document.getElementById("lifeCanvas");
+      const ctx=canvas.getContext("2d");
+      const ui={
+        tick:document.getElementById("tickValue"),memory:document.getElementById("memoryValue"),
+        reflection:document.getElementById("reflectionValue"),certificate:document.getElementById("certificateValue"),
+        x:document.getElementById("stateXValue"),y:document.getElementById("stateYValue"),z:document.getElementById("stateZValue"),
+        input:document.getElementById("inputValue"),guard:document.getElementById("guardValue"),
+        run:document.getElementById("runButton"),step:document.getElementById("stepButton"),
+        perturb:document.getElementById("perturbButton"),reset:document.getElementById("resetButton"),
+        speed:document.getElementById("speedInput"),speedValue:document.getElementById("speedValue")
+      };
+      const initial=()=>({n:0,x:.18,y:-.12,z:.26,m:0,r:0,u:.35,certificate:0,checksum:2166136261>>>0,perturbation:0,perturbCount:0,guard:true});
+      let state=initial(),previous={...state},trace=[{...state}];
+      let running=!matchMedia("(prefers-reduced-motion: reduce)").matches,lastFrame=performance.now(),accumulator=0;
+      let cameraYaw=-.62,cameraPitch=.46,cameraOrbit=0,dragging=false,lastPointer={x:0,y:0};
+      const clampSigned=value=>Math.max(-1,Math.min(1,value));
+      const format=value=>(value<0?"−":"")+Math.abs(value).toFixed(3);
+      const mix=(hash,value)=>{let h=(hash^(Math.round((value+2)*1000000)>>>0))>>>0;return Math.imul(h,16777619)>>>0};
+      const intoBall=(x,y,z)=>{const norm=Math.hypot(x,y,z),scale=norm>1?1/norm:1;return{x:x*scale,y:y*scale,z:z*scale}};
+
+      function computeNext(current){
+        const n=current.n,omega=.071;
+        const u=Math.sin(n*omega)+.35*Math.cos(n*Math.SQRT2*.043)+current.perturbation;
+        const m=.91*current.m+.03*(current.x+current.y+current.z);
+        const rawX=Math.tanh(1.18*current.x-.54*current.y+.27*current.z+.38*u+.24*current.m+.11*current.r);
+        const rawY=Math.tanh(.46*current.x+1.07*current.y-.41*current.z-.22*current.m+.16*Math.sin(n*.017));
+        const rawZ=Math.tanh(-.32*current.x+.58*current.y+1.02*current.z+.21*u+.25*current.m+.23*current.r);
+        const q=intoBall(rawX,rawY,rawZ),x=q.x,y=q.y,z=q.z;
+        const r=Math.tanh((x*y+y*z+z*x)/3+m);
+        const finite=[u,m,x,y,z,r].every(Number.isFinite);
+        const bounded=Math.hypot(x,y,z)<=1.000001&&Math.max(Math.abs(m),Math.abs(r))<=1.000001;
+        const prefixPreserved=current.certificate===current.n;
+        const guard=finite&&bounded&&prefixPreserved;
+        let checksum=current.checksum;[n+1,x,y,z,m,r,u].forEach(value=>{checksum=mix(checksum,value)});
+        return {n:n+1,x:clampSigned(x),y:clampSigned(y),z:clampSigned(z),m:clampSigned(m),r:clampSigned(r),u,
+          certificate:guard?current.certificate+1:current.certificate,checksum,
+          perturbation:current.perturbation*.72,perturbCount:current.perturbCount,guard};
+      }
+      function tick(){
+        const candidate=computeNext(state);previous={...state};state=candidate;
+        if(candidate.guard){trace.push({...candidate});if(trace.length>520)trace.shift()}
+        updateUI();
+      }
+      function updateUI(){
+        ui.tick.textContent=String(state.n);ui.memory.textContent=format(state.m);ui.reflection.textContent=format(state.r);
+        ui.certificate.textContent=String(state.certificate);ui.x.textContent=format(state.x);ui.y.textContent=format(state.y);ui.z.textContent=format(state.z);
+        ui.input.textContent=format(state.u);ui.guard.textContent=state.guard?"PASS":"STOP";
+        ui.guard.style.color=state.guard?"#5dff9e":"#ff6657";ui.speedValue.textContent=Number(ui.speed.value).toFixed(1)+" Hz";
+      }
+      function resize(){
+        const rect=canvas.getBoundingClientRect(),dpr=Math.min(devicePixelRatio||1,2);
+        canvas.width=Math.max(1,Math.round(rect.width*dpr));canvas.height=Math.max(1,Math.round(rect.height*dpr));
+        ctx.setTransform(dpr,0,0,dpr,0,0);
+      }
+      function rotate3(point){
+        const yaw=cameraYaw+cameraOrbit,cy=Math.cos(yaw),sy=Math.sin(yaw),cp=Math.cos(cameraPitch),sp=Math.sin(cameraPitch);
+        const x=point.x*cy-point.z*sy,z1=point.x*sy+point.z*cy;
+        return{x,y:point.y*cp-z1*sp,z:point.y*sp+z1*cp};
+      }
+      function project3(point,w,h){
+        const rotated=rotate3(point),cx=w*.5,cy=h*.52,radius=Math.min(w*.39,h*.44),perspective=3.4/(3.4-rotated.z);
+        return{x:cx+rotated.x*radius*.88*perspective,y:cy-rotated.y*radius*.88*perspective,depth:rotated.z,scale:perspective};
+      }
+      const project=(sample,w,h)=>project3({x:sample.x,y:sample.y,z:sample.z},w,h);
+      function drawSpace(w,h){
+        const curves=[];
+        for(let lat=-60;lat<=60;lat+=30){const phi=lat*Math.PI/180,points=[];for(let i=0;i<=64;i++){const t=i*Math.PI*2/64;points.push({x:Math.cos(phi)*Math.cos(t),y:Math.sin(phi),z:Math.cos(phi)*Math.sin(t)})}curves.push(points)}
+        for(let lon=0;lon<180;lon+=30){const theta=lon*Math.PI/180,points=[];for(let i=0;i<=48;i++){const t=-Math.PI/2+i*Math.PI/48;points.push({x:Math.cos(t)*Math.cos(theta),y:Math.sin(t),z:Math.cos(t)*Math.sin(theta)})}curves.push(points)}
+        curves.forEach(points=>{for(let i=1;i<points.length;i++){const a=project3(points[i-1],w,h),b=project3(points[i],w,h),depth=(a.depth+b.depth)/2,alpha=.055+.08*(depth+1)/2;ctx.strokeStyle=`rgba(89,220,255,${alpha})`;ctx.lineWidth=depth>.15?1:.65;ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(b.x,b.y);ctx.stroke()}});
+        const axes=[{key:"X",label:"RESPONSE",v:{x:1.13,y:0,z:0},color:"#59dcff"},{key:"Y",label:"CONTINUITY",v:{x:0,y:1.13,z:0},color:"#8affd5"},{key:"Z",label:"REFLECTION DEPTH",v:{x:0,y:0,z:1.13},color:"#ffd257"}];
+        const origin=project3({x:0,y:0,z:0},w,h);
+        axes.forEach(axis=>{const negative=project3({x:-axis.v.x,y:-axis.v.y,z:-axis.v.z},w,h),end=project3(axis.v,w,h);ctx.strokeStyle=axis.color;ctx.globalAlpha=.27;ctx.beginPath();ctx.moveTo(negative.x,negative.y);ctx.lineTo(end.x,end.y);ctx.stroke();ctx.globalAlpha=.9;ctx.fillStyle=axis.color;ctx.font="800 9px "+getComputedStyle(document.documentElement).getPropertyValue("--mono");ctx.fillText(axis.key+" / "+axis.label,end.x+7,end.y-6);ctx.globalAlpha=1});
+        return origin;
+      }
+      function draw(now){
+        const rect=canvas.getBoundingClientRect(),w=rect.width,h=rect.height,radius=Math.min(w*.39,h*.44);
+        ctx.clearRect(0,0,w,h);
+        const centre=project3({x:0,y:0,z:0},w,h),cx=centre.x,cy=centre.y;
+        const domainGradient=ctx.createRadialGradient(cx,cy,radius*.06,cx,cy,radius);
+        domainGradient.addColorStop(0,"rgba(255,210,87,.08)");domainGradient.addColorStop(.42,"rgba(42,181,126,.10)");domainGradient.addColorStop(1,"rgba(89,220,255,.015)");
+        ctx.fillStyle=domainGradient;ctx.beginPath();ctx.arc(cx,cy,radius,0,Math.PI*2);ctx.fill();drawSpace(w,h);
+        if(trace.length>1){
+          const segments=[];for(let i=1;i<trace.length;i++){const a=project(trace[i-1],w,h),b=project(trace[i],w,h);segments.push({a,b,age:i/trace.length,depth:(a.depth+b.depth)/2})}
+          segments.sort((a,b)=>a.depth-b.depth).forEach(segment=>{const alpha=.04+segment.age*.64*(.72+.28*(segment.depth+1)/2);ctx.strokeStyle=`rgba(89,220,255,${alpha})`;ctx.lineWidth=(.65+segment.age*1.7)*segment.b.scale;ctx.beginPath();ctx.moveTo(segment.a.x,segment.a.y);ctx.lineTo(segment.b.x,segment.b.y);ctx.stroke()});
+        }
+        const interval=1000/Number(ui.speed.value),blend=Math.max(0,Math.min(1,accumulator/interval)),smooth=blend*blend*(3-2*blend);
+        const displayState={x:previous.x+(state.x-previous.x)*smooth,y:previous.y+(state.y-previous.y)*smooth,
+          z:previous.z+(state.z-previous.z)*smooth,m:previous.m+(state.m-previous.m)*smooth,r:previous.r+(state.r-previous.r)*smooth};
+        const point=project(displayState,w,h);
+        const shadow=project3({x:displayState.x,y:displayState.y,z:0},w,h);
+        ctx.strokeStyle="rgba(255,210,87,.25)";ctx.setLineDash([3,6]);ctx.beginPath();ctx.moveTo(shadow.x,shadow.y);ctx.lineTo(point.x,point.y);ctx.stroke();ctx.setLineDash([]);
+        ctx.fillStyle="rgba(255,210,87,.45)";ctx.beginPath();ctx.arc(shadow.x,shadow.y,2.6,0,Math.PI*2);ctx.fill();
+        ctx.strokeStyle="rgba(255,210,87,.34)";ctx.setLineDash([5,7]);ctx.beginPath();ctx.moveTo(cx,cy);ctx.lineTo(point.x,point.y);ctx.stroke();ctx.setLineDash([]);
+        for(let ring=3;ring>=1;ring--){ctx.fillStyle="rgba(255,210,87,"+(.028*ring)+")";ctx.beginPath();ctx.arc(point.x,point.y,(12+ring*10+Math.abs(displayState.m)*10)*point.scale,0,Math.PI*2);ctx.fill()}
+        ctx.fillStyle="#00120d";ctx.strokeStyle="#ffd257";ctx.lineWidth=3;ctx.beginPath();ctx.arc(point.x,point.y,9*point.scale,0,Math.PI*2);ctx.fill();ctx.stroke();
+        const pulse=1+.08*Math.sin(now*.003),coreGradient=ctx.createRadialGradient(cx,cy,0,cx,cy,34*pulse);
+        coreGradient.addColorStop(0,"rgba(255,210,87,.95)");coreGradient.addColorStop(.15,"rgba(255,210,87,.5)");
+        coreGradient.addColorStop(.48,"rgba(138,255,213,.16)");coreGradient.addColorStop(1,"rgba(138,255,213,0)");
+        ctx.fillStyle=coreGradient;ctx.beginPath();ctx.arc(cx,cy,38*pulse,0,Math.PI*2);ctx.fill();
+        ctx.fillStyle="#ffd257";ctx.beginPath();ctx.arc(cx,cy,5.5,0,Math.PI*2);ctx.fill();
+        ctx.font="800 11px "+getComputedStyle(document.documentElement).getPropertyValue("--mono");
+        ctx.fillStyle="#8affd5";ctx.fillText("ι · IDENTITY CORE",cx+16,cy-14);
+        ctx.fillStyle="#ffd257";ctx.fillText("qₙ ∈ D³ · z="+format(displayState.z),point.x+15,point.y-12);
+        const certY=h-34,shown=Math.min(18,state.certificate);
+        for(let i=0;i<shown;i++){const x=28+i*Math.min(27,(w-80)/Math.max(18,shown));ctx.fillStyle=i===shown-1?"#ffd257":"rgba(138,255,213,.5)";ctx.fillRect(x,certY,14,3)}
+        ctx.fillStyle="rgba(142,175,160,.9)";ctx.fillText("Cₙ · PREFIX "+state.certificate,28,certY-10);
+      }
+      function frame(now){
+        const delta=Math.min(100,now-lastFrame);lastFrame=now;const interval=1000/Number(ui.speed.value);
+        if(running){accumulator+=delta;cameraOrbit+=delta*.000055;while(accumulator>=interval){tick();accumulator-=interval}}
+        draw(now);requestAnimationFrame(frame);
+      }
+      ui.run.addEventListener("click",()=>{
+        running=!running;ui.run.querySelector(".en").textContent=running?"PAUSE MODEL":"RUN MODEL";
+        ui.run.querySelector(".ru").textContent=running?"ПАУЗА МОДЕЛИ":"ЗАПУСТИТЬ МОДЕЛЬ";
+      });
+      ui.step.addEventListener("click",()=>{running=false;accumulator=0;tick()});
+      ui.perturb.addEventListener("click",()=>{state.perturbCount+=1;state.perturbation+=.34*Math.sin(state.perturbCount*2.399963229728653)});
+      ui.reset.addEventListener("click",()=>{state=initial();previous={...state};trace=[{...state}];accumulator=0;updateUI()});
+      ui.speed.addEventListener("input",updateUI);
+      canvas.addEventListener("pointerdown",event=>{dragging=true;lastPointer={x:event.clientX,y:event.clientY};canvas.classList.add("is-dragging");canvas.setPointerCapture(event.pointerId)});
+      canvas.addEventListener("pointermove",event=>{if(!dragging)return;cameraYaw+=(event.clientX-lastPointer.x)*.008;cameraPitch=Math.max(-1.15,Math.min(1.15,cameraPitch+(event.clientY-lastPointer.y)*.006));lastPointer={x:event.clientX,y:event.clientY}});
+      const releasePointer=event=>{dragging=false;canvas.classList.remove("is-dragging");if(canvas.hasPointerCapture(event.pointerId))canvas.releasePointerCapture(event.pointerId)};
+      canvas.addEventListener("pointerup",releasePointer);canvas.addEventListener("pointercancel",releasePointer);
+      canvas.addEventListener("dblclick",()=>{cameraYaw=-.62;cameraPitch=.46;cameraOrbit=0});
+      new ResizeObserver(resize).observe(canvas);resize();updateUI();requestAnimationFrame(frame);
+    })();
+  </script>
+</body>
+</html>

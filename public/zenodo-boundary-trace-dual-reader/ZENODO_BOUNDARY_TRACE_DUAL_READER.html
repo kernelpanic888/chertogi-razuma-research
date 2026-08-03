@@ -1,0 +1,1096 @@
+<!doctype html>
+<html lang="ru" data-lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="A self-contained bilingual reader on interfaces of life, observability, and a modified Drake equation.">
+  <title>Интерфейсы жизни и наблюдаемости</title>
+  <style>
+    :root {
+      --ink: #dff7e7;
+      --muted: #97b9a2;
+      --paper: #03150b;
+      --panel: rgba(3, 26, 13, .92);
+      --line: rgba(67, 222, 126, .28);
+      --green: #00f283;
+      --bright: #bdffcf;
+      --yellow: #ffd447;
+      --red: #ff665c;
+      --mono: "SFMono-Regular", "Cascadia Mono", "IBM Plex Mono", "Courier New", monospace;
+      --serif: "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Georgia, serif;
+      --sans: "Avenir Next", "Gill Sans", "Trebuchet MS", sans-serif;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background:
+        linear-gradient(rgba(0, 242, 131, .075) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 242, 131, .075) 1px, transparent 1px),
+        radial-gradient(circle at 82% 8%, rgba(0, 242, 131, .12), transparent 34rem),
+        var(--paper);
+      background-size: 48px 48px, 48px 48px, auto, auto;
+      font-family: var(--sans);
+      line-height: 1.6;
+    }
+    a { color: var(--green); }
+    a:hover { color: var(--bright); }
+    .shell { width: min(1120px, calc(100% - 32px)); margin: 0 auto; }
+    .masthead {
+      padding: 48px 0 32px;
+      border-bottom: 1px solid var(--line);
+    }
+    .topline {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+    .stamp, .eyebrow, .status, .route-label, .formula-label {
+      font: 800 13px/1.3 var(--mono);
+      letter-spacing: .085em;
+      text-transform: uppercase;
+    }
+    .stamp {
+      color: var(--green);
+      border-left: 5px solid var(--green);
+      padding: 8px 12px;
+      background: rgba(0, 30, 14, .72);
+    }
+    .toolbar { display: flex; align-items: center; gap: 9px; }
+    .lang-button, .print-button {
+      appearance: none;
+      border: 1px solid var(--line);
+      color: var(--ink);
+      background: rgba(0, 26, 12, .85);
+      padding: 9px 12px;
+      cursor: pointer;
+      font: 800 13px/1 var(--mono);
+    }
+    .lang-button[aria-pressed="true"] {
+      color: var(--paper);
+      background: var(--green);
+      border-color: var(--green);
+    }
+    .print-button { color: var(--yellow); border-color: rgba(255, 212, 71, .6); }
+    .jump-button { color: var(--green); border-color: rgba(0, 242, 131, .6); }
+    h1 {
+      max-width: 850px;
+      margin: 36px 0 12px;
+      font: 400 clamp(42px, 8vw, 84px)/.98 var(--serif);
+      letter-spacing: -.045em;
+    }
+    .subtitle { max-width: 790px; color: var(--muted); font-size: clamp(17px, 2vw, 22px); }
+    .meta { margin-top: 24px; color: var(--muted); font: 14px/1.6 var(--mono); }
+    .doc-nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 9px;
+      margin: 30px 0 38px;
+    }
+    .doc-nav a {
+      color: var(--green);
+      text-decoration: none;
+      border: 1px solid var(--line);
+      background: rgba(0, 26, 12, .75);
+      padding: 8px 11px;
+      font: 800 12px/1 var(--mono);
+      letter-spacing: .035em;
+    }
+    .doc-nav a:hover { color: var(--paper); background: var(--green); border-color: var(--green); }
+    [data-pane] { padding: 48px 0 72px; }
+    [data-lang="ru"] [data-pane="en"], [data-lang="en"] [data-pane="ru"] { display: none; }
+    section { margin: 0 0 42px; }
+    h2 {
+      margin: 0 0 16px;
+      color: var(--bright);
+      font: 400 clamp(28px, 4vw, 44px)/1.04 var(--serif);
+      letter-spacing: -.025em;
+    }
+    h3 { margin: 0 0 10px; font: 800 16px/1.35 var(--mono); letter-spacing: .04em; }
+    p { max-width: 860px; margin: 0 0 16px; }
+    .lead { max-width: 900px; font: 400 clamp(21px, 2.6vw, 30px)/1.35 var(--serif); }
+    .card, .plain, .formula, .callout {
+      border: 1px solid var(--line);
+      background: var(--panel);
+    }
+    .card, .plain, .callout { padding: 22px; }
+    .plain { color: var(--muted); }
+    .plain strong { color: var(--green); }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 18px;
+    }
+    .formula {
+      margin: 20px 0;
+      padding: 25px;
+      color: var(--bright);
+      overflow-x: auto;
+      font: 700 clamp(20px, 3.4vw, 34px)/1.55 var(--mono);
+    }
+    .formula small { color: var(--muted); font-size: .52em; }
+    .mark { color: var(--green); font-family: var(--mono); font-weight: 800; }
+    .candidate { border-color: rgba(255, 212, 71, .72); }
+    .candidate h3, .candidate .formula-label { color: var(--yellow); }
+    .external { border-color: rgba(0, 242, 131, .78); }
+    .external h3, .external .formula-label { color: var(--green); }
+    .open { border-color: rgba(255, 102, 92, .82); }
+    .open h3, .open .formula-label { color: var(--red); }
+    .cite {
+      color: var(--yellow);
+      border-bottom: 1px dotted currentColor;
+      text-decoration: none;
+      font: 800 .82em var(--mono);
+      white-space: nowrap;
+    }
+    .cite:hover { color: var(--bright); }
+    .direct-source {
+      color: var(--yellow);
+      text-decoration: none;
+      border-bottom: 1px solid currentColor;
+      font-weight: 800;
+    }
+    .direct-source::after {
+      content: " ↗";
+      font-family: var(--mono);
+      font-size: .8em;
+    }
+    .source-link {
+      color: var(--yellow);
+      font-weight: 800;
+      text-decoration: none;
+      border-bottom: 1px solid currentColor;
+    }
+    .source-link::after {
+      content: " ↗";
+      margin-left: 2px;
+      font: .75em var(--mono);
+    }
+    .parameter-list {
+      margin: 20px 0 0;
+      display: grid;
+      grid-template-columns: 190px 1fr;
+      border-top: 1px solid var(--line);
+      border-left: 1px solid var(--line);
+    }
+    .parameter-list dt, .parameter-list dd {
+      margin: 0;
+      padding: 14px 16px;
+      border-right: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+    }
+    .parameter-list dt {
+      color: var(--yellow);
+      background: rgba(255, 212, 71, .05);
+      font: 800 14px/1.45 var(--mono);
+    }
+    .parameter-list dd { color: var(--muted); }
+    .step-list {
+      max-width: 900px;
+      margin: 22px 0 0;
+      padding: 0;
+      list-style: none;
+      counter-reset: steps;
+    }
+    .step-list li {
+      position: relative;
+      min-height: 54px;
+      margin: 0;
+      padding: 0 0 20px 58px;
+      counter-increment: steps;
+    }
+    .step-list li::before {
+      content: counter(steps, decimal-leading-zero);
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 38px;
+      height: 38px;
+      display: grid;
+      place-items: center;
+      border: 1px solid var(--yellow);
+      color: var(--yellow);
+      font: 800 12px/1 var(--mono);
+    }
+    .source-deck {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+      margin-top: 20px;
+    }
+    .source-card {
+      border: 1px solid var(--line);
+      background: rgba(0, 22, 11, .86);
+    }
+    .source-card summary {
+      cursor: pointer;
+      padding: 16px 18px;
+      color: var(--bright);
+      font: 800 14px/1.45 var(--mono);
+    }
+    .source-card p { padding: 0 18px 18px; margin: 0; color: var(--muted); }
+    .source-scope {
+      margin-top: 20px;
+      padding: 16px 18px;
+      border-left: 4px solid var(--yellow);
+      color: var(--muted);
+      background: rgba(255, 212, 71, .055);
+    }
+    .route-map {
+      margin-top: 58px;
+      padding: clamp(18px, 4vw, 34px);
+      border: 1px solid var(--line);
+      background: linear-gradient(135deg, rgba(0, 242, 131, .075), rgba(255, 102, 92, .045));
+    }
+    .route-intro { max-width: 920px; color: var(--muted); }
+    .route-tree {
+      display: grid;
+      justify-items: center;
+      max-width: 1000px;
+      margin: 32px auto 0;
+      gap: 14px;
+    }
+    .tree-root, .tree-lane, .tree-target {
+      width: min(100%, 790px);
+      padding: 22px;
+      border: 1px solid var(--line);
+      background: rgba(0, 19, 9, .88);
+    }
+    .tree-root { border-color: var(--green); }
+    .tree-root strong, .tree-lane strong, .tree-target strong {
+      display: block;
+      margin-bottom: 10px;
+      font: 800 15px/1.35 var(--mono);
+      letter-spacing: .045em;
+    }
+    .tree-root p, .tree-lane p, .tree-target p { margin: 0; max-width: none; }
+    .tree-arrow {
+      color: var(--green);
+      text-shadow: 0 0 14px rgba(0, 242, 131, .45);
+      font: 900 34px/1 var(--mono);
+    }
+    .tree-branches {
+      width: 100%;
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 22px;
+    }
+    .tree-lane { width: auto; min-height: 190px; }
+    .tree-lane.external { border-color: var(--green); }
+    .tree-lane.candidate { border-color: var(--yellow); }
+    .route-label { color: var(--yellow); margin-bottom: 10px; }
+    .tree-converge {
+      width: min(100%, 720px);
+      padding: 0 18%;
+      color: var(--yellow);
+      display: flex;
+      justify-content: space-between;
+      font: 900 30px/1 var(--mono);
+    }
+    .tree-target {
+      border-color: var(--red);
+      box-shadow: 0 0 0 1px rgba(255, 102, 92, .14), inset 0 0 42px rgba(255, 102, 92, .06);
+    }
+    .tree-target strong { color: var(--red); }
+    .red-dot {
+      display: inline-block;
+      width: 24px;
+      height: 24px;
+      margin-right: 10px;
+      vertical-align: -5px;
+      border-radius: 50%;
+      background: var(--red);
+      box-shadow: 0 0 0 7px rgba(255, 102, 92, .14), 0 0 26px rgba(255, 102, 92, .84);
+    }
+    .honesty {
+      margin: 26px 0 0;
+      padding: 17px 18px;
+      border-left: 4px solid var(--red);
+      color: var(--muted);
+      background: rgba(255, 102, 92, .07);
+    }
+    .references {
+      break-before: page;
+      page-break-before: always;
+      margin-top: 68px;
+      padding: 34px;
+      border: 1px solid var(--line);
+      background: rgba(0, 26, 12, .86);
+    }
+    .references > p { color: var(--muted); }
+    .ref-list { margin: 20px 0 0; padding: 0; list-style: none; counter-reset: refs; }
+    .ref-list li {
+      position: relative;
+      counter-increment: refs;
+      padding: 17px 0 17px 50px;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+    }
+    .ref-list li::before {
+      content: "[" counter(refs) "]";
+      position: absolute;
+      left: 0;
+      color: var(--yellow);
+      font: 800 15px var(--mono);
+    }
+    .footer {
+      margin-top: 42px;
+      color: var(--muted);
+      font: 13px/1.6 var(--mono);
+    }
+    @media (max-width: 720px) {
+      .shell { width: min(100% - 24px, 1120px); }
+      .masthead { padding-top: 26px; }
+      .grid, .tree-branches { grid-template-columns: 1fr; }
+      .tree-converge { padding: 0 34%; }
+      .route-map, .references { padding: 20px 16px; }
+      .parameter-list, .source-deck { grid-template-columns: 1fr; }
+      .parameter-list dt, .parameter-list dd { border-left: 1px solid var(--line); }
+      .toolbar { width: 100%; }
+      .lang-button, .print-button { flex: 1; }
+    }
+    @page {
+      size: A4 portrait;
+      margin: 15mm 16mm 18mm;
+    }
+    @media print {
+      html, body {
+        width: auto;
+        min-height: auto;
+        background: #fff !important;
+        color: #132319 !important;
+        font-size: 10.8pt;
+        line-height: 1.52;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+      body { background-image: none !important; }
+      .shell { width: auto; margin: 0; }
+      .masthead {
+        padding: 0 0 8mm;
+        border-bottom: 1px solid #315b3d;
+        background: #fff !important;
+      }
+      .topline { margin-bottom: 5mm; }
+      .stamp {
+        color: #075a35;
+        background: transparent;
+        border-left-color: #07814b;
+        font-size: 9pt;
+      }
+      .toolbar, .doc-nav { display: none !important; }
+      h1 {
+        margin: 0 0 4mm;
+        color: #102b1b;
+        font-size: 30pt;
+        line-height: 1.02;
+      }
+      h2 {
+        margin-top: 8mm;
+        color: #123522;
+        font-size: 20pt;
+        break-after: avoid;
+        page-break-after: avoid;
+      }
+      h3 { color: #183c29; break-after: avoid; page-break-after: avoid; }
+      .subtitle { color: #385546; font-size: 14pt; }
+      .meta, .footer { color: #53695a; font-size: 8.8pt; }
+      .lead { font-size: 16pt; color: #213c2b; }
+      section { margin: 0 0 7mm; }
+      p { max-width: none; }
+      .card, .plain, .formula, .callout, .route-map, .references,
+      .tree-root, .tree-lane, .tree-target, .source-card, .source-scope {
+        color: #152519 !important;
+        background: #fff !important;
+        box-shadow: none !important;
+      }
+      .card, .plain, .callout, .tree-root, .tree-lane, .tree-target,
+      .source-card, .formula, .source-scope {
+        break-inside: avoid;
+        page-break-inside: avoid;
+      }
+      .grid, .tree-branches, .source-deck { grid-template-columns: 1fr; gap: 4mm; }
+      .formula {
+        padding: 5mm;
+        color: #102b1b !important;
+        font-size: 14pt;
+        line-height: 1.46;
+      }
+      .plain, .source-scope, .honesty, .route-intro,
+      .parameter-list dd, .ref-list li { color: #334a3a !important; }
+      .mark, .external h3, .external .formula-label { color: #076e42 !important; }
+      .candidate h3, .candidate .formula-label, .route-label { color: #896000 !important; }
+      .open h3, .open .formula-label, .tree-target strong { color: #a52d25 !important; }
+      .tree-arrow, .tree-converge { color: #376b4a !important; text-shadow: none; }
+      .red-dot {
+        background: #be4036;
+        box-shadow: none;
+        width: 15px;
+        height: 15px;
+      }
+      .route-map { padding: 0; border: 0; }
+      .tree-root, .tree-lane, .tree-target { padding: 4mm; }
+      .tree-converge { padding: 0 35%; font-size: 18pt; }
+      .parameter-list { break-inside: avoid; page-break-inside: avoid; }
+      .parameter-list dt, .parameter-list dd {
+        padding: 3mm 4mm;
+        border-color: #a9c1af;
+      }
+      .parameter-list dt { color: #7a5500; background: #fff8df !important; }
+      .step-list li { break-inside: avoid; page-break-inside: avoid; }
+      .step-list li::before { color: #755000; border-color: #a5811e; }
+      details[open] summary, details summary { color: #183c29; }
+      details > *:not(summary) { display: block !important; }
+      .references {
+        break-before: page;
+        page-break-before: always;
+        margin-top: 0;
+        padding: 0;
+        border: 0;
+      }
+      a, .cite, .source-link, .direct-source {
+        color: #005e36 !important;
+        text-decoration: underline;
+        border-bottom: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="masthead">
+    <div class="shell">
+      <div class="topline">
+        <span class="stamp">SELF-CONTAINED READER · 16.07.2026</span>
+        <div class="toolbar" aria-label="Reader controls">
+          <button class="lang-button" type="button" data-language="ru" aria-pressed="true">RU</button>
+          <button class="lang-button" type="button" data-language="en" aria-pressed="false">EN</button>
+          <button class="print-button jump-button" type="button" data-jump=".route-map">КАРТА / MAP</button>
+          <button class="print-button jump-button" type="button" data-jump=".references">REFERENCES</button>
+          <button class="print-button" type="button" data-print>PDF / PRINT</button>
+        </div>
+      </div>
+
+      <div data-pane="ru">
+        <h1>Интерфейсы жизни<br>и наблюдаемости</h1>
+        <p class="subtitle">Полная методологическая выкладка и параметризованная модификация формулы Дрейка.</p>
+        <p class="meta">Двуязычный автономный ридер. Все оформление, формулы и переключение языка встроены в один файл. Жёлтые ссылки [1]–[8] открывают первоисточник напрямую; кнопка REFERENCES ведёт к полному списку.</p>
+      </div>
+      <div data-pane="en">
+        <h1>Interfaces of Life<br>and Observability</h1>
+        <p class="subtitle">A full methodological account and a parameterized modification of the Drake equation.</p>
+        <p class="meta">Bilingual self-contained reader. Layout, formulas, and language switching are embedded in this file. Yellow [1]–[8] links open the primary source directly; REFERENCES opens the full list.</p>
+      </div>
+    </div>
+  </header>
+
+  <main class="shell">
+    <article data-pane="ru">
+      <nav class="doc-nav" aria-label="Навигация по документу">
+        <a href="#ru-method">МЕТОД</a>
+        <a href="#ru-evidence">ОПОРЫ</a>
+        <a href="#ru-math">МАТЕМАТИКА</a>
+        <a href="#ru-protocol">ТЕСТ</a>
+        <a href="#ru-route">КАРТА</a>
+        <a href="#ru-sources">ИСТОЧНИКИ</a>
+      </nav>
+      <section id="ru-method">
+        <p class="lead">Здесь не утверждается «готовая формула жизни». Работа предлагает проверяемый язык: отделить внешнюю опору, авторское определение и следующий необходимый тест.</p>
+        <div class="source-scope"><strong>Методологический контракт.</strong> Внешний факт не превращается незаметно в авторскую конструкцию; неизвестная величина не превращается в число; кандидатная теорема не называется доказанной. Если опоры нет, она помечается как будущая задача.</div>
+      </section>
+
+      <section>
+        <h2>1 / Вопрос до формулы</h2>
+        <p>Формула Дрейка полезна не тем, что уже знает количество цивилизаций, а тем, что делает неизвестности видимыми. В этой работе вопрос уже: как описать класс систем, для которых сохраняется различимое различие между системой и средой, а также внешний след такого различия <a class="cite" href="#ru-ref-1">[1]</a>.</p>
+        <div class="grid">
+          <div class="card external">
+            <div class="formula-label">ВНЕШНЯЯ ОПОРА</div>
+            <h3>Астрономическая нормировка</h3>
+            <p>Сценарные значения для доли солнцеподобных звёзд с потенциально пригодными каменистыми мирами зависят от определения зоны обитаемости. Это не вероятность жизни <a class="cite" href="#ru-ref-2">[2]</a>.</p>
+          </div>
+          <div class="card candidate">
+            <div class="formula-label">АВТОРСКИЙ КАНДИДАТ</div>
+            <h3>Интерфейс различия</h3>
+            <p>Активная граница вводится как рабочая модель системы, а не как установленное определение жизни.</p>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <h2>2 / Рабочая геометрия системы</h2>
+        <p>Пусть <span class="mark">H</span> — среда, а <span class="mark">S(t) ⊂ H</span> — система в момент времени t. Граница понимается относительно среды, а не как абстрактная линия без контекста.</p>
+        <div class="formula">
+          S(t) ⊂ H<br>
+          Γ(t) = ∂<sub>H</sub>S(t)<br>
+          J<sub>H↔S</sub>(t) → u<sub>S</sub>(t; H) → <span class="mark">Γ<sub>act</sub>(t; H) = (∂<sub>H</sub>S(t), u<sub>S</sub>(t; H))</span>
+        </div>
+        <div class="plain"><strong>Пояснение.</strong> Здесь H появляется трижды: граница S задана относительно H; через границу проходят потоки J; способность u<sub>S</sub> удерживать организацию зависит от обмена со средой и от возмущений. Это язык модели, который ещё нужно операционализировать на выбранном классе систем.</div>
+      </section>
+
+      <section>
+        <h2>3 / Модифицированная формула Дрейка</h2>
+        <p>Для наблюдательной задачи разделяем астрономическую нормировку и неизвестную вероятность сохранения различимого следа:</p>
+        <div class="formula">
+          K<sub>host</sub> = R<sub>ref</sub> · η<sub>host</sub> · q<sub>h</sub><br>
+          P<sub>trace</sub> = f<sub>Γ</sub> · f<sub>complex</sub> · f<sub>trace</sub><br>
+          <span class="mark">N<sub>trace</sub> = K<sub>host</sub> · P<sub>trace</sub> · L<sub>trace</sub></span>
+        </div>
+        <div class="plain"><strong>Где:</strong> R<sub>ref</sub> — темп появления солнцеподобных звёзд в выбранной популяции; η<sub>host</sub> — сценарная доля хозяев; q<sub>h</sub> — ожидаемое число миров-кандидатов при условии хотя бы одного; f<sub>Γ</sub>, f<sub>complex</sub>, f<sub>trace</sub> и L<sub>trace</sub> пока не имеют эмпирической оценки. Поэтому формула — программа измерений, а не расчёт количества жизни.</div>
+        <div class="source-scope">Для η<sub>host</sub> сохранены два сценария <a class="direct-source" href="https://science.nasa.gov/universe/exoplanets/about-half-of-sun-like-stars-could-host-rocky-potentially-habitable-planets/" target="_blank" rel="noopener noreferrer">NASA Science</a>: 0.50 и 0.75 при разных определениях пригодности. Это не доверительный интервал и не «шанс жизни». Масштабный ориентир R<sub>ref</sub> ≈ 3 yr<sup>−1</sup> берётся только как порядок величины <a class="cite" href="#ru-ref-2">[2]</a> <a class="cite" href="#ru-ref-8">[8]</a>.</div>
+      </section>
+
+      <section>
+        <h2>4 / Неизвестность становится тестом</h2>
+        <p>Первая красная неизвестность должна быть сформулирована не как метафора, а как заранее объявленный сравнительный тест. Пусть химические данные и контекст среды образуют:</p>
+        <div class="formula">
+          D<sub>chem</sub> = (CH<sub>4</sub>, CO<sub>2</sub>, C<sub>star</sub>, C<sub>planet</sub>)<br>
+          <span class="mark">B(D, C) = P(D | H<sub>Γ</sub>, C) / P(D | A, C)</span>
+        </div>
+        <p>Здесь H<sub>Γ</sub> — гипотеза о механизме, согласованном с активной границей; A — набор абиотических альтернатив; C — наблюдаемый контекст. Такая структура не даёт права объявить сигнал живым. Она требует заранее задать предсказание, альтернативы, измерение и условие фальсификации <a class="cite" href="#ru-ref-3">[3]</a> <a class="cite" href="#ru-ref-5">[5]</a> <a class="cite" href="#ru-ref-6">[6]</a>.</p>
+      </section>
+
+      <section>
+        <h2>5 / Тень жизни: кандидатная связка</h2>
+        <p>Тень жизни — не сама жизнь, а интерфейсно сохранённый след живого различия в модели:</p>
+        <div class="formula">
+          <span class="mark">ShadowLife<sub>M</sub> = Tr(I<sub>L→M</sub>(Δ<sub>L</sub>))</span><br>
+          F<sub>X</sub>(ShadowLife<sub>M</sub>) → Δ<sub>X</sub>
+        </div>
+        <div class="card candidate">
+          <div class="formula-label">КАНДИДАТНАЯ ТЕОРЕМА</div>
+          <h3>Осмысление не равно хранению</h3>
+          <p><span class="mark">Sense<sub>X</sub><sup>strong</sup>(ShadowLife<sub>M</sub>) ⇒ ∃ C<sub>X</sub>, B<sub>X</sub>, ε<sub>X</sub> &gt; 0</span>, где тень влияет на собственный замкнутый контур системы, имеющий обратную связь и цену ошибки. Это не утверждение, что мыслить может только биологическая жизнь.</p>
+        </div>
+      </section>
+
+      <section id="ru-evidence">
+        <h2>6 / Что именно известно извне</h2>
+        <p>Внешняя опора начинается не с идеи, а с отдельно проверяемых фактов. <a class="source-link" href="https://science.nasa.gov/universe/exoplanets/about-half-of-sun-like-stars-could-host-rocky-potentially-habitable-planets/" target="_blank" rel="noopener noreferrer">Анализ NASA Science по данным Kepler</a> даёт два сценарных ориентира для доли солнцеподобных звёзд с каменистыми потенциально пригодными мирами: около 0.50 при более консервативном определении и 0.75 при альтернативном. Это два способа задать класс миров, а не две оценки вероятности жизни.</p>
+        <p>Для масштаба времени в формуле используется грубый ориентир: в <a class="source-link" href="https://science.nasa.gov/universe/glossary/" target="_blank" rel="noopener noreferrer">глоссарии NASA Science</a> скорость появления солнцеподобных звёзд в Млечном Пути описана как порядка трёх в год. Это не точная постоянная и не универсальное значение для всех задач; здесь она нужна только для того, чтобы астрономическая часть не осталась без масштаба.</p>
+        <p>Дальше начинается граница знания. Работа <a class="source-link" href="https://arxiv.org/abs/1510.08837" target="_blank" rel="noopener noreferrer">Frank и Sullivan</a> полезна тем, что показывает: в расширенных версиях формулы Дрейка некоторые вопросы можно переводить в язык предшествующих ограничений. Но она не оценивает наши параметры f<sub>Γ</sub>, f<sub>complex</sub>, f<sub>trace</sub> или L<sub>trace</sub>. Эти параметры в настоящей работе остаются открытыми.</p>
+        <div class="plain"><strong>Честная вычитка:</strong> сейчас внешняя статистика поддерживает только K<sub>host</sub>. Она не поддерживает число живых систем, число мыслящих систем, ценность философской модели или вероятность её верности.</div>
+      </section>
+
+      <section id="ru-math">
+        <h2>7 / Что делает и чего не делает математика</h2>
+        <p>Если временно положить q<sub>h</sub> = 1 как простейший сценарий «по меньшей мере один мир-кандидат на хозяина», то внешняя нормировка даёт:</p>
+        <div class="formula">
+          3 yr<sup>−1</sup> · 0.50 · 1 = <span class="mark">1.50 yr<sup>−1</sup></span><br>
+          3 yr<sup>−1</sup> · 0.75 · 1 = <span class="mark">2.25 yr<sup>−1</sup></span><br>
+          N<sub>trace</sub> = K<sub>host</sub> · <span class="mark">(P<sub>trace</sub> · L<sub>trace</sub>)</span>
+        </div>
+        <p>Это не расчёт «сколько жизни существует». Неизвестный множитель P<sub>trace</sub> · L<sub>trace</sub> может быть очень мал, большим, нулевым в выбранном классе систем или вообще плохо заданным. Поэтому численно определена только левая, астрономическая часть маршрута.</p>
+        <dl class="parameter-list">
+          <dt>R<sub>ref</sub></dt>
+          <dd>Внешняя масштабная опора. Можно менять при переходе к другой звёздной популяции; источник описывает порядок величины, не окончательную константу.</dd>
+          <dt>η<sub>host</sub></dt>
+          <dd>Внешняя сценарная величина. Значения 0.50 и 0.75 нельзя усреднять в «вероятность жизни».</dd>
+          <dt>q<sub>h</sub></dt>
+          <dd>Параметр модели. Требует отдельного определения «мира-кандидата» и отдельной статистики.</dd>
+          <dt>f<sub>Γ</sub>, f<sub>complex</sub>, f<sub>trace</sub></dt>
+          <dd>Открытые параметры. Им нельзя приписывать числа без заранее описанной процедуры измерения.</dd>
+          <dt>L<sub>trace</sub></dt>
+          <dd>Открытая длительность различимости следа. Её нельзя заменить возрастом объекта или возрастом цивилизации без дополнительной модели.</dd>
+        </dl>
+      </section>
+
+      <section>
+        <h2>8 / Почему одного красивого сигнала недостаточно</h2>
+        <p><a class="source-link" href="https://science.nasa.gov/wp-content/uploads/2023/05/4a.20181010_AstrobiologyStrategyfortheS4LintheUniverse.pdf" target="_blank" rel="noopener noreferrer">Стратегия NASA по астробиологии</a> задаёт рамку, в которой поиск жизни требует согласования нескольких линий данных. <a class="source-link" href="https://www.nasa.gov/universe/nasa-research-gives-guideline-for-future-alien-life-search/" target="_blank" rel="noopener noreferrer">Материал NASA о ложноположительных результатах</a> отдельно напоминает, что один и тот же наблюдаемый признак может иметь неживые механизмы происхождения.</p>
+        <p>Для химической части полезна работа <a class="source-link" href="https://arxiv.org/abs/1801.08211" target="_blank" rel="noopener noreferrer">Krissansen-Totton, Olson и Catling</a> о химическом неравновесии, а также обзор <a class="source-link" href="https://www.giss.nasa.gov/pubs/abs/ca07620h.html" target="_blank" rel="noopener noreferrer">Catling и коллег о рамке оценки биосигнатур</a>. Их смысл здесь ограничен: они поддерживают требование контекста и альтернатив, а не наши авторские определения активной границы и тени жизни.</p>
+        <div class="callout open">
+          <div class="formula-label">НЕЗАКРЫТАЯ ЛОГИЧЕСКАЯ ЩЕЛЬ</div>
+          <h3>Сигнал не равен причине</h3>
+          <p>Даже высокий показатель B не доказывает жизнь сам по себе. Он зависит от того, насколько полно заданы альтернативы A, насколько корректно измерены D и C, а также от выбора самих вероятностных моделей.</p>
+        </div>
+      </section>
+
+      <section id="ru-protocol">
+        <h2>9 / Протокол перед любым сильным выводом</h2>
+        <p>Чтобы красная точка действительно была проверкой, а не украшением схемы, шаги надо зафиксировать до интерпретации результата:</p>
+        <ol class="step-list">
+          <li><strong>Выбрать класс систем.</strong> Явно записать, к чему относится S, что включено в H и какое наблюдение считается контекстом C.</li>
+          <li><strong>Операционализировать Γ<sub>act</sub>.</strong> Указать, какие измерения будут считаться границей, потоком J и поддержанием u<sub>S</sub>. Если таких измерений нет, это отмечается как незакрытая задача.</li>
+          <li><strong>Записать H<sub>Γ</sub> и альтернативы A.</strong> Не просто сказать «это похоже на жизнь», а перечислить предсказание модели и конкретные абиотические механизмы.</li>
+          <li><strong>Определить D и правило сравнения.</strong> Заранее зафиксировать, какие данные пойдут в B(D,C), как будут оцениваться неопределённости и когда тест считается неинформативным.</li>
+          <li><strong>Задать условие остановки.</strong> Если результат не отличает H<sub>Γ</sub> от A, маршрут не объявляется подтверждённым: он либо уточняется, либо останавливается.</li>
+        </ol>
+        <div class="plain"><strong>Смысл методологии:</strong> сильная опора нужна не везде заранее, а в каждой текущей точке. Если следующий шаг не имеет опоры, он обязан стать явно названной будущей работой, а не незаметной догадкой.</div>
+      </section>
+
+      <section>
+        <h2>10 / Внешняя среда документа</h2>
+        <p>Этот файл не прячет ссылки в конце. Карточки ниже раскрываются внутри страницы, а их названия ведут прямо во внешнюю научную среду. Это позволяет читать текст как маршрут: утверждение, область опоры, ограничение, первоисточник.</p>
+        <div class="source-deck">
+          <details class="source-card">
+            <summary>NASA Science / Kepler occurrence</summary>
+            <p>Поддерживает только сценарные значения для η<sub>host</sub>. <a class="source-link" href="https://science.nasa.gov/universe/exoplanets/about-half-of-sun-like-stars-could-host-rocky-potentially-habitable-planets/" target="_blank" rel="noopener noreferrer">Открыть анализ NASA</a>.</p>
+          </details>
+          <details class="source-card">
+            <summary>NASA / Astrobiology Strategy</summary>
+            <p>Поддерживает осторожную методологию поиска и необходимость нескольких линий данных. <a class="source-link" href="https://science.nasa.gov/wp-content/uploads/2023/05/4a.20181010_AstrobiologyStrategyfortheS4LintheUniverse.pdf" target="_blank" rel="noopener noreferrer">Открыть стратегию</a>.</p>
+          </details>
+          <details class="source-card">
+            <summary>NASA / false positives</summary>
+            <p>Поддерживает требование перечислять неживые альтернативы. <a class="source-link" href="https://www.nasa.gov/universe/nasa-research-gives-guideline-for-future-alien-life-search/" target="_blank" rel="noopener noreferrer">Открыть материал NASA</a>.</p>
+          </details>
+          <details class="source-card">
+            <summary>Открытые статьи / arXiv и GISS</summary>
+            <p>Дают контекст для предшествующих ограничений и оценки биосигнатур. <a class="source-link" href="https://arxiv.org/abs/1510.08837" target="_blank" rel="noopener noreferrer">Frank–Sullivan</a> · <a class="source-link" href="https://arxiv.org/abs/1801.08211" target="_blank" rel="noopener noreferrer">Krissansen-Totton et al.</a> · <a class="source-link" href="https://www.giss.nasa.gov/pubs/abs/ca07620h.html" target="_blank" rel="noopener noreferrer">Catling et al.</a>.</p>
+          </details>
+        </div>
+      </section>
+
+      <section>
+        <h2>11 / Как читать возможный результат</h2>
+        <p>Красная точка не делит мир на «доказано» и «не доказано». У неё есть как минимум четыре честных исхода, и все они несут информацию:</p>
+        <div class="grid">
+          <div class="card open">
+            <div class="formula-label">ИСХОД A</div>
+            <h3>Данных недостаточно</h3>
+            <p>D не позволяет надёжно оценить B. В этом случае нельзя говорить ни за H<sub>Γ</sub>, ни за A. Следующий шаг — улучшить измерение, а не усиливать интерпретацию.</p>
+          </div>
+          <div class="card open">
+            <div class="formula-label">ИСХОД B</div>
+            <h3>Альтернатива объясняет данные</h3>
+            <p>Одна из абиотических моделей A объясняет D не хуже, чем H<sub>Γ</sub>. Это закрывает сильный вывод, но помогает уточнить перечень различающих измерений.</p>
+          </div>
+          <div class="card candidate">
+            <div class="formula-label">ИСХОД C</div>
+            <h3>Кандидатный перевес</h3>
+            <p>В явно заданной модели H<sub>Γ</sub> объясняет D лучше выбранных A. Это кандидатный результат, а не обнаружение жизни: нужны независимые данные, расширенный набор альтернатив и повторение.</p>
+          </div>
+          <div class="card external">
+            <div class="formula-label">ИСХОД D</div>
+            <h3>Устойчивый маршрут</h3>
+            <p>Несколько независимых линий данных и контекстов согласуются, а альтернативы переживают активную проверку. Это самый сильный возможный статус, но он всё равно относится к конкретной модели и классу систем.</p>
+          </div>
+        </div>
+        <p>Такой порядок согласуется с осторожной логикой, которую требуют <a class="source-link" href="https://science.nasa.gov/wp-content/uploads/2023/05/4a.20181010_AstrobiologyStrategyfortheS4LintheUniverse.pdf" target="_blank" rel="noopener noreferrer">астробиологическая стратегия NASA</a> и рамки оценки биосигнатур: контекст, конкурирующие объяснения и независимые линии данных важнее отдельной эффектной аномалии.</p>
+      </section>
+
+      <section>
+        <h2>12 / Интерактивный словарь без подмены смысла</h2>
+        <p>Термины ниже раскрываются по нажатию. Их цель — не заменить ими науку, а не дать разным уровням высказывания слиться в одно неясное слово.</p>
+        <div class="source-deck">
+          <details class="source-card">
+            <summary>H — среда</summary>
+            <p>Контекст, относительно которого система S выделяется и обменивается потоками. H не означает «вся Вселенная»; это выбранная область модели.</p>
+          </details>
+          <details class="source-card">
+            <summary>Γ<sub>act</sub> — активная граница</summary>
+            <p>Пара (граница, способность поддерживать различие) в авторской модели. Это кандидатный интерфейс, не общепринятое биологическое определение.</p>
+          </details>
+          <details class="source-card">
+            <summary>След</summary>
+            <p>Наблюдаемая разность в данных, которая может быть связана с системой. След сам по себе не сообщает механизм его происхождения.</p>
+          </details>
+          <details class="source-card">
+            <summary>ShadowLife</summary>
+            <p>Авторское имя для следа живого различия, сохранённого после перехода в модель. Это не утверждение, что модель хранит саму жизнь.</p>
+          </details>
+          <details class="source-card">
+            <summary>B(D,C)</summary>
+            <p>Отношение того, насколько хорошо данные объясняются одной явно заданной гипотезой по сравнению с альтернативами. Значение B зависит от самих моделей и не является магическим числом истины.</p>
+          </details>
+          <details class="source-card">
+            <summary>Фальсификация</summary>
+            <p>Заранее описанное условие, при котором маршрут нельзя продолжать как подтверждённый. Без него любая интерпретация способна пережить любые данные.</p>
+          </details>
+        </div>
+      </section>
+
+      <section>
+        <h2>13 / Программа исследования, а не обещание</h2>
+        <p>Полная версия должна показывать не только идею, но и порядок работы. Ниже — минимальная программа, которая остаётся честной даже при отрицательном результате:</p>
+        <ol class="step-list">
+          <li><strong>Паспорт модели.</strong> Для одного выбранного класса систем задать H, S, Γ, J, u<sub>S</sub>, наблюдаемое C и единицы измерения. До этого момента формулы остаются схемой.</li>
+          <li><strong>Библиотека альтернатив.</strong> Собрать не только удобные, но и сильные абиотические объяснения A; связать каждое с конкретными ожидаемыми данными.</li>
+          <li><strong>Реестр наблюдений.</strong> Описать, откуда берётся D, какие у него ошибки, как отделяются модельные допущения от измерений и что будет опубликовано для независимой проверки.</li>
+          <li><strong>Заранее объявленный тест.</strong> Зафиксировать расчёт B, пороги информативности, правило остановки и то, какие изменения модели допустимы после знакомства с данными.</li>
+          <li><strong>Независимая проверка.</strong> Повторить ключевой переход на другом наборе данных или другой реализации модели. Если повтор не проходит, фиксировать расхождение, а не маскировать его новым определением.</li>
+        </ol>
+        <div class="honesty"><strong>Финальная дисциплина:</strong> этот текст не доказывает существование жизни вне Земли и не даёт окончательного определения жизни. Его полезность зависит от того, будет ли хотя бы один авторский параметр превращён в реально измеримый и фальсифицируемый объект.</div>
+      </section>
+
+      <section id="ru-route" class="route-map">
+        <h2>Карта маршрута: от опоры к красной точке</h2>
+        <p class="route-intro">Дерево ниже не является доказательством жизни и не является обещанием результата. Оно показывает только честный маршрут: где есть внешняя опора, где начинается авторская конструкция и какой единственный узел должен выдержать проверку.</p>
+        <div class="route-tree">
+          <article class="tree-root">
+            <strong>ЗЕЛЁНАЯ ОПОРА / EXTERNAL FOUNDATIONS</strong>
+            <p>Наблюдательная астрономия задаёт только скорость появления потенциальных хозяев: <span class="mark">K<sub>host</sub> = R<sub>ref</sub> · η<sub>host</sub> · q<sub>h</sub></span>. Это нормировка вопроса, не вероятность жизни <a class="cite" href="#ru-ref-2">[2]</a> <a class="cite" href="#ru-ref-8">[8]</a>.</p>
+          </article>
+          <div class="tree-arrow" aria-hidden="true">↓</div>
+          <div class="tree-branches">
+            <article class="tree-lane external">
+              <div class="route-label">Маршрут A / наблюдаемый</div>
+              <strong>От мира-кандидата к данным</strong>
+              <p><span class="mark">K<sub>host</sub> → D<sub>chem</sub></span>. Измеряются данные, контекст среды и абиотические альтернативы. Сам маршрут не делает вывод «это жизнь» <a class="cite" href="#ru-ref-5">[5]</a> <a class="cite" href="#ru-ref-7">[7]</a>.</p>
+            </article>
+            <article class="tree-lane candidate">
+              <div class="route-label">Маршрут B / кандидат модели</div>
+              <strong>От среды к активной границе</strong>
+              <p><span class="mark">H → ∂<sub>H</sub>S → J<sub>H↔S</sub> → u<sub>S</sub> → Γ<sub>act</sub> → C = O(H)</span>. Это авторский интерфейс; он нуждается в независимой операционализации и не заменяет измерения.</p>
+            </article>
+          </div>
+          <div class="tree-converge" aria-hidden="true"><span>↘</span><span>↙</span></div>
+          <article class="tree-target">
+            <strong><span class="red-dot" aria-hidden="true"></span>КРАСНАЯ ТОЧКА / TEST GATE</strong>
+            <p><span class="mark">B(D, C = O(H)) = P(D | H<sub>Γ</sub>, C) / P(D | A, C)</span></p>
+            <p>До этой точки фиксируются предсказание модели, абиотические альтернативы A, измеряемые данные D и условие фальсификации. Данные могут усилить маршрут, сузить его или остановить <a class="cite" href="#ru-ref-3">[3]</a> <a class="cite" href="#ru-ref-6">[6]</a>.</p>
+          </article>
+        </div>
+        <p class="honesty"><strong>Граница утверждения:</strong> дерево не заявляет обнаружение жизни, универсальную теорию жизни или причинность между философской моделью и природой. Оно задаёт переход от внешней статистики и кандидатного интерфейса к заранее объявленному тесту.</p>
+      </section>
+
+      <section id="ru-sources" class="references" aria-labelledby="ru-references">
+        <h2 id="ru-references">References / Источники и область опоры</h2>
+        <p>Каждый источник поддерживает только указанную область: астрономическую статистику, методологию поиска или оценку биосигнатур. Ни один источник не подтверждает авторские конструкции Γ<sub>act</sub>, ShadowLife или общий вывод о жизни.</p>
+        <ol class="ref-list">
+          <li id="ru-ref-1">SETI Institute. <em>The Drake Equation.</em> Базовая декомпозиция задачи поиска технологических цивилизаций. <a href="https://www.seti.org/research/seti-101/drake-equation/" target="_blank" rel="noopener noreferrer">Открыть источник</a>.</li>
+          <li id="ru-ref-2">NASA Science. <em>About Half of Sun-Like Stars Could Host Rocky, Potentially Habitable Planets</em> (2020). Сценарные значения 0.50 и 0.75 при разных определениях зоны обитаемости. <a href="https://science.nasa.gov/universe/exoplanets/about-half-of-sun-like-stars-could-host-rocky-potentially-habitable-planets/" target="_blank" rel="noopener noreferrer">Открыть источник</a>.</li>
+          <li id="ru-ref-3">NASA. <em>Astrobiology Strategy for the Search for Life in the Universe</em> (2018). Рамки для поиска жизни и трактовки данных. <a href="https://science.nasa.gov/wp-content/uploads/2023/05/4a.20181010_AstrobiologyStrategyfortheS4LintheUniverse.pdf" target="_blank" rel="noopener noreferrer">Открыть PDF</a>.</li>
+          <li id="ru-ref-4">Frank, A. &amp; Sullivan, W. T. <em>A New Empirical Constraint on the Prevalence of Technological Species in the Universe</em> (2016). Предшествующие ограничения в расширенном контексте формулы Дрейка. <a href="https://arxiv.org/abs/1510.08837" target="_blank" rel="noopener noreferrer">Открыть препринт</a>.</li>
+          <li id="ru-ref-5">Krissansen-Totton, J., Olson, S. L. &amp; Catling, D. C. <em>Disequilibrium Biosignatures over Earth History and Implications for Detecting Exoplanet Life</em> (2018). Химическое неравновесие как задача оценки биосигнатуры. <a href="https://arxiv.org/abs/1801.08211" target="_blank" rel="noopener noreferrer">Открыть препринт</a>.</li>
+          <li id="ru-ref-6">NASA. <em>NASA Research Gives Guideline for Future Alien Life Search.</em> Риск ложноположительных интерпретаций. <a href="https://www.nasa.gov/universe/nasa-research-gives-guideline-for-future-alien-life-search/" target="_blank" rel="noopener noreferrer">Открыть источник</a>.</li>
+          <li id="ru-ref-7">Catling, D. C., et al. <em>Exoplanet Biosignatures: A Framework for Their Assessment.</em> Контекст и альтернативы при оценке биосигнатур. <a href="https://www.giss.nasa.gov/pubs/abs/ca07620h.html" target="_blank" rel="noopener noreferrer">Открыть источник</a>.</li>
+          <li id="ru-ref-8">NASA Science. <em>Glossary: Milky Way.</em> Масштабная оценка темпа рождения солнцеподобных звёзд. <a href="https://science.nasa.gov/universe/glossary/" target="_blank" rel="noopener noreferrer">Открыть источник</a>.</li>
+        </ol>
+      </section>
+      <p class="footer">Автономный HTML-ридер: текст, стили, формулы и переключение языка находятся в одном файле. Для перехода по внешним источникам требуется интернет.</p>
+    </article>
+
+    <article data-pane="en">
+      <nav class="doc-nav" aria-label="Document navigation">
+        <a href="#en-method">METHOD</a>
+        <a href="#en-evidence">SUPPORT</a>
+        <a href="#en-math">MATH</a>
+        <a href="#en-protocol">TEST</a>
+        <a href="#en-route">MAP</a>
+        <a href="#en-sources">SOURCES</a>
+      </nav>
+      <section id="en-method">
+        <p class="lead">This text does not claim a finished “formula of life.” It proposes a checkable language: distinguish external support, author-defined constructs, and the next necessary test.</p>
+        <div class="source-scope"><strong>Methodological contract.</strong> An external fact must not silently become an author-defined construct; an unknown parameter must not silently become a number; a candidate theorem must not be called proven. If support is absent, it is marked as future work.</div>
+      </section>
+
+      <section>
+        <h2>1 / The question before the formula</h2>
+        <p>The Drake equation is useful not because it already knows the number of civilizations, but because it makes unknowns visible. The question here is narrower: how can we describe systems for which a distinction between system and environment, together with an external trace of that distinction, remains discernible <a class="cite" href="#en-ref-1">[1]</a>?</p>
+        <div class="grid">
+          <div class="card external">
+            <div class="formula-label">EXTERNAL SUPPORT</div>
+            <h3>Astronomical normalization</h3>
+            <p>Scenario values for the share of Sun-like stars with potentially suitable rocky worlds depend on the habitable-zone definition. They are not probabilities of life <a class="cite" href="#en-ref-2">[2]</a>.</p>
+          </div>
+          <div class="card candidate">
+            <div class="formula-label">AUTHOR-DEFINED CANDIDATE</div>
+            <h3>Interface of distinction</h3>
+            <p>The active boundary is introduced as a working model of a system, not as an established definition of life.</p>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <h2>2 / Working geometry of a system</h2>
+        <p>Let <span class="mark">H</span> be an environment and <span class="mark">S(t) ⊂ H</span> a system at time t. The boundary is understood relative to the environment, not as a context-free abstract line.</p>
+        <div class="formula">
+          S(t) ⊂ H<br>
+          Γ(t) = ∂<sub>H</sub>S(t)<br>
+          J<sub>H↔S</sub>(t) → u<sub>S</sub>(t; H) → <span class="mark">Γ<sub>act</sub>(t; H) = (∂<sub>H</sub>S(t), u<sub>S</sub>(t; H))</span>
+        </div>
+        <div class="plain"><strong>Interpretive note.</strong> H appears in three places: the boundary of S is relative to H; flows J cross that boundary; and the ability u<sub>S</sub> to maintain organization depends on exchange with and disturbances from H. This is model language that still requires operationalization for a chosen class of systems.</div>
+      </section>
+
+      <section>
+        <h2>3 / Modified Drake equation</h2>
+        <p>For an observational task, we separate astronomical normalization from the unknown probability that a discernible trace persists:</p>
+        <div class="formula">
+          K<sub>host</sub> = R<sub>ref</sub> · η<sub>host</sub> · q<sub>h</sub><br>
+          P<sub>trace</sub> = f<sub>Γ</sub> · f<sub>complex</sub> · f<sub>trace</sub><br>
+          <span class="mark">N<sub>trace</sub> = K<sub>host</sub> · P<sub>trace</sub> · L<sub>trace</sub></span>
+        </div>
+        <div class="plain"><strong>Where:</strong> R<sub>ref</sub> is a rate of Sun-like star formation in the selected population; η<sub>host</sub> is a scenario share of hosts; q<sub>h</sub> is the expected number of candidate worlds conditional on at least one; and f<sub>Γ</sub>, f<sub>complex</sub>, f<sub>trace</sub>, and L<sub>trace</sub> currently have no empirical estimate. Thus the equation is a measurement program, not a count of life.</div>
+        <div class="source-scope">For η<sub>host</sub>, the two <a class="direct-source" href="https://science.nasa.gov/universe/exoplanets/about-half-of-sun-like-stars-could-host-rocky-potentially-habitable-planets/" target="_blank" rel="noopener noreferrer">NASA Science</a> scenarios are retained: 0.50 and 0.75 under different suitability definitions. They are neither a confidence interval nor a “chance of life.” The scale anchor R<sub>ref</sub> ≈ 3 yr<sup>−1</sup> is used only as an order of magnitude <a class="cite" href="#en-ref-2">[2]</a> <a class="cite" href="#en-ref-8">[8]</a>.</div>
+      </section>
+
+      <section>
+        <h2>4 / An unknown becomes a test</h2>
+        <p>The first red unknown should be stated not as a metaphor but as a pre-declared comparative test. Let chemical data and environmental context be:</p>
+        <div class="formula">
+          D<sub>chem</sub> = (CH<sub>4</sub>, CO<sub>2</sub>, C<sub>star</sub>, C<sub>planet</sub>)<br>
+          <span class="mark">B(D, C) = P(D | H<sub>Γ</sub>, C) / P(D | A, C)</span>
+        </div>
+        <p>Here H<sub>Γ</sub> is a hypothesis about a mechanism consistent with the active boundary; A is a set of abiotic alternatives; and C is observed context. This structure does not license calling a signal alive. It requires a pre-specified prediction, alternatives, observation, and falsification criterion <a class="cite" href="#en-ref-3">[3]</a> <a class="cite" href="#en-ref-5">[5]</a> <a class="cite" href="#en-ref-6">[6]</a>.</p>
+      </section>
+
+      <section>
+        <h2>5 / ShadowLife: a candidate link</h2>
+        <p>ShadowLife is not life itself, but an interface-preserved trace of a living distinction inside a model:</p>
+        <div class="formula">
+          <span class="mark">ShadowLife<sub>M</sub> = Tr(I<sub>L→M</sub>(Δ<sub>L</sub>))</span><br>
+          F<sub>X</sub>(ShadowLife<sub>M</sub>) → Δ<sub>X</sub>
+        </div>
+        <div class="card candidate">
+          <div class="formula-label">CANDIDATE THEOREM</div>
+          <h3>Sense is not storage</h3>
+          <p><span class="mark">Sense<sub>X</sub><sup>strong</sup>(ShadowLife<sub>M</sub>) ⇒ ∃ C<sub>X</sub>, B<sub>X</sub>, ε<sub>X</sub> &gt; 0</span>, where a shadow influences the system’s own closed loop, which has feedback and a cost of error. This does not state that only biological life can think.</p>
+        </div>
+      </section>
+
+      <section id="en-evidence">
+        <h2>6 / What is externally known</h2>
+        <p>External support begins not with an idea, but with separately checkable facts. The <a class="source-link" href="https://science.nasa.gov/universe/exoplanets/about-half-of-sun-like-stars-could-host-rocky-potentially-habitable-planets/" target="_blank" rel="noopener noreferrer">NASA Science analysis of Kepler data</a> gives two scenario anchors for the fraction of Sun-like stars with rocky potentially suitable worlds: about 0.50 under a more conservative definition and 0.75 under an alternative one. These are two ways of defining a world class, not two estimates of the probability of life.</p>
+        <p>For a time-scale anchor, the <a class="source-link" href="https://science.nasa.gov/universe/glossary/" target="_blank" rel="noopener noreferrer">NASA Science glossary</a> describes the Milky Way’s production of Sun-like stars as roughly three per year. It is not a precision constant or a universal value; here it only prevents the astronomical part of the equation from being scale-free.</p>
+        <p>The work of <a class="source-link" href="https://arxiv.org/abs/1510.08837" target="_blank" rel="noopener noreferrer">Frank and Sullivan</a> is useful because it shows that some extended Drake-equation questions can be expressed using prior empirical constraints. It does not estimate our parameters f<sub>Γ</sub>, f<sub>complex</sub>, f<sub>trace</sub>, or L<sub>trace</sub>. In this work those parameters remain open.</p>
+        <div class="plain"><strong>Honest reading:</strong> external statistics currently support only K<sub>host</sub>. They do not support a count of living systems, a count of thinking systems, the value of a philosophical model, or the probability that the model is true.</div>
+      </section>
+
+      <section id="en-math">
+        <h2>7 / What the mathematics does and does not do</h2>
+        <p>If q<sub>h</sub> = 1 is temporarily used as the simplest “at least one candidate world per host” scenario, external normalization gives:</p>
+        <div class="formula">
+          3 yr<sup>−1</sup> · 0.50 · 1 = <span class="mark">1.50 yr<sup>−1</sup></span><br>
+          3 yr<sup>−1</sup> · 0.75 · 1 = <span class="mark">2.25 yr<sup>−1</sup></span><br>
+          N<sub>trace</sub> = K<sub>host</sub> · <span class="mark">(P<sub>trace</sub> · L<sub>trace</sub>)</span>
+        </div>
+        <p>This is not a calculation of “how much life exists.” The unknown factor P<sub>trace</sub> · L<sub>trace</sub> may be very small, large, zero in the selected system class, or poorly specified. Only the left, astronomical part of the route is numerically anchored.</p>
+        <dl class="parameter-list">
+          <dt>R<sub>ref</sub></dt>
+          <dd>An external scale anchor. It may change for another stellar population; the source gives an order of magnitude, not a final constant.</dd>
+          <dt>η<sub>host</sub></dt>
+          <dd>An external scenario quantity. The values 0.50 and 0.75 must not be averaged into a “probability of life.”</dd>
+          <dt>q<sub>h</sub></dt>
+          <dd>A model parameter. It requires a separate definition of “candidate world” and separate statistics.</dd>
+          <dt>f<sub>Γ</sub>, f<sub>complex</sub>, f<sub>trace</sub></dt>
+          <dd>Open parameters. No numerical values should be assigned without a declared measurement procedure.</dd>
+          <dt>L<sub>trace</sub></dt>
+          <dd>An open duration of trace discernibility. It cannot be replaced by object age or civilization age without an additional model.</dd>
+        </dl>
+      </section>
+
+      <section>
+        <h2>8 / Why one beautiful signal is insufficient</h2>
+        <p>The <a class="source-link" href="https://science.nasa.gov/wp-content/uploads/2023/05/4a.20181010_AstrobiologyStrategyfortheS4LintheUniverse.pdf" target="_blank" rel="noopener noreferrer">NASA Astrobiology Strategy</a> supplies a framework in which life search requires multiple lines of evidence. NASA’s guidance on <a class="source-link" href="https://www.nasa.gov/universe/nasa-research-gives-guideline-for-future-alien-life-search/" target="_blank" rel="noopener noreferrer">false-positive interpretations</a> separately notes that the same observable feature can arise through non-living mechanisms.</p>
+        <p>For the chemical side, use the work of <a class="source-link" href="https://arxiv.org/abs/1801.08211" target="_blank" rel="noopener noreferrer">Krissansen-Totton, Olson, and Catling</a> on chemical disequilibrium and the review by <a class="source-link" href="https://www.giss.nasa.gov/pubs/abs/ca07620h.html" target="_blank" rel="noopener noreferrer">Catling and colleagues on biosignature assessment</a>. Their role here is limited: they support the demand for context and alternatives, not the author-defined notions of active boundary or ShadowLife.</p>
+        <div class="callout open">
+          <div class="formula-label">UNRESOLVED LOGICAL GAP</div>
+          <h3>A signal is not a cause</h3>
+          <p>Even a high value of B does not by itself prove life. It depends on how completely alternatives A are specified, how D and C are measured, and how the probability models themselves are selected.</p>
+        </div>
+      </section>
+
+      <section id="en-protocol">
+        <h2>9 / Protocol before any strong conclusion</h2>
+        <p>For the red point to be a real test rather than decoration, the steps must be fixed before the result is interpreted:</p>
+        <ol class="step-list">
+          <li><strong>Select a system class.</strong> State what S is, what belongs to H, and which observation counts as context C.</li>
+          <li><strong>Operationalize Γ<sub>act</sub>.</strong> Specify which measurements count as a boundary, a flow J, and maintenance u<sub>S</sub>. If no measurements exist, mark this as unresolved work.</li>
+          <li><strong>Write H<sub>Γ</sub> and alternatives A.</strong> Do not merely say “this resembles life”; list the model prediction and concrete abiotic mechanisms.</li>
+          <li><strong>Define D and the comparison rule.</strong> Pre-specify which data enter B(D,C), how uncertainty is evaluated, and when the test is uninformative.</li>
+          <li><strong>Set a stopping condition.</strong> If the outcome does not distinguish H<sub>Γ</sub> from A, the route is not declared confirmed; it is refined or stopped.</li>
+        </ol>
+        <div class="plain"><strong>Meaning of the methodology:</strong> strong support is not required everywhere in advance, but at every present point. If the next step lacks support, it must become explicitly named future work rather than an invisible guess.</div>
+      </section>
+
+      <section>
+        <h2>10 / The document’s external environment</h2>
+        <p>This file does not hide links at the end. The cards below expand within the page, and their titles lead directly into the external scientific environment. The intended reading path is: claim, scope of support, limitation, primary source.</p>
+        <div class="source-deck">
+          <details class="source-card">
+            <summary>NASA Science / Kepler occurrence</summary>
+            <p>Supports only the scenario values for η<sub>host</sub>. <a class="source-link" href="https://science.nasa.gov/universe/exoplanets/about-half-of-sun-like-stars-could-host-rocky-potentially-habitable-planets/" target="_blank" rel="noopener noreferrer">Open NASA analysis</a>.</p>
+          </details>
+          <details class="source-card">
+            <summary>NASA / Astrobiology Strategy</summary>
+            <p>Supports a cautious search methodology and the need for multiple data lines. <a class="source-link" href="https://science.nasa.gov/wp-content/uploads/2023/05/4a.20181010_AstrobiologyStrategyfortheS4LintheUniverse.pdf" target="_blank" rel="noopener noreferrer">Open strategy</a>.</p>
+          </details>
+          <details class="source-card">
+            <summary>NASA / false positives</summary>
+            <p>Supports the requirement to state non-living alternatives. <a class="source-link" href="https://www.nasa.gov/universe/nasa-research-gives-guideline-for-future-alien-life-search/" target="_blank" rel="noopener noreferrer">Open NASA guidance</a>.</p>
+          </details>
+          <details class="source-card">
+            <summary>Open papers / arXiv and GISS</summary>
+            <p>Provide context for prior constraints and biosignature assessment. <a class="source-link" href="https://arxiv.org/abs/1510.08837" target="_blank" rel="noopener noreferrer">Frank–Sullivan</a> · <a class="source-link" href="https://arxiv.org/abs/1801.08211" target="_blank" rel="noopener noreferrer">Krissansen-Totton et al.</a> · <a class="source-link" href="https://www.giss.nasa.gov/pubs/abs/ca07620h.html" target="_blank" rel="noopener noreferrer">Catling et al.</a>.</p>
+          </details>
+        </div>
+      </section>
+
+      <section>
+        <h2>11 / How to read a possible result</h2>
+        <p>The red point does not divide the world into “proven” and “unproven.” It has at least four honest outcomes, and each carries information:</p>
+        <div class="grid">
+          <div class="card open">
+            <div class="formula-label">OUTCOME A</div>
+            <h3>Insufficient data</h3>
+            <p>D does not allow B to be assessed reliably. In this case nothing can be claimed for either H<sub>Γ</sub> or A. The next step is better measurement, not stronger interpretation.</p>
+          </div>
+          <div class="card open">
+            <div class="formula-label">OUTCOME B</div>
+            <h3>An alternative explains the data</h3>
+            <p>One abiotic model A explains D at least as well as H<sub>Γ</sub>. This blocks a strong conclusion but helps identify which measurements would be discriminating.</p>
+          </div>
+          <div class="card candidate">
+            <div class="formula-label">OUTCOME C</div>
+            <h3>Candidate advantage</h3>
+            <p>Within an explicitly stated model, H<sub>Γ</sub> explains D better than the selected A. This is a candidate result, not a detection of life: independent data, broader alternatives, and repetition remain necessary.</p>
+          </div>
+          <div class="card external">
+            <div class="formula-label">OUTCOME D</div>
+            <h3>Robust route</h3>
+            <p>Several independent data lines and contexts agree while alternatives undergo active testing. This is the strongest possible status, but it still applies to a particular model and system class.</p>
+          </div>
+        </div>
+        <p>This ordering follows the cautious logic of the <a class="source-link" href="https://science.nasa.gov/wp-content/uploads/2023/05/4a.20181010_AstrobiologyStrategyfortheS4LintheUniverse.pdf" target="_blank" rel="noopener noreferrer">NASA Astrobiology Strategy</a> and biosignature-assessment frameworks: context, competing explanations, and independent data lines matter more than a single striking anomaly.</p>
+      </section>
+
+      <section>
+        <h2>12 / Interactive glossary without a substitution of meaning</h2>
+        <p>The terms below expand on click. Their purpose is not to replace science with vocabulary, but to keep levels of statement from collapsing into one vague word.</p>
+        <div class="source-deck">
+          <details class="source-card">
+            <summary>H — environment</summary>
+            <p>The context relative to which S is distinguished and exchanges flows. H does not mean “the whole universe”; it is the selected domain of a model.</p>
+          </details>
+          <details class="source-card">
+            <summary>Γ<sub>act</sub> — active boundary</summary>
+            <p>A pair of boundary and capacity to maintain a distinction in the author-defined model. It is a candidate interface, not a standard biological definition.</p>
+          </details>
+          <details class="source-card">
+            <summary>Trace</summary>
+            <p>An observable difference in data that may be related to a system. A trace alone says nothing about the mechanism that produced it.</p>
+          </details>
+          <details class="source-card">
+            <summary>ShadowLife</summary>
+            <p>The author-defined name for a trace of a living distinction preserved after passage into a model. It does not state that the model stores life itself.</p>
+          </details>
+          <details class="source-card">
+            <summary>B(D,C)</summary>
+            <p>A ratio describing how well data are explained by one explicitly stated hypothesis relative to alternatives. B depends on the models themselves and is not a magical number of truth.</p>
+          </details>
+          <details class="source-card">
+            <summary>Falsification</summary>
+            <p>A pre-specified condition under which the route cannot continue as confirmed. Without it, any interpretation can survive any data.</p>
+          </details>
+        </div>
+      </section>
+
+      <section>
+        <h2>13 / A research program, not a promise</h2>
+        <p>A full version should show not only an idea but an order of work. The following is a minimum program that remains honest even after a negative result:</p>
+        <ol class="step-list">
+          <li><strong>Model passport.</strong> For one chosen system class, define H, S, Γ, J, u<sub>S</sub>, observable C, and measurement units. Before this, the formulas remain a scheme.</li>
+          <li><strong>Alternative library.</strong> Collect not only convenient but strong abiotic explanations A, and connect each with concrete expected data.</li>
+          <li><strong>Observation register.</strong> Describe where D comes from, its errors, how model assumptions are separated from measurements, and what will be published for independent checking.</li>
+          <li><strong>Pre-declared test.</strong> Fix the calculation of B, informativeness thresholds, stopping rule, and which model changes are admissible after seeing the data.</li>
+          <li><strong>Independent check.</strong> Repeat the key transition with another data set or another model implementation. If replication fails, record the discrepancy rather than hiding it behind a new definition.</li>
+        </ol>
+        <div class="honesty"><strong>Final discipline:</strong> this text neither proves extraterrestrial life nor supplies a final definition of life. Its usefulness depends on whether at least one author-defined parameter becomes a genuinely measurable and falsifiable object.</div>
+      </section>
+
+      <section id="en-route" class="route-map">
+        <h2>Route map: from support to the red point</h2>
+        <p class="route-intro">The tree below is neither evidence of life nor a promise of success. It shows only an honest route: where external support exists, where an author-defined construct begins, and which single node must withstand testing.</p>
+        <div class="route-tree">
+          <article class="tree-root">
+            <strong>GREEN SUPPORT / EXTERNAL FOUNDATIONS</strong>
+            <p>Observational astronomy provides only a rate of potential hosts: <span class="mark">K<sub>host</sub> = R<sub>ref</sub> · η<sub>host</sub> · q<sub>h</sub></span>. This normalizes the question; it is not a probability of life <a class="cite" href="#en-ref-2">[2]</a> <a class="cite" href="#en-ref-8">[8]</a>.</p>
+          </article>
+          <div class="tree-arrow" aria-hidden="true">↓</div>
+          <div class="tree-branches">
+            <article class="tree-lane external">
+              <div class="route-label">Route A / observable</div>
+              <strong>From candidate world to data</strong>
+              <p><span class="mark">K<sub>host</sub> → D<sub>chem</sub></span>. Measure data, environmental context, and abiotic alternatives. This route alone does not imply “this is life” <a class="cite" href="#en-ref-5">[5]</a> <a class="cite" href="#en-ref-7">[7]</a>.</p>
+            </article>
+            <article class="tree-lane candidate">
+              <div class="route-label">Route B / model candidate</div>
+              <strong>From environment to active boundary</strong>
+              <p><span class="mark">H → ∂<sub>H</sub>S → J<sub>H↔S</sub> → u<sub>S</sub> → Γ<sub>act</sub> → C = O(H)</span>. This is an author-defined interface; it needs independent operationalization and does not replace measurement.</p>
+            </article>
+          </div>
+          <div class="tree-converge" aria-hidden="true"><span>↘</span><span>↙</span></div>
+          <article class="tree-target">
+            <strong><span class="red-dot" aria-hidden="true"></span>RED POINT / TEST GATE</strong>
+            <p><span class="mark">B(D, C = O(H)) = P(D | H<sub>Γ</sub>, C) / P(D | A, C)</span></p>
+            <p>Before this point, fix a model prediction, abiotic alternatives A, measurable data D, and a falsification criterion. Data may strengthen, narrow, or stop the route <a class="cite" href="#en-ref-3">[3]</a> <a class="cite" href="#en-ref-6">[6]</a>.</p>
+          </article>
+        </div>
+        <p class="honesty"><strong>Claim boundary:</strong> the tree does not claim a detection of life, a universal theory of life, or a causal link between the philosophical model and nature. It specifies a transition from external statistics and a candidate interface to a pre-declared test.</p>
+      </section>
+
+      <section id="en-sources" class="references" aria-labelledby="en-references">
+        <h2 id="en-references">References / scope of support</h2>
+        <p>Each source supports only the stated scope: astronomical statistics, search methodology, or biosignature assessment. No source validates the author-defined constructs Γ<sub>act</sub>, ShadowLife, or a general conclusion about life.</p>
+        <ol class="ref-list">
+          <li id="en-ref-1">SETI Institute. <em>The Drake Equation.</em> Basic decomposition of the technological-civilization search question. <a href="https://www.seti.org/research/seti-101/drake-equation/" target="_blank" rel="noopener noreferrer">Open source</a>.</li>
+          <li id="en-ref-2">NASA Science. <em>About Half of Sun-Like Stars Could Host Rocky, Potentially Habitable Planets</em> (2020). Scenario values 0.50 and 0.75 under different habitable-zone definitions. <a href="https://science.nasa.gov/universe/exoplanets/about-half-of-sun-like-stars-could-host-rocky-potentially-habitable-planets/" target="_blank" rel="noopener noreferrer">Open source</a>.</li>
+          <li id="en-ref-3">NASA. <em>Astrobiology Strategy for the Search for Life in the Universe</em> (2018). Frameworks for life-search design and data interpretation. <a href="https://science.nasa.gov/wp-content/uploads/2023/05/4a.20181010_AstrobiologyStrategyfortheS4LintheUniverse.pdf" target="_blank" rel="noopener noreferrer">Open PDF</a>.</li>
+          <li id="en-ref-4">Frank, A. &amp; Sullivan, W. T. <em>A New Empirical Constraint on the Prevalence of Technological Species in the Universe</em> (2016). Prior constraints in an extended Drake-equation context. <a href="https://arxiv.org/abs/1510.08837" target="_blank" rel="noopener noreferrer">Open preprint</a>.</li>
+          <li id="en-ref-5">Krissansen-Totton, J., Olson, S. L. &amp; Catling, D. C. <em>Disequilibrium Biosignatures over Earth History and Implications for Detecting Exoplanet Life</em> (2018). Chemical disequilibrium as a biosignature-assessment problem. <a href="https://arxiv.org/abs/1801.08211" target="_blank" rel="noopener noreferrer">Open preprint</a>.</li>
+          <li id="en-ref-6">NASA. <em>NASA Research Gives Guideline for Future Alien Life Search.</em> Risks of false-positive interpretations. <a href="https://www.nasa.gov/universe/nasa-research-gives-guideline-for-future-alien-life-search/" target="_blank" rel="noopener noreferrer">Open source</a>.</li>
+          <li id="en-ref-7">Catling, D. C., et al. <em>Exoplanet Biosignatures: A Framework for Their Assessment.</em> Biosignature assessment requires context and alternatives. <a href="https://www.giss.nasa.gov/pubs/abs/ca07620h.html" target="_blank" rel="noopener noreferrer">Open source</a>.</li>
+          <li id="en-ref-8">NASA Science. <em>Glossary: Milky Way.</em> Order-of-magnitude rate for Sun-like star formation. <a href="https://science.nasa.gov/universe/glossary/" target="_blank" rel="noopener noreferrer">Open source</a>.</li>
+        </ol>
+      </section>
+      <p class="footer">Self-contained HTML reader: text, styles, formulas, and language switching live in one file. Internet access is needed only to open external sources.</p>
+    </article>
+  </main>
+
+  <script>
+    (() => {
+      const root = document.documentElement;
+      const buttons = [...document.querySelectorAll("[data-language]")];
+      const titles = {
+        ru: "Интерфейсы жизни и наблюдаемости",
+        en: "Interfaces of Life and Observability"
+      };
+      const chooseLanguage = (language) => {
+        const next = language === "en" ? "en" : "ru";
+        root.dataset.lang = next;
+        root.lang = next;
+        document.title = titles[next];
+        buttons.forEach((button) => {
+          button.setAttribute("aria-pressed", String(button.dataset.language === next));
+        });
+        try { localStorage.setItem("boundary-trace-language", next); } catch (_) {}
+        if (history.replaceState) history.replaceState(null, "", "#" + next);
+      };
+      buttons.forEach((button) => button.addEventListener("click", () => chooseLanguage(button.dataset.language)));
+      const sources = {
+        "1": "https://www.seti.org/research/seti-101/drake-equation/",
+        "2": "https://science.nasa.gov/universe/exoplanets/about-half-of-sun-like-stars-could-host-rocky-potentially-habitable-planets/",
+        "3": "https://science.nasa.gov/wp-content/uploads/2023/05/4a.20181010_AstrobiologyStrategyfortheS4LintheUniverse.pdf",
+        "4": "https://arxiv.org/abs/1510.08837",
+        "5": "https://arxiv.org/abs/1801.08211",
+        "6": "https://www.nasa.gov/universe/nasa-research-gives-guideline-for-future-alien-life-search/",
+        "7": "https://www.giss.nasa.gov/pubs/abs/ca07620h.html",
+        "8": "https://science.nasa.gov/universe/glossary/"
+      };
+      document.querySelectorAll("a.cite[href^='#']").forEach((link) => {
+        const sourceId = link.getAttribute("href").match(/ref-(\d+)$/)?.[1];
+        if (!sources[sourceId]) return;
+        link.href = sources[sourceId];
+        link.target = "_blank";
+        link.rel = "noopener noreferrer";
+        link.title = "Open primary source / Открыть первоисточник";
+      });
+      document.querySelectorAll("[data-jump]").forEach((button) => {
+        button.addEventListener("click", () => {
+          const pane = document.querySelector('article[data-pane="' + root.dataset.lang + '"]');
+          const target = pane && pane.querySelector(button.dataset.jump);
+          if (target) target.scrollIntoView({ behavior: "smooth", block: "start" });
+        });
+      });
+      document.querySelector("[data-print]").addEventListener("click", () => window.print());
+      let initial = location.hash === "#en" ? "en" : location.hash === "#ru" ? "ru" : "ru";
+      try { initial = location.hash ? initial : (localStorage.getItem("boundary-trace-language") || initial); } catch (_) {}
+      chooseLanguage(initial);
+    })();
+  </script>
+</body>
+</html>

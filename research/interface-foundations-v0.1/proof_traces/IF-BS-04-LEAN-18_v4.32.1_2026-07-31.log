@@ -1,0 +1,6 @@
+warning: failed to query latest release, using existing version 'leanprover/lean4:v4.32.1'
+'BoundaryOfSelf.RefinedBoundaryPath.coarseInside_iff_threshold' does not depend on any axioms
+'BoundaryOfSelf.RefinedBoundaryPath.fineInside_iff_threshold' does not depend on any axioms
+'BoundaryOfSelf.RefinedBoundaryPath.fineBand_maps_to_coarseBand' depends on axioms: [propext]
+'BoundaryOfSelf.RefinedBoundaryPath.coarseBand_has_fine_lift' depends on axioms: [propext]
+'BoundaryOfSelf.RefinedBoundaryPath.coarseBand_eq_coarsenedFineBand' depends on axioms: [propext, Quot.sound]
