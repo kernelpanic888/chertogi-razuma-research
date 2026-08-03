@@ -6,11 +6,11 @@
 
 ![CR-02: поле свидетелей и обнаружение скрытой развилки](assets/2026-08-04-cr-02-witness-field.png)
 
-## Русское чтение
+## English reading
 
-Приватная развилка становится доказательством только тогда, когда встречаются два несовместимых подписанных представления одного шага.
+A private fork becomes evidence only when two incompatible, signed views of one slot meet.
 
-Пока свидетель A видит только голову `51α`, а свидетель B только `51β`, каждый из них локально наблюдает допустимое продолжение. После gossip-обмена возникает компактная проверяемая пара: одна идентичность, один номер шага и один родитель, но две разные подписанные головы.
+While witness A sees only head `51α` and witness B sees only `51β`, each locally observes an admissible continuation. Once gossip connects them, the pair becomes compact and verifiable: one identity, one slot and one parent, but two different signed heads.
 
 ```text
 Wₙ = (id, n, parentHead, head, σ)
@@ -19,19 +19,19 @@ Fork(Wᵃ, Wᵇ) ⇔
   sameSlot(Wᵃ, Wᵇ) ∧ headᵃ ≠ headᵇ
 ```
 
-Gossip не выбирает «истинную» ветвь. Он доказывает более узкий и проверяемый факт: единая непрерывная история больше не согласуется со всеми полученными свидетельствами.
-
-Это не новый шифр и не доказательство глобального обнаружения в полностью разделённой сети. Модель требует, чтобы хотя бы один честный свидетель увидел каждую ветвь, а канал между свидетелями когда-нибудь восстановился.
-
-## English reading
-
-A private fork becomes evidence only when two incompatible, signed views of one slot meet.
-
-While witness A sees only head `51α` and witness B sees only `51β`, each locally observes an admissible continuation. Once gossip connects them, the pair becomes compact and verifiable: one identity, one slot and one parent, but two different signed heads.
-
 Gossip does not choose the true branch. It proves the narrower claim that one continuous history is no longer compatible with all received evidence.
 
 This is neither a new cipher nor a proof of global discovery in a permanently partitioned network. The model requires at least one honest witness to observe each branch and eventual reconnection between witnesses.
+
+## Русское чтение
+
+Приватная развилка становится доказательством только тогда, когда встречаются два несовместимых подписанных представления одного шага.
+
+Пока свидетель A видит только голову `51α`, а свидетель B только `51β`, каждый из них локально наблюдает допустимое продолжение. После gossip-обмена возникает компактная проверяемая пара: одна идентичность, один номер шага и один родитель, но две разные подписанные головы.
+
+Gossip не выбирает «истинную» ветвь. Он доказывает более узкий и проверяемый факт: единая непрерывная история больше не согласуется со всеми полученными свидетельствами.
+
+Это не новый шифр и не доказательство глобального обнаружения в полностью разделённой сети. Модель требует, чтобы хотя бы один честный свидетель увидел каждую ветвь, а канал между свидетелями когда-нибудь восстановился.
 
 ## Canonical artifacts / Канонические артефакты
 
