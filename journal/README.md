@@ -1,0 +1,21 @@
+# Journal of the First Distinction
+
+## Журнал первого различия
+
+A bilingual, versioned field journal of the research published in the Chambers of the First Distinction.
+
+Двуязычный версионируемый полевой журнал исследований, опубликованных в «Чертогах первого различия».
+
+The journal explains transitions, shows working maps and points to canonical artifacts. It does not duplicate Lean files or executable protocol code.
+
+Журнал объясняет переходы, показывает рабочие карты и ведёт к каноническим артефактам. Lean-файлы и исполняемый код протокола здесь не дублируются.
+
+## Entries / Записи
+
+- [2026-08-04 · CR-02 · When a hidden fork becomes evidence / Когда скрытая развилка становится доказательством](2026-08-04-cr-02-hidden-fork-evidence.md)
+
+## Coordinates / Координаты
+
+- [Live research site / Живой исследовательский сайт](https://chertogi-razuma-research.kernelpanic888.chatgpt.site/)
+- [Certified Continuity Protocol code / Код протокола непрерывности](https://github.com/kernelpanic888/Salkutsan-Certified-Continuity-Protocol)
+- [Author ORCID](https://orcid.org/0009-0006-8717-0492)

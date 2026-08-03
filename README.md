@@ -19,6 +19,12 @@ Cryptographic reference code is intentionally maintained in a separate repositor
 
 https://github.com/kernelpanic888/Salkutsan-Certified-Continuity-Protocol
 
+## Research journal
+
+The bilingual **Journal of the First Distinction / Журнал первого различия** records research transitions without duplicating the canonical code:
+
+https://github.com/kernelpanic888/chertogi-razuma-research/tree/main/journal
+
 ## Build and boundary check
 
 ```bash
