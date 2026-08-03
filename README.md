@@ -19,6 +19,8 @@ Cryptographic reference code is intentionally maintained in a separate repositor
 
 https://github.com/kernelpanic888/Salkutsan-Certified-Continuity-Protocol
 
+The CR-03 branch adds an executable physical-anchor provider contract, a development-only simulator, a Lean relation for anchored successors and a bilingual visual research map. It remains a laboratory candidate until a real hardware provider and frozen attack matrix are independently exercised.
+
 ## Research journal
 
 The bilingual **Journal of the First Distinction / Журнал первого различия** records research transitions without duplicating the canonical code:

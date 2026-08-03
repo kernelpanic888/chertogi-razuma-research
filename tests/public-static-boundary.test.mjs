@@ -95,11 +95,15 @@ test("unregistered browser-storage key is rejected", () => {
     .includes("registered-local-storage-only"));
 });
 
-test("D1 binding promotes the project out of P0 and is rejected", () => {
+test("only the anonymous DB counter binding is permitted in P0", () => {
+  assert.equal(failingIds(publicHtml, {
+    ...publicHosting,
+    d1: "DB",
+  }).includes("d1-counter-only"), false);
   assert.ok(failingIds(publicHtml, {
     ...publicHosting,
-    d1: { binding: "DB" },
-  }).includes("d1-unbound"));
+    d1: "PRIVATE_DATA",
+  }).includes("d1-counter-only"));
 });
 
 test("R2 binding promotes the project out of P0 and is rejected", () => {
