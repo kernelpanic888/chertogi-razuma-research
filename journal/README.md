@@ -12,7 +12,8 @@ The journal explains transitions, shows working maps and points to canonical art
 
 ## Entries / Записи
 
-- [2026-08-04 · CR-02 · When a hidden fork becomes evidence / Когда скрытая развилка становится доказательством](2026-08-04-cr-02-hidden-fork-evidence.md)
+- [2026-08-04 · CR-02 · When a hidden fork becomes evidence · EN](2026-08-04-cr-02-hidden-fork-evidence.md)
+- [2026-08-04 · CR-02 · Когда скрытая развилка становится доказательством · RU](2026-08-04-cr-02-hidden-fork-evidence-ru.md)
 
 ## Coordinates / Координаты
 
