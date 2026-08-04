@@ -211,6 +211,44 @@
       <div class="css03-boundary"><b>RED BOUNDARY / КРАСНАЯ ГРАНИЦА</b> <span class="en">The contract and adversarial protocol tests exist. A signed SMAppService LaunchDaemon and authenticated physical XPC transport do not yet exist; operational status therefore remains CSS-02.</span><span class="ru">Контракт и состязательные тесты протокола существуют. Подписанного SMAppService LaunchDaemon и физического доверенного XPC-канала пока нет; поэтому рабочий статус остаётся CSS-02.</span></div>
     </section>
 
+    <section class="section" id="aiso-01">
+      <div class="section-kicker">AISO-01 / SAFE IMPROVEMENT LOOP</div>
+      <h2 class="en">Choose only inside the admissible set.</h2>
+      <h2 class="ru">Выбирать только внутри допустимого множества.</h2>
+      <p class="en">AISO selects a proof-carrying change. CSS applies it inside the passport action field and emits the receipt.</p>
+      <p class="ru">AISO выбирает переход со свидетельствами. CSS исполняет его в поле действий паспорта и выпускает квитанцию.</p>
+
+      <div style="border:1px solid rgba(89,208,236,.38);padding:1rem 1.15rem;margin:1.15rem 0;font-family:monospace;color:#8fffd5;overflow:auto">
+        D<sub>t</sub>={δ∈A<sub>t</sub> | Improve&gt;0 ∧ Risk≤ρ ∧ C ∧ V ∧ P ∧ Safe ∧ PreservesInv ∧ RollbackWitness}<br>
+        δ*<sub>t</sub>=arg max<sub>δ∈D<sub>t</sub></sub>[α Improve−β Risk−γ Cost−λ Entropy] · D<sub>t</sub>=∅ ⇒ NO_OP
+      </div>
+
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));border:1px solid rgba(89,208,236,.28);margin:1rem 0">
+        <div style="padding:1rem;border-right:1px solid rgba(89,208,236,.2)"><strong>01</strong><br>OBSERVE → MODEL</div>
+        <div style="padding:1rem;border-right:1px solid rgba(89,208,236,.2)"><strong>02</strong><br>SELECT → VALIDATE</div>
+        <div style="padding:1rem;border-right:1px solid rgba(89,208,236,.2)"><strong>03</strong><br>AUTHORIZE → APPLY</div>
+        <div style="padding:1rem"><strong>04</strong><br>VERIFY → LEARN</div>
+      </div>
+
+      <p class="en"><strong>Local guarantees:</strong> objective maximum among admissible candidates; protected invariants; rollback witness; learning only after post-verification.</p>
+      <p class="ru"><strong>Локальные гарантии:</strong> максимум цели среди допустимых кандидатов; защищённые инварианты; свидетельство отката; обучение только после постпроверки.</p>
+      <p>
+        <a href="https://github.com/kernelpanic888/TMI-Lean-Formal-Library/blob/main/tools/AISOControlLoop.lean">LEAN CORE ↗</a> ·
+        <a href="https://github.com/kernelpanic888/TMI-Lean-Formal-Library/blob/main/tools/aiso-control-loop.mjs">SELECTOR ↗</a> ·
+        <a href="https://github.com/kernelpanic888/TMI-Lean-Formal-Library/blob/main/tools/tests/aiso-control-loop.test.mjs">BLIND CORPUS ↗</a>
+      </p>
+      <p>
+        <a href="https://arxiv.org/abs/1705.10528">CONSTRAINED OPTIMIZATION ↗</a> ·
+        <a href="https://arxiv.org/abs/1708.08611">SHIELDING ↗</a> ·
+        <a href="https://www.sei.cmu.edu/library/an-architectural-description-of-the-simplex-architecture/">SIMPLEX ↗</a> ·
+        <a href="https://doi.org/10.6028/NIST.AI.100-1">NIST AI RMF ↗</a>
+      </p>
+      <div style="border:1px solid #9b4338;background:rgba(80,25,18,.42);padding:1rem 1.15rem;margin-top:1rem;color:#efb3a8">
+        <span class="en"><strong>RED BOUNDARY.</strong> Lean verifies the conditional selector, not the truth of Q, Risk, validation, or the physical adapter. A global computable argmax is not claimed.</span>
+        <span class="ru"><strong>КРАСНАЯ ГРАНИЦА.</strong> Lean проверяет условный селектор, а не истинность Q, Risk, валидации или физического адаптера. Вычислимый глобальный argmax не заявлен.</span>
+      </div>
+    </section>
+
     <section class="section" id="prior-art">
       <header class="section__head"><h2 class="en">Prior-art boundary</h2><h2 class="ru">Граница предшествующих решений</h2><span>SHOULDERS / 05</span></header>
       <div class="section__body prior">

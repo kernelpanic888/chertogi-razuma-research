@@ -12,6 +12,9 @@ The journal explains transitions, shows working maps and points to canonical art
 
 ## Entries / Записи
 
+- [2026-08-05 · AISO-01: optimize only inside the admissible set](./2026-08-05-aiso-01-safe-improvement-loop.md)
+- [2026-08-05 · AISO-01: оптимизация только внутри допустимого множества](./2026-08-05-aiso-01-safe-improvement-loop-ru.md)
+
 - [2026-08-04 · CSS-03 · Authority boundary · EN](2026-08-04-css-03-authority-boundary.md)
 - [2026-08-04 · CSS-03 · Граница полномочий · RU](2026-08-04-css-03-authority-boundary-ru.md)
 - [2026-08-04 · CSS-02 · Quarantine refinement · EN](2026-08-04-css-02-quarantine-refinement.md)
