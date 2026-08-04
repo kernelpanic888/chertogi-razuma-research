@@ -12,6 +12,8 @@ The journal explains transitions, shows working maps and points to canonical art
 
 ## Entries / Записи
 
+- [2026-08-04 · CSS-02 · Quarantine refinement · EN](2026-08-04-css-02-quarantine-refinement.md)
+- [2026-08-04 · CSS-02 · Карантинное уточнение · RU](2026-08-04-css-02-quarantine-refinement-ru.md)
 - [2026-08-04 · CSS-01 · Certified System Steward · EN](2026-08-04-css-01-certified-system-steward.md)
 - [2026-08-04 · CSS-01 · Сертифицированный системный распорядитель · RU](2026-08-04-css-01-certified-system-steward-ru.md)
 - [2026-08-04 · CR-03 · Physical continuity anchor · EN](2026-08-04-cr-03-physical-continuity-anchor.md)
