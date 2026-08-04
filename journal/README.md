@@ -12,6 +12,8 @@ The journal explains transitions, shows working maps and points to canonical art
 
 ## Entries / Записи
 
+- [2026-08-04 · CSS-01 · Certified System Steward · EN](2026-08-04-css-01-certified-system-steward.md)
+- [2026-08-04 · CSS-01 · Сертифицированный системный распорядитель · RU](2026-08-04-css-01-certified-system-steward-ru.md)
 - [2026-08-04 · CR-03 · Physical continuity anchor · EN](2026-08-04-cr-03-physical-continuity-anchor.md)
 - [2026-08-04 · CR-03 · Физический якорь непрерывности · RU](2026-08-04-cr-03-physical-continuity-anchor-ru.md)
 - [2026-08-04 · CR-02 · When a hidden fork becomes evidence · EN](2026-08-04-cr-02-hidden-fork-evidence.md)
