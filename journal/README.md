@@ -12,6 +12,9 @@ The journal explains transitions, shows working maps and points to canonical art
 
 ## Entries / Записи
 
+- [2026-08-05 · AISO-02: the selector never becomes the executor](./2026-08-05-aiso-02-selection-to-receipt.md)
+- [2026-08-05 · AISO-02: селектор не становится исполнителем](./2026-08-05-aiso-02-selection-to-receipt-ru.md)
+
 - [2026-08-05 · AISO-01: optimize only inside the admissible set](./2026-08-05-aiso-01-safe-improvement-loop.md)
 - [2026-08-05 · AISO-01: оптимизация только внутри допустимого множества](./2026-08-05-aiso-01-safe-improvement-loop-ru.md)
 
