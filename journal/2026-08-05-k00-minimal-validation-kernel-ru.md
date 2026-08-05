@@ -1,9 +1,9 @@
-# K-00: интерфейсное замыкание
+# AZ-00: исполнительный шлюз Agent Zero
 
-`Act_I(a,b)=V_A(a) and V_B(b) and C_I(a,b)`
+`V_0, V_ext, Safe : X -> {0,1}`
 
-`Exec_I(a,b)=some(a,b)` при совпадении тройки; иначе `none`.
+`Exec_0(X)=some(X)` тогда и только тогда, когда `V_0(X)=1`, `V_ext(X)=1` и `Safe(X)=1`; иначе `none`.
 
-Два проверенных состояния ещё не образуют акт. Тройку замыкает предикат совместимости интерфейса. Совпало всё трижды, есть неизменённый кандидат действия. Не совпало хотя бы одно условие, наступает тишина. Lean доказывает семантику этой связки, а исполнимый тест покрывает все восемь бинарных комбинаций.
+Agent Zero действует только тогда, когда одно и то же действие прошло самовалидацию, внешнюю валидацию и контур безопасности. Полное совпадение возвращает исходное действие. Один ноль означает бездействие. Lean доказывает семантику связки, а исполнимый тест покрывает все восемь бинарных комбинаций.
 
-[Lean-ядро](https://github.com/kernelpanic888/TMI-Lean-Formal-Library/blob/main/tools/AISOValidationKernel.lean) · [таблица истинности](https://github.com/kernelpanic888/TMI-Lean-Formal-Library/blob/main/tools/tests/aiso-validation-kernel.test.mjs)
+[Lean-ядро](https://github.com/kernelpanic888/TMI-Lean-Formal-Library/blob/main/tools/AgentZeroValidationKernel.lean) · [таблица истинности](https://github.com/kernelpanic888/TMI-Lean-Formal-Library/blob/main/tools/tests/agent-zero-validation-kernel.test.mjs)

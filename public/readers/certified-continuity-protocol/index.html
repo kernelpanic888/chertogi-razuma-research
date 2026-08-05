@@ -212,16 +212,16 @@
     </section>
 
     <section class="section" id="aiso-01">
-      <div class="section-kicker">K-00 → AISO-02 / INTERFACE CLOSURE</div>
-      <h2 class="en">An act exists only under triple agreement.</h2>
-      <h2 class="ru">Акт существует только при тройном совпадении.</h2>
-      <p class="en">Two validated states still need interface compatibility. Agreement yields the act; one mismatch yields silence.</p>
-      <p class="ru">Двум проверенным состояниям всё ещё нужна совместимость интерфейса. Совпало всё трижды, есть акт. Одно несовпадение означает тишину.</p>
+      <div class="section-kicker">AZ-00 → AISO-02 / AGENT ZERO GATE</div>
+      <h2 class="en">Agent Zero acts only after triple admission.</h2>
+      <h2 class="ru">Agent Zero действует только после тройного допуска.</h2>
+      <p class="en">The base layer has one action and exactly three predicates: self-validation, external validation and the safety contour.</p>
+      <p class="ru">В основании есть одно действие и ровно три предиката: самовалидация, внешняя валидация и контур безопасности.</p>
 
       <div style="border:1px solid rgba(89,208,236,.38);padding:1rem 1.15rem;margin:1.15rem 0;font-family:monospace;color:#8fffd5;overflow:auto">
-        V<sub>A</sub>:S<sub>A</sub>→{0,1} · V<sub>B</sub>:S<sub>B</sub>→{0,1} · C<sub>I</sub>:S<sub>A</sub>×S<sub>B</sub>→{0,1}<br>
-        Act<sub>I</sub>(a,b)=V<sub>A</sub>(a) ∧ V<sub>B</sub>(b) ∧ C<sub>I</sub>(a,b)<br>
-        Exec<sub>I</sub>(a,b)=some(a,b), Act<sub>I</sub>=1 · Exec<sub>I</sub>(a,b)=none, Act<sub>I</sub>=0
+        V<sub>0</sub>,V<sub>ext</sub>,Safe : X→{0,1}<br>
+        Exec<sub>0</sub>(X)=some(X) ⇔ V<sub>0</sub>(X)=1 ∧ V<sub>ext</sub>(X)=1 ∧ Safe(X)=1<br>
+        otherwise / иначе: Exec<sub>0</sub>(X)=none
       </div>
 
       <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));border:1px solid rgba(89,208,236,.28);margin:1rem 0">
@@ -234,7 +234,7 @@
       <p class="en"><strong>Local guarantees:</strong> objective maximum among admissible candidates; protected invariants; rollback witness; learning only after post-verification.</p>
       <p class="ru"><strong>Локальные гарантии:</strong> максимум цели среди допустимых кандидатов; защищённые инварианты; свидетельство отката; обучение только после постпроверки.</p>
       <p>
-        <a href="https://github.com/kernelpanic888/TMI-Lean-Formal-Library/blob/main/tools/AISOValidationKernel.lean">K-00 LEAN ↗</a> ·
+        <a href="https://github.com/kernelpanic888/TMI-Lean-Formal-Library/blob/main/tools/AgentZeroValidationKernel.lean">AZ-00 LEAN ↗</a> ·
         <a href="https://github.com/kernelpanic888/TMI-Lean-Formal-Library/blob/main/tools/AISOControlLoop.lean">LEAN CORE ↗</a> ·
         <a href="https://github.com/kernelpanic888/TMI-Lean-Formal-Library/blob/main/tools/aiso-control-loop.mjs">SELECTOR ↗</a> ·
         <a href="https://github.com/kernelpanic888/TMI-Lean-Formal-Library/blob/main/tools/tests/aiso-control-loop.test.mjs">BLIND CORPUS ↗</a>
