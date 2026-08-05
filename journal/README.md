@@ -37,3 +37,8 @@ The journal explains transitions, shows working maps and points to canonical art
 - [Live research site / Живой исследовательский сайт](https://chertogi-razuma-research.kernelpanic888.chatgpt.site/)
 - [Certified Continuity Protocol code / Код протокола непрерывности](https://github.com/kernelpanic888/Salkutsan-Certified-Continuity-Protocol)
 - [Author ORCID](https://orcid.org/0009-0006-8717-0492)
+
+## PF-01 / Paradoxical Formula Theorem
+
+- [English](2026-08-05-pf-01-paradoxical-formula-theorem.md)
+- [Русское чтение](2026-08-05-pf-01-paradoxical-formula-theorem-ru.md)
