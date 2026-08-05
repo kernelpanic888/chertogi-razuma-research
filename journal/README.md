@@ -12,6 +12,9 @@ The journal explains transitions, shows working maps and points to canonical art
 
 ## Entries / Записи
 
+- [2026-08-05 · K-00: the irreducible validation gate](./2026-08-05-k00-minimal-validation-kernel.md)
+- [2026-08-05 · K-00: неразложимый gate валидации](./2026-08-05-k00-minimal-validation-kernel-ru.md)
+
 - [2026-08-05 · AISO-02: the selector never becomes the executor](./2026-08-05-aiso-02-selection-to-receipt.md)
 - [2026-08-05 · AISO-02: селектор не становится исполнителем](./2026-08-05-aiso-02-selection-to-receipt-ru.md)
 
