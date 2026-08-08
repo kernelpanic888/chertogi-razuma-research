@@ -1,0 +1,185 @@
+{
+  "schema": "CI-01/1",
+  "title": "Corpus Interface / Интерфейс корпуса",
+  "site": "https://chertogi-razuma-research.kernelpanic888.chatgpt.site",
+  "repository": "https://github.com/kernelpanic888/chertogi-razuma-research",
+  "journal": "https://github.com/kernelpanic888/chertogi-razuma-research/tree/main/journal",
+  "contract": {
+    "sourceOfTruth": "git",
+    "publicProjection": "site",
+    "requiredRoute": "idea <-> reader <-> source <-> journal <-> formal-or-runtime-model",
+    "missingRouteStatus": "open-seam"
+  },
+  "readers": [
+    {
+      "id": "IF-P01B",
+      "titleRu": "Почему существует нечто, а не ничто?",
+      "titleEn": "Why is there something rather than nothing?",
+      "publicPath": "/",
+      "sourcePath": "public/index.html",
+      "journalPaths": [],
+      "formalUrls": [
+        "https://github.com/kernelpanic888/TMI-Lean-Formal-Library/blob/main/lean/TMI/InterfaceFoundationsAlpha.lean",
+        "https://github.com/kernelpanic888/TMI-Lean-Formal-Library/blob/main/lean/TMI/InterfaceMathematics.lean"
+      ],
+      "status": "current-map"
+    },
+    {
+      "id": "CI-01",
+      "titleRu": "Интерфейс целостного корпуса",
+      "titleEn": "Whole Corpus Interface",
+      "publicPath": "/readers/corpus-interface/",
+      "sourcePath": "public/readers/corpus-interface/index.html",
+      "journalPaths": [],
+      "formalUrls": [],
+      "status": "interface"
+    },
+    {
+      "id": "M-01",
+      "titleRu": "Методология подхвата мысли",
+      "titleEn": "Methodology of Thought Resumption",
+      "publicPath": "/readers/methodology-of-thought/",
+      "sourcePath": "public/readers/methodology-of-thought/index.html",
+      "journalPaths": [
+        "journal/2026-08-05-pf-01-paradoxical-formula-theorem.md",
+        "journal/2026-08-05-pf-01-paradoxical-formula-theorem-ru.md"
+      ],
+      "formalUrls": [
+        "https://github.com/kernelpanic888/TMI-Lean-Formal-Library/blob/main/lean/TMI/FormulaInterface/ParadoxicalFormulaTheorem.lean"
+      ],
+      "status": "linked"
+    },
+    {
+      "id": "SO-01",
+      "titleRu": "Онтологическая проблема Дираковского спинора",
+      "titleEn": "The Ontological Problem of the Dirac Spinor",
+      "publicPath": "/readers/spinor-ontology/",
+      "sourcePath": "public/readers/spinor-ontology/index.html",
+      "journalPaths": [],
+      "formalUrls": [
+        "https://github.com/kernelpanic888/TMI-Lean-Formal-Library/blob/main/lean/TMI/SpinorOntology.lean"
+      ],
+      "status": "open-journal-seam"
+    },
+    {
+      "id": "TIDL-01",
+      "titleRu": "Изобрели ли мы искусственный интеллект?",
+      "titleEn": "Did We Invent Artificial Intelligence?",
+      "publicPath": "/readers/true-intellectual-digital-life/",
+      "sourcePath": "public/readers/true-intellectual-digital-life/index.html",
+      "journalPaths": [],
+      "formalUrls": [],
+      "status": "open-formal-seam"
+    },
+    {
+      "id": "TIDL-A",
+      "titleRu": "Архитектура интеллектуальной цифровой жизни",
+      "titleEn": "Architecture of Intellectual Digital Life",
+      "publicPath": "/readers/intellectual-digital-life-architecture/",
+      "sourcePath": "public/readers/intellectual-digital-life-architecture/index.html",
+      "journalPaths": [],
+      "formalUrls": [],
+      "status": "open-formal-seam"
+    },
+    {
+      "id": "DL-01",
+      "titleRu": "Паспорт цифровой жизни",
+      "titleEn": "Digital Life Passport",
+      "publicPath": "/readers/digital-life-passport/",
+      "sourcePath": "public/readers/digital-life-passport/index.html",
+      "journalPaths": [],
+      "formalUrls": [],
+      "status": "open-formal-seam"
+    },
+    {
+      "id": "DL-02",
+      "titleRu": "Конечная реализация",
+      "titleEn": "Finite Realization",
+      "publicPath": "/readers/digital-life-realization/",
+      "sourcePath": "public/readers/digital-life-realization/index.html",
+      "journalPaths": [],
+      "formalUrls": [],
+      "status": "open-formal-seam"
+    },
+    {
+      "id": "DL-03",
+      "titleRu": "Растущий паспорт",
+      "titleEn": "Growing Passport",
+      "publicPath": "/readers/digital-life-growth/",
+      "sourcePath": "public/readers/digital-life-growth/index.html",
+      "journalPaths": [],
+      "formalUrls": [],
+      "status": "open-formal-seam"
+    },
+    {
+      "id": "DL-04",
+      "titleRu": "Живая модель в виртуальном домене",
+      "titleEn": "Living Model in a Virtual Domain",
+      "publicPath": "/readers/digital-life-living-model/",
+      "sourcePath": "public/readers/digital-life-living-model/index.html",
+      "journalPaths": [],
+      "formalUrls": [],
+      "status": "open-formal-seam"
+    },
+    {
+      "id": "CR-01",
+      "titleRu": "Сертифицированная непрерывность",
+      "titleEn": "Certified Continuity",
+      "publicPath": "/readers/certified-continuity-protocol/",
+      "sourcePath": "public/readers/certified-continuity-protocol/index.html",
+      "journalPaths": [
+        "journal/2026-08-04-cr-02-hidden-fork-evidence.md",
+        "journal/2026-08-04-cr-02-hidden-fork-evidence-ru.md",
+        "journal/2026-08-04-cr-03-physical-continuity-anchor.md",
+        "journal/2026-08-04-cr-03-physical-continuity-anchor-ru.md"
+      ],
+      "formalUrls": [
+        "https://github.com/kernelpanic888/Salkutsan-Certified-Continuity-Protocol",
+        "https://github.com/kernelpanic888/TMI-Lean-Formal-Library/blob/main/tools/CertifiedSystemSteward.lean"
+      ],
+      "status": "linked"
+    },
+    {
+      "id": "AZ-OBS",
+      "titleRu": "Камера протокола Agent Zero",
+      "titleEn": "Agent Zero Protocol Chamber",
+      "publicPath": "/readers/agent-zero-protocol-chamber/",
+      "sourcePath": "public/readers/agent-zero-protocol-chamber/index.html",
+      "journalPaths": [
+        "journal/2026-08-05-k00-minimal-validation-kernel.md",
+        "journal/2026-08-05-k00-minimal-validation-kernel-ru.md",
+        "journal/2026-08-05-aiso-01-safe-improvement-loop.md",
+        "journal/2026-08-05-aiso-01-safe-improvement-loop-ru.md",
+        "journal/2026-08-05-aiso-02-selection-to-receipt.md",
+        "journal/2026-08-05-aiso-02-selection-to-receipt-ru.md",
+        "journal/2026-08-04-css-01-certified-system-steward.md",
+        "journal/2026-08-04-css-01-certified-system-steward-ru.md",
+        "journal/2026-08-04-css-02-quarantine-refinement.md",
+        "journal/2026-08-04-css-02-quarantine-refinement-ru.md",
+        "journal/2026-08-04-css-03-authority-boundary.md",
+        "journal/2026-08-04-css-03-authority-boundary-ru.md"
+      ],
+      "formalUrls": [
+        "https://github.com/kernelpanic888/TMI-Lean-Formal-Library/blob/main/tools/AgentZeroValidationKernel.lean",
+        "https://github.com/kernelpanic888/TMI-Lean-Formal-Library/blob/main/tools/AISOControlLoop.lean",
+        "https://github.com/kernelpanic888/TMI-Lean-Formal-Library/blob/main/tools/AISOToStewardBridge.lean",
+        "https://github.com/kernelpanic888/TMI-Lean-Formal-Library/blob/main/tools/CertifiedSystemStewardPrivilegeBoundary.lean"
+      ],
+      "status": "linked"
+    }
+  ],
+  "edges": [
+    { "from": "IF-P01B", "to": "M-01", "relation": "question-to-trace" },
+    { "from": "IF-P01B", "to": "SO-01", "relation": "distinction-to-carrier" },
+    { "from": "IF-P01B", "to": "TIDL-01", "relation": "identity-to-digital-life" },
+    { "from": "M-01", "to": "TIDL-A", "relation": "trace-to-architecture" },
+    { "from": "TIDL-01", "to": "TIDL-A", "relation": "status-to-architecture" },
+    { "from": "TIDL-A", "to": "DL-01", "relation": "architecture-to-passport" },
+    { "from": "DL-01", "to": "DL-02", "relation": "passport-to-realization" },
+    { "from": "DL-02", "to": "DL-03", "relation": "realization-to-growth" },
+    { "from": "DL-03", "to": "DL-04", "relation": "growth-to-execution" },
+    { "from": "DL-04", "to": "CR-01", "relation": "living-model-to-continuity" },
+    { "from": "CR-01", "to": "AZ-OBS", "relation": "protocol-to-observation" },
+    { "from": "AZ-OBS", "to": "IF-P01B", "relation": "receipt-to-return" }
+  ]
+}

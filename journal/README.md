@@ -10,6 +10,10 @@ The journal explains transitions, shows working maps and points to canonical art
 
 Журнал объясняет переходы, показывает рабочие карты и ведёт к каноническим артефактам. Lean-файлы и исполняемый код протокола здесь не дублируются.
 
+The journal is one layer of the [whole corpus interface](../CORPUS_INTERFACE.md): idea ↔ reader ↔ Git source ↔ journal ↔ formal or runtime model.
+
+Журнал является одним слоем [интерфейса целостного корпуса](../CORPUS_INTERFACE.md): идея ↔ ридер ↔ исходник Git ↔ журнал ↔ формальная либо исполняемая модель.
+
 ## Entries / Записи
 
 - [2026-08-05 · K-00: the irreducible validation gate](./2026-08-05-k00-minimal-validation-kernel.md)
@@ -35,6 +39,7 @@ The journal explains transitions, shows working maps and points to canonical art
 ## Coordinates / Координаты
 
 - [Live research site / Живой исследовательский сайт](https://chertogi-razuma-research.kernelpanic888.chatgpt.site/)
+- [Whole corpus interface / Интерфейс целостного корпуса](https://chertogi-razuma-research.kernelpanic888.chatgpt.site/readers/corpus-interface/)
 - [Certified Continuity Protocol code / Код протокола непрерывности](https://github.com/kernelpanic888/Salkutsan-Certified-Continuity-Protocol)
 - [Author ORCID](https://orcid.org/0009-0006-8717-0492)
 

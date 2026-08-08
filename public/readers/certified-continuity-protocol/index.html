@@ -345,5 +345,20 @@
       function drwp(now){px.clearRect(0,0,pw,ph);const t=reduced?1:(now-pt)/1500,d={x:pw*.15,y:ph*.52},a={x:pw*.36,y:ph*.52},r={x:pw*.55,y:ph*.52},wa={x:pw*.75,y:ph*.27},wb={x:pw*.75,y:ph*.76},v={x:pw*.90,y:ph*.52};px.strokeStyle="rgba(34,124,95,.18)";px.lineWidth=1;for(let i=1;i<6;i++){px.beginPath();px.arc(a.x,a.y,i*Math.min(pw,ph)*.09,0,Math.PI*2);px.stroke()}pl(d,a,"#7fffd4",false,4);pl(a,r,"#ffd257",false,4);pl(r,wa,"#59d9ff",true);pl(r,wb,"#59d9ff",true);pl(wa,wb,"rgba(89,217,255,.45)",true,2);pl(wa,v,"#7fffd4",true,2);pl(wb,v,"#7fffd4",true,2);pn(d.x,d.y,"DEVICE","#7fffd4",17,-28,-32);pn(a.x,a.y,"PHYSICAL ANCHOR","#ffd257",18,-64,48);pn(r.x,r.y,"R₅₁","#59d9ff",15,-14,-32);pn(wa.x,wa.y,"WITNESS A","#59d9ff",12,18,-18);pn(wb.x,wb.y,"WITNESS B","#59d9ff",12,18,30);let verdict="ACCEPT",color="#7fffd4";if(ps==="disk"){verdict="REJECT 49<51";color="#ff6557";px.fillStyle=color;px.fillText("DISK n=49 / ANCHOR n=51",pw*.19,ph*.78)}else if(ps==="tamper"){verdict="QUARANTINE";color="#ff6557";px.fillStyle=color;px.fillText("MEASUREMENT ≠ REFERENCE",pw*.28,ph*.82)}else if(ps==="clone"){verdict="FORK EVIDENCE";color="#ff6557";const f={x:r.x,y:r.y+ph*.21};pl(a,f,"#ff6557",true);pn(f.x,f.y,"R₅₁β","#ff6557",15,20,30);pl(f,wb,"#ff6557",true)}pn(v.x,v.y,verdict,color,17,-116,48);const q=(t%1+1)%1,x=a.x+(r.x-a.x)*q;px.beginPath();px.arc(x,a.y,6,0,Math.PI*2);px.fillStyle="#ffd257";px.shadowColor="#ffd257";px.shadowBlur=18;px.fill();px.shadowBlur=0;px.fillStyle="#8faf9f";px.font="800 11px monospace";px.fillText("KEY · EPOCH · MEASUREMENT · CHALLENGE",pw*.22,ph*.16);if(!reduced)requestAnimationFrame(drwp)}selp("normal");requestAnimationFrame(drwp);
     })();
   </script>
+
+  <!-- CORPUS_INTERFACE_BRIDGE_CI_01 -->
+  <style>
+    .ci01-bridge{display:flex;justify-content:space-between;align-items:center;gap:18px;flex-wrap:wrap;margin:34px auto 0;padding:18px clamp(18px,3vw,38px);width:min(1500px,94vw);border:1px solid #216654;border-left:5px solid #ffd257;background:#002219;color:#91ad9f;font:800 11px/1.5 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;letter-spacing:.08em}
+    .ci01-bridge strong{color:#85ffd5}.ci01-bridge nav{display:flex;gap:16px;flex-wrap:wrap}.ci01-bridge a{color:#59d9ff;text-decoration:none;border-bottom:1px solid #286b79;padding-bottom:3px}
+  </style>
+  <footer class="ci01-bridge" aria-label="Corpus interface return bridge">
+    <strong>CI-01 · ИНТЕРФЕЙС КОРПУСА / CORPUS INTERFACE</strong>
+    <nav>
+      <a href="../corpus-interface/index.html">КОРПУС / CORPUS ↗</a>
+      <a href="https://github.com/kernelpanic888/chertogi-razuma-research/blob/main/public/readers/certified-continuity-protocol/index.html" target="_blank" rel="noopener noreferrer">ИСХОДНИК / SOURCE ↗</a>
+      <a href="https://github.com/kernelpanic888/chertogi-razuma-research/tree/main/journal" target="_blank" rel="noopener noreferrer">ЖУРНАЛ / JOURNAL ↗</a>
+      <a href="../../index.html">ГЛАВНАЯ КАРТА / MAIN MAP ↖</a>
+    </nav>
+  </footer>
 </body>
 </html>

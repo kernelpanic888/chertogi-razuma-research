@@ -6,6 +6,8 @@ https://chertogi-razuma-research.kernelpanic888.chatgpt.site/
 
 This repository is the source of truth. Production deployments are built from a named Git commit; the hosting repository is only a deployment mirror.
 
+The bidirectional publication contract and whole-corpus registry are defined in [CORPUS_INTERFACE.md](CORPUS_INTERFACE.md). Every public reader returns to its canonical source and the corpus map; missing journal or formal routes are recorded as `OPEN SEAM` rather than replaced by invented references.
+
 ## Research architecture
 
 - one continuous bilingual public map;
@@ -26,6 +28,12 @@ The CR-03 branch adds an executable physical-anchor provider contract, a develop
 The bilingual **Journal of the First Distinction / Журнал первого различия** records research transitions without duplicating the canonical code:
 
 https://github.com/kernelpanic888/chertogi-razuma-research/tree/main/journal
+
+## Whole corpus interface
+
+- Live map: https://chertogi-razuma-research.kernelpanic888.chatgpt.site/readers/corpus-interface/
+- Machine registry: [public/corpus/interfaces.json](public/corpus/interfaces.json)
+- Publication contract: [CORPUS_INTERFACE.md](CORPUS_INTERFACE.md)
 
 ## Build and boundary check
 
