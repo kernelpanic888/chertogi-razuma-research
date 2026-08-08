@@ -16,6 +16,9 @@ The journal is one layer of the [whole corpus interface](../CORPUS_INTERFACE.md)
 
 ## Entries / Записи
 
+- [2026-08-08 · PM-01: Poetry of Mathematics](./2026-08-08-pm-01-poetry-of-mathematics.md)
+- [2026-08-08 · PM-01: Поэзия математики](./2026-08-08-pm-01-poetry-of-mathematics-ru.md)
+
 - [2026-08-05 · K-00: the irreducible validation gate](./2026-08-05-k00-minimal-validation-kernel.md)
 - [2026-08-05 · K-00: неразложимый gate валидации](./2026-08-05-k00-minimal-validation-kernel-ru.md)
 
