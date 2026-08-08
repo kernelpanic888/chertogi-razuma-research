@@ -36,6 +36,8 @@ test("PM-01 is bilingual, self-contained, and preserves its red boundary", async
   assert.match(html, /вычислимое присутствие ограничения на поверхности мира/);
   assert.match(html, /computable presence of a constraint on the surface of the world/);
   assert.match(html, /const LANGUAGE_KEY = 'pm-language'/);
+  assert.match(html, /container-type:inline-size/);
+  assert.match(html, /h1>.en em\{font-size:min\(\.72em,10\.5cqw\)\}/);
   assert.doesNotMatch(html, /<script\b[^>]*\bsrc=/i);
   assert.doesNotMatch(html, /<link\b[^>]*\brel="stylesheet"/i);
   assert.doesNotMatch(html, /\bfetch\s*\(|\bXMLHttpRequest\b|\bWebSocket\s*\(/);
