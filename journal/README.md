@@ -14,6 +14,8 @@ The journal is one layer of the [whole corpus interface](../CORPUS_INTERFACE.md)
 
 Журнал является одним слоем [интерфейса целостного корпуса](../CORPUS_INTERFACE.md): идея ↔ ридер ↔ исходник Git ↔ журнал ↔ формальная либо исполняемая модель.
 
+Versioned research states are fixed in the formal home through the [reader release interface](../READER_RELEASE_MODEL.md). Журнал описывает переход между релизами, но не заменяет релизный срез.
+
 ## Entries / Записи
 
 - [2026-08-05 · K-00: the irreducible validation gate](./2026-08-05-k00-minimal-validation-kernel.md)

@@ -21,7 +21,20 @@ Git является источником истины. Сайт являетс�
 - [Machine-readable interface registry](public/corpus/interfaces.json)
 - [Self-contained public corpus reader](public/readers/corpus-interface/index.html)
 - [Bilingual field journal](journal/README.md)
+- [Reader release interface](READER_RELEASE_MODEL.md)
 - [Live corpus interface](https://chertogi-razuma-research.kernelpanic888.chatgpt.site/readers/corpus-interface/)
+
+## Release layer
+
+The formal home is [TMI Lean Formal Library](https://github.com/kernelpanic888/TMI-Lean-Formal-Library). The canonical release example is [Chambers of the First Distinction v0.1.0](https://github.com/kernelpanic888/TMI-Lean-Formal-Library/releases/tag/chertogi-first-distinction-v0.1.0).
+
+Формальным домом является [TMI Lean Formal Library](https://github.com/kernelpanic888/TMI-Lean-Formal-Library). Канонический пример релиза — [Chambers of the First Distinction v0.1.0](https://github.com/kernelpanic888/TMI-Lean-Formal-Library/releases/tag/chertogi-first-distinction-v0.1.0).
+
+```text
+formal home <-> tagged release <-> self-contained export <-> live reader
+```
+
+The release layer fixes a reproducible research state and its claim boundary. It does not replace the live reader or silently raise a claim's status.
 
 ## Invariant
 

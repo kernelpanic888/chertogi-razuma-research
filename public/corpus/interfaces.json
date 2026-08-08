@@ -4,6 +4,13 @@
   "site": "https://chertogi-razuma-research.kernelpanic888.chatgpt.site",
   "repository": "https://github.com/kernelpanic888/chertogi-razuma-research",
   "journal": "https://github.com/kernelpanic888/chertogi-razuma-research/tree/main/journal",
+  "formalHome": "https://github.com/kernelpanic888/TMI-Lean-Formal-Library",
+  "releaseModel": {
+    "document": "READER_RELEASE_MODEL.md",
+    "referenceRelease": "https://github.com/kernelpanic888/TMI-Lean-Formal-Library/releases/tag/chertogi-first-distinction-v0.1.0",
+    "route": "formal-home <-> tagged-release <-> export <-> live-reader <-> journal <-> next-seam",
+    "bodyOrder": ["result", "live-url", "representative-image", "release-surface", "reader-routes", "security-boundary", "claim-boundary", "english-reading", "russian-reading", "provenance"]
+  },
   "contract": {
     "sourceOfTruth": "git",
     "publicProjection": "site",
@@ -22,6 +29,7 @@
         "https://github.com/kernelpanic888/TMI-Lean-Formal-Library/blob/main/lean/TMI/InterfaceFoundationsAlpha.lean",
         "https://github.com/kernelpanic888/TMI-Lean-Formal-Library/blob/main/lean/TMI/InterfaceMathematics.lean"
       ],
+      "releaseId": "CHERTOGI-FIRST-DISTINCTION-0.1.0",
       "status": "current-map"
     },
     {
@@ -47,6 +55,7 @@
       "formalUrls": [
         "https://github.com/kernelpanic888/TMI-Lean-Formal-Library/blob/main/lean/TMI/FormulaInterface/ParadoxicalFormulaTheorem.lean"
       ],
+      "releaseId": "CHERTOGI-FIRST-DISTINCTION-0.1.0",
       "status": "linked"
     },
     {
@@ -69,6 +78,7 @@
       "sourcePath": "public/readers/true-intellectual-digital-life/index.html",
       "journalPaths": [],
       "formalUrls": [],
+      "releaseId": "CHERTOGI-FIRST-DISTINCTION-0.1.0",
       "status": "open-formal-seam"
     },
     {
@@ -79,6 +89,7 @@
       "sourcePath": "public/readers/intellectual-digital-life-architecture/index.html",
       "journalPaths": [],
       "formalUrls": [],
+      "releaseId": "CHERTOGI-FIRST-DISTINCTION-0.1.0",
       "status": "open-formal-seam"
     },
     {
@@ -88,8 +99,11 @@
       "publicPath": "/readers/digital-life-passport/",
       "sourcePath": "public/readers/digital-life-passport/index.html",
       "journalPaths": [],
-      "formalUrls": [],
-      "status": "open-formal-seam"
+      "formalUrls": [
+        "https://github.com/kernelpanic888/TMI-Lean-Formal-Library/blob/chertogi-first-distinction-v0.1.0/exports/chertogi_first_distinction_public/readers/digital-life-passport/DigitalLifePassport.lean"
+      ],
+      "releaseId": "CHERTOGI-FIRST-DISTINCTION-0.1.0",
+      "status": "open-journal-seam"
     },
     {
       "id": "DL-02",
@@ -98,8 +112,11 @@
       "publicPath": "/readers/digital-life-realization/",
       "sourcePath": "public/readers/digital-life-realization/index.html",
       "journalPaths": [],
-      "formalUrls": [],
-      "status": "open-formal-seam"
+      "formalUrls": [
+        "https://github.com/kernelpanic888/TMI-Lean-Formal-Library/blob/chertogi-first-distinction-v0.1.0/exports/chertogi_first_distinction_public/readers/digital-life-realization/DL02SessionRealization.lean"
+      ],
+      "releaseId": "CHERTOGI-FIRST-DISTINCTION-0.1.0",
+      "status": "open-journal-seam"
     },
     {
       "id": "DL-03",
@@ -108,8 +125,11 @@
       "publicPath": "/readers/digital-life-growth/",
       "sourcePath": "public/readers/digital-life-growth/index.html",
       "journalPaths": [],
-      "formalUrls": [],
-      "status": "open-formal-seam"
+      "formalUrls": [
+        "https://github.com/kernelpanic888/TMI-Lean-Formal-Library/blob/chertogi-first-distinction-v0.1.0/exports/chertogi_first_distinction_public/readers/digital-life-growth/DL03CertificateGrowth.lean"
+      ],
+      "releaseId": "CHERTOGI-FIRST-DISTINCTION-0.1.0",
+      "status": "open-journal-seam"
     },
     {
       "id": "DL-04",
@@ -119,6 +139,10 @@
       "sourcePath": "public/readers/digital-life-living-model/index.html",
       "journalPaths": [],
       "formalUrls": [],
+      "runtimeUrls": [
+        "https://github.com/kernelpanic888/TMI-Lean-Formal-Library/blob/chertogi-first-distinction-v0.1.0/exports/chertogi_first_distinction_public/readers/digital-life-living-model/index.html"
+      ],
+      "releaseId": "CHERTOGI-FIRST-DISTINCTION-0.1.0",
       "status": "open-formal-seam"
     },
     {
@@ -166,6 +190,20 @@
         "https://github.com/kernelpanic888/TMI-Lean-Formal-Library/blob/main/tools/CertifiedSystemStewardPrivilegeBoundary.lean"
       ],
       "status": "linked"
+    }
+  ],
+  "releases": [
+    {
+      "id": "CHERTOGI-FIRST-DISTINCTION-0.1.0",
+      "name": "Chambers of the First Distinction v0.1.0",
+      "tag": "chertogi-first-distinction-v0.1.0",
+      "commit": "a5d468d1f9ffbab2beb1d213205f60f93071a5c1",
+      "url": "https://github.com/kernelpanic888/TMI-Lean-Formal-Library/releases/tag/chertogi-first-distinction-v0.1.0",
+      "exportPath": "exports/chertogi_first_distinction_public",
+      "sourceMapPath": "exports/chertogi_first_distinction_public/SOURCE_MAP.md",
+      "readerIds": ["IF-P01B", "M-01", "TIDL-01", "TIDL-A", "DL-01", "DL-02", "DL-03", "DL-04"],
+      "securityBoundary": "pass-at-release",
+      "claimBoundary": "formal-and-executable-candidate-not-consciousness-or-life"
     }
   ],
   "edges": [

@@ -6,6 +6,7 @@ const registryPath = resolve(root, "public/corpus/interfaces.json");
 const registry = JSON.parse(await readFile(registryPath, "utf8"));
 const failures = [];
 const ids = new Set();
+const releaseIds = new Set();
 const sourceBase = "https://github.com/kernelpanic888/chertogi-razuma-research/blob/main/";
 
 const exists = async (path, label) => {
@@ -32,6 +33,18 @@ for (const reader of registry.readers ?? []) {
   }
 }
 
+for (const release of registry.releases ?? []) {
+  if (releaseIds.has(release.id)) failures.push(`release: duplicate ${release.id}`);
+  releaseIds.add(release.id);
+  if (!/^[0-9a-f]{40}$/.test(release.commit ?? "")) failures.push(`${release.id}: exact commit missing`);
+  if (!release.url?.includes(`/releases/tag/${release.tag}`)) failures.push(`${release.id}: tag URL mismatch`);
+  for (const readerId of release.readerIds ?? []) if (!ids.has(readerId)) failures.push(`${release.id}: unknown reader ${readerId}`);
+}
+
+for (const reader of registry.readers ?? []) {
+  if (reader.releaseId && !releaseIds.has(reader.releaseId)) failures.push(`${reader.id}: unknown release ${reader.releaseId}`);
+}
+
 for (const edge of registry.edges ?? []) {
   if (!ids.has(edge.from)) failures.push(`edge: unknown source ${edge.from}`);
   if (!ids.has(edge.to)) failures.push(`edge: unknown target ${edge.to}`);
@@ -43,6 +56,7 @@ if (!home.includes("https://github.com/kernelpanic888/chertogi-razuma-research")
 
 const readme = await readFile(resolve(root, "README.md"), "utf8");
 if (!readme.includes("CORPUS_INTERFACE.md")) failures.push("README: corpus contract link missing");
+if (!readme.includes("READER_RELEASE_MODEL.md")) failures.push("README: release model link missing");
 if (!readme.includes(registry.site)) failures.push("README: live site link missing");
 
 if (failures.length) {
@@ -52,4 +66,4 @@ if (failures.length) {
 }
 
 const open = registry.readers.filter((reader) => reader.status.startsWith("open-")).length;
-console.log(`CI-01 / CORPUS INTERFACE: PASS · ${ids.size} nodes · ${registry.edges.length} edges · ${open} open seams`);
+console.log(`CI-01 / CORPUS INTERFACE: PASS · ${ids.size} nodes · ${registry.edges.length} edges · ${releaseIds.size} tagged release · ${open} open seams`);

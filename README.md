@@ -34,6 +34,8 @@ https://github.com/kernelpanic888/chertogi-razuma-research/tree/main/journal
 - Live map: https://chertogi-razuma-research.kernelpanic888.chatgpt.site/readers/corpus-interface/
 - Machine registry: [public/corpus/interfaces.json](public/corpus/interfaces.json)
 - Publication contract: [CORPUS_INTERFACE.md](CORPUS_INTERFACE.md)
+- Reader release model: [READER_RELEASE_MODEL.md](READER_RELEASE_MODEL.md)
+- Canonical release example: https://github.com/kernelpanic888/TMI-Lean-Formal-Library/releases/tag/chertogi-first-distinction-v0.1.0
 
 ## Build and boundary check
 
