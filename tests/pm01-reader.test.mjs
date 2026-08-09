@@ -33,6 +33,12 @@ test("PM-01 is bilingual, self-contained, and preserves its red boundary", async
   assert.match(html, /TMI-Lean-Formal-Library\/tree\/main\/research\/poetry-of-mathematics-v0\.1/);
   assert.match(html, /Мы не доказываем иные миры/);
   assert.match(html, /We do not prove other worlds/);
+  assert.match(html, /V-02 \/ Магия формулы/);
+  assert.match(html, /И здесь рождается магия/);
+  assert.match(html, /Magic here is not supernatural/);
+  assert.match(html, /NOT A MIRACLE CLAIM/);
+  assert.match(html, /href="\.\.\/\.\.\/index\.html"/);
+  assert.match(html, /HOME ↖/);
   assert.match(html, /вычислимое присутствие ограничения на поверхности мира/);
   assert.match(html, /computable presence of a constraint on the surface of the world/);
   assert.match(html, /const LANGUAGE_KEY = 'pm-language'/);
