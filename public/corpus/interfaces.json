@@ -206,6 +206,21 @@
         "https://github.com/kernelpanic888/TMI-Lean-Formal-Library/blob/main/tools/CertifiedSystemStewardPrivilegeBoundary.lean"
       ],
       "status": "linked"
+    },
+    {
+      "id": "AMF-01",
+      "titleRu": "Адаптивная бережливость рынка",
+      "titleEn": "Adaptive Market Frugality",
+      "publicPath": "/readers/adaptive-market-frugality/",
+      "sourcePath": "public/readers/adaptive-market-frugality/index.html",
+      "journalPaths": [
+        "journal/2026-08-09-amf-01-adaptive-market-frugality.md",
+        "journal/2026-08-09-amf-01-adaptive-market-frugality-ru.md"
+      ],
+      "formalUrls": [
+        "https://github.com/kernelpanic888/TMI-Lean-Formal-Library/blob/main/tools/AdaptiveMarketFrugality.lean"
+      ],
+      "status": "linked"
     }
   ],
   "releases": [
@@ -236,6 +251,8 @@
     { "from": "DL-03", "to": "DL-04", "relation": "growth-to-execution" },
     { "from": "DL-04", "to": "CR-01", "relation": "living-model-to-continuity" },
     { "from": "CR-01", "to": "AZ-OBS", "relation": "protocol-to-observation" },
-    { "from": "AZ-OBS", "to": "IF-P01B", "relation": "receipt-to-return" }
+    { "from": "AZ-OBS", "to": "IF-P01B", "relation": "receipt-to-return" },
+    { "from": "AZ-OBS", "to": "AMF-01", "relation": "selector-to-market-policy" },
+    { "from": "AMF-01", "to": "IF-P01B", "relation": "sufficient-buffer-to-living-function" }
   ]
 }

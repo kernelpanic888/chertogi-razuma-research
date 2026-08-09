@@ -18,6 +18,9 @@ Versioned research states are fixed in the formal home through the [reader relea
 
 ## Entries / Записи
 
+- [2026-08-09 · AMF-01: Adaptive Market Frugality](./2026-08-09-amf-01-adaptive-market-frugality.md)
+- [2026-08-09 · AMF-01: Адаптивная бережливость рынка](./2026-08-09-amf-01-adaptive-market-frugality-ru.md)
+
 - [2026-08-08 · PM-01: Poetry of Mathematics](./2026-08-08-pm-01-poetry-of-mathematics.md)
 - [2026-08-08 · PM-01: Поэзия математики](./2026-08-08-pm-01-poetry-of-mathematics-ru.md)
 

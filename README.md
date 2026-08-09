@@ -29,6 +29,10 @@ The bilingual **Journal of the First Distinction / Журнал первого �
 
 https://github.com/kernelpanic888/chertogi-razuma-research/tree/main/journal
 
+The newest business-policy layer is **AMF-01 / Adaptive Market Frugality**:
+
+https://chertogi-razuma-research.kernelpanic888.chatgpt.site/readers/adaptive-market-frugality/
+
 ## Whole corpus interface
 
 - Live map: https://chertogi-razuma-research.kernelpanic888.chatgpt.site/readers/corpus-interface/
