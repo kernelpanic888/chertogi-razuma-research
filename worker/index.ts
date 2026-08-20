@@ -76,9 +76,17 @@ const worker = {
       }, allowedWidths);
     }
 
+if (
+  request.method === "GET" &&
+  url.pathname === "/index.html" &&
+  (request.headers.get("Accept") ?? "").includes("text/html")
+) {
+  return Response.redirect(new URL("/", request.url), 308);
+}
+
 const servesCanonicalPage =
   request.method === "GET" &&
-  (url.pathname === "/" || url.pathname === "/index.html") &&
+  url.pathname === "/" &&
   (request.headers.get("Accept") ?? "").includes("text/html");
 
 if (!servesCanonicalPage) {
@@ -102,6 +110,11 @@ try {
 const headers = new Headers(response.headers);
 headers.set("Content-Type", "text/html; charset=utf-8");
 headers.set("X-Chertogi-Counter", counterStatus);
+headers.set("X-Robots-Tag", "index, follow, max-image-preview:large");
+headers.set(
+  "Link",
+  '<https://chertogi-razuma-research.kernelpanic888.chatgpt.site/>; rel="canonical"',
+);
 
 return new Response(response.body, {
   status: response.status,

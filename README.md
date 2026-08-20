@@ -1,57 +1,98 @@
-# Chambers of the First Distinction
+# vinext-starter
 
-The canonical source of the public research site:
+A clean full-stack starter running on
+[vinext](https://github.com/cloudflare/vinext), with optional Cloudflare D1 and
+Drizzle support.
 
-https://chertogi-razuma-research.kernelpanic888.chatgpt.site/
+## Prerequisites
 
-This repository is the source of truth. Production deployments are built from a named Git commit; the hosting repository is only a deployment mirror.
+- Node.js `>=22.13.0`
 
-The bidirectional publication contract and whole-corpus registry are defined in [CORPUS_INTERFACE.md](CORPUS_INTERFACE.md). Every public reader returns to its canonical source and the corpus map; missing journal or formal routes are recorded as `OPEN SEAM` rather than replaced by invented references.
-
-## Research architecture
-
-- one continuous bilingual public map;
-- self-contained HTML readers under `public/readers/`;
-- inline CSS and JavaScript only inside public readers;
-- no external runtime dependencies for reader content;
-- a minimal D1 binding used only by the anonymous page-view counter;
-- no R2 storage, public forms, cookies, service workers or hidden admin route.
-
-Cryptographic reference code is intentionally maintained in a separate repository and linked from the self-contained CR-01 reader:
-
-https://github.com/kernelpanic888/Salkutsan-Certified-Continuity-Protocol
-
-The CR-03 branch adds an executable physical-anchor provider contract, a development-only simulator, a Lean relation for anchored successors and a bilingual visual research map. It remains a laboratory candidate until a real hardware provider and frozen attack matrix are independently exercised.
-
-## Research journal
-
-The bilingual **Journal of the First Distinction / Журнал первого различия** records research transitions without duplicating the canonical code:
-
-https://github.com/kernelpanic888/chertogi-razuma-research/tree/main/journal
-
-The newest business-policy layer is **AMF-01 / Adaptive Market Frugality**:
-
-https://chertogi-razuma-research.kernelpanic888.chatgpt.site/readers/adaptive-market-frugality/
-
-## Whole corpus interface
-
-- Live map: https://chertogi-razuma-research.kernelpanic888.chatgpt.site/readers/corpus-interface/
-- Machine registry: [public/corpus/interfaces.json](public/corpus/interfaces.json)
-- Publication contract: [CORPUS_INTERFACE.md](CORPUS_INTERFACE.md)
-- Reader release model: [READER_RELEASE_MODEL.md](READER_RELEASE_MODEL.md)
-- Canonical release example: https://github.com/kernelpanic888/TMI-Lean-Formal-Library/releases/tag/chertogi-first-distinction-v0.1.0
-
-## Build and boundary check
+## Quick Start
 
 ```bash
-npm ci
+npm install
+npm run dev
 npm run build
-npm run test:security
 ```
 
-## Status boundary
+This starter does not use `wrangler.jsonc`.
 
-The site distinguishes definitions, formal theorems, model bridges, empirical results and open hypotheses. A Lean proof checks a consequence of stated assumptions; it does not by itself prove that the formal objects describe physical reality.
+## Included Shape
 
-Author: Salkutsan Aleksey Anatolievich  
-ORCID: https://orcid.org/0009-0006-8717-0492
+- edit site code under `app/`
+- `.openai/hosting.json` declares optional Sites D1 and R2 bindings
+- `vite.config.ts` simulates declared bindings for local development
+- `db/schema.ts` starts intentionally empty
+- `examples/d1/` contains an optional D1 example surface
+- `drizzle.config.ts` supports local migration generation when needed
+
+## Workspace Auth Headers
+
+OpenAI workspace sites can read the current user's email from
+`oai-authenticated-user-email`.
+
+SIWC-authenticated workspace sites may also receive
+`oai-authenticated-user-full-name` when the user's SIWC profile has a non-empty
+`name` claim. The full-name value is percent-encoded UTF-8 and is accompanied by
+`oai-authenticated-user-full-name-encoding: percent-encoded-utf-8`.
+
+Treat the full name as optional and fall back to email when it is absent:
+
+```tsx
+import { headers } from "next/headers";
+
+export default async function Home() {
+  const requestHeaders = await headers();
+  const email = requestHeaders.get("oai-authenticated-user-email");
+  const encodedFullName = requestHeaders.get("oai-authenticated-user-full-name");
+  const fullName =
+    encodedFullName &&
+    requestHeaders.get("oai-authenticated-user-full-name-encoding") ===
+      "percent-encoded-utf-8"
+      ? decodeURIComponent(encodedFullName)
+      : null;
+
+  const displayName = fullName ?? email;
+  // ...
+}
+```
+
+## Optional Dispatch-Owned ChatGPT Sign-In
+
+Import the ready-to-use helpers from `app/chatgpt-auth.ts` when the site needs
+optional or required ChatGPT sign-in:
+
+- Use `getChatGPTUser()` for optional signed-in UI.
+- Use `requireChatGPTUser(returnTo)` for server-rendered pages that should send
+  anonymous visitors through Sign in with ChatGPT.
+- Use `chatGPTSignInPath(returnTo)` and `chatGPTSignOutPath(returnTo)` for
+  browser links or actions.
+- Pass a same-origin relative `returnTo` path for the destination after sign-in
+  or sign-out. The helper validates and safely encodes it.
+- Mark protected pages with `export const dynamic = "force-dynamic"` because
+  they depend on per-request identity headers.
+
+Dispatch owns `/signin-with-chatgpt`, `/signout-with-chatgpt`, `/callback`, the
+OAuth cookies, and identity header injection. Do not implement app routes for
+those reserved paths. Routes that do not import and call the helper remain
+anonymous-compatible.
+
+SIWC establishes identity only; it does not prove workspace membership. Use the
+Sites hosting platform's access policy controls for workspace-wide restrictions,
+or enforce explicit server-side membership or allowlist checks.
+
+Use SIWC for account pages, user-specific dashboards, saved records, and write
+actions tied to the current ChatGPT user. Leave public content anonymous.
+
+## Useful Commands
+
+- `npm run dev`: start local development
+- `npm run build`: verify the vinext build output
+- `npm test`: build the starter and verify its rendered loading skeleton
+- `npm run db:generate`: generate Drizzle migrations after schema changes
+
+## Learn More
+
+- [vinext Documentation](https://github.com/cloudflare/vinext)
+- [Drizzle D1 Guide](https://orm.drizzle.team/docs/get-started/d1-new)
