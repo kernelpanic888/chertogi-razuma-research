@@ -13,7 +13,8 @@ test('F8C31G public scene shows continuity, revocation and the external identity
   assert.doesNotMatch(html, /node:crypto/);
 });
 
-test('F8C31G advances the local public route', async () => {
-  const route = await readFile(new URL('../app/page.tsx', import.meta.url), 'utf8');
-  assert.match(route, /first-distinction-53/);
+test('F8C31G is served through the canonical public route', async () => {
+  const route = await readFile(new URL('../app/route.ts', import.meta.url), 'utf8');
+  assert.match(route, /public\/index\.html\?raw/);
+  assert.match(route, /chertogi-razuma-research\.kernelpanic888\.chatgpt\.site/);
 });

@@ -18,6 +18,7 @@ test('F8C31F public scene keeps content, signature and identity claims separate'
 });
 
 test('F8C31F advances the local public route', async () => {
-  const route = await readFile(new URL('../app/page.tsx', import.meta.url), 'utf8');
-  assert.match(route, /first-distinction-53/);
+  const route = await readFile(new URL('../app/route.ts', import.meta.url), 'utf8');
+  assert.match(route, /public\/index\.html\?raw/);
+  assert.match(route, /chertogi-razuma-research.kernelpanic888.chatgpt.site/);
 });

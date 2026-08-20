@@ -13,7 +13,8 @@ test('F8C31H public scene distinguishes readiness from an executed key ceremony'
   assert.doesNotMatch(html, /PRIVATE KEY-----/);
 });
 
-test('F8C31H advances the local public route', async () => {
-  const route = await readFile(new URL('../app/page.tsx', import.meta.url), 'utf8');
-  assert.match(route, /first-distinction-53/);
+test('F8C31H is served through the canonical public route', async () => {
+  const route = await readFile(new URL('../app/route.ts', import.meta.url), 'utf8');
+  assert.match(route, /public\/index\.html\?raw/);
+  assert.match(route, /chertogi-razuma-research\.kernelpanic888\.chatgpt\.site/);
 });

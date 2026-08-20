@@ -6,7 +6,7 @@ import { dirname, resolve } from "node:path";
 
 const here = dirname(fileURLToPath(import.meta.url));
 const publicHtml = readFileSync(resolve(here, "../public/index.html"), "utf8");
-const routeSource = readFileSync(resolve(here, "../app/page.tsx"), "utf8");
+const routeSource = readFileSync(resolve(here, "../app/route.ts"), "utf8");
 
 test("F8C27 displays simultaneous least direct and inverse metric constants", () => {
   assert.match(routeSource, /first-distinction-53/);

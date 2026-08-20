@@ -4,7 +4,7 @@ import { readFileSync } from "node:fs";
 
 const root = new URL("../", import.meta.url);
 const publicHtml = readFileSync(new URL("public/index.html", root), "utf8");
-const routeSource = readFileSync(new URL("app/page.tsx", root), "utf8");
+const routeSource = readFileSync(new URL("app/route.ts", root), "utf8");
 
 test("F8C25 actual-pair transport is present and honestly bounded", () => {
   assert.match(routeSource, /first-distinction-53/);

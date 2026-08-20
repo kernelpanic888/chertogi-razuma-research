@@ -3,7 +3,7 @@ import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
 
 const publicHtml = await readFile(new URL("../public/index.html", import.meta.url), "utf8");
-const routeSource = await readFile(new URL("../app/page.tsx", import.meta.url), "utf8");
+const routeSource = await readFile(new URL("../app/route.ts", import.meta.url), "utf8");
 
 test("F8C31B closes the two-chart stereographic lift honestly", () => {
   assert.match(routeSource, /first-distinction-53/);

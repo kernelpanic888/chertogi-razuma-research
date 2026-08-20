@@ -21,6 +21,8 @@
 # misc
 .DS_Store
 *.pem
+!verification/f8c31f/release-public-key.pem
+!verification/f8c31g/*-public.pem
 
 # debug
 npm-debug.log*

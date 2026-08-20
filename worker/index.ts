@@ -76,10 +76,24 @@ const worker = {
       }, allowedWidths);
     }
 
+const acceptsHtml = (request.headers.get("Accept") ?? "").includes("text/html");
+const canonicalUrl = "https://chertogi-razuma-research.kernelpanic888.chatgpt.site/";
+
+if (request.method === "GET" && url.pathname === "/index.html" && acceptsHtml) {
+  return new Response(null, {
+    status: 308,
+    headers: {
+      Location: "/",
+      "X-Robots-Tag": "noindex, follow",
+      Link: `<${canonicalUrl}>; rel="canonical"`,
+    },
+  });
+}
+
 const servesCanonicalPage =
   request.method === "GET" &&
-  (url.pathname === "/" || url.pathname === "/index.html") &&
-  (request.headers.get("Accept") ?? "").includes("text/html");
+  url.pathname === "/" &&
+  acceptsHtml;
 
 if (!servesCanonicalPage) {
   return handler.fetch(request, env, ctx);
@@ -102,6 +116,8 @@ try {
 const headers = new Headers(response.headers);
 headers.set("Content-Type", "text/html; charset=utf-8");
 headers.set("X-Chertogi-Counter", counterStatus);
+headers.set("X-Robots-Tag", "index, follow, max-image-preview:large");
+headers.set("Link", `<${canonicalUrl}>; rel="canonical"`);
 
 return new Response(response.body, {
   status: response.status,

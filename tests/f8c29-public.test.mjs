@@ -6,7 +6,7 @@ import { dirname, resolve } from "node:path";
 
 const here = dirname(fileURLToPath(import.meta.url));
 const publicHtml = readFileSync(resolve(here, "../public/index.html"), "utf8");
-const routeSource = readFileSync(resolve(here, "../app/page.tsx"), "utf8");
+const routeSource = readFileSync(resolve(here, "../app/route.ts"), "utf8");
 
 test("F8C29 transports raw finite samples into certified F8C28 budgets", () => {
   assert.match(routeSource, /first-distinction-53/);

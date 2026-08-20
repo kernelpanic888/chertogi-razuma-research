@@ -17,6 +17,7 @@ test('F8C31E public scene explains canonical replay without implementation sourc
 });
 
 test('F8C31E advances the public route', async () => {
-  const route = await readFile(new URL('../app/page.tsx', import.meta.url), 'utf8');
-  assert.match(route, /first-distinction-53/);
+  const route = await readFile(new URL('../app/route.ts', import.meta.url), 'utf8');
+  assert.match(route, /public\/index\.html\?raw/);
+  assert.match(route, /chertogi-razuma-research.kernelpanic888.chatgpt.site/);
 });

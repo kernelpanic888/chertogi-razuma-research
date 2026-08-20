@@ -16,6 +16,7 @@ test('F8C31C public scene exposes the proved metric transport without Lean sourc
 });
 
 test('F8C31C advances the public route', async () => {
-  const route = await readFile(new URL('../app/page.tsx', import.meta.url), 'utf8');
-  assert.match(route, /first-distinction-53/);
+  const route = await readFile(new URL('../app/route.ts', import.meta.url), 'utf8');
+  assert.match(route, /public\/index\.html\?raw/);
+  assert.match(route, /chertogi-razuma-research.kernelpanic888.chatgpt.site/);
 });
