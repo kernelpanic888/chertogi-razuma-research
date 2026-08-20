@@ -156,6 +156,38 @@
       gap: 1rem;
     }
 
+    .game-corner-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.42rem;
+      padding: 0.42rem 0.62rem;
+      border: 1px solid rgba(255, 210, 88, 0.34);
+      border-left: 3px solid var(--gold);
+      background: linear-gradient(110deg, rgba(255, 210, 88, 0.08), rgba(89, 217, 255, 0.04));
+      color: var(--cyan);
+      font-size: 0.62rem;
+      font-weight: 800;
+      letter-spacing: 0.12em;
+      line-height: 1;
+      text-decoration: none;
+      white-space: nowrap;
+      transition: border-color 160ms ease, color 160ms ease, background 160ms ease;
+    }
+
+    .game-corner-link::before {
+      content: "\25C7";
+      color: var(--gold);
+      font-size: 0.72rem;
+    }
+
+    .game-corner-link:hover,
+    .game-corner-link:focus-visible {
+      border-color: rgba(255, 210, 88, 0.78);
+      background: linear-gradient(110deg, rgba(255, 210, 88, 0.14), rgba(89, 217, 255, 0.08));
+      color: var(--mint);
+      outline: none;
+    }
+
     .status {
       display: flex;
       align-items: center;
@@ -1115,7 +1147,10 @@
         align-items: flex-start;
         justify-content: space-between;
         gap: 0.75rem;
+        flex-wrap: wrap;
       }
+
+      .game-corner-link { margin-left: auto; }
 
       .status { font-size: 0.6rem; }
 
@@ -4222,6 +4257,7 @@
     <div class="brand">Чертоги первого различия / IF-0.1</div>
     <div class="topbar-tools">
       <div class="status"><span class="status-dot"></span><span class="status-copy">Публичная карта · текущее исследование · IF-P01B</span></div>
+      <a class="game-corner-link" href="https://imba-mir-aleksey.kernelpanic888.chatgpt.site/" target="_blank" rel="noopener noreferrer" aria-label="IMBA MIR — открыть игру / open game">IMBA MIR / GAME ↗</a>
       <div class="language-switch" role="group" aria-label="Язык страницы">
         <button class="language-button" type="button" data-language="ru" aria-pressed="false">RU</button>
         <button class="language-button" type="button" data-language="en" aria-pressed="true">EN</button>
