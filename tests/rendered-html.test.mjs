@@ -2,22 +2,19 @@ import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
 import test from "node:test";
 
-async function renderPath(pathname = "/") {
+async function renderRoot() {
   const workerUrl = new URL("../dist/server/index.js", import.meta.url);
   workerUrl.searchParams.set("test", `${process.pid}-${Date.now()}`);
   const { default: worker } = await import(workerUrl.href);
-  const publicHtml = await readFile(new URL("../public/index.html", import.meta.url), "utf8");
 
   return worker.fetch(
-    new Request(`http://localhost${pathname}`, {
+    new Request("http://localhost/", {
       headers: { accept: "text/html" },
       redirect: "manual",
     }),
     {
       ASSETS: {
-        fetch: async (request) => new URL(request.url).pathname === "/_canonical/page.dat"
-          ? new Response(publicHtml, { headers: { "Content-Type": "text/html; charset=utf-8" } })
-          : new Response("Not found", { status: 404 }),
+        fetch: async () => new Response("Not found", { status: 404 }),
       },
     },
     {
@@ -27,18 +24,13 @@ async function renderPath(pathname = "/") {
   );
 }
 
-test("serves one indexable canonical research map at the root", async () => {
-  const response = await renderPath();
-  assert.equal(response.status, 200);
-  assert.match(response.headers.get("content-type") ?? "", /^text\/html/);
-  assert.equal(response.headers.get("x-robots-tag"), "index, follow, max-image-preview:large");
-  assert.match(response.headers.get("link") ?? "", /rel="canonical"/);
-});
-
-test("redirects the duplicate index path to the canonical root", async () => {
-  const response = await renderPath("/index.html?v=legacy");
-  assert.equal(response.status, 308);
-  assert.equal(response.headers.get("location"), "http://localhost/");
+test("redirects the root to the versioned self-contained research map", async () => {
+  const response = await renderRoot();
+  assert.equal(response.status, 307);
+  assert.match(
+    response.headers.get("location") ?? "",
+    /\/index\.html\?v=first-distinction-53$/,
+  );
 });
 
 test("ships F8C10 without the disposable starter preview", async () => {
@@ -110,7 +102,7 @@ test("ships F8C10 without the disposable starter preview", async () => {
   assert.match(publicHtml, /EXECUTABLE REFERENCE CERTIFICATE EXISTS/);
   assert.match(publicHtml, /if-bs-f8c31a-rational-parameter-grid/);
   assert.match(publicHtml, /EXECUTABLE PARAMETER REFINEMENT EXISTS/);
-  assert.match(page, /redirect\("\/index\.html"\)/);
+  assert.match(page, /redirect\("\/index\.html\?v=first-distinction-53"\)/);
   assert.doesNotMatch(page, /_sites-preview|SkeletonPreview|codex-preview/);
   assert.match(layout, /export const metadata:\s*Metadata/);
   assert.match(layout, /<html lang="en">/);

@@ -1,0 +1,673 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark">
+  <title>AZ-OBS-11 / Protocol Chamber</title>
+  <style>
+    :root {
+      --ink: #001912;
+      --deep: #00110c;
+      --panel: #00251b;
+      --line: #155e4c;
+      --line-soft: rgba(76, 201, 161, .16);
+      --mint: #86ffd3;
+      --green: #20ef86;
+      --cyan: #53d7ff;
+      --yellow: #ffd052;
+      --red: #ff6257;
+      --muted: #8dac9f;
+      --serif: Georgia, "Times New Roman", serif;
+      --mono: "Courier New", Courier, monospace;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--mint);
+      background:
+        linear-gradient(var(--line-soft) 1px, transparent 1px),
+        linear-gradient(90deg, var(--line-soft) 1px, transparent 1px),
+        radial-gradient(circle at 50% 18%, rgba(23, 121, 82, .24), transparent 42%),
+        var(--deep);
+      background-size: 62px 62px, 62px 62px, auto, auto;
+      font-family: var(--mono);
+      min-height: 100vh;
+    }
+
+    a { color: inherit; }
+    button { font: inherit; }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      min-height: 84px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      padding: 18px 4vw;
+      border-bottom: 1px solid var(--line);
+      background: rgba(0, 17, 12, .94);
+      backdrop-filter: blur(12px);
+    }
+
+    .brand, .status, .eyebrow, .gate-id, .formula-label {
+      letter-spacing: .11em;
+      text-transform: uppercase;
+      font-weight: 700;
+    }
+
+    .brand { color: var(--green); font-size: clamp(.84rem, 1.4vw, 1.1rem); }
+    .status { color: var(--muted); font-size: .78rem; text-align: right; }
+    .status-dot {
+      display: inline-block;
+      width: 10px;
+      height: 10px;
+      margin-right: 9px;
+      border-radius: 50%;
+      background: var(--yellow);
+      box-shadow: 0 0 18px var(--yellow);
+    }
+
+    .lang {
+      display: inline-flex;
+      border: 1px solid var(--line);
+      flex: none;
+    }
+    .lang button {
+      width: 58px;
+      height: 44px;
+      border: 0;
+      color: var(--muted);
+      background: transparent;
+      cursor: pointer;
+      font-weight: 800;
+    }
+    .lang button.active { color: var(--deep); background: var(--cyan); }
+
+    main { width: min(1840px, 96vw); margin: 0 auto; padding: 44px 0 90px; }
+
+    .hero {
+      position: relative;
+      overflow: hidden;
+      min-height: 430px;
+      padding: clamp(34px, 6vw, 86px);
+      border: 1px solid var(--line);
+      border-left: 10px solid var(--yellow);
+      background: linear-gradient(110deg, rgba(0, 64, 43, .88), rgba(0, 25, 18, .72));
+    }
+    .hero::after {
+      content: "11";
+      position: absolute;
+      right: 2vw;
+      bottom: -9vw;
+      color: rgba(83, 215, 255, .045);
+      font-family: var(--serif);
+      font-size: clamp(18rem, 34vw, 42rem);
+      line-height: .8;
+    }
+    .eyebrow { color: var(--cyan); font-size: .88rem; }
+    h1, h2, h3 { font-family: var(--serif); margin: 0; }
+    h1 {
+      position: relative;
+      z-index: 1;
+      max-width: 1150px;
+      margin-top: 28px;
+      font-size: clamp(3rem, 7.2vw, 8.7rem);
+      line-height: .92;
+      font-weight: 600;
+    }
+    h1 em { color: var(--yellow); font-weight: 500; }
+    .lead {
+      position: relative;
+      z-index: 1;
+      max-width: 1020px;
+      margin: 34px 0 0;
+      color: #b4d2c5;
+      font: 1.06rem/1.75 var(--mono);
+    }
+
+    .research-bridge {
+      display: grid;
+      grid-template-columns: minmax(250px, .72fr) 1.6fr;
+      gap: clamp(28px, 5vw, 86px);
+      margin: 28px 0;
+      padding: clamp(28px, 4vw, 58px);
+      border-left: 7px solid var(--cyan);
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+      background: linear-gradient(90deg, rgba(0, 55, 39, .72), rgba(0, 17, 12, .78));
+    }
+    .research-bridge h2 { font-size: clamp(2.1rem, 4vw, 4.8rem); line-height: 1.02; }
+    .research-bridge p { margin: 0 0 20px; color: #abc8bc; line-height: 1.72; }
+    .route-line {
+      margin-top: 25px;
+      color: var(--yellow);
+      font-weight: 800;
+      line-height: 1.8;
+      letter-spacing: .025em;
+    }
+    .bridge-links { display: flex; flex-wrap: wrap; gap: 22px; margin-top: 26px; }
+    .bridge-links a {
+      color: var(--cyan);
+      text-decoration: none;
+      border-bottom: 1px solid var(--cyan);
+      padding-bottom: 5px;
+      font-weight: 800;
+      letter-spacing: .06em;
+    }
+
+    .binding-strip {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      margin: 0 0 28px;
+      border: 1px solid var(--line);
+      background: rgba(0, 37, 27, .9);
+    }
+    .binding-strip div {
+      padding: 18px;
+      border-right: 1px solid var(--line);
+      color: var(--cyan);
+      font-size: .76rem;
+      font-weight: 700;
+      letter-spacing: .05em;
+      text-align: center;
+    }
+    .binding-strip div:last-child { border-right: 0; }
+
+    .mode-map {
+      display: grid;
+      grid-template-columns: 1fr 190px 1fr;
+      align-items: stretch;
+      margin: 0 0 28px;
+      border: 1px solid var(--line);
+      background: rgba(0, 17, 12, .9);
+    }
+    .mode-card { padding: 28px; }
+    .mode-card h3 { color: var(--mint); font-size: 1.55rem; }
+    .mode-card p { color: var(--muted); line-height: 1.6; }
+    .head-bridge {
+      display: grid;
+      place-content: center;
+      border-left: 1px solid var(--line);
+      border-right: 1px solid var(--line);
+      color: var(--yellow);
+      text-align: center;
+      font-weight: 800;
+      line-height: 1.7;
+      box-shadow: inset 0 0 45px rgba(255, 208, 82, .06);
+    }
+    .lease-note {
+      margin: -1px 0 28px;
+      padding: 22px 28px;
+      border: 1px solid var(--line);
+      border-left: 7px solid var(--yellow);
+      background: rgba(36, 31, 7, .46);
+      color: var(--muted);
+      line-height: 1.65;
+    }
+    .lease-note strong { color: var(--yellow); }
+
+    .formula {
+      display: grid;
+      grid-template-columns: 150px 1fr;
+      gap: 20px;
+      margin: 28px 0;
+      padding: 25px 28px;
+      border: 1px solid var(--line);
+      background: rgba(0, 17, 12, .88);
+    }
+    .formula-label { color: var(--cyan); font-size: .8rem; }
+    .formula-code {
+      color: var(--mint);
+      font-weight: 700;
+      line-height: 1.65;
+      overflow-wrap: anywhere;
+    }
+
+    .scene {
+      border: 1px solid var(--line);
+      background: rgba(0, 25, 18, .88);
+      overflow: hidden;
+    }
+    .scene-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      padding: 22px 28px;
+      border-bottom: 1px solid var(--line);
+    }
+    .scene-head strong { color: var(--cyan); letter-spacing: .08em; }
+    .scene-state { color: var(--yellow); font-size: .8rem; letter-spacing: .08em; }
+
+    .stage { position: relative; min-height: 650px; }
+    svg { display: block; width: 100%; height: auto; min-height: 540px; }
+    .orbit { fill: none; stroke: rgba(83, 215, 255, .12); stroke-width: 1.2; }
+    .route { fill: none; stroke: rgba(134, 255, 211, .35); stroke-width: 5; }
+    .route-open { stroke: var(--mint); filter: drop-shadow(0 0 8px rgba(134,255,211,.45)); }
+    .route-closed { stroke: var(--red); stroke-dasharray: 14 12; }
+    .gate circle { fill: var(--deep); stroke: var(--mint); stroke-width: 5; }
+    .gate text { fill: var(--mint); font: 700 18px var(--mono); }
+    .gate .sub { fill: var(--muted); font-size: 13px; }
+    .gate.active circle { fill: rgba(255,208,82,.22); stroke: var(--yellow); filter: drop-shadow(0 0 16px var(--yellow)); }
+    .gate.done circle { fill: rgba(32,239,134,.18); stroke: var(--green); }
+    .gate.closed circle { fill: rgba(255,98,87,.16); stroke: var(--red); }
+    .pulse { fill: var(--yellow); filter: drop-shadow(0 0 16px var(--yellow)); }
+    .receiver-core { fill: var(--yellow); filter: drop-shadow(0 0 14px var(--yellow)); }
+    .receiver-ring { fill: none; stroke: var(--mint); stroke-width: 3; }
+    .axis { stroke: rgba(83, 215, 255, .22); stroke-width: 1; }
+    .axis-label { fill: var(--cyan); font: 700 13px var(--mono); letter-spacing: .09em; }
+
+    .controls {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1.4fr;
+      border-top: 1px solid var(--line);
+    }
+    .controls button {
+      min-height: 70px;
+      border: 0;
+      border-right: 1px solid var(--line);
+      color: var(--cyan);
+      background: rgba(0, 17, 12, .82);
+      cursor: pointer;
+      font-weight: 800;
+      letter-spacing: .08em;
+    }
+    .controls button:hover { background: rgba(83, 215, 255, .08); }
+    .controls .perturb { color: var(--red); border-right: 0; }
+
+    .gate-grid {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      margin-top: 28px;
+      border: 1px solid var(--line);
+    }
+    .gate-card {
+      min-height: 190px;
+      padding: 22px 18px;
+      border-right: 1px solid var(--line);
+      background: rgba(0, 25, 18, .84);
+    }
+    .gate-card:last-child { border-right: 0; }
+    .gate-id { color: var(--yellow); font-size: .78rem; }
+    .gate-card h3 { margin-top: 15px; font-size: 1.24rem; }
+    .gate-card p { color: var(--muted); font-size: .8rem; line-height: 1.55; }
+
+    .reading {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      margin-top: 28px;
+      border: 1px solid var(--line);
+    }
+    .reading > section { padding: clamp(26px, 4vw, 56px); }
+    .reading > section + section { border-left: 1px solid var(--line); }
+    .reading h2 { font-size: clamp(2rem, 3.3vw, 4rem); }
+    .reading p { color: #a8c3b8; line-height: 1.75; }
+    .invariants { margin-top: 25px; padding-top: 22px; border-top: 1px solid var(--line); }
+    .invariants strong { display: block; color: var(--yellow); margin: 10px 0; }
+
+    .red-boundary {
+      margin-top: 28px;
+      padding: 34px;
+      border: 1px solid #79362f;
+      background: rgba(71, 25, 20, .58);
+      color: #e8b4ae;
+    }
+    .red-boundary strong { color: var(--red); letter-spacing: .1em; }
+
+    footer {
+      display: block;
+      margin-top: 48px;
+      padding: 30px 0 0;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      font-size: .82rem;
+      line-height: 1.7;
+    }
+    footer > div:first-child { color: var(--cyan); font-weight: 800; letter-spacing: .08em; }
+    .evidence-history {
+      margin-top: 20px;
+      border: 1px solid var(--line);
+      background: rgba(0, 25, 18, .7);
+    }
+    .evidence-history summary {
+      padding: 18px 22px;
+      color: var(--yellow);
+      cursor: pointer;
+      font-weight: 800;
+      letter-spacing: .06em;
+      list-style-position: inside;
+    }
+    .evidence-history__list {
+      display: grid;
+      gap: 10px;
+      padding: 0 22px 22px;
+      border-top: 1px solid var(--line);
+    }
+    .evidence-history__list > div { padding-top: 10px; }
+
+    [data-lang] { display: none; }
+    html[lang="en"] [data-lang="en"], html[lang="ru"] [data-lang="ru"] { display: revert; }
+
+    @media (max-width: 1080px) {
+      .gate-grid { grid-template-columns: repeat(2, 1fr); }
+      .gate-card { border-bottom: 1px solid var(--line); }
+      .gate-card:nth-child(even) { border-right: 0; }
+      .gate-card:last-child { grid-column: 1 / -1; }
+      .reading { grid-template-columns: 1fr; }
+      .reading > section + section { border-left: 0; border-top: 1px solid var(--line); }
+    }
+
+    @media (max-width: 720px) {
+      .topbar { align-items: flex-start; flex-wrap: wrap; }
+      .status { order: 3; width: 100%; text-align: left; }
+      main { width: 94vw; padding-top: 20px; }
+      .hero { min-height: auto; padding: 34px 24px; }
+      h1 { font-size: clamp(2.7rem, 15vw, 5rem); }
+      .research-bridge { grid-template-columns: 1fr; }
+      .formula { grid-template-columns: 1fr; }
+      .binding-strip { grid-template-columns: 1fr; }
+      .binding-strip div { border-right: 0; border-bottom: 1px solid var(--line); }
+      .mode-map { grid-template-columns: 1fr; }
+      .head-bridge { min-height: 110px; border: 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+      .stage { min-height: 450px; overflow-x: auto; }
+      svg { width: 980px; min-height: 430px; }
+      .controls { grid-template-columns: 1fr; }
+      .controls button { border-right: 0; border-bottom: 1px solid var(--line); }
+      .gate-grid { grid-template-columns: 1fr; }
+      .gate-card, .gate-card:nth-child(even) { border-right: 0; }
+      .gate-card:last-child { grid-column: auto; }
+      footer { flex-direction: column; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">AZ-OBS-11 / PROTOCOL CHAMBER</div>
+    <div class="status"><span class="status-dot"></span><span data-lang="en">PUBLIC RESEARCH READER · WORKING MODEL</span><span data-lang="ru">ПУБЛИЧНЫЙ ИССЛЕДОВАТЕЛЬСКИЙ РИДЕР · РАБОЧАЯ МОДЕЛЬ</span></div>
+    <div class="lang" aria-label="Language">
+      <button type="button" data-set-lang="ru">RU</button>
+      <button type="button" data-set-lang="en" class="active">EN</button>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="eyebrow" data-lang="en">ONE ROUTE · SEVEN INDEPENDENT GATES · ZERO AMBIENT AUTHORITY</div>
+      <div class="eyebrow" data-lang="ru">ОДИН МАРШРУТ · СЕМЬ НЕЗАВИСИМЫХ ВОРОТ · НОЛЬ НЕЯВНЫХ ПОЛНОМОЧИЙ</div>
+      <h1 data-lang="en">Evidence moves.<br><em>The receiver does not.</em></h1>
+      <h1 data-lang="ru">Свидетельство движется.<br><em>Получатель неподвижен.</em></h1>
+      <p class="lead" data-lang="en">A trust head may advance only after committed reception, exact recovery, explicit authorization, external witnessing, trust admission, governance quorum and validation of the next passport meet in one chamber.</p>
+      <p class="lead" data-lang="ru">Граница доверия может продвинуться только там, где в одной камере совпали зафиксированный приём, точное восстановление, явное разрешение, внешнее свидетельство, допуск свидетеля, кворум управления и проверка следующего паспорта.</p>
+    </section>
+
+    <section class="research-bridge" id="research-bridge">
+      <div>
+        <div class="eyebrow">Q → TRACE → RETURN</div>
+        <h2 data-lang="en">From first distinction to certified return.</h2>
+        <h2 data-lang="ru">От первого различия к проверяемому возврату.</h2>
+      </div>
+      <div>
+        <p data-lang="en"><strong>This is an applied branch of the main research, not a second answer to the ontological question.</strong> The central map studies the minimal distinction from which an interface, a trace and the possibility of return become expressible. This chamber begins one level later: when that trace enters physical execution, how can we establish that it was preserved rather than silently replaced, replayed or forked?</p>
+        <p data-lang="ru"><strong>Это прикладная ветка главного исследования, а не второй ответ на онтологический вопрос.</strong> Центральная карта исследует минимальное различие, из которого становятся выразимы интерфейс, след и возможность возврата. Эта камера начинает уровнем позже: когда след входит в физическое исполнение, как установить, что он сохранён, а не незаметно подменён, повторён или разветвлён?</p>
+        <p data-lang="en">The protocol therefore proves no being, consciousness or new physics. It gives an operational test for continuity of an already produced distinction.</p>
+        <p data-lang="ru">Поэтому протокол не доказывает бытие, сознание или новую физику. Он даёт операциональную проверку непрерывности уже возникшего различия.</p>
+        <div class="route-line">DISTINCTION → INTERFACE → TRACE → RETURN → CERTIFIED CONTINUITY</div>
+        <div class="bridge-links">
+          <a href="../../index.html"><span data-lang="en">MAIN RESEARCH MAP ↗</span><span data-lang="ru">ГЛАВНАЯ КАРТА ↗</span></a>
+          <a href="../intellectual-digital-life-architecture/index.html"><span data-lang="en">DIGITAL-LIFE ARCHITECTURE ↗</span><span data-lang="ru">АРХИТЕКТУРА ЦИФРОВОЙ ЖИЗНИ ↗</span></a>
+        </div>
+      </div>
+    </section>
+
+    <div class="formula">
+      <div class="formula-label" data-lang="en">CORE</div>
+      <div class="formula-label" data-lang="ru">ЯДРО</div>
+      <div class="formula-code">Open(G) = g₁ ∧ g₂ ∧ g₃ ∧ g₄ ∧ g₅ ∧ g₆ ∧ g₇<br>Open(G) ⇒ Rₙ₊₁ = Rₙ ∧ epoch(Hₙ₊₁) = epoch(Hₙ) + 1</div>
+    </div>
+
+    <div class="binding-strip" aria-label="Concrete local bindings">
+      <div>06 · RECEIVE</div>
+      <div>07 · RECOVER</div>
+      <div>08 · WITNESS</div>
+      <div>09 · TRUST</div>
+      <div>10 · MIGRATE</div>
+    </div>
+
+    <section class="mode-map">
+      <article class="mode-card">
+        <div class="gate-id">MODE A / NORMAL</div>
+        <h3 data-lang="en">Receive and commit</h3><h3 data-lang="ru">Принять и зафиксировать</h3>
+        <p data-lang="en">Signed envelope → durable receiver state → RECEIVER_COMMIT record. No recovery authority.</p>
+        <p data-lang="ru">Signed envelope → устойчивое состояние → запись RECEIVER_COMMIT. Полномочий recovery нет.</p>
+      </article>
+      <div class="head-bridge">SHA-256<br>CONTINUITY<br>HEAD</div>
+      <article class="mode-card">
+        <div class="gate-id">MODE B / OPERATOR</div>
+        <h3 data-lang="en">Pin and recover</h3><h3 data-lang="ru">Закрепить и восстановить</h3>
+        <p data-lang="en">Exact HEAD → stale-lock quarantine → trusted witness → OPERATOR_RECOVERY record.</p>
+        <p data-lang="ru">Точный HEAD → карантин stale-lock → trusted witness → запись OPERATOR_RECOVERY.</p>
+      </article>
+    </section>
+    <div class="lease-note">
+      <strong>AZ-OBS-14 / EXCLUSIVE CONTINUITY LEASE</strong><br>
+      <span data-lang="en">One writer owns the append point. Expiry is not death: recovery also requires a local owner, an absent PID, the exact lease digest and literal manual authorization.</span>
+      <span data-lang="ru">Точка append принадлежит одному writer. Истечение срока не означает смерть: recovery также требует локального владельца, отсутствующий PID, точный digest lease и буквальное ручное разрешение.</span>
+    </div>
+
+    <section class="scene" aria-labelledby="scene-title">
+      <div class="scene-head">
+        <strong id="scene-title" data-lang="en">LIVE EVIDENCE ROUTE</strong>
+        <strong id="scene-title-ru" data-lang="ru">ЖИВОЙ МАРШРУТ СВИДЕТЕЛЬСТВ</strong>
+        <span class="scene-state" id="sceneState">READY / G₀</span>
+      </div>
+      <div class="stage">
+        <svg id="map" viewBox="0 0 1400 620" role="img" aria-label="Seven-gate protocol chamber">
+          <line class="axis" x1="700" y1="80" x2="700" y2="550"></line>
+          <text class="axis-label" x="722" y="105">TRUST EPOCH ↑</text>
+          <ellipse class="orbit" cx="700" cy="330" rx="540" ry="245"></ellipse>
+          <ellipse class="orbit" cx="700" cy="330" rx="410" ry="180"></ellipse>
+          <ellipse class="orbit" cx="700" cy="330" rx="270" ry="115"></ellipse>
+          <path id="route" class="route route-open" d="M130 430 C230 430 245 280 350 280 S480 430 575 430 S690 235 790 235 S900 420 1000 420 S1110 255 1260 255"></path>
+          <circle class="receiver-ring" cx="700" cy="330" r="42"></circle>
+          <circle class="receiver-core" cx="700" cy="330" r="11"></circle>
+          <text class="axis-label" x="730" y="337">R / PROTECTED RECEIVER</text>
+
+          <g class="gate" data-gate="0" transform="translate(130 430)"><circle r="22"></circle><text x="-8" y="7">1</text><text class="sub" x="-46" y="55">COMMIT</text></g>
+          <g class="gate" data-gate="1" transform="translate(350 280)"><circle r="22"></circle><text x="-8" y="7">2</text><text class="sub" x="-42" y="55">EXACT</text></g>
+          <g class="gate" data-gate="2" transform="translate(575 430)"><circle r="22"></circle><text x="-8" y="7">3</text><text class="sub" x="-58" y="55">AUTHORIZE</text></g>
+          <g class="gate" data-gate="3" transform="translate(790 235)"><circle r="22"></circle><text x="-8" y="7">4</text><text class="sub" x="-56" y="55">WITNESS</text></g>
+          <g class="gate" data-gate="4" transform="translate(1000 420)"><circle r="22"></circle><text x="-8" y="7">5</text><text class="sub" x="-42" y="55">TRUST</text></g>
+          <g class="gate" data-gate="5" transform="translate(1160 330)"><circle r="22"></circle><text x="-8" y="7">6</text><text class="sub" x="-48" y="55">QUORUM</text></g>
+          <g class="gate" data-gate="6" transform="translate(1260 255)"><circle r="22"></circle><text x="-8" y="7">7</text><text class="sub" x="-52" y="55">PASSPORT</text></g>
+          <circle id="pulse" class="pulse" r="9"><animateMotion id="motion" dur="8s" repeatCount="indefinite" path="M130 430 C230 430 245 280 350 280 S480 430 575 430 S690 235 790 235 S900 420 1000 420 S1110 255 1260 255"></animateMotion></circle>
+        </svg>
+      </div>
+      <div class="controls">
+        <button type="button" id="toggle"><span data-lang="en">PAUSE ROUTE</span><span data-lang="ru">ОСТАНОВИТЬ МАРШРУТ</span></button>
+        <button type="button" id="step"><span data-lang="en">ONE GATE</span><span data-lang="ru">ОДНИ ВОРОТА</span></button>
+        <button type="button" class="perturb" id="perturb"><span data-lang="en">BREAK ONE WITNESS</span><span data-lang="ru">НАРУШИТЬ ОДНО СВИДЕТЕЛЬСТВО</span></button>
+      </div>
+    </section>
+
+    <section class="gate-grid">
+      <article class="gate-card"><div class="gate-id">G-01</div><h3 data-lang="en">Committed</h3><h3 data-lang="ru">Зафиксировано</h3><p data-lang="en">The receiver exposes a state only after durable commit.</p><p data-lang="ru">Получатель показывает состояние только после устойчивой фиксации.</p></article>
+      <article class="gate-card"><div class="gate-id">G-02</div><h3 data-lang="en">Exact</h3><h3 data-lang="ru">Точно</h3><p data-lang="en">The released lock is the same lock that was inspected.</p><p data-lang="ru">Освобождается ровно тот lock, который был обследован.</p></article>
+      <article class="gate-card"><div class="gate-id">G-03</div><h3 data-lang="en">Authorized</h3><h3 data-lang="ru">Разрешено</h3><p data-lang="en">Recovery carries explicit authorization for the exact digest.</p><p data-lang="ru">Восстановление несёт явное разрешение для точного хеша.</p></article>
+      <article class="gate-card"><div class="gate-id">G-04</div><h3 data-lang="en">Witnessed</h3><h3 data-lang="ru">Засвидетельствовано</h3><p data-lang="en">An external key signs the exact recovery receipt bytes.</p><p data-lang="ru">Внешний ключ подписывает точные байты квитанции восстановления.</p></article>
+      <article class="gate-card"><div class="gate-id">G-05</div><h3 data-lang="en">Trusted</h3><h3 data-lang="ru">Допущено</h3><p data-lang="en">A valid signature is admitted only inside its trust window.</p><p data-lang="ru">Корректная подпись допускается только внутри окна доверия.</p></article>
+      <article class="gate-card"><div class="gate-id">G-06</div><h3 data-lang="en">Quorum</h3><h3 data-lang="ru">Кворум</h3><p data-lang="en">Independent approvals meet the pinned N-of-M rule.</p><p data-lang="ru">Независимые разрешения выполняют закреплённое правило N-из-M.</p></article>
+      <article class="gate-card"><div class="gate-id">G-07</div><h3 data-lang="en">Next passport</h3><h3 data-lang="ru">Следующий паспорт</h3><p data-lang="en">The new anchor is valid, distinct and exactly one epoch ahead.</p><p data-lang="ru">Новый якорь корректен, отличен и опережает ровно на одну эпоху.</p></article>
+    </section>
+
+    <section class="reading">
+      <section>
+        <div class="eyebrow">LEAN / FORMAL SIDE</div>
+        <h2 data-lang="en">Silence is a result.</h2><h2 data-lang="ru">Тишина — это результат.</h2>
+        <p data-lang="en">The executable function returns no state whenever even one gate is false. From every admitted result Lean derives receiver preservation, monotone epoch growth and impossibility of same-epoch replay.</p>
+        <p data-lang="ru">Исполнимая функция не возвращает состояния, если хотя бы одни ворота закрыты. Из каждого допущенного результата Lean выводит сохранение получателя, монотонный рост эпохи и невозможность повтора в той же эпохе.</p>
+        <div class="invariants"><strong>R_after = R_before</strong><strong>epoch(H_after) = epoch(H_before) + 1</strong><strong>¬ replay(H_n → H_n)</strong></div>
+      </section>
+      <section>
+        <div class="eyebrow">RUNTIME / PHYSICAL SIDE</div>
+        <h2 data-lang="en">Adapters act. The chamber judges.</h2><h2 data-lang="ru">Адаптеры действуют. Камера судит.</h2>
+        <p data-lang="en">Five explicit ports perform physical work. The chamber supplies no hidden disk, network or account authority. It orders receipts, checks exact SHA-256 identities and stops before the next phase when evidence diverges.</p>
+        <p data-lang="ru">Пять явных портов выполняют физическую работу. Камера не получает скрытой власти над диском, сетью или аккаунтами. Она упорядочивает квитанции, сравнивает точные SHA-256 и останавливается до следующей фазы при расхождении свидетельств.</p>
+      </section>
+    </section>
+
+    <section class="red-boundary">
+      <strong>RED BOUNDARY / КРАСНАЯ ГРАНИЦА</strong>
+      <p data-lang="en">The chamber proves composition of stated gates. It does not prove the operating system, filesystem, clock, network or hardware key. Physical stale-lock release and later trust migration are staged, not globally atomic; every completed phase must leave its own receipt.</p>
+      <p data-lang="ru">Камера доказывает композицию заявленных ворот. Она не доказывает операционную систему, файловую систему, часы, сеть или аппаратный ключ. Физическое снятие stale-lock и последующая миграция доверия выполняются поэтапно, а не одной глобально атомарной операцией; каждая завершённая фаза обязана оставить свою квитанцию.</p>
+    </section>
+
+    <footer>
+      <div>AZ-OBS-11 → 34 · PUBLIC RESEARCH READER · 2026</div>
+      <details class="evidence-history">
+        <summary><span data-lang="en">EVIDENCE HISTORY · AZ-OBS-15 → 34 · EXPAND</span><span data-lang="ru">ИСТОРИЯ СВИДЕТЕЛЬСТВ · AZ-OBS-15 → 34 · РАСКРЫТЬ</span></summary>
+        <div class="evidence-history__list">
+      <div data-lang="en">AZ-OBS-15 · 5 CRASH CUTS · TRUSTED RECOVERY WITNESS · LEAN + RUNTIME VERIFIED</div>
+      <div data-lang="ru">AZ-OBS-15 · 5 СРЕЗОВ СБОЯ · ДОВЕРЕННЫЙ СВИДЕТЕЛЬ ВОССТАНОВЛЕНИЯ · ПРОВЕРЕНО LEAN + RUNTIME</div>
+      <div data-lang="en">AZ-OBS-16 · NORMAL + RECOVERY SHARE ONE WITNESSED ATOMIC WRITER · 19/19 PASS</div>
+      <div data-lang="ru">AZ-OBS-16 · NORMAL + RECOVERY ИСПОЛЬЗУЮТ ЕДИНЫЙ АТОМАРНЫЙ WRITER СО СВИДЕТЕЛЕМ · 19/19 PASS</div>
+      <div data-lang="en">AZ-OBS-17 · RECEIVER + CONTINUITY ARE BOUND BY ONE DURABLE INTENT · 20/20 PASS</div>
+      <div data-lang="ru">AZ-OBS-17 · RECEIVER + CONTINUITY СВЯЗАНЫ ЕДИНЫМ УСТОЙЧИВЫМ INTENT · 20/20 PASS</div>
+      <div data-lang="en">AZ-OBS-18 · CRASH-IDEMPOTENT SIGNED ROLLBACK · 7 CRASH CUTS · 29/29 PASS</div>
+      <div data-lang="ru">AZ-OBS-18 · ПОДПИСАННЫЙ ВОЗВРАТ, УСТОЙЧИВЫЙ К СБОЯМ · 7 СРЕЗОВ · 29/29 PASS</div>
+      <div data-lang="en">AZ-OBS-19 · EXTERNAL CHALLENGE/RESPONSE SIGNER · PRIVATE KEY ABSENT FROM EXECUTOR API · 34/34 PASS</div>
+      <div data-lang="ru">AZ-OBS-19 · ВНЕШНИЙ SIGNER CHALLENGE/RESPONSE · PRIVATE KEY ОТСУТСТВУЕТ В API ИСПОЛНИТЕЛЯ · 34/34 PASS</div>
+      <div data-lang="en">AZ-OBS-20 · HARDWARE-ORIENTED SIGNER CONTRACT · MONOTONIC PIN + MEASUREMENT · 40/40 PASS</div>
+      <div data-lang="ru">AZ-OBS-20 · АППАРАТНО-ОРИЕНТИРОВАННЫЙ SIGNER · МОНОТОННЫЙ PIN + MEASUREMENT · 40/40 PASS</div>
+      <div data-lang="en">AZ-OBS-21 · DURABLE EXTERNAL PIN LEDGER · IDEMPOTENT PROVIDER PROOF RECOVERY · 49/49 PASS</div>
+      <div data-lang="ru">AZ-OBS-21 · УСТОЙЧИВЫЙ ВНЕШНИЙ PIN-ЖУРНАЛ · ИДЕМПОТЕНТНЫЙ ВОЗВРАТ PROVIDER PROOF · 49/49 PASS</div>
+      <div data-lang="en">AZ-OBS-22 · INDEPENDENT 2-OF-3 PIN QUORUM · SIGNED FORK EVIDENCE · 55/55 PASS</div>
+      <div data-lang="ru">AZ-OBS-22 · НЕЗАВИСИМЫЙ PIN-КВОРУМ 2 ИЗ 3 · ПОДПИСАННОЕ FORK EVIDENCE · 55/55 PASS</div>
+      <div data-lang="en">AZ-OBS-23 · PROOF-CARRYING PIN QUORUM · WITNESS-SIDE PROVIDER VERIFICATION · 61/61 PASS</div>
+      <div data-lang="ru">AZ-OBS-23 · PROOF-CARRYING PIN-КВОРУМ · ПРОВЕРКА PROVIDER PROOF НА СТОРОНЕ WITNESS · 61/61 PASS</div>
+      <div data-lang="en">AZ-OBS-24 · QUORUM CONFIGURATION EPOCHS · ROSTER + KEY ROTATION · 69/69 PASS</div>
+      <div data-lang="ru">AZ-OBS-24 · ЭПОХИ КОНФИГУРАЦИИ КВОРУМА · РОТАЦИЯ ROSTER + КЛЮЧЕЙ · 69/69 PASS</div>
+      <div data-lang="en">AZ-OBS-25 · CRASH-SAFE CONFIGURATION ACTIVATION · PENDING MEANS SILENCE · 85/85 PASS</div>
+      <div data-lang="ru">AZ-OBS-25 · CRASH-SAFE АКТИВАЦИЯ КОНФИГУРАЦИИ · PENDING ОЗНАЧАЕТ ТИШИНУ · 85/85 PASS</div>
+      <div data-lang="en">AZ-OBS-26 · EXTERNALLY WITNESSED ACTIVE CHECKPOINTS · STARTUP RECONCILIATION · 95/95 PASS</div>
+      <div data-lang="ru">AZ-OBS-26 · ВНЕШНЕ ЗАСВИДЕТЕЛЬСТВОВАННЫЕ ACTIVE CHECKPOINTS · STARTUP RECONCILIATION · 95/95 PASS</div>
+      <div data-lang="en">AZ-OBS-27 · AUTHENTICATED REMOTE CHECKPOINT TRANSPORT · PARTITION IS NOT ROLLBACK · 107/107 PASS</div>
+      <div data-lang="ru">AZ-OBS-27 · АУТЕНТИФИЦИРОВАННЫЙ УДАЛЁННЫЙ CHECKPOINT TRANSPORT · PARTITION НЕ РАВЕН ROLLBACK · 107/107 PASS</div>
+      <div data-lang="en">AZ-OBS-28 · PROCESS-ISOLATED CHECKPOINT WITNESSES · BOUNDED FRAMES + DURABLE CHALLENGE JOURNAL · 119/119 PASS</div>
+      <div data-lang="ru">AZ-OBS-28 · PROCESS-ИЗОЛИРОВАННЫЕ CHECKPOINT-СВИДЕТЕЛИ · ОГРАНИЧЕННЫЕ КАДРЫ + ДОЛГОВЕЧНЫЙ CHALLENGE JOURNAL · 119/119 PASS</div>
+      <div data-lang="en">AZ-OBS-29 · DURABLE TRUSTED-FLOOR LEDGER · CLIENT MEMORY ROLLBACK DETECTION · 133/133 PASS</div>
+      <div data-lang="ru">AZ-OBS-29 · ДОЛГОВЕЧНЫЙ TRUSTED-FLOOR LEDGER · ОБНАРУЖЕНИЕ ОТКАТА ПАМЯТИ КЛИЕНТА · 133/133 PASS</div>
+      <div data-lang="en">AZ-OBS-30 · TRUST-ROOT CLOSURE PASSPORT · NO SELF-AUTHORIZATION · 147/147 PASS</div>
+      <div data-lang="ru">AZ-OBS-30 · ПАСПОРТ ЗАМЫКАНИЯ КОРНЯ ДОВЕРИЯ · БЕЗ САМОАВТОРИЗАЦИИ · 147/147 PASS</div>
+      <div data-lang="en">AZ-OBS-31 · OFFLINE RECOVERY CUSTODY · ONE-TIME LOSS + REVOCATION TRANSCRIPT · 163/163 PASS</div>
+      <div data-lang="ru">AZ-OBS-31 · ОФЛАЙН-ХРАНЕНИЕ ВОССТАНОВЛЕНИЯ · ОДНОРАЗОВЫЙ TRANSCRIPT ПОТЕРИ + ОТЗЫВА · 163/163 PASS</div>
+      <div data-lang="en">AZ-OBS-32 · AIR-GAP RECOVERY PACKAGE · DETACHED EXPORT/IMPORT QUORUMS + DUAL CHANNEL · 182/182 PASS</div>
+      <div data-lang="ru">AZ-OBS-32 · AIR-GAP ПАКЕТ ВОССТАНОВЛЕНИЯ · РАЗДЕЛЬНЫЕ EXPORT/IMPORT КВОРУМЫ + ВТОРОЙ КАНАЛ · 182/182 PASS</div>
+      <div data-lang="en">AZ-OBS-33 · DETACHED OFFLINE SIGNING STATION · MANIFEST-ONLY + ONE-SHOT JOURNAL · 199/199 PASS</div>
+      <div data-lang="ru">AZ-OBS-33 · ОТДЕЛЬНАЯ ОФЛАЙН-СТАНЦИЯ ПОДПИСИ · ТОЛЬКО MANIFEST + ОДНОРАЗОВЫЙ ЖУРНАЛ · 199/199 PASS</div>
+      <div data-lang="en">AZ-OBS-34 · TWO-DEVICE CEREMONY ADAPTER · BYTE-ONLY HANDOFF + PHYSICAL POLICY · 219/219 PASS</div>
+      <div data-lang="ru">AZ-OBS-34 · АДАПТЕР ДВУХУСТРОЙСТВЕННОЙ ЦЕРЕМОНИИ · BYTE-ONLY HANDOFF + ФИЗИЧЕСКАЯ ПОЛИТИКА · 219/219 PASS</div>
+        </div>
+      </details>
+    </footer>
+  </main>
+
+  <script>
+    const root = document.documentElement;
+    const motion = document.getElementById("motion");
+    const route = document.getElementById("route");
+    const state = document.getElementById("sceneState");
+    const gates = [...document.querySelectorAll(".gate")];
+    const toggle = document.getElementById("toggle");
+    const stepButton = document.getElementById("step");
+    const perturb = document.getElementById("perturb");
+    let running = true;
+    let broken = false;
+    let cursor = 0;
+    let clock;
+
+    function setLanguage(lang) {
+      root.lang = lang;
+      document.querySelectorAll("[data-set-lang]").forEach((button) => {
+        button.classList.toggle("active", button.dataset.setLang === lang);
+      });
+    }
+
+    function paint(index) {
+      cursor = index % gates.length;
+      gates.forEach((gate, gateIndex) => {
+        gate.classList.toggle("done", gateIndex < cursor && !broken);
+        gate.classList.toggle("active", gateIndex === cursor && !broken);
+        gate.classList.toggle("closed", broken && gateIndex === 3);
+      });
+      state.textContent = broken ? "SILENCE / G₄ CLOSED" : `ADVANCING / G${cursor + 1}`;
+    }
+
+    function startClock() {
+      clearInterval(clock);
+      clock = setInterval(() => {
+        if (!running || broken) return;
+        paint(cursor + 1);
+      }, 1100);
+    }
+
+    document.querySelectorAll("[data-set-lang]").forEach((button) => {
+      button.addEventListener("click", () => setLanguage(button.dataset.setLang));
+    });
+
+    toggle.addEventListener("click", () => {
+      running = !running;
+      if (running && !broken) motion.unpauseAnimations(); else motion.pauseAnimations();
+      toggle.querySelector('[data-lang="en"]').textContent = running ? "PAUSE ROUTE" : "RESUME ROUTE";
+      toggle.querySelector('[data-lang="ru"]').textContent = running ? "ОСТАНОВИТЬ МАРШРУТ" : "ПРОДОЛЖИТЬ МАРШРУТ";
+    });
+
+    stepButton.addEventListener("click", () => {
+      running = false;
+      motion.pauseAnimations();
+      if (!broken) paint(cursor + 1);
+    });
+
+    perturb.addEventListener("click", () => {
+      broken = !broken;
+      route.classList.toggle("route-open", !broken);
+      route.classList.toggle("route-closed", broken);
+      if (broken) motion.pauseAnimations(); else if (running) motion.unpauseAnimations();
+      paint(broken ? 3 : cursor);
+      perturb.querySelector('[data-lang="en"]').textContent = broken ? "RESTORE WITNESS" : "BREAK ONE WITNESS";
+      perturb.querySelector('[data-lang="ru"]').textContent = broken ? "ВОССТАНОВИТЬ СВИДЕТЕЛЬСТВО" : "НАРУШИТЬ ОДНО СВИДЕТЕЛЬСТВО";
+    });
+
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      running = false;
+      motion.pauseAnimations();
+    }
+    paint(0);
+    startClock();
+  </script>
+
+  <!-- CORPUS_INTERFACE_BRIDGE_CI_01 -->
+  <style>
+    .ci01-bridge{display:flex;justify-content:space-between;align-items:center;gap:18px;flex-wrap:wrap;margin:34px auto 0;padding:18px clamp(18px,3vw,38px);width:min(1500px,94vw);border:1px solid #216654;border-left:5px solid #ffd257;background:#002219;color:#91ad9f;font:800 11px/1.5 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;letter-spacing:.08em}
+    .ci01-bridge strong{color:#85ffd5}.ci01-bridge nav{display:flex;gap:16px;flex-wrap:wrap}.ci01-bridge a{color:#59d9ff;text-decoration:none;border-bottom:1px solid #286b79;padding-bottom:3px}
+  </style>
+  <footer class="ci01-bridge" aria-label="Corpus interface return bridge">
+    <strong>CI-01 · ИНТЕРФЕЙС КОРПУСА / CORPUS INTERFACE</strong>
+    <nav>
+      <a href="../corpus-interface/index.html">КОРПУС / CORPUS ↗</a>
+      <a href="https://github.com/kernelpanic888/chertogi-razuma-research/blob/main/public/readers/agent-zero-protocol-chamber/index.html" target="_blank" rel="noopener noreferrer">ИСХОДНИК / SOURCE ↗</a>
+      <a href="https://github.com/kernelpanic888/chertogi-razuma-research/tree/main/journal" target="_blank" rel="noopener noreferrer">ЖУРНАЛ / JOURNAL ↗</a>
+      <a href="../../index.html">ГЛАВНАЯ КАРТА / MAIN MAP ↖</a>
+    </nav>
+  </footer>
+</body>
+</html>
