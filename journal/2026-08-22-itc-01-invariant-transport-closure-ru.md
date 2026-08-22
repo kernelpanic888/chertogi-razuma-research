@@ -1,7 +1,7 @@
 # ITC-01 / Замыкание переноса инварианта
 
 **Дата:** 2026-08-22  
-**Статус:** машинно проверенный RC-носитель · публичный шов формального исходника открыт · живой публичный ридер  
+**Статус:** проверенный ядром формальный мост · точный Lean-коммит заморожен · кандидат в релиз без DOI и тега<br>
 **Автор:** Салкуцан Алексей Анатольевич  
 **ORCID:** 0009-0006-8717-0492
 
@@ -46,7 +46,9 @@ Boundary и stable record подключаются как отдельные с�
 
 - [Живой ридер](https://chertogi-razuma-research.kernelpanic888.chatgpt.site/readers/invariant-transport-closure/)
 - [Исходник ридера](https://github.com/kernelpanic888/chertogi-razuma-research/blob/main/public/readers/invariant-transport-closure/index.html)
-- [Дом Lean/TLFL](https://github.com/kernelpanic888/TMI-Lean-Formal-Library)
+- [Lean 4 · коммит 74a2a806](https://github.com/kernelpanic888/TMI-Lean-Formal-Library/blob/74a2a806a229830c668e66be233de2fda7bfc944/lean/TMI/InvariantTransportClosure.lean)
+- [Аудит аксиом · тот же коммит](https://github.com/kernelpanic888/TMI-Lean-Formal-Library/blob/74a2a806a229830c668e66be233de2fda7bfc944/lean/TMI/InvariantTransportClosureAudit.lean)
+- [Карта формальных источников и паспорт границ](https://github.com/kernelpanic888/TMI-Lean-Formal-Library/blob/74a2a806a229830c668e66be233de2fda7bfc944/research/invariant-transport-closure-v0.1/README.md)
 - [Интерфейс корпуса](https://chertogi-razuma-research.kernelpanic888.chatgpt.site/readers/corpus-interface/)
 
 ## Внешние опоры
@@ -60,6 +62,10 @@ Boundary и stable record подключаются как отдельные с�
 
 Формальный мост не доказывает, что локальный дисбаланс порождает орбиту, что замкнутая орбита устойчива или что возврат одного выбранного инварианта превращает весь транспорт в тождество. Конкретная динамика, нетривиальная теорема замыкания и независимое доказательство устойчивости остаются открытыми обязательствами.
 
+## Граница сборки
+
+Выделенный модуль ITC и его аудит успешно собираются Lean 4.31.0-rc1. Связь на уровне исходника с экспериментальным `MemoryGoalField.lean` точна, но тот файл импортирует Mathlib, тогда как текущий manifest пакета не объявляет Mathlib-зависимость; этот RC не выдаёт её за собранный импорт.
+
 ## Следующий шов
 
-Заморозить публичный путь к выделенному Lean-исходнику и вывести нетривиальный полный оборот из явной динамики локального дисбаланса.
+Вывести нетривиальный полный оборот из явной динамики локального дисбаланса, а затем независимо доказать устойчивость. Назначение DOI, release tag и продакшен-деплой остаются человеческими воротами релиза.

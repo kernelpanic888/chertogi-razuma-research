@@ -1,0 +1,43 @@
+{
+  "schemaVersion": "1.0.0",
+  "canon": {
+    "id": "IF-0.1",
+    "route": ["distinction", "transition", "trace", "return"],
+    "rule": "Every publication record inherits the route and declares its own semantic voice and claim ceiling."
+  },
+  "records": [
+    {
+      "id": "ITC-01-RC",
+      "titleRu": "Дисбалансный оборот",
+      "titleEn": "Invariant Transport Closure",
+      "kind": "formal-bridge",
+      "voice": "transport",
+      "stage": "return",
+      "date": "2026-08-22",
+      "status": "release-candidate",
+      "reader": "/readers/invariant-transport-closure/",
+      "readerSource": "https://github.com/kernelpanic888/chertogi-razuma-research/blob/main/public/readers/invariant-transport-closure/index.html",
+      "journal": [
+        "https://github.com/kernelpanic888/chertogi-razuma-research/blob/main/journal/2026-08-22-itc-01-invariant-transport-closure.md",
+        "https://github.com/kernelpanic888/chertogi-razuma-research/blob/main/journal/2026-08-22-itc-01-invariant-transport-closure-ru.md"
+      ],
+      "formal": {
+        "commit": "74a2a806a229830c668e66be233de2fda7bfc944",
+        "source": "https://github.com/kernelpanic888/TMI-Lean-Formal-Library/blob/74a2a806a229830c668e66be233de2fda7bfc944/lean/TMI/InvariantTransportClosure.lean",
+        "audit": "https://github.com/kernelpanic888/TMI-Lean-Formal-Library/blob/74a2a806a229830c668e66be233de2fda7bfc944/lean/TMI/InvariantTransportClosureAudit.lean",
+        "kernel": "Lean 4.31.0-rc1",
+        "auditResult": "six public declarations depend on no axioms"
+      },
+      "claimCeiling": "formal bridge for explicit transition, invariant transport, selected-invariant return, and separate boundary/stable-record witnesses",
+      "notProved": [
+        "local imbalance produces an orbit",
+        "a cycle implies dynamical stability",
+        "return of one selected invariant makes the full transport the identity",
+        "the formal carrier models a concrete physical system"
+      ],
+      "doi": null,
+      "orcidWorkId": null,
+      "releaseTag": null
+    }
+  ]
+}

@@ -1,7 +1,7 @@
 # ITC-01 / Invariant Transport Closure
 
 **Date:** 2026-08-22  
-**Status:** machine-checked RC carrier · public formal-source seam open · live public reader  
+**Status:** kernel-checked formal bridge · exact Lean commit frozen · release candidate, no DOI or tag<br>
 **Author:** Salkutsan Aleksey Anatolievich  
 **ORCID:** 0009-0006-8717-0492
 
@@ -46,7 +46,9 @@ Every chamber inherits the same structural grammar while receiving a semantic vo
 
 - [Live reader](https://chertogi-razuma-research.kernelpanic888.chatgpt.site/readers/invariant-transport-closure/)
 - [Reader source](https://github.com/kernelpanic888/chertogi-razuma-research/blob/main/public/readers/invariant-transport-closure/index.html)
-- [Lean/TLFL home](https://github.com/kernelpanic888/TMI-Lean-Formal-Library)
+- [Lean 4 source · commit 74a2a806](https://github.com/kernelpanic888/TMI-Lean-Formal-Library/blob/74a2a806a229830c668e66be233de2fda7bfc944/lean/TMI/InvariantTransportClosure.lean)
+- [Axiom audit · same commit](https://github.com/kernelpanic888/TMI-Lean-Formal-Library/blob/74a2a806a229830c668e66be233de2fda7bfc944/lean/TMI/InvariantTransportClosureAudit.lean)
+- [Formal source map and claim passport](https://github.com/kernelpanic888/TMI-Lean-Formal-Library/blob/74a2a806a229830c668e66be233de2fda7bfc944/research/invariant-transport-closure-v0.1/README.md)
 - [Corpus interface](https://chertogi-razuma-research.kernelpanic888.chatgpt.site/readers/corpus-interface/)
 
 ## External shoulders
@@ -60,6 +62,10 @@ These sources are shoulders for path transport and periodic-cocycle theory. They
 
 The formal bridge does not prove that local imbalance produces an orbit, that a closed orbit is stable, or that return of one selected invariant makes the whole transport the identity. A concrete dynamics, a nontrivial closure theorem and an independent stability argument remain open obligations.
 
+## Build boundary
+
+The dedicated ITC module and its audit build successfully with Lean 4.31.0-rc1. The existing experimental `MemoryGoalField.lean` source-level coupling is exact, but that file imports Mathlib while the current package manifest declares no Mathlib dependency; this RC does not misreport it as a compiled import.
+
 ## Next seam
 
-Freeze the dedicated public Lean source route and derive a nontrivial closed turn from an explicit local-imbalance dynamics.
+Derive a nontrivial closed turn from an explicit local-imbalance dynamics, then prove stability independently. DOI assignment, a release tag and production deployment remain human release gates.

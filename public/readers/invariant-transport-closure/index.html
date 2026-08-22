@@ -186,20 +186,23 @@
       </header>
       <div class="formal">
 <pre><code>structure PersistenceStep
-    (State : Type) (Inv : State → Type)
-    (from to : State) where
-  transition : from ⟶ to
-  transport  : Inv from ≃ Inv to
+    (system : TransportSystem State Invariant)
+    (src dst : State) where
+  transition : system.Step src dst
+  invariantTransport : TransportEquiv (Invariant src) (Invariant dst)
+  transportAgrees : invariantTransport = system.transport transition
 
 structure ClosedTurn
-    (C₀ : State) (I₀ : Inv C₀) where
-  path   : Cycle C₀
-  returns : path.transport I₀ = I₀
+    (system : TransportSystem State Invariant)
+    (base : State) where
+  path : Path system base base
+  selectedInvariant : Invariant base
+  returns : path.transport.forward selectedInvariant = selectedInvariant
 
 -- Deliberately absent:
--- returns ≠ proof that path.transport = id
+-- selected return ≠ proof that the full transport = id
 -- cycle   ≠ proof of dynamical stability</code></pre>
-        <aside class="claim-card"><h3><span class="ru">Статус утверждений</span><span class="en">Claim status</span></h3><ul><li><span class="ru">Определены persistence step и циклический возврат выбранного инварианта.</span><span class="en">Persistence step and cyclic return of a chosen invariant are defined.</span></li><li><span class="ru">Boundary и stable record остаются отдельными интерфейсами.</span><span class="en">Boundary and stable record remain separate interfaces.</span></li><li><span class="ru">Специализация к конкретной физической динамике остаётся открытым обязательством.</span><span class="en">Specialization to concrete physical dynamics remains an open obligation.</span></li><li><span class="ru">Публичный канонический путь к выделенному Lean-файлу ещё не заморожен.</span><span class="en">The canonical public route to the dedicated Lean file is not frozen yet.</span></li></ul></aside>
+        <aside class="claim-card"><h3><span class="ru">Статус утверждений</span><span class="en">Claim status</span></h3><ul><li><span class="ru">Определены persistence step и циклический возврат выбранного инварианта.</span><span class="en">Persistence step and cyclic return of a chosen invariant are defined.</span></li><li><span class="ru">Boundary и stable record остаются отдельными интерфейсами.</span><span class="en">Boundary and stable record remain separate interfaces.</span></li><li><span class="ru">Специализация к конкретной физической динамике остаётся открытым обязательством.</span><span class="en">Specialization to concrete physical dynamics remains an open obligation.</span></li><li><span class="ru">Lean-модуль и audit заморожены в коммите 74a2a806; публичные теоремы аудита не зависят от аксиом.</span><span class="en">The Lean module and audit are frozen at commit 74a2a806; the audited public theorems depend on no axioms.</span></li></ul></aside>
       </div>
     </section>
 
@@ -211,7 +214,9 @@ structure ClosedTurn
         <a href="https://github.com/kernelpanic888/chertogi-razuma-research/blob/main/public/readers/invariant-transport-closure/index.html" target="_blank" rel="noopener noreferrer"><span class="ru">Исходник</span><span class="en">Source</span> ↗</a>
         <a href="https://github.com/kernelpanic888/chertogi-razuma-research/blob/main/journal/2026-08-22-itc-01-invariant-transport-closure.md" target="_blank" rel="noopener noreferrer">Journal EN ↗</a>
         <a href="https://github.com/kernelpanic888/chertogi-razuma-research/blob/main/journal/2026-08-22-itc-01-invariant-transport-closure-ru.md" target="_blank" rel="noopener noreferrer">Journal RU ↗</a>
-        <a href="https://github.com/kernelpanic888/TMI-Lean-Formal-Library" target="_blank" rel="noopener noreferrer">Lean/TLFL ↗</a>
+        <a href="https://github.com/kernelpanic888/TMI-Lean-Formal-Library/blob/74a2a806a229830c668e66be233de2fda7bfc944/lean/TMI/InvariantTransportClosure.lean" target="_blank" rel="noopener noreferrer">Lean 4 ↗</a>
+        <a href="https://github.com/kernelpanic888/TMI-Lean-Formal-Library/blob/74a2a806a229830c668e66be233de2fda7bfc944/lean/TMI/InvariantTransportClosureAudit.lean" target="_blank" rel="noopener noreferrer">Axiom audit ↗</a>
+        <a href="../../publications/records.json" target="_blank" rel="noopener noreferrer"><span class="ru">RC-паспорт</span><span class="en">RC record</span> ↗</a>
       </div>
     </section>
   </main>

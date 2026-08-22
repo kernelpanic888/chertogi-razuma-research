@@ -72,10 +72,11 @@ test("keeps the complete corpus and its discovery metadata", async () => {
 });
 
 test("publishes ITC-01 as a canonical but individually voiced interactive chamber", async () => {
-  const [home, reader, registry] = await Promise.all([
+  const [home, reader, registry, publications] = await Promise.all([
     readFile(new URL("../public/index.html", import.meta.url), "utf8"),
     readFile(new URL("../public/readers/invariant-transport-closure/index.html", import.meta.url), "utf8"),
     readFile(new URL("../public/corpus/interfaces.json", import.meta.url), "utf8"),
+    readFile(new URL("../public/publications/records.json", import.meta.url), "utf8"),
   ]);
   assert.match(home, /distinction → transition → trace → return/);
   assert.match(home, /data-voice="transport"/);
@@ -83,5 +84,11 @@ test("publishes ITC-01 as a canonical but individually voiced interactive chambe
   assert.match(reader, /τγ\(I\(C₀\)\) = I\(C₀\)/);
   assert.match(reader, /return of a chosen invariant ⇒ τγ = id/);
   assert.match(reader, /corpus-interface\/index\.html/);
-  assert.equal(JSON.parse(registry).readers.some((item) => item.id === "ITC-01"), true);
+  const corpusRecord = JSON.parse(registry).readers.find((item) => item.id === "ITC-01");
+  const publicationRecord = JSON.parse(publications).records.find((item) => item.id === "ITC-01-RC");
+  assert.equal(corpusRecord.status, "linked");
+  assert.match(corpusRecord.formalUrls[0], /blob\/74a2a806a229830c668e66be233de2fda7bfc944\//);
+  assert.equal(publicationRecord.status, "release-candidate");
+  assert.equal(publicationRecord.doi, null);
+  assert.equal(publicationRecord.releaseTag, null);
 });

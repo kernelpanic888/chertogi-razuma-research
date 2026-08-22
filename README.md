@@ -33,6 +33,11 @@ The newest formal bridge is **ITC-01 / Invariant Transport Closure**:
 
 https://chertogi-razuma-research.kernelpanic888.chatgpt.site/readers/invariant-transport-closure/
 
+Its publication record remains an RC without DOI or release tag. The shared
+publication invariant and machine registry are defined in
+[PUBLICATION_CANON.md](PUBLICATION_CANON.md) and
+[public/publications/records.json](public/publications/records.json).
+
 The newest business-policy layer is **AMF-01 / Adaptive Market Frugality**:
 
 https://chertogi-razuma-research.kernelpanic888.chatgpt.site/readers/adaptive-market-frugality/

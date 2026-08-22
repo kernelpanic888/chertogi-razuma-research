@@ -52,11 +52,15 @@
         "journal/2026-08-22-itc-01-invariant-transport-closure.md",
         "journal/2026-08-22-itc-01-invariant-transport-closure-ru.md"
       ],
-      "formalUrls": [],
+      "formalUrls": [
+        "https://github.com/kernelpanic888/TMI-Lean-Formal-Library/blob/74a2a806a229830c668e66be233de2fda7bfc944/lean/TMI/InvariantTransportClosure.lean",
+        "https://github.com/kernelpanic888/TMI-Lean-Formal-Library/blob/74a2a806a229830c668e66be233de2fda7bfc944/lean/TMI/InvariantTransportClosureAudit.lean",
+        "https://github.com/kernelpanic888/TMI-Lean-Formal-Library/blob/74a2a806a229830c668e66be233de2fda7bfc944/research/invariant-transport-closure-v0.1/README.md"
+      ],
       "runtimeUrls": [
         "https://chertogi-razuma-research.kernelpanic888.chatgpt.site/readers/invariant-transport-closure/"
       ],
-      "status": "open-formal-seam"
+      "status": "linked"
     },
     {
       "id": "M-01",

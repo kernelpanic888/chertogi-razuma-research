@@ -7,12 +7,13 @@
   },
   "scripts": {
     "dev": "WRANGLER_LOG_PATH=.wrangler/wrangler.log vinext dev",
-    "build": "WRANGLER_LOG_PATH=.wrangler/wrangler.log vinext build && npm run security:boundary && npm run corpus:check",
+    "build": "WRANGLER_LOG_PATH=.wrangler/wrangler.log vinext build && npm run security:boundary && npm run corpus:check && npm run publication:check",
     "start": "WRANGLER_LOG_PATH=.wrangler/wrangler.log vinext start",
     "test": "npm run build && node --test tests/rendered-html.test.mjs",
     "test:security": "node --test tests/public-static-boundary.test.mjs",
     "security:boundary": "node scripts/check-public-static-boundary.mjs",
     "corpus:check": "node scripts/check-corpus-interfaces.mjs",
+    "publication:check": "node scripts/check-publication-records.mjs",
     "lint": "eslint . --ignore-pattern dist --ignore-pattern .next",
     "db:generate": "drizzle-kit generate"
   },
