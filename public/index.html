@@ -4280,22 +4280,60 @@
 
   <!-- RESEARCH_LAB_READER_GATE_V1 -->
   <style>
-    .research-lab-gate{margin:clamp(28px,4vw,58px) clamp(18px,3vw,58px) 0;border:1px solid rgba(89,217,255,.48);border-left:10px solid #ffd258;background:linear-gradient(110deg,rgba(7,72,52,.96),rgba(0,27,20,.98));color:#e8fff3;font-family:"IBM Plex Mono","Courier New",monospace;box-shadow:0 18px 50px rgba(0,0,0,.18)}
-    .research-lab-gate__link{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:28px;align-items:center;padding:clamp(24px,3vw,42px) clamp(22px,3.5vw,58px);color:inherit;text-decoration:none}
+    .canon-rail{margin:clamp(28px,4vw,58px) clamp(18px,3vw,58px) 0;padding:18px clamp(20px,3vw,42px);display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:18px;align-items:center;border:1px solid rgba(131,255,212,.36);background:rgba(0,25,16,.84);color:#e8fff3;font-family:"IBM Plex Mono","Courier New",monospace}
+    .canon-rail__label{color:#8affd5;font-size:10px;font-weight:900;letter-spacing:.16em;text-transform:uppercase}
+    .canon-rail__formula{font:700 clamp(13px,1.6vw,18px)/1.35 "IBM Plex Mono","Courier New",monospace}
+    .canon-rail__note{color:#91ad9f;font-size:10px;letter-spacing:.08em;text-transform:uppercase;text-align:right}
+    .research-lab-gate{--voice:#8affd5;--voice-rgb:138,255,213;position:relative;isolation:isolate;overflow:hidden;margin:14px clamp(18px,3vw,58px) 0;border:1px solid rgba(var(--voice-rgb),.5);border-left:10px solid var(--voice);background:radial-gradient(circle at 84% 50%,rgba(var(--voice-rgb),.13),transparent 32%),linear-gradient(110deg,rgba(7,55,39,.97),rgba(0,23,17,.99));color:#e8fff3;font-family:"IBM Plex Mono","Courier New",monospace;box-shadow:0 18px 50px rgba(0,0,0,.18)}
+    .research-lab-gate::before{content:attr(data-canon) " / " attr(data-voice);position:absolute;z-index:0;top:12px;right:18px;color:rgba(var(--voice-rgb),.42);font-size:9px;font-weight:900;letter-spacing:.16em;text-transform:uppercase}
+    .research-lab-gate::after{content:"";position:absolute;z-index:0;right:clamp(50px,9vw,130px);top:50%;width:clamp(90px,13vw,170px);aspect-ratio:1;border:1px solid rgba(var(--voice-rgb),.18);border-radius:50%;transform:translateY(-50%);box-shadow:0 0 0 18px rgba(var(--voice-rgb),.025),0 0 0 36px rgba(var(--voice-rgb),.018);pointer-events:none}
+    .research-lab-gate__link{position:relative;z-index:1;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:28px;align-items:center;padding:clamp(28px,3vw,46px) clamp(22px,3.5vw,58px);color:inherit;text-decoration:none}
     .research-lab-gate__code{display:block;margin-bottom:12px;color:#91ad9f;font-size:11px;font-weight:800;letter-spacing:.13em;text-transform:uppercase}
-    .research-lab-gate__title{display:block;color:#8affd5;font:600 clamp(25px,2.8vw,43px)/1.08 Georgia,"Times New Roman",serif}
-    .research-lab-gate__cta{color:#59d9ff;font-size:12px;font-weight:900;letter-spacing:.12em;white-space:nowrap}
+    .research-lab-gate__title{display:block;color:var(--voice);font:600 clamp(25px,2.8vw,43px)/1.08 Georgia,"Times New Roman",serif}
+    .research-lab-gate__cta{color:var(--voice);font-size:12px;font-weight:900;letter-spacing:.12em;white-space:nowrap}
     .research-lab-gate__en{display:none}
-    .research-lab-gate--spinor{margin-top:14px;border-color:rgba(255,210,88,.62);border-left-color:#59d9ff;background:linear-gradient(110deg,rgba(18,31,54,.97),rgba(0,21,28,.98))}
-    .research-lab-gate--market{margin-top:14px;border-color:rgba(131,255,212,.62);border-left-color:#ffd258;background:radial-gradient(circle at 78% 45%,rgba(255,210,88,.1),transparent 31%),linear-gradient(110deg,rgba(8,75,49,.98),rgba(0,25,19,.99))}
-    .research-lab-gate--relic{margin-top:14px;border-color:rgba(89,217,255,.64);border-left-color:#8affd5;background:radial-gradient(circle at 78% 45%,rgba(89,217,255,.13),transparent 32%),linear-gradient(110deg,rgba(9,39,49,.98),rgba(0,19,23,.99))}
-    .research-lab-gate--poetry{margin-top:14px;border-color:rgba(72,240,166,.58);border-left-color:#ffd258;background:radial-gradient(circle at 84% 35%,rgba(89,217,255,.12),transparent 34%),linear-gradient(110deg,rgba(4,56,40,.98),rgba(0,17,13,.99))}
+    .research-lab-gate[data-voice="boundary"]{--voice:#8affd5;--voice-rgb:138,255,213;background:radial-gradient(circle at 80% 50%,rgba(89,217,255,.14),transparent 34%),linear-gradient(110deg,rgba(9,39,49,.98),rgba(0,19,23,.99))}
+    .research-lab-gate[data-voice="resource"]{--voice:#ffd258;--voice-rgb:255,210,88}
+    .research-lab-gate[data-voice="carrier"]{--voice:#59d9ff;--voice-rgb:89,217,255;background:linear-gradient(110deg,rgba(18,31,54,.98),rgba(0,21,28,.99))}
+    .research-lab-gate[data-voice="corpus"]{--voice:#8affd5;--voice-rgb:138,255,213}
+    .research-lab-gate[data-voice="identity"]{--voice:#b9a7ff;--voice-rgb:185,167,255;background:linear-gradient(110deg,rgba(37,24,57,.98),rgba(0,21,22,.99))}
+    .research-lab-gate[data-voice="continuity"]{--voice:#59d9ff;--voice-rgb:89,217,255}
+    .research-lab-gate[data-voice="observation"]{--voice:#ffd258;--voice-rgb:255,210,88;background:linear-gradient(110deg,rgba(50,39,12,.95),rgba(0,24,19,.99))}
+    .research-lab-gate[data-voice="poetry"]{--voice:#8affd5;--voice-rgb:138,255,213;background:radial-gradient(circle at 84% 35%,rgba(89,217,255,.14),transparent 34%),linear-gradient(110deg,rgba(4,56,40,.98),rgba(0,17,13,.99))}
+    .research-lab-gate[data-voice="transport"]{--voice:#22d463;--voice-rgb:34,212,99;background:radial-gradient(circle at 68% 50%,rgba(34,212,99,.16),transparent 35%),linear-gradient(110deg,rgba(8,58,32,.99),rgba(1,18,10,.99))}
+    .research-lab-gate--itc .research-lab-gate__link{grid-template-columns:minmax(0,1fr) minmax(170px,240px) auto}
+    .itc-gate-orbit{position:relative;width:100%;height:118px;color:var(--voice)}
+    .itc-gate-orbit::before{content:"";position:absolute;inset:12px 25px 6px;border:1px dashed rgba(var(--voice-rgb),.55);border-radius:50%}
+    .itc-gate-orbit::after{content:"Δ ≠ 0";position:absolute;left:50%;top:51%;transform:translate(-50%,-50%);color:#ffd258;font-size:12px;font-weight:900}
+    .itc-gate-orbit i{position:absolute;width:34px;height:34px;display:grid;place-items:center;border:1px solid var(--voice);border-radius:50%;background:#001c10;color:#e8fff3;font-style:normal;font-size:11px;font-weight:900;box-shadow:0 0 16px rgba(var(--voice-rgb),.24)}
+    .itc-gate-orbit i:nth-child(1){left:15%;top:8%}.itc-gate-orbit i:nth-child(2){right:15%;top:8%}.itc-gate-orbit i:nth-child(3){left:50%;bottom:0;transform:translateX(-50%)}
     body[data-lang=en] .research-lab-gate__ru,html[lang^=en] .research-lab-gate__ru{display:none}
     body[data-lang=en] .research-lab-gate__en,html[lang^=en] .research-lab-gate__en{display:inline}
-    @media(max-width:720px){.research-lab-gate__link{grid-template-columns:1fr}.research-lab-gate__cta{white-space:normal}}
+    @media(max-width:820px){.canon-rail{grid-template-columns:1fr}.canon-rail__note{text-align:left}.research-lab-gate__link,.research-lab-gate--itc .research-lab-gate__link{grid-template-columns:1fr}.research-lab-gate__cta{white-space:normal}.itc-gate-orbit{max-width:260px}}
   </style>
+
+  <section class="canon-rail" aria-label="Единый канон исследовательских камер / Shared canon of research chambers">
+    <span class="canon-rail__label"><span class="research-lab-gate__ru">Единый инвариант</span><span class="research-lab-gate__en">Shared invariant</span></span>
+    <strong class="canon-rail__formula">distinction → transition → trace → return</strong>
+    <span class="canon-rail__note"><span class="research-lab-gate__ru">один канон · разные смысловые голоса</span><span class="research-lab-gate__en">one canon · distinct semantic voices</span></span>
+  </section>
+
+  <!-- INVARIANT_TRANSPORT_CLOSURE_READER_GATE_ITC_01 -->
+  <aside class="research-lab-gate research-lab-gate--itc" data-canon="IF-0.1" data-voice="transport" aria-label="Дисбалансный оборот / Invariant Transport Closure">
+    <a class="research-lab-gate__link" href="readers/invariant-transport-closure/index.html">
+      <span>
+        <span class="research-lab-gate__title research-lab-gate__ru">Дисбалансный оборот</span>
+        <span class="research-lab-gate__title research-lab-gate__en">Invariant Transport Closure</span>
+        <span class="research-lab-gate__code research-lab-gate__ru">ITC-01 · переход + перенос инварианта → продолжение · полный оборот → возврат выбранного инварианта</span>
+        <span class="research-lab-gate__code research-lab-gate__en">ITC-01 · transition + invariant transport → persistence · full turn → return of the chosen invariant</span>
+      </span>
+      <span class="itc-gate-orbit" aria-hidden="true"><i>C₀</i><i>C₁</i><i>C₂</i></span>
+      <span class="research-lab-gate__cta research-lab-gate__ru">ПОЩУПАТЬ МОДЕЛЬ ↗</span>
+      <span class="research-lab-gate__cta research-lab-gate__en">TOUCH THE MODEL ↗</span>
+    </a>
+  </aside>
   <!-- ACTIVATION_RELIC_READER_GATE_AR_01 -->
-  <aside class="research-lab-gate research-lab-gate--relic" aria-label="Реликт активации: теневая граница и проблема времени / Activation Relic: Shadow Boundary and the Problem of Time">
+  <aside class="research-lab-gate research-lab-gate--relic" data-canon="IF-0.1" data-voice="boundary" aria-label="Реликт активации: теневая граница и проблема времени / Activation Relic: Shadow Boundary and the Problem of Time">
     <a class="research-lab-gate__link" href="readers/activation-relic-shadow-boundary/index.html">
       <span>
         <span class="research-lab-gate__title research-lab-gate__ru">Реликт активации: теневая граница и проблема времени</span>
@@ -4309,7 +4347,7 @@
   </aside>
 
   <!-- ADAPTIVE_MARKET_FRUGALITY_READER_GATE_AMF_01 -->
-  <aside class="research-lab-gate research-lab-gate--market" aria-label="Адаптивная бережливость рынка / Adaptive Market Frugality">
+  <aside class="research-lab-gate research-lab-gate--market" data-canon="IF-0.1" data-voice="resource" aria-label="Адаптивная бережливость рынка / Adaptive Market Frugality">
     <a class="research-lab-gate__link" href="readers/adaptive-market-frugality/index.html">
       <span>
         <span class="research-lab-gate__title research-lab-gate__ru">Адаптивная бережливость рынка</span>
@@ -4323,7 +4361,7 @@
   </aside>
 
   <!-- SPINOR_ONTOLOGY_READER_GATE_SO_01 -->
-  <aside class="research-lab-gate research-lab-gate--spinor" aria-label="Онтологическая проблема Дираковского спинора / The ontological problem of the Dirac spinor">
+  <aside class="research-lab-gate research-lab-gate--spinor" data-canon="IF-0.1" data-voice="carrier" aria-label="Онтологическая проблема Дираковского спинора / The ontological problem of the Dirac spinor">
     <a class="research-lab-gate__link" href="readers/spinor-ontology/index.html">
       <span>
         <span class="research-lab-gate__title research-lab-gate__ru">Онтологическая проблема Дираковского спинора</span>
@@ -4337,7 +4375,7 @@
   </aside>
 
   <!-- WHOLE_CORPUS_INTERFACE_GATE_CI_01 -->
-  <aside class="research-lab-gate" aria-label="Интерфейс целостного корпуса / Whole corpus interface">
+  <aside class="research-lab-gate" data-canon="IF-0.1" data-voice="corpus" aria-label="Интерфейс целостного корпуса / Whole corpus interface">
     <a class="research-lab-gate__link" href="readers/corpus-interface/index.html">
       <span>
         <span class="research-lab-gate__title research-lab-gate__ru">Интерфейс целостного корпуса</span>
@@ -4350,7 +4388,7 @@
     </a>
   </aside>
 
-  <aside class="research-lab-gate" aria-label="Новый исследовательский ридер / New research reader">
+  <aside class="research-lab-gate" data-canon="IF-0.1" data-voice="identity" aria-label="Новый исследовательский ридер / New research reader">
     <a class="research-lab-gate__link" href="readers/true-intellectual-digital-life/index.html">
       <span>
         <span class="research-lab-gate__title research-lab-gate__ru">Изобрели ли мы искусственный интеллект?</span>
@@ -4363,7 +4401,7 @@
     </a>
   </aside>
 
-  <aside class="research-lab-gate" aria-label="Криптографический исследовательский ридер / Cryptography research reader">
+  <aside class="research-lab-gate" data-canon="IF-0.1" data-voice="continuity" aria-label="Криптографический исследовательский ридер / Cryptography research reader">
     <a class="research-lab-gate__link" href="readers/certified-continuity-protocol/index.html">
       <span>
         <span class="research-lab-gate__title research-lab-gate__ru">Можно ли защищать непрерывность цифровой личности?</span>
@@ -4376,7 +4414,7 @@
     </a>
   </aside>
 
-  <aside class="research-lab-gate" aria-label="Прикладная камера проверяемой непрерывности / Applied certified-continuity chamber">
+  <aside class="research-lab-gate" data-canon="IF-0.1" data-voice="observation" aria-label="Прикладная камера проверяемой непрерывности / Applied certified-continuity chamber">
     <a class="research-lab-gate__link" href="readers/agent-zero-protocol-chamber/index.html">
       <span>
         <span class="research-lab-gate__title research-lab-gate__ru">Как доказать, что исполнение не подменило след?</span>
@@ -4390,7 +4428,7 @@
   </aside>
 
   <!-- POETRY_OF_MATHEMATICS_READER_GATE_PM_01 -->
-  <aside class="research-lab-gate research-lab-gate--poetry" aria-label="Поэзия математики / Poetry of Mathematics">
+  <aside class="research-lab-gate research-lab-gate--poetry" data-canon="IF-0.1" data-voice="poetry" aria-label="Поэзия математики / Poetry of Mathematics">
     <a class="research-lab-gate__link" href="readers/poetry-of-mathematics/index.html">
       <span>
         <span class="research-lab-gate__title research-lab-gate__ru">Поэзия математики</span>

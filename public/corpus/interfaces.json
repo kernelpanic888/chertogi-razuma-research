@@ -43,6 +43,22 @@
       "status": "interface"
     },
     {
+      "id": "ITC-01",
+      "titleRu": "Дисбалансный оборот",
+      "titleEn": "Invariant Transport Closure",
+      "publicPath": "/readers/invariant-transport-closure/",
+      "sourcePath": "public/readers/invariant-transport-closure/index.html",
+      "journalPaths": [
+        "journal/2026-08-22-itc-01-invariant-transport-closure.md",
+        "journal/2026-08-22-itc-01-invariant-transport-closure-ru.md"
+      ],
+      "formalUrls": [],
+      "runtimeUrls": [
+        "https://chertogi-razuma-research.kernelpanic888.chatgpt.site/readers/invariant-transport-closure/"
+      ],
+      "status": "open-formal-seam"
+    },
+    {
       "id": "M-01",
       "titleRu": "Методология подхвата мысли",
       "titleEn": "Methodology of Thought Resumption",
@@ -239,6 +255,10 @@
   ],
   "edges": [
     { "from": "IF-P01B", "to": "M-01", "relation": "question-to-trace" },
+    { "from": "IF-P01B", "to": "ITC-01", "relation": "distinction-to-transport" },
+    { "from": "DL-03", "to": "ITC-01", "relation": "growth-to-invariant-transport" },
+    { "from": "ITC-01", "to": "CR-01", "relation": "closure-to-certified-continuity" },
+    { "from": "ITC-01", "to": "IF-P01B", "relation": "return-to-distinction" },
     { "from": "IF-P01B", "to": "PM-01", "relation": "distinction-to-visible-constraint" },
     { "from": "PM-01", "to": "M-01", "relation": "projection-to-readable-trace" },
     { "from": "IF-P01B", "to": "SO-01", "relation": "distinction-to-carrier" },

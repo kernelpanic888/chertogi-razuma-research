@@ -29,6 +29,10 @@ The bilingual **Journal of the First Distinction / Журнал первого �
 
 https://github.com/kernelpanic888/chertogi-razuma-research/tree/main/journal
 
+The newest formal bridge is **ITC-01 / Invariant Transport Closure**:
+
+https://chertogi-razuma-research.kernelpanic888.chatgpt.site/readers/invariant-transport-closure/
+
 The newest business-policy layer is **AMF-01 / Adaptive Market Frugality**:
 
 https://chertogi-razuma-research.kernelpanic888.chatgpt.site/readers/adaptive-market-frugality/

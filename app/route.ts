@@ -1,7 +1,7 @@
 import homeHtml from "../public/index.html?raw";
 
 export const dynamic = "force-static";
-export const corpusRelease = "first-distinction-53";
+export const corpusRelease = "first-distinction-54";
 const canonicalUrl = "https://chertogi-razuma-research.kernelpanic888.chatgpt.site/";
 
 export function GET() {
