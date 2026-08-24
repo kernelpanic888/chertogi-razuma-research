@@ -47,6 +47,12 @@ test("PM-01 is bilingual, self-contained, and preserves its red boundary", async
   assert.match(html, /Красота сама по себе не доказательство/);
   assert.match(html, /BeautyCandidate/);
   assert.match(html, /RealityTraceCandidate/);
+  assert.match(html, /INFO-01 \/ HONEST PROOF GATE/);
+  assert.match(html, /Как красота проходит проверку/);
+  assert.match(html, /How beauty passes through verification/);
+  assert.match(html, /STOP \/ BEAUTY ALONE/);
+  assert.match(html, /Без CHECKED стрелки к TRACE не существует/);
+  assert.match(html, /Without CHECKED, there is no arrow to TRACE/);
   assert.match(html, /LEAN \/ KERNEL-CHECKED/);
   assert.match(html, /TMI-Lean-Formal-Library\/blob\/main\/research\/poetry-of-mathematics-v0\.1\/PoetryOfMathematics\.lean/);
   assert.match(html, /TMI-Lean-Formal-Library\/blob\/main\/research\/poetry-of-mathematics-v0\.1\/PoetryOfMathematicsAudit\.lean/);
