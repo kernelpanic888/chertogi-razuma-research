@@ -47,6 +47,9 @@ test("PM-01 is bilingual, self-contained, and preserves its red boundary", async
   assert.match(html, /Красота сама по себе не доказательство/);
   assert.match(html, /BeautyCandidate/);
   assert.match(html, /RealityTraceCandidate/);
+  assert.match(html, /LEAN \/ KERNEL-CHECKED/);
+  assert.match(html, /TMI-Lean-Formal-Library\/blob\/main\/research\/poetry-of-mathematics-v0\.1\/PoetryOfMathematics\.lean/);
+  assert.match(html, /TMI-Lean-Formal-Library\/blob\/main\/research\/poetry-of-mathematics-v0\.1\/PoetryOfMathematicsAudit\.lean/);
   const leanSkeleton = html.match(/universe u[\s\S]*?exact hChecked/)?.[0] ?? "";
   assert.ok(leanSkeleton);
   assert.doesNotMatch(leanSkeleton, /\d/);
