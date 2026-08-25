@@ -78,6 +78,12 @@ The original AMF-01 `STATE FIELD` interaction is restored with K, K*, δ band,
 BELOW/NEAR/ABOVE zones, and the original resource-policy selector. It remains
 an AMF-01 legacy surface and denotes neither price nor probability.
 
+After comparison with the original visual slice, AMF-01 is also preserved as a
+standalone full-screen reader at `/readers/adaptive-market-frugality-amf01/`.
+Its `Live selector chamber` heading, scene/control proportions, five actions,
+four readouts, and seven controls are restored from canonical Git history. The
+AMF-02 embed is only a projection and no longer substitutes for that reader.
+
 D-EXP-01 receives a visual twin called `EVENT FIELD`: Eₜ is compared with
 θcall inside an editable band. This projection shows only whether the event
 gate opens. Even ABOVE does not remove freshness, conflict-verification, and

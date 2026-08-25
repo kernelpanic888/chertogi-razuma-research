@@ -6,6 +6,13 @@ const reader = await readFile(
   new URL("../public/readers/adaptive-market-frugality/index.html", import.meta.url),
   "utf8",
 );
+const legacyReader = await readFile(
+  new URL(
+    "../public/readers/adaptive-market-frugality-amf01/index.html",
+    import.meta.url,
+  ),
+  "utf8",
+);
 const lean = await readFile(
   new URL(
     "../public/readers/adaptive-market-frugality/AdaptiveMarketHypothesisSteward.lean",
@@ -52,10 +59,11 @@ test("AMF-02 Lean carrier states the advertised theorems and has no gaps", () =>
   assert.doesNotMatch(lean, /\bsorry\b|\badmit\b|\baxiom\b/);
 });
 
-test("AMF-01 remains a separately named legacy surface", () => {
+test("AMF-01 remains separately named and preserved in full", () => {
   assert.match(reader, /AMF-01 \/ BUFFER/);
   assert.match(reader, /AdaptiveMarketFrugality\.lean/);
-  assert.match(reader, /AMF‑01 не переписан/);
+  assert.match(reader, /AMF‑01 сохранён целиком/);
+  assert.match(reader, /adaptive-market-frugality-amf01\//);
 });
 
 test("D-EXP-01 states Denys's second-observer experiment explicitly", () => {
@@ -125,4 +133,29 @@ test("D-EXP-01 event field is a separate Eₜ/θcall projection", () => {
     assert.ok(reader.includes(required), `missing D-EXP-01 event field: ${required}`);
   }
   assert.match(reader, /callModel.*freshness.*compute/);
+});
+
+test("AMF-01 is preserved as its exact standalone live selector chamber", () => {
+  assert.match(reader, /href="\.\.\/adaptive-market-frugality-amf01\//);
+  for (const required of [
+    "AMF-01 / MARKET SELECTOR",
+    "Live selector chamber",
+    "STATE FIELD / ПОЛЕ СОСТОЯНИЙ",
+    "State controls",
+    "data-action=\"accumulate\"",
+    "data-action=\"hold\"",
+    "data-action=\"investAdaptation\"",
+    "data-action=\"reduceRisk\"",
+    "data-action=\"spendQuality\"",
+    "id=\"metric-k\"",
+    "id=\"metric-target\"",
+    "id=\"metric-band\"",
+    "id=\"metric-next\"",
+  ]) {
+    assert.ok(legacyReader.includes(required), `missing standalone AMF-01 surface: ${required}`);
+  }
+  assert.match(
+    legacyReader,
+    /rel="canonical" href="https:\/\/chertogi-razuma-research\.kernelpanic888\.chatgpt\.site\/readers\/adaptive-market-frugality-amf01\//,
+  );
 });
