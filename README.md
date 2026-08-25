@@ -38,9 +38,11 @@ publication invariant and machine registry are defined in
 [PUBLICATION_CANON.md](PUBLICATION_CANON.md) and
 [public/publications/records.json](public/publications/records.json).
 
-The newest market-research layer is **AMF-02 / Living Market Hypothesis Steward**.
-It preserves AMF-01 as a separate proved buffer policy and adds a finite,
-Lean-checked hypothesis lifecycle with guarded model-call budgets:
+The newest market-research layer is **AMF-02 / Living Market Hypothesis Steward**
+with **D-EXP-01 / Second Observer**. It preserves AMF-01 as a separate proved
+buffer policy, adds a finite Lean-checked hypothesis lifecycle with guarded
+model-call budgets, and states the measurable card-only versus card-plus-exchange
+experiment:
 
 https://chertogi-razuma-research.kernelpanic888.chatgpt.site/readers/adaptive-market-frugality/
 

@@ -47,6 +47,31 @@ freshness, time left, attention budget, and compute budget. It exposes the
 admissible action field before highlighting the selected move and appends one
 record per admitted tick.
 
+## D-EXP-01 / Second-observer experiment
+
+Denys's applied request is separated from the mathematical core and stated as
+a measurable experiment. Its hypothesis is that an additional machine layer
+can reduce analyst fatigue, review time, and accidental decision reversals
+without claiming to predict the future.
+
+Two modes are compared:
+
+1. `CARD ONLY` is the inexpensive baseline over a frozen card with source,
+   snapshot time, thesis, confirmation, invalidation, and feature version.
+2. `CARD + EXCHANGE` enriches the card on events with candles, volume, and only
+   the additional fields on which the thesis actually depends. The LLM is not
+   called on every candle.
+
+The verdict must be `SUPPORTS`, `WEAKENS`, or `INDETERMINATE`. The last value is
+admissible only with explicit missing data and a nearest review. `strengthScore`
+is an experimental scale, not a calibrated probability.
+
+The reader adds an editable cost calculator, asynchronous append-only trace,
+Grafana projection fields, and a `HUMAN` versus `HUMAN+MODEL` comparison over
+the same cards with hidden outcomes. Primary metrics are review time, fatigue,
+unsupported decision reversals, missed evidence, model-call count, and cost per
+hour freed.
+
 ## Claim boundary
 
 The carrier proves selector properties, not signal calibration, market
@@ -56,7 +81,7 @@ execution.
 
 ## Next point
 
-Freeze a versioned market-card schema and a prospective replay fixture before
-connecting any live exchange feed. Only then test whether the same JavaScript
-and Lean decision table agree on every finite fixture row.
-
+Freeze a versioned JSON schema for card and verdict, then build the first blind
+replay set without a live exchange feed. Only after the `CARD ONLY` baseline
+should event-driven `CARD + EXCHANGE` enrichment be added and its incremental
+value compared with its incremental cost.

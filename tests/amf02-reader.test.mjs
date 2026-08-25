@@ -57,3 +57,36 @@ test("AMF-01 remains a separately named legacy surface", () => {
   assert.match(reader, /AdaptiveMarketFrugality\.lean/);
   assert.match(reader, /AMF‑01 не переписан/);
 });
+
+test("D-EXP-01 states Denys's second-observer experiment explicitly", () => {
+  for (const required of [
+    "Эксперимент второго наблюдателя",
+    "D-EXP-01 / RESEARCH QUESTION",
+    "MODE A / BASELINE",
+    "MODE B / ENRICHED",
+    "CARD + EXCHANGE",
+    "verdict ∈ {SUPPORTS, WEAKENS, INDETERMINATE}",
+    "INDETERMINATE ⇒ missingData ≠ ∅ ∧ nextReview ≠ ∅",
+    "GRAFANA = PROJECTION, NOT SOURCE.",
+    "HUMAN vs HUMAN+MODEL",
+  ]) {
+    assert.ok(reader.includes(required), `missing experiment contract: ${required}`);
+  }
+});
+
+test("D-EXP-01 exposes an editable event-budget calculator", () => {
+  for (const id of [
+    "cost-calls",
+    "cost-days",
+    "cost-input",
+    "cost-output",
+    "cost-in-rate",
+    "cost-out-rate",
+    "cost-data",
+    "cost-total",
+  ]) {
+    assert.match(reader, new RegExp(`id="${id}"`));
+  }
+  assert.match(reader, /experimentMode==='exchange'/);
+  assert.match(reader, /dataMode, strengthScore, counterevidence, verdict, phase, modelCalls/);
+});
