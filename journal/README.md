@@ -18,6 +18,9 @@ Versioned research states are fixed in the formal home through the [reader relea
 
 ## Entries / Записи
 
+- [2026-08-25 · AMF-02: Living Market Hypothesis Steward](./2026-08-25-amf-02-living-market-hypothesis.md)
+- [2026-08-25 · AMF-02: Жизнь рыночной гипотезы](./2026-08-25-amf-02-living-market-hypothesis-ru.md)
+
 - [2026-08-09 · AMF-01: Adaptive Market Frugality](./2026-08-09-amf-01-adaptive-market-frugality.md)
 - [2026-08-09 · AMF-01: Адаптивная бережливость рынка](./2026-08-09-amf-01-adaptive-market-frugality-ru.md)
 

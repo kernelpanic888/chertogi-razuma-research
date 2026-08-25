@@ -235,10 +235,13 @@
       "sourcePath": "public/readers/adaptive-market-frugality/index.html",
       "journalPaths": [
         "journal/2026-08-09-amf-01-adaptive-market-frugality.md",
-        "journal/2026-08-09-amf-01-adaptive-market-frugality-ru.md"
+        "journal/2026-08-09-amf-01-adaptive-market-frugality-ru.md",
+        "journal/2026-08-25-amf-02-living-market-hypothesis.md",
+        "journal/2026-08-25-amf-02-living-market-hypothesis-ru.md"
       ],
       "formalUrls": [
-        "https://github.com/kernelpanic888/TMI-Lean-Formal-Library/blob/main/tools/AdaptiveMarketFrugality.lean"
+        "https://github.com/kernelpanic888/TMI-Lean-Formal-Library/blob/main/tools/AdaptiveMarketFrugality.lean",
+        "https://github.com/kernelpanic888/chertogi-razuma-research/blob/main/public/readers/adaptive-market-frugality/AdaptiveMarketHypothesisSteward.lean"
       ],
       "status": "linked"
     }
