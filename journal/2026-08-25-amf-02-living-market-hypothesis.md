@@ -72,6 +72,17 @@ the same cards with hidden outcomes. Primary metrics are review time, fatigue,
 unsupported decision reversals, missed evidence, model-call count, and cost per
 hour freed.
 
+### Two fields, two semantics
+
+The original AMF-01 `STATE FIELD` interaction is restored with K, K*, δ band,
+BELOW/NEAR/ABOVE zones, and the original resource-policy selector. It remains
+an AMF-01 legacy surface and denotes neither price nor probability.
+
+D-EXP-01 receives a visual twin called `EVENT FIELD`: Eₜ is compared with
+θcall inside an editable band. This projection shows only whether the event
+gate opens. Even ABOVE does not remove freshness, conflict-verification, and
+available-compute requirements.
+
 ## Claim boundary
 
 The carrier proves selector properties, not signal calibration, market

@@ -90,3 +90,39 @@ test("D-EXP-01 exposes an editable event-budget calculator", () => {
   assert.match(reader, /experimentMode==='exchange'/);
   assert.match(reader, /dataMode, strengthScore, counterevidence, verdict, phase, modelCalls/);
 });
+
+test("AMF-01 original K/K* state field is restored as an interactive legacy surface", () => {
+  for (const required of [
+    "STATE FIELD / ПОЛЕ СОСТОЯНИЙ · AMF-01 ORIGINAL",
+    "id=\"buffer-band\"",
+    "id=\"buffer-target-pin\"",
+    "id=\"buffer-resource-pin\"",
+    "data-label=\"K*\"",
+    "data-label=\"K\"",
+    "BELOW / НИЖЕ",
+    "NEAR / РЯДОМ",
+    "ABOVE / ВЫШЕ",
+    "const chooseBuffer=",
+    "K(t+1) = ",
+  ]) {
+    assert.ok(reader.includes(required), `missing restored AMF-01 field: ${required}`);
+  }
+});
+
+test("D-EXP-01 event field is a separate Eₜ/θcall projection", () => {
+  for (const required of [
+    "EVENT FIELD / ПОЛЕ СОБЫТИЯ · D-EXP-01",
+    "data-label=\"θcall\"",
+    "data-label=\"Eₜ\"",
+    "BELOW / TICK",
+    "NEAR / VERIFY",
+    "ABOVE / EVENT",
+    "id=\"event-intensity\"",
+    "id=\"event-threshold\"",
+    "id=\"event-bandwidth\"",
+    "ABOVE opens the event gate only",
+  ]) {
+    assert.ok(reader.includes(required), `missing D-EXP-01 event field: ${required}`);
+  }
+  assert.match(reader, /callModel.*freshness.*compute/);
+});
