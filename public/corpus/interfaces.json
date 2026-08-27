@@ -80,8 +80,8 @@
     },
     {
       "id": "PM-01",
-      "titleRu": "Поэзия математики",
-      "titleEn": "Poetry of Mathematics",
+      "titleRu": "Орбитальная геометрия гипотез",
+      "titleEn": "Hypothesis Orbit Geometry",
       "publicPath": "/readers/poetry-of-mathematics/",
       "sourcePath": "public/readers/poetry-of-mathematics/index.html",
       "journalPaths": [
@@ -89,10 +89,14 @@
         "journal/2026-08-08-pm-01-poetry-of-mathematics-ru.md"
       ],
       "formalUrls": [
-        "https://github.com/kernelpanic888/TMI-Lean-Formal-Library/blob/main/research/poetry-of-mathematics-v0.1/PoetryOfMathematics.lean",
-        "https://github.com/kernelpanic888/TMI-Lean-Formal-Library/blob/main/research/poetry-of-mathematics-v0.1/PoetryOfMathematicsAudit.lean"
+        "https://github.com/kernelpanic888/TMI-Lean-Formal-Library/blob/pm01-hypothesis-orbit-geometry-v0.2.0/research/poetry-of-mathematics-v0.1/PoetryOfMathematics.lean",
+        "https://github.com/kernelpanic888/TMI-Lean-Formal-Library/blob/pm01-hypothesis-orbit-geometry-v0.2.0/research/poetry-of-mathematics-v0.1/PoetryOfMathematicsAudit.lean"
       ],
-      "status": "linked"
+      "runtimeUrls": [
+        "https://chertogi-razuma-research.kernelpanic888.chatgpt.site/readers/poetry-of-mathematics/"
+      ],
+      "releaseId": "PM01-HYPOTHESIS-ORBIT-GEOMETRY-0.2.0",
+      "status": "released"
     },
     {
       "id": "SO-01",
@@ -258,6 +262,18 @@
       "readerIds": ["IF-P01B", "M-01", "TIDL-01", "TIDL-A", "DL-01", "DL-02", "DL-03", "DL-04"],
       "securityBoundary": "pass-at-release",
       "claimBoundary": "formal-and-executable-candidate-not-consciousness-or-life"
+    },
+    {
+      "id": "PM01-HYPOTHESIS-ORBIT-GEOMETRY-0.2.0",
+      "name": "PM-01 Hypothesis Orbit Geometry v0.2.0",
+      "tag": "pm01-hypothesis-orbit-geometry-v0.2.0",
+      "commit": "fd5ced124f7871af93a0c32164ca0caaa08c6c0f",
+      "url": "https://github.com/kernelpanic888/TMI-Lean-Formal-Library/releases/tag/pm01-hypothesis-orbit-geometry-v0.2.0",
+      "exportPath": "exports/chertogi_first_distinction_public/readers/poetry-of-mathematics",
+      "sourceMapPath": "exports/chertogi_first_distinction_public/SOURCE_MAP.md",
+      "readerIds": ["PM-01"],
+      "securityBoundary": "lean-wrapper-vampire-e-pass-at-release",
+      "claimBoundary": "abstract-orbit-gate-not-fisher-rao-identification-or-world-validation"
     }
   ],
   "edges": [

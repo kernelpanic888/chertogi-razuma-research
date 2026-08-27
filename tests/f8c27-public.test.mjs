@@ -9,7 +9,7 @@ const publicHtml = readFileSync(resolve(here, "../public/index.html"), "utf8");
 const routeSource = readFileSync(resolve(here, "../app/route.ts"), "utf8");
 
 test("F8C27 displays simultaneous least direct and inverse metric constants", () => {
-  assert.match(routeSource, /first-distinction-53/);
+  assert.match(routeSource, /first-distinction-54/);
   assert.match(publicHtml, /if-bs-f8c27-metric-least-constants/);
   assert.match(publicHtml, /IsLeast\(F_a,K_\+\) ∧ IsLeast\(B_a,K_-\)/);
   assert.match(publicHtml, /λ_- · μ_inv = 1/);

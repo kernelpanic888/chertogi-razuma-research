@@ -39,6 +39,11 @@ test("external script injection is rejected", () => {
     .includes("scripts-inline-only"));
 });
 
+test("unregistered local script injection is rejected", () => {
+  assert.ok(failingIds(`${publicHtml}<script src="readers/unregistered.js"></script>`)
+    .includes("scripts-inline-only"));
+});
+
 test("remote stylesheet injection is rejected", () => {
   assert.ok(failingIds(`${publicHtml}<link rel="stylesheet" href="https://example.test/x.css">`)
     .includes("styles-inline-only"));

@@ -25,6 +25,9 @@ const PRIVILEGED_MARKUP = [
 ];
 
 const ALLOWED_STORAGE_KEYS = new Set(["STORAGE_KEY", "LANGUAGE_KEY"]);
+const ALLOWED_SCRIPT_SOURCES = new Set([
+  "readers/poetry-of-mathematics/hypothesis-orbit-wrapper.js",
+]);
 
 function scriptRecords(html) {
   return [...html.matchAll(/<script\b([^>]*)>([\s\S]*?)<\/script>/gi)]
@@ -48,8 +51,11 @@ export function inspectPublicStaticBoundary({ html, hosting }) {
 
   add(
     "scripts-inline-only",
-    scripts.every((script) => !/\bsrc\s*=/i.test(script.attributes)),
-    "external script src is forbidden",
+    scripts.every((script) => {
+      const source = script.attributes.match(/\bsrc\s*=\s*["']([^"']+)["']/i);
+      return !source || ALLOWED_SCRIPT_SOURCES.has(source[1]);
+    }),
+    "only the registered local PM-01 wrapper script is allowed",
   );
 
   add(

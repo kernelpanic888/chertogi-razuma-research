@@ -6,7 +6,7 @@ const publicHtml = await readFile(new URL("../public/index.html", import.meta.ur
 const routeSource = await readFile(new URL("../app/route.ts", import.meta.url), "utf8");
 
 test("F8C31B closes the two-chart stereographic lift honestly", () => {
-  assert.match(routeSource, /first-distinction-53/);
+  assert.match(routeSource, /first-distinction-54/);
   assert.match(publicHtml, /if-bs-f8c31b-stereographic-diamond-lift/);
   assert.match(publicHtml, /TWO-CHART SURJECTIVITY CLOSED/);
   assert.match(publicHtml, /X\(t\).*1-t².*1\+t²/s);

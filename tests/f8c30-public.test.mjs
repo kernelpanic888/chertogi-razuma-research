@@ -9,7 +9,7 @@ const publicHtml = readFileSync(resolve(here, "../public/index.html"), "utf8");
 const routeSource = readFileSync(resolve(here, "../app/route.ts"), "utf8");
 
 test("F8C30 supplies an executable rational coarse net", () => {
-  assert.match(routeSource, /first-distinction-53/);
+  assert.match(routeSource, /first-distinction-54/);
   assert.match(publicHtml, /if-bs-f8c30-executable-coarse-net/);
   assert.match(publicHtml, /c₀=\(\(1,0\),0\)/);
   assert.match(publicHtml, /D ⊆ B\(c₀,2\)/);

@@ -9,7 +9,7 @@ const publicHtml = readFileSync(resolve(here, "../public/index.html"), "utf8");
 const routeSource = readFileSync(resolve(here, "../app/route.ts"), "utf8");
 
 test("F8C31A supplies an executable convergent rational parameter grid", () => {
-  assert.match(routeSource, /first-distinction-53/);
+  assert.match(routeSource, /first-distinction-54/);
   assert.match(publicHtml, /if-bs-f8c31a-rational-parameter-grid/);
   assert.match(publicHtml, /qₖ=−1\+2k\/\(n\+1\)/);
   assert.match(publicHtml, /k=floor\(\(x\+1\)\(n\+1\)\/2\)/);

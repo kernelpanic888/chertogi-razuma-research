@@ -9,7 +9,7 @@ const publicHtml = readFileSync(resolve(here, "../public/index.html"), "utf8");
 const routeSource = readFileSync(resolve(here, "../app/route.ts"), "utf8");
 
 test("F8C29 transports raw finite samples into certified F8C28 budgets", () => {
-  assert.match(routeSource, /first-distinction-53/);
+  assert.match(routeSource, /first-distinction-54/);
   assert.match(publicHtml, /if-bs-f8c29-raw-budget-transport/);
   assert.match(publicHtml, /S⁻ ≤ S_exact ≤ S⁺/);
   assert.match(publicHtml, /O=√S⁺ · ε=√S⁺−√S⁻/);
