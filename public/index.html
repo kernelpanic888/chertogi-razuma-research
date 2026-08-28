@@ -4311,6 +4311,10 @@
     .research-lab-gate__link{position:relative;z-index:1;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:28px;align-items:center;padding:clamp(28px,3vw,46px) clamp(22px,3.5vw,58px);color:inherit;text-decoration:none}
     .research-lab-gate__code{display:block;margin-bottom:12px;color:#91ad9f;font-size:11px;font-weight:800;letter-spacing:.13em;text-transform:uppercase}
     .research-lab-gate__title{display:block;color:var(--voice);font:600 clamp(25px,2.8vw,43px)/1.08 Georgia,"Times New Roman",serif}
+    .research-lab-gate__question{display:block;margin:12px 0 10px;color:#ffd258;font-size:12px;font-weight:900;line-height:1.5;letter-spacing:.08em;text-transform:uppercase}
+    .research-lab-gate__dates{display:flex;flex-wrap:wrap;gap:6px 18px;margin-top:2px;color:#a9c5b7;font-size:10px;font-weight:800;letter-spacing:.11em;text-transform:uppercase}
+    .research-lab-gate__dates time{color:#ffd258;font-variant-numeric:tabular-nums}
+    .research-lab-gate__dates span+span::before{content:"·";margin-right:18px;color:rgba(89,217,255,.72)}
     .research-lab-gate__cta{color:var(--voice);font-size:12px;font-weight:900;letter-spacing:.12em;white-space:nowrap}
     .research-lab-gate__en{display:none}
     .research-lab-gate[data-voice="boundary"]{--voice:#8affd5;--voice-rgb:138,255,213;background:radial-gradient(circle at 80% 50%,rgba(89,217,255,.14),transparent 34%),linear-gradient(110deg,rgba(9,39,49,.98),rgba(0,19,23,.99))}
@@ -4328,6 +4332,7 @@
     .pm01-home__code{color:#59d9ff;font:800 11px/1.4 "IBM Plex Mono","Courier New",monospace;letter-spacing:.14em;text-transform:uppercase}
     .pm01-home__title{display:block;margin:13px 0 16px;color:#8affd5;font:500 clamp(34px,4.6vw,67px)/.96 Georgia,"Times New Roman",serif;letter-spacing:-.035em}
     .pm01-home__text{max-width:650px;color:#a7c3b5;font:500 clamp(14px,1.35vw,18px)/1.58 Georgia,"Times New Roman",serif}
+    .pm01-home__dates{display:flex;flex-wrap:wrap;gap:6px 18px;margin:13px 0 0;color:#a9c5b7;font:800 10px/1.5 "IBM Plex Mono","Courier New",monospace;letter-spacing:.1em;text-transform:uppercase}.pm01-home__dates time{color:#ffd258;font-variant-numeric:tabular-nums}.pm01-home__dates span+span::before{content:"·";margin-right:18px;color:rgba(89,217,255,.72)}
     .pm01-home__proofs{display:flex;flex-wrap:wrap;gap:7px;margin:20px 0;color:#8affd5;font:800 9px/1.2 "IBM Plex Mono","Courier New",monospace;letter-spacing:.07em}
     .pm01-home__proofs span{padding:6px 8px;border:1px solid rgba(138,255,213,.28);background:rgba(2,31,25,.64)}
     .pm01-home__cta{color:#ffd258;font:900 11px/1.4 "IBM Plex Mono","Courier New",monospace;letter-spacing:.12em;text-transform:uppercase}
@@ -4343,6 +4348,7 @@
     .itc-gate-orbit i:nth-child(1){left:15%;top:8%}.itc-gate-orbit i:nth-child(2){right:15%;top:8%}.itc-gate-orbit i:nth-child(3){left:50%;bottom:0;transform:translateX(-50%)}
     body[data-lang=en] .research-lab-gate__ru,html[lang^=en] .research-lab-gate__ru{display:none}
     body[data-lang=en] .research-lab-gate__en,html[lang^=en] .research-lab-gate__en{display:inline}
+    body[data-lang=en] .research-lab-gate__dates.research-lab-gate__en,html[lang^=en] .research-lab-gate__dates.research-lab-gate__en{display:flex}
     @media(max-width:900px){.pm01-home__link{grid-template-columns:1fr}.pm01-home__visual{border-left:0;border-top:1px solid rgba(89,217,255,.24)}}
     @media(max-width:820px){.canon-rail{grid-template-columns:1fr}.canon-rail__note{text-align:left}.research-lab-gate__link,.research-lab-gate--itc .research-lab-gate__link{grid-template-columns:1fr}.research-lab-gate__cta{white-space:normal}.itc-gate-orbit{max-width:260px}}
   </style>
@@ -4361,6 +4367,8 @@
         <span class="research-lab-gate__title research-lab-gate__en">Invariant Transport Closure</span>
         <span class="research-lab-gate__code research-lab-gate__ru">ITC-01 · переход + перенос инварианта → продолжение · полный оборот → возврат выбранного инварианта</span>
         <span class="research-lab-gate__code research-lab-gate__en">ITC-01 · transition + invariant transport → persistence · full turn → return of the chosen invariant</span>
+        <span class="research-lab-gate__dates research-lab-gate__ru"><span>РЕЛИЗ · <time datetime="2026-08-22">22.08.2026</time></span><span>ОБНОВЛЕНО · <time datetime="2026-08-23">23.08.2026</time></span></span>
+        <span class="research-lab-gate__dates research-lab-gate__en"><span>RELEASED · <time datetime="2026-08-22">2026-08-22</time></span><span>UPDATED · <time datetime="2026-08-23">2026-08-23</time></span></span>
       </span>
       <span class="itc-gate-orbit" aria-hidden="true"><i>C₀</i><i>C₁</i><i>C₂</i></span>
       <span class="research-lab-gate__cta research-lab-gate__ru">ПОЩУПАТЬ МОДЕЛЬ ↗</span>
@@ -4373,8 +4381,12 @@
       <span>
         <span class="research-lab-gate__title research-lab-gate__ru">Реликт активации: теневая граница и проблема времени</span>
         <span class="research-lab-gate__title research-lab-gate__en">Activation Relic: Shadow Boundary and the Problem of Time</span>
+        <span class="research-lab-gate__question research-lab-gate__ru">ВОПРОС СТАТЬИ: «Мы живём внутри квантовой машины времени?»</span>
+        <span class="research-lab-gate__question research-lab-gate__en">ARTICLE QUESTION: “Do we live inside a quantum time machine?”</span>
         <span class="research-lab-gate__code research-lab-gate__ru">AR-01 · недоступное условие → внутридоменный след → внутреннее время · физическая аналогия ≠ TMI-доказательство</span>
         <span class="research-lab-gate__code research-lab-gate__en">AR-01 · inaccessible condition → in-domain trace → internal time · physical analogy ≠ TMI proof</span>
+        <span class="research-lab-gate__dates research-lab-gate__ru"><span>РЕЛИЗ · <time datetime="2026-08-10">10.08.2026</time></span><span>ОБНОВЛЕНО · <time datetime="2026-08-28">28.08.2026</time></span></span>
+        <span class="research-lab-gate__dates research-lab-gate__en"><span>RELEASED · <time datetime="2026-08-10">2026-08-10</time></span><span>UPDATED · <time datetime="2026-08-28">2026-08-28</time></span></span>
       </span>
       <span class="research-lab-gate__cta research-lab-gate__ru">ОТКРЫТЬ РИДЕР ↗</span>
       <span class="research-lab-gate__cta research-lab-gate__en">OPEN READER ↗</span>
@@ -4389,6 +4401,8 @@
         <span class="research-lab-gate__title research-lab-gate__en">Living Market Hypothesis Steward</span>
         <span class="research-lab-gate__code research-lab-gate__ru">AMF-02 · D-EXP-01 второй наблюдатель · карточка ↔ биржа · Lean 4.32.2 / PASS</span>
         <span class="research-lab-gate__code research-lab-gate__en">AMF-02 · D-EXP-01 second observer · card ↔ exchange · Lean 4.32.2 / PASS</span>
+        <span class="research-lab-gate__dates research-lab-gate__ru"><span>РЕЛИЗ · <time datetime="2026-08-09">09.08.2026</time></span><span>ОБНОВЛЕНО · <time datetime="2026-08-25">25.08.2026</time></span></span>
+        <span class="research-lab-gate__dates research-lab-gate__en"><span>RELEASED · <time datetime="2026-08-09">2026-08-09</time></span><span>UPDATED · <time datetime="2026-08-25">2026-08-25</time></span></span>
       </span>
       <span class="research-lab-gate__cta research-lab-gate__ru">ОТКРЫТЬ РИДЕР ↗</span>
       <span class="research-lab-gate__cta research-lab-gate__en">OPEN READER ↗</span>
@@ -4403,6 +4417,8 @@
         <span class="research-lab-gate__title research-lab-gate__en">The ontological problem of the Dirac spinor</span>
         <span class="research-lab-gate__code research-lab-gate__ru">SO-01 · от формализма Дирака к первичному интерфейсу различия · стандартная теория ≠ TMI-гипотеза</span>
         <span class="research-lab-gate__code research-lab-gate__en">SO-01 · from Dirac formalism to the primary interface of distinction · standard theory ≠ TMI hypothesis</span>
+        <span class="research-lab-gate__dates research-lab-gate__ru"><span>РЕЛИЗ · <time datetime="2026-08-08">08.08.2026</time></span><span>ОБНОВЛЕНО · <time datetime="2026-08-20">20.08.2026</time></span></span>
+        <span class="research-lab-gate__dates research-lab-gate__en"><span>RELEASED · <time datetime="2026-08-08">2026-08-08</time></span><span>UPDATED · <time datetime="2026-08-20">2026-08-20</time></span></span>
       </span>
       <span class="research-lab-gate__cta research-lab-gate__ru">ОТКРЫТЬ РИДЕР ↗</span>
       <span class="research-lab-gate__cta research-lab-gate__en">OPEN READER ↗</span>
@@ -4417,6 +4433,8 @@
         <span class="research-lab-gate__title research-lab-gate__en">Whole corpus interface</span>
         <span class="research-lab-gate__code research-lab-gate__ru">CI-01 · идея ↔ ридер ↔ Git ↔ журнал ↔ формальная и исполняемая модель</span>
         <span class="research-lab-gate__code research-lab-gate__en">CI-01 · idea ↔ reader ↔ Git ↔ journal ↔ formal and executable model</span>
+        <span class="research-lab-gate__dates research-lab-gate__ru"><span>РЕЛИЗ · <time datetime="2026-08-08">08.08.2026</time></span><span>ОБНОВЛЕНО · <time datetime="2026-08-28">28.08.2026</time></span></span>
+        <span class="research-lab-gate__dates research-lab-gate__en"><span>RELEASED · <time datetime="2026-08-08">2026-08-08</time></span><span>UPDATED · <time datetime="2026-08-28">2026-08-28</time></span></span>
       </span>
       <span class="research-lab-gate__cta research-lab-gate__ru">ОТКРЫТЬ КОРПУС ↗</span>
       <span class="research-lab-gate__cta research-lab-gate__en">OPEN CORPUS ↗</span>
@@ -4430,6 +4448,8 @@
         <span class="research-lab-gate__title research-lab-gate__en">Did we invent artificial intelligence?</span>
         <span class="research-lab-gate__code research-lab-gate__ru">TIDL-01 · отдельный ридер статусов · формальная архитектура ≠ готовый автономный разум</span>
         <span class="research-lab-gate__code research-lab-gate__en">TIDL-01 · separate status reader · formal architecture ≠ finished autonomous mind</span>
+        <span class="research-lab-gate__dates research-lab-gate__ru"><span>РЕЛИЗ · <time datetime="2026-08-03">03.08.2026</time></span><span>ОБНОВЛЕНО · <time datetime="2026-08-20">20.08.2026</time></span></span>
+        <span class="research-lab-gate__dates research-lab-gate__en"><span>RELEASED · <time datetime="2026-08-03">2026-08-03</time></span><span>UPDATED · <time datetime="2026-08-20">2026-08-20</time></span></span>
       </span>
       <span class="research-lab-gate__cta research-lab-gate__ru">ОТКРЫТЬ РИДЕР ↗</span>
       <span class="research-lab-gate__cta research-lab-gate__en">OPEN READER ↗</span>
@@ -4443,6 +4463,8 @@
         <span class="research-lab-gate__title research-lab-gate__en">Can digital identity continuity be protected?</span>
         <span class="research-lab-gate__code research-lab-gate__ru">CR-01 · отдельный ридер · стандартная криптография + проверяемые переходы состояния</span>
         <span class="research-lab-gate__code research-lab-gate__en">CR-01 · independent reader · standard cryptography + verifiable state transitions</span>
+        <span class="research-lab-gate__dates research-lab-gate__ru"><span>РЕЛИЗ · <time datetime="2026-08-03">03.08.2026</time></span><span>ОБНОВЛЕНО · <time datetime="2026-08-20">20.08.2026</time></span></span>
+        <span class="research-lab-gate__dates research-lab-gate__en"><span>RELEASED · <time datetime="2026-08-03">2026-08-03</time></span><span>UPDATED · <time datetime="2026-08-20">2026-08-20</time></span></span>
       </span>
       <span class="research-lab-gate__cta research-lab-gate__ru">ОТКРЫТЬ РИДЕР ↗</span>
       <span class="research-lab-gate__cta research-lab-gate__en">OPEN READER ↗</span>
@@ -4456,6 +4478,8 @@
         <span class="research-lab-gate__title research-lab-gate__en">How do we prove that execution did not replace the trace?</span>
         <span class="research-lab-gate__code research-lab-gate__ru">AZ-OBS-11 → 34 · прикладная ветка · различие → след → проверяемая непрерывность</span>
         <span class="research-lab-gate__code research-lab-gate__en">AZ-OBS-11 → 34 · applied branch · distinction → trace → certified continuity</span>
+        <span class="research-lab-gate__dates research-lab-gate__ru"><span>РЕЛИЗ · <time datetime="2026-08-08">08.08.2026</time></span><span>ОБНОВЛЕНО · <time datetime="2026-08-20">20.08.2026</time></span></span>
+        <span class="research-lab-gate__dates research-lab-gate__en"><span>RELEASED · <time datetime="2026-08-08">2026-08-08</time></span><span>UPDATED · <time datetime="2026-08-20">2026-08-20</time></span></span>
       </span>
       <span class="research-lab-gate__cta research-lab-gate__ru">ОТКРЫТЬ КАМЕРУ ↗</span>
       <span class="research-lab-gate__cta research-lab-gate__en">OPEN CHAMBER ↗</span>
@@ -4472,6 +4496,8 @@
         <span class="pm01-home__title pm01-home__ru">Орбитальная геометрия гипотез</span>
         <span class="pm01-home__text pm01-home__en">Interpretation rotates freely. Inward motion and fact promotion remain locked until an independent verification witness is supplied.</span>
         <span class="pm01-home__text pm01-home__ru">Интерпретация свободно меняет угол. Движение внутрь и повышение до факта остаются запертыми до предъявления независимого свидетельства верификации.</span>
+        <span class="pm01-home__dates pm01-home__en"><span>RELEASED · <time datetime="2026-08-08">2026-08-08</time></span><span>UPDATED · <time datetime="2026-08-28">2026-08-28</time></span></span>
+        <span class="pm01-home__dates pm01-home__ru"><span>РЕЛИЗ · <time datetime="2026-08-08">08.08.2026</time></span><span>ОБНОВЛЕНО · <time datetime="2026-08-28">28.08.2026</time></span></span>
         <span class="pm01-home__proofs"><span>LEAN · PASS</span><span>VAMPIRE · THEOREM</span><span>E · THEOREM</span><span>FISHER BASE · UPSTREAM</span></span>
         <span class="pm01-home__cta pm01-home__en">OPEN BILINGUAL LIVE READER ↗</span>
         <span class="pm01-home__cta pm01-home__ru">ОТКРЫТЬ ДВУЯЗЫЧНЫЙ ЖИВОЙ РИДЕР ↗</span>
