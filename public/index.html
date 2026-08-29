@@ -4305,6 +4305,7 @@
     .canon-rail__label{color:#8affd5;font-size:10px;font-weight:900;letter-spacing:.16em;text-transform:uppercase}
     .canon-rail__formula{font:700 clamp(13px,1.6vw,18px)/1.35 "IBM Plex Mono","Courier New",monospace}
     .canon-rail__note{color:#91ad9f;font-size:10px;letter-spacing:.08em;text-transform:uppercase;text-align:right}
+    .reader-gates{display:block}
     .research-lab-gate{--voice:#8affd5;--voice-rgb:138,255,213;position:relative;isolation:isolate;overflow:hidden;margin:14px clamp(18px,3vw,58px) 0;border:1px solid rgba(var(--voice-rgb),.5);border-left:10px solid var(--voice);background:radial-gradient(circle at 84% 50%,rgba(var(--voice-rgb),.13),transparent 32%),linear-gradient(110deg,rgba(7,55,39,.97),rgba(0,23,17,.99));color:#e8fff3;font-family:"IBM Plex Mono","Courier New",monospace;box-shadow:0 18px 50px rgba(0,0,0,.18)}
     .research-lab-gate::before{content:attr(data-canon) " / " attr(data-voice);position:absolute;z-index:0;top:12px;right:18px;color:rgba(var(--voice-rgb),.42);font-size:9px;font-weight:900;letter-spacing:.16em;text-transform:uppercase}
     .research-lab-gate::after{content:"";position:absolute;z-index:0;right:clamp(50px,9vw,130px);top:50%;width:clamp(90px,13vw,170px);aspect-ratio:1;border:1px solid rgba(var(--voice-rgb),.18);border-radius:50%;transform:translateY(-50%);box-shadow:0 0 0 18px rgba(var(--voice-rgb),.025),0 0 0 36px rgba(var(--voice-rgb),.018);pointer-events:none}
@@ -4356,11 +4357,12 @@
   <section class="canon-rail" aria-label="Единый канон исследовательских камер / Shared canon of research chambers">
     <span class="canon-rail__label"><span class="research-lab-gate__ru">Единый инвариант</span><span class="research-lab-gate__en">Shared invariant</span></span>
     <strong class="canon-rail__formula">distinction → transition → trace → return</strong>
-    <span class="canon-rail__note"><span class="research-lab-gate__ru">один канон · разные смысловые голоса</span><span class="research-lab-gate__en">one canon · distinct semantic voices</span></span>
+    <span class="canon-rail__note"><span class="research-lab-gate__ru">один канон · разные смысловые голоса · свежие обновления сверху</span><span class="research-lab-gate__en">one canon · distinct semantic voices · latest updates first</span></span>
   </section>
 
+  <section class="reader-gates" id="reader-gates" aria-label="Исследовательские ридеры — свежие обновления сверху / Research readers — latest updates first">
   <!-- INVARIANT_TRANSPORT_CLOSURE_READER_GATE_ITC_01 -->
-  <aside class="research-lab-gate research-lab-gate--itc" data-canon="IF-0.1" data-voice="transport" aria-label="Дисбалансный оборот / Invariant Transport Closure">
+  <aside class="research-lab-gate research-lab-gate--itc" data-reader-updated="2026-08-23" data-canon="IF-0.1" data-voice="transport" aria-label="Дисбалансный оборот / Invariant Transport Closure">
     <a class="research-lab-gate__link" href="readers/invariant-transport-closure/index.html">
       <span>
         <span class="research-lab-gate__title research-lab-gate__ru">Дисбалансный оборот</span>
@@ -4376,7 +4378,7 @@
     </a>
   </aside>
   <!-- ACTIVATION_RELIC_READER_GATE_AR_01 -->
-  <aside class="research-lab-gate research-lab-gate--relic" data-canon="IF-0.1" data-voice="boundary" aria-label="Реликт активации: теневая граница и проблема времени / Activation Relic: Shadow Boundary and the Problem of Time">
+  <aside class="research-lab-gate research-lab-gate--relic" data-reader-updated="2026-08-29" data-canon="IF-0.1" data-voice="boundary" aria-label="Реликт активации: теневая граница и проблема времени / Activation Relic: Shadow Boundary and the Problem of Time">
     <a class="research-lab-gate__link" href="readers/activation-relic-shadow-boundary/index.html">
       <span>
         <span class="research-lab-gate__title research-lab-gate__ru">Реликт активации: теневая граница и проблема времени</span>
@@ -4394,7 +4396,7 @@
   </aside>
 
   <!-- ADAPTIVE_MARKET_FRUGALITY_READER_GATE_AMF_01 -->
-  <aside class="research-lab-gate research-lab-gate--market" data-canon="IF-0.1" data-voice="resource" aria-label="Адаптивная бережливость рынка / Adaptive Market Frugality">
+  <aside class="research-lab-gate research-lab-gate--market" data-reader-updated="2026-08-25" data-canon="IF-0.1" data-voice="resource" aria-label="Адаптивная бережливость рынка / Adaptive Market Frugality">
     <a class="research-lab-gate__link" href="readers/adaptive-market-frugality/index.html">
       <span>
         <span class="research-lab-gate__title research-lab-gate__ru">Жизнь рыночной гипотезы</span>
@@ -4410,7 +4412,7 @@
   </aside>
 
   <!-- SPINOR_ONTOLOGY_READER_GATE_SO_01 -->
-  <aside class="research-lab-gate research-lab-gate--spinor" data-canon="IF-0.1" data-voice="carrier" aria-label="Онтологическая проблема Дираковского спинора / The ontological problem of the Dirac spinor">
+  <aside class="research-lab-gate research-lab-gate--spinor" data-reader-updated="2026-08-20" data-canon="IF-0.1" data-voice="carrier" aria-label="Онтологическая проблема Дираковского спинора / The ontological problem of the Dirac spinor">
     <a class="research-lab-gate__link" href="readers/spinor-ontology/index.html">
       <span>
         <span class="research-lab-gate__title research-lab-gate__ru">Онтологическая проблема Дираковского спинора</span>
@@ -4426,7 +4428,7 @@
   </aside>
 
   <!-- WHOLE_CORPUS_INTERFACE_GATE_CI_01 -->
-  <aside class="research-lab-gate" data-canon="IF-0.1" data-voice="corpus" aria-label="Интерфейс целостного корпуса / Whole corpus interface">
+  <aside class="research-lab-gate" data-reader-updated="2026-08-28" data-canon="IF-0.1" data-voice="corpus" aria-label="Интерфейс целостного корпуса / Whole corpus interface">
     <a class="research-lab-gate__link" href="readers/corpus-interface/index.html">
       <span>
         <span class="research-lab-gate__title research-lab-gate__ru">Интерфейс целостного корпуса</span>
@@ -4441,7 +4443,7 @@
     </a>
   </aside>
 
-  <aside class="research-lab-gate" data-canon="IF-0.1" data-voice="identity" aria-label="Новый исследовательский ридер / New research reader">
+  <aside class="research-lab-gate" data-reader-updated="2026-08-20" data-canon="IF-0.1" data-voice="identity" aria-label="Новый исследовательский ридер / New research reader">
     <a class="research-lab-gate__link" href="readers/true-intellectual-digital-life/index.html">
       <span>
         <span class="research-lab-gate__title research-lab-gate__ru">Изобрели ли мы искусственный интеллект?</span>
@@ -4456,7 +4458,7 @@
     </a>
   </aside>
 
-  <aside class="research-lab-gate" data-canon="IF-0.1" data-voice="continuity" aria-label="Криптографический исследовательский ридер / Cryptography research reader">
+  <aside class="research-lab-gate" data-reader-updated="2026-08-20" data-canon="IF-0.1" data-voice="continuity" aria-label="Криптографический исследовательский ридер / Cryptography research reader">
     <a class="research-lab-gate__link" href="readers/certified-continuity-protocol/index.html">
       <span>
         <span class="research-lab-gate__title research-lab-gate__ru">Можно ли защищать непрерывность цифровой личности?</span>
@@ -4471,7 +4473,7 @@
     </a>
   </aside>
 
-  <aside class="research-lab-gate" data-canon="IF-0.1" data-voice="observation" aria-label="Прикладная камера проверяемой непрерывности / Applied certified-continuity chamber">
+  <aside class="research-lab-gate" data-reader-updated="2026-08-20" data-canon="IF-0.1" data-voice="observation" aria-label="Прикладная камера проверяемой непрерывности / Applied certified-continuity chamber">
     <a class="research-lab-gate__link" href="readers/agent-zero-protocol-chamber/index.html">
       <span>
         <span class="research-lab-gate__title research-lab-gate__ru">Как доказать, что исполнение не подменило след?</span>
@@ -4488,7 +4490,7 @@
 
   <!-- POETRY_OF_MATHEMATICS_READER_GATE_PM_01 -->
   <!-- PM-01_LIVE_HOME_BANNER: every transition calls the bounded browser wrapper. -->
-  <aside class="pm01-home" aria-label="Орбитальная геометрия гипотез / Hypothesis Orbit Geometry">
+  <aside class="pm01-home" data-reader-updated="2026-08-28" aria-label="Орбитальная геометрия гипотез / Hypothesis Orbit Geometry">
     <a class="pm01-home__link" href="readers/poetry-of-mathematics/index.html">
       <span class="pm01-home__copy">
         <span class="pm01-home__code">PM-01 · TLFL · LEAN 4 + BOUNDED WRAPPER</span>
@@ -4505,6 +4507,11 @@
       <span class="pm01-home__visual"><canvas id="pm01-home-canvas" aria-hidden="true"></canvas><span class="pm01-home__boundary pm01-home__en">visual = handwritten wrapper · not Lean extraction</span><span class="pm01-home__boundary pm01-home__ru">визуал = ручная обёртка · не экстракция Lean</span></span>
     </a>
   </aside>
+  </section>
+
+  <script>
+  (()=>{const shelf=document.getElementById("reader-gates");if(!shelf)return;[...shelf.querySelectorAll(":scope > [data-reader-updated]")].map((banner,index)=>({banner,index})).sort((a,b)=>b.banner.dataset.readerUpdated.localeCompare(a.banner.dataset.readerUpdated)||a.index-b.index).forEach(({banner})=>shelf.append(banner));shelf.dataset.sorted="latest-updated-first"})();
+  </script>
 
   <script src="readers/poetry-of-mathematics/hypothesis-orbit-wrapper.js"></script>
   <script>

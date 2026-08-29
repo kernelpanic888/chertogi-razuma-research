@@ -71,6 +71,39 @@ test("keeps the complete corpus and its discovery metadata", async () => {
   assert.match(route, /rel="canonical"/);
 });
 
+test("orders all homepage reader banners by their latest update", async () => {
+  const home = await readFile(new URL("../public/index.html", import.meta.url), "utf8");
+  const banners = [...home.matchAll(
+    /<aside class="(?:research-lab-gate|pm01-home)[^"]*" data-reader-updated="(\d{4}-\d{2}-\d{2})"[\s\S]*?<\/aside>/g,
+  )].map((match, sourceIndex) => ({
+    html: match[0],
+    sourceIndex,
+    updated: match[1],
+  }));
+
+  assert.equal(banners.length, 9);
+  for (const banner of banners) {
+    const visibleDateCount = banner.html.match(new RegExp(`datetime="${banner.updated}"`, "g"))?.length ?? 0;
+    assert.equal(visibleDateCount, 2, `RU and EN update dates must match ${banner.updated}`);
+  }
+
+  const sortedDates = banners
+    .sort((a, b) => b.updated.localeCompare(a.updated) || a.sourceIndex - b.sourceIndex)
+    .map((banner) => banner.updated);
+  assert.deepEqual(sortedDates, [
+    "2026-08-29",
+    "2026-08-28",
+    "2026-08-28",
+    "2026-08-25",
+    "2026-08-23",
+    "2026-08-20",
+    "2026-08-20",
+    "2026-08-20",
+    "2026-08-20",
+  ]);
+  assert.match(home, /shelf\.dataset\.sorted="latest-updated-first"/);
+});
+
 test("publishes ITC-01 as a canonical but individually voiced interactive chamber", async () => {
   const [home, reader, registry, publications] = await Promise.all([
     readFile(new URL("../public/index.html", import.meta.url), "utf8"),
