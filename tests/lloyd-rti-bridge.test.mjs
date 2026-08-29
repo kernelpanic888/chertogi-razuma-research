@@ -23,6 +23,9 @@ test("publishes the Lloyd to RTI bridge with explicit provenance", async () => {
 test("keeps Lloyd's P-CTC map exact and nonzero-weight guarded", async () => {
   const reader = await readFile(readerUrl, "utf8");
 
+  assert.match(reader, /\.lloyd-card__formula\{display:block;/);
+  assert.match(reader, /white-space:nowrap;word-break:normal;overflow-wrap:normal/);
+  assert.doesNotMatch(reader, /\.lloyd-card__formula\{display:grid;/);
   assert.match(reader, /C<sub>U<\/sub> := Tr<sub>CTC<\/sub>\[U\]/);
   assert.match(reader, /𝒩<sub>U<\/sub>\[ρ\] := C<sub>U<\/sub>ρC<sub>U<\/sub><sup>†<\/sup> \/ Tr\[C<sub>U<\/sub>ρC<sub>U<\/sub><sup>†<\/sup>\]/);
   assert.match(reader, /w<sub>U<\/sub>\(ρ\) := Tr\[C<sub>U<\/sub>ρC<sub>U<\/sub><sup>†<\/sup>\] &gt; 0/);
