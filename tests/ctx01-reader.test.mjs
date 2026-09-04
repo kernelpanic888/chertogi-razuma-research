@@ -26,5 +26,7 @@ test("CTX-01 preserves provenance and the corpus return path", async () => {
   assert.match(reader, /InterfacehoodClasses\.lean/);
   assert.match(reader, /MeasurementDecoherence\.lean/);
   assert.match(reader, /FIELD_OF_NEAREST_GOALS_DUAL_READER\.html/);
-  assert.match(reader, /PARTIAL BRIDGE \/ OPEN EXTENSION/);
+  assert.match(reader, /ContextualInterface\.lean/);
+  assert.match(reader, /ContextualInterfaceAudit\.lean/);
+  assert.match(reader, /LOCAL LEAN PASS \/ PUBLIC LINK OPEN/);
 });
