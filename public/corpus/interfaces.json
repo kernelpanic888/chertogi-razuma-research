@@ -72,7 +72,9 @@
       "formalUrls": [
         "https://github.com/kernelpanic888/TMI-Lean-Formal-Library/blob/main/lean/TMI/InterfaceFoundations/MemoryGoalField.lean",
         "https://github.com/kernelpanic888/TMI-Lean-Formal-Library/blob/main/lean/TMI/InterfaceMathematics/InterfacehoodClasses.lean",
-        "https://github.com/kernelpanic888/TMI-Lean-Formal-Library/blob/main/lean/TMI/InterfaceMathematics/MeasurementDecoherence.lean"
+        "https://github.com/kernelpanic888/TMI-Lean-Formal-Library/blob/main/lean/TMI/InterfaceMathematics/MeasurementDecoherence.lean",
+        "https://github.com/kernelpanic888/TMI-Lean-Formal-Library/blob/codex/contextual-interface-carrier/lean/TMI/InterfaceMathematics/ContextualInterface.lean",
+        "https://github.com/kernelpanic888/TMI-Lean-Formal-Library/blob/codex/contextual-interface-carrier/lean/TMI/InterfaceMathematics/ContextualInterfaceAudit.lean"
       ],
       "canonicalReaderUrls": [
         "https://github.com/kernelpanic888/TMI-Lean-Formal-Library/blob/main/exports/chertogi_first_distinction_public/connectedness-c01/FIELD_OF_NEAREST_GOALS_DUAL_READER.html"
@@ -80,7 +82,7 @@
       "runtimeUrls": [
         "https://github.com/openai/codex/issues/42826"
       ],
-      "status": "open-extension-seam"
+      "status": "open-canonical-merge-seam"
     },
     {
       "id": "M-01",

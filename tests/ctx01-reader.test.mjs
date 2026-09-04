@@ -19,7 +19,7 @@ test("CTX-01 presents contextual mathematics as a human reading surface", async 
 test("CTX-01 preserves provenance and the corpus return path", async () => {
   const reader = await readFile(readerUrl, "utf8");
   assert.match(reader, /corpus-interface\/index\.html/);
-  assert.match(reader, /github\.com\/kernelpanic888\/chertogi-razuma-research\/blob\/main\/public\/readers\/context-that-cannot-be-erased\/index\.html/);
+  assert.match(reader, /github\.com\/kernelpanic888\/chertogi-razuma-research\/blob\/codex\/contextual-interface-reader\/public\/readers\/context-that-cannot-be-erased\/index\.html/);
   assert.match(reader, /arxiv\.org\/abs\/1102\.0264/);
   assert.match(reader, /github\.com\/openai\/codex\/issues\/42826/);
   assert.match(reader, /MemoryGoalField\.lean/);
@@ -28,5 +28,6 @@ test("CTX-01 preserves provenance and the corpus return path", async () => {
   assert.match(reader, /FIELD_OF_NEAREST_GOALS_DUAL_READER\.html/);
   assert.match(reader, /ContextualInterface\.lean/);
   assert.match(reader, /ContextualInterfaceAudit\.lean/);
-  assert.match(reader, /LOCAL LEAN PASS \/ PUBLIC LINK OPEN/);
+  assert.match(reader, /blob\/codex\/contextual-interface-carrier\/lean\/TMI\/InterfaceMathematics\/ContextualInterface\.lean/);
+  assert.match(reader, /FORMAL BRANCH LINKED \/ CANONICAL MERGE OPEN/);
 });
