@@ -63,6 +63,26 @@
       "status": "linked"
     },
     {
+      "id": "CTX-01",
+      "titleRu": "Контекст, который нельзя стереть",
+      "titleEn": "The Context That Cannot Be Erased",
+      "publicPath": "/readers/context-that-cannot-be-erased/",
+      "sourcePath": "public/readers/context-that-cannot-be-erased/index.html",
+      "journalPaths": [],
+      "formalUrls": [
+        "https://github.com/kernelpanic888/TMI-Lean-Formal-Library/blob/main/lean/TMI/InterfaceFoundations/MemoryGoalField.lean",
+        "https://github.com/kernelpanic888/TMI-Lean-Formal-Library/blob/main/lean/TMI/InterfaceMathematics/InterfacehoodClasses.lean",
+        "https://github.com/kernelpanic888/TMI-Lean-Formal-Library/blob/main/lean/TMI/InterfaceMathematics/MeasurementDecoherence.lean"
+      ],
+      "canonicalReaderUrls": [
+        "https://github.com/kernelpanic888/TMI-Lean-Formal-Library/blob/main/exports/chertogi_first_distinction_public/connectedness-c01/FIELD_OF_NEAREST_GOALS_DUAL_READER.html"
+      ],
+      "runtimeUrls": [
+        "https://github.com/openai/codex/issues/42826"
+      ],
+      "status": "open-extension-seam"
+    },
+    {
       "id": "M-01",
       "titleRu": "Методология подхвата мысли",
       "titleEn": "Methodology of Thought Resumption",
@@ -260,6 +280,8 @@
   "edges": [
     { "from": "IF-P01B", "to": "M-01", "relation": "question-to-trace" },
     { "from": "IF-P01B", "to": "ITC-01", "relation": "distinction-to-transport" },
+    { "from": "IF-P01B", "to": "CTX-01", "relation": "distinction-to-context-index" },
+    { "from": "CTX-01", "to": "ITC-01", "relation": "context-to-compatible-transport" },
     { "from": "DL-03", "to": "ITC-01", "relation": "growth-to-invariant-transport" },
     { "from": "ITC-01", "to": "CR-01", "relation": "closure-to-certified-continuity" },
     { "from": "ITC-01", "to": "IF-P01B", "relation": "return-to-distinction" },

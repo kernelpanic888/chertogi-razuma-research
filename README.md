@@ -8,6 +8,8 @@ This repository is the source of truth. Production deployments are built from a 
 
 The bidirectional publication contract and whole-corpus registry are defined in [CORPUS_INTERFACE.md](CORPUS_INTERFACE.md). Every public reader returns to its canonical source and the corpus map; missing journal or formal routes are recorded as `OPEN SEAM` rather than replaced by invented references.
 
+The human-facing mathematical style is defined in [READER_EDITORIAL_CONTRACT.md](READER_EDITORIAL_CONTRACT.md): visible equations use semantic mathematical notation, while Lean and executable code remain linked provenance rather than the default reading surface.
+
 ## Research architecture
 
 - one continuous bilingual public map;
