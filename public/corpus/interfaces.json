@@ -9,7 +9,18 @@
     "document": "READER_RELEASE_MODEL.md",
     "referenceRelease": "https://github.com/kernelpanic888/TMI-Lean-Formal-Library/releases/tag/chertogi-first-distinction-v0.1.0",
     "route": "formal-home <-> tagged-release <-> export <-> live-reader <-> journal <-> next-seam",
-    "bodyOrder": ["result", "live-url", "representative-image", "release-surface", "reader-routes", "security-boundary", "claim-boundary", "english-reading", "russian-reading", "provenance"]
+    "bodyOrder": [
+      "result",
+      "live-url",
+      "representative-image",
+      "release-surface",
+      "reader-routes",
+      "security-boundary",
+      "claim-boundary",
+      "english-reading",
+      "russian-reading",
+      "provenance"
+    ]
   },
   "contract": {
     "sourceOfTruth": "git",
@@ -248,6 +259,25 @@
         "https://github.com/kernelpanic888/chertogi-razuma-research/blob/main/public/readers/adaptive-market-frugality/AdaptiveMarketHypothesisSteward.lean"
       ],
       "status": "linked"
+    },
+    {
+      "id": "MI-01",
+      "titleRu": "Зеркальный интерфейс",
+      "titleEn": "The Mirror Interface",
+      "publicPath": "/readers/mirror-interface/",
+      "sourcePath": "public/readers/mirror-interface/index.html",
+      "journalPaths": [
+        "journal/2026-10-31-mi-01-mirror-interface.md"
+      ],
+      "formalUrls": [],
+      "runtimeUrls": [
+        "https://chertogi-razuma-research.kernelpanic888.chatgpt.site/readers/mirror-interface/"
+      ],
+      "status": "open-release",
+      "openSeams": [
+        "Separate MI-01 DOI, ORCID work, formal-home tag and training provenance are unconfirmed."
+      ],
+      "formalPath": "research/mirror-interface/MirrorInterface.lean"
     }
   ],
   "releases": [
@@ -259,7 +289,16 @@
       "url": "https://github.com/kernelpanic888/TMI-Lean-Formal-Library/releases/tag/chertogi-first-distinction-v0.1.0",
       "exportPath": "exports/chertogi_first_distinction_public",
       "sourceMapPath": "exports/chertogi_first_distinction_public/SOURCE_MAP.md",
-      "readerIds": ["IF-P01B", "M-01", "TIDL-01", "TIDL-A", "DL-01", "DL-02", "DL-03", "DL-04"],
+      "readerIds": [
+        "IF-P01B",
+        "M-01",
+        "TIDL-01",
+        "TIDL-A",
+        "DL-01",
+        "DL-02",
+        "DL-03",
+        "DL-04"
+      ],
       "securityBoundary": "pass-at-release",
       "claimBoundary": "formal-and-executable-candidate-not-consciousness-or-life"
     },
@@ -271,31 +310,123 @@
       "url": "https://github.com/kernelpanic888/TMI-Lean-Formal-Library/releases/tag/pm01-hypothesis-orbit-geometry-v0.2.0",
       "exportPath": "exports/chertogi_first_distinction_public/readers/poetry-of-mathematics",
       "sourceMapPath": "exports/chertogi_first_distinction_public/SOURCE_MAP.md",
-      "readerIds": ["PM-01"],
+      "readerIds": [
+        "PM-01"
+      ],
       "securityBoundary": "lean-wrapper-vampire-e-pass-at-release",
       "claimBoundary": "abstract-orbit-gate-not-fisher-rao-identification-or-world-validation"
     }
   ],
   "edges": [
-    { "from": "IF-P01B", "to": "M-01", "relation": "question-to-trace" },
-    { "from": "IF-P01B", "to": "ITC-01", "relation": "distinction-to-transport" },
-    { "from": "DL-03", "to": "ITC-01", "relation": "growth-to-invariant-transport" },
-    { "from": "ITC-01", "to": "CR-01", "relation": "closure-to-certified-continuity" },
-    { "from": "ITC-01", "to": "IF-P01B", "relation": "return-to-distinction" },
-    { "from": "IF-P01B", "to": "PM-01", "relation": "distinction-to-visible-constraint" },
-    { "from": "PM-01", "to": "M-01", "relation": "projection-to-readable-trace" },
-    { "from": "IF-P01B", "to": "SO-01", "relation": "distinction-to-carrier" },
-    { "from": "IF-P01B", "to": "TIDL-01", "relation": "identity-to-digital-life" },
-    { "from": "M-01", "to": "TIDL-A", "relation": "trace-to-architecture" },
-    { "from": "TIDL-01", "to": "TIDL-A", "relation": "status-to-architecture" },
-    { "from": "TIDL-A", "to": "DL-01", "relation": "architecture-to-passport" },
-    { "from": "DL-01", "to": "DL-02", "relation": "passport-to-realization" },
-    { "from": "DL-02", "to": "DL-03", "relation": "realization-to-growth" },
-    { "from": "DL-03", "to": "DL-04", "relation": "growth-to-execution" },
-    { "from": "DL-04", "to": "CR-01", "relation": "living-model-to-continuity" },
-    { "from": "CR-01", "to": "AZ-OBS", "relation": "protocol-to-observation" },
-    { "from": "AZ-OBS", "to": "IF-P01B", "relation": "receipt-to-return" },
-    { "from": "AZ-OBS", "to": "AMF-01", "relation": "selector-to-market-policy" },
-    { "from": "AMF-01", "to": "IF-P01B", "relation": "sufficient-buffer-to-living-function" }
+    {
+      "from": "IF-P01B",
+      "to": "M-01",
+      "relation": "question-to-trace"
+    },
+    {
+      "from": "IF-P01B",
+      "to": "ITC-01",
+      "relation": "distinction-to-transport"
+    },
+    {
+      "from": "DL-03",
+      "to": "ITC-01",
+      "relation": "growth-to-invariant-transport"
+    },
+    {
+      "from": "ITC-01",
+      "to": "CR-01",
+      "relation": "closure-to-certified-continuity"
+    },
+    {
+      "from": "ITC-01",
+      "to": "IF-P01B",
+      "relation": "return-to-distinction"
+    },
+    {
+      "from": "IF-P01B",
+      "to": "PM-01",
+      "relation": "distinction-to-visible-constraint"
+    },
+    {
+      "from": "PM-01",
+      "to": "M-01",
+      "relation": "projection-to-readable-trace"
+    },
+    {
+      "from": "IF-P01B",
+      "to": "SO-01",
+      "relation": "distinction-to-carrier"
+    },
+    {
+      "from": "IF-P01B",
+      "to": "TIDL-01",
+      "relation": "identity-to-digital-life"
+    },
+    {
+      "from": "M-01",
+      "to": "TIDL-A",
+      "relation": "trace-to-architecture"
+    },
+    {
+      "from": "TIDL-01",
+      "to": "TIDL-A",
+      "relation": "status-to-architecture"
+    },
+    {
+      "from": "TIDL-A",
+      "to": "DL-01",
+      "relation": "architecture-to-passport"
+    },
+    {
+      "from": "DL-01",
+      "to": "DL-02",
+      "relation": "passport-to-realization"
+    },
+    {
+      "from": "DL-02",
+      "to": "DL-03",
+      "relation": "realization-to-growth"
+    },
+    {
+      "from": "DL-03",
+      "to": "DL-04",
+      "relation": "growth-to-execution"
+    },
+    {
+      "from": "DL-04",
+      "to": "CR-01",
+      "relation": "living-model-to-continuity"
+    },
+    {
+      "from": "CR-01",
+      "to": "AZ-OBS",
+      "relation": "protocol-to-observation"
+    },
+    {
+      "from": "AZ-OBS",
+      "to": "IF-P01B",
+      "relation": "receipt-to-return"
+    },
+    {
+      "from": "AZ-OBS",
+      "to": "AMF-01",
+      "relation": "selector-to-market-policy"
+    },
+    {
+      "from": "AMF-01",
+      "to": "IF-P01B",
+      "relation": "sufficient-buffer-to-living-function"
+    },
+    {
+      "from": "IF-P01B",
+      "to": "MI-01",
+      "kind": "reader"
+    },
+    {
+      "from": "MI-01",
+      "to": "CI-01",
+      "kind": "return"
+    }
   ]
 }

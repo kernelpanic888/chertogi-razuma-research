@@ -1,0 +1,27 @@
+{
+  "readerId": "MI-01",
+  "date": "2026-10-31",
+  "version": "0.5.3-alpha-site.1",
+  "inputSha256": "4129f8a1ad4f21582b44788ffb099266cc2034574d8698449c128e9293bb1118",
+  "readerSha256": "7db54d470e3c0085d97e98df105fc6270d7be4fe948db60e1ccdf8c72480f8f0",
+  "capsuleSha256": "a5e5bbd2466db963733b2feda8cfc93fe62dcb7b5bafbbde568ee8bb9437c0e4",
+  "kernel": "Lean 4.35.0",
+  "theorems": [
+    "reciprocal_implies_visible",
+    "visible_implies_separated",
+    "reflection_interface_is_visible",
+    "reflection_interface_preserves_separation",
+    "reflection_roundtrip_preserves_invariant",
+    "reflection_is_best_interface",
+    "reflection_interface_not_merged",
+    "reflection_interface_does_not_imply_second_subject"
+  ],
+  "doi": null,
+  "orcidWorkId": null,
+  "releaseTag": null,
+  "claimCeiling": "Separation and inverse invariant transport under stated premises; zero distortion stipulated by definition.",
+  "sourcePath": "public/readers/mirror-interface/index.html",
+  "formalPath": "research/mirror-interface/MirrorInterface.lean",
+  "journalPath": "journal/2026-10-31-mi-01-mirror-interface.md",
+  "axiomAudit": "All 8 theorems do not depend on any axioms."
+}
