@@ -21,4 +21,4 @@ boundaries, and premature release identifiers.
 
 ## Homepage reader placement
 
-The newest reader goes first, directly below the page header, before personal coordinates and corpus entrances. Preserve the shared reader-banner markup: one title-and-description group on the left and the language-specific “Open reader” action on the right. Do not add standalone glyphs as grid children. This is the owner-confirmed homepage canon (2026-10-31).
+The newest reader goes first among reader banners, immediately below the complete CORPUS-GROWTH-01 / THREE PUBLIC DOORS block. The page header, personal coordinates and three corpus entrances remain above it. Preserve the shared reader-banner markup: one title-and-description group on the left and the language-specific “Open reader” action on the right. Do not add standalone glyphs as grid children. This is the owner-confirmed homepage canon (2026-10-31).
