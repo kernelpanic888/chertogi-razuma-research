@@ -18,3 +18,7 @@ release candidates. A candidate must keep `doi`, `orcidWorkId`, and
 
 `npm run publication:check` rejects mutable formal-source links, missing claim
 boundaries, and premature release identifiers.
+
+## Homepage reader placement
+
+The newest reader goes first, directly below the page header, before personal coordinates and corpus entrances. Preserve the shared reader-banner markup: one title-and-description group on the left and the language-specific “Open reader” action on the right. Do not add standalone glyphs as grid children. This is the owner-confirmed homepage canon (2026-10-31).
