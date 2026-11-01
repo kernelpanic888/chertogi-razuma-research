@@ -1,0 +1,9 @@
+{
+  "status": "PASS",
+  "embeddedGridIdenticalToStandalone": true,
+  "embeddedParameterPairs": 10201,
+  "originalTraceExportUnchanged": true,
+  "noFrameOrFetch": true,
+  "sectionOrder": true,
+  "inlineScriptsParsed": 3
+}

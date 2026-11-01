@@ -1,9 +1,9 @@
 {
   "id": "ER-01",
-  "version": "0.3",
+  "version": "0.4",
   "date": "2026-11-01",
   "status": "open-physical-bridge",
-  "readerSha256": "e8e1f6476032337451d7e21ed35ade1db9003b811badd60c01d82c8b218fdff4",
+  "readerSha256": "c6599d8ab5b83f003256f369933872b154320b99a0929d5f4347c65f34a66b35",
   "sourcePath": "public/readers/edge-of-reality/index.html",
   "journalPath": "journal/2026-11-01-er-01-edge-of-reality.md",
   "formalStatus": "24 Lean theorems; standard axioms only; no sorryAx or custom axioms",
@@ -37,6 +37,12 @@
     "formalSourcePath": "research/edge-of-reality/physics-sandbox/",
     "instrumentTheorems": 7,
     "graphTheorems": 10,
-    "hardwareExecuted": false
+    "hardwareExecuted": false,
+    "integration": {
+      "section": "s4b",
+      "host": "er01-physics-sandbox",
+      "mode": "inline template and open shadow root; exact data embedded; no iframe, network or local server"
+    },
+    "standalonePage": "sandbox/"
   }
 }

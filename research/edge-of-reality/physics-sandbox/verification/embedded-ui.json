@@ -1,0 +1,17 @@
+{
+  "status": "PASS",
+  "readerSection": "s4b",
+  "host": "er01-physics-sandbox",
+  "openShadowRoot": true,
+  "defaultExperiment": true,
+  "zeroSuccessPosteriorAbsent": true,
+  "coarseReadout": true,
+  "originalTraceStepWorks": true,
+  "independentControls": true,
+  "bilingualIntroduction": true,
+  "graphNodes": 7,
+  "graphEdges": 6,
+  "graphWidth": 917,
+  "graphScrollWidth": 917,
+  "consoleErrors": []
+}

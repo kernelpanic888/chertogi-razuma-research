@@ -1,0 +1,25 @@
+const fs=require('node:fs'),path=require('node:path'),vm=require('node:vm'),zlib=require('node:zlib'),assert=require('node:assert/strict'),child=require('node:child_process');
+const root=path.resolve(__dirname,'../../..');
+const readerPath='public/readers/edge-of-reality/index.html';
+const reader=fs.readFileSync(path.join(root,readerPath),'utf8');
+const standalone=fs.readFileSync(path.join(root,'public/readers/edge-of-reality/sandbox/index.html'),'utf8');
+const before=child.execFileSync('git',['show','HEAD:'+readerPath],{cwd:root,encoding:'utf8'});
+const oldGrid=s=>s.match(/<script type="application\/json" id="er01-grid">([\s\S]*?)<\/script>/)[1];
+assert.equal(oldGrid(reader),oldGrid(before),'Original trace export must be preserved');
+const embedded=reader.match(/<template id="er01-physics-template">([\s\S]*?)<\/template>/)[1];
+const data=s=>s.match(/id="lean-instrument-grid">([^<]+)<\/script>/)[1];
+assert.equal(data(embedded),data(standalone));
+const raw=zlib.gunzipSync(Buffer.from(data(embedded),'base64'));
+assert.equal(JSON.parse(raw).length,10201);
+assert.equal(raw.toString(),zlib.gunzipSync(fs.readFileSync(path.join(__dirname,'instrument-grid.json.gz'))).toString());
+assert.equal(reader.includes('<iframe'),false);
+assert.equal(/\bfetch\s*\(/.test(reader),false);
+assert.ok(reader.indexOf('<section id="s4">')<reader.indexOf('<section id="s4b">'));
+assert.ok(reader.indexOf('<section id="s4b">')<reader.indexOf('<section id="s5">'));
+assert.equal((reader.match(/id="er01-physics-sandbox"/g)||[]).length,1);
+assert.equal((reader.match(/id="physics-sandbox-entry"/g)||[]).length,1);
+let scripts=0;
+for(const m of reader.matchAll(/<script\b([^>]*)>([\s\S]*?)<\/script>/g))if(!/type="application\//.test(m[1])){new vm.Script(m[2]);scripts++;}
+const report={status:'PASS',embeddedGridIdenticalToStandalone:true,embeddedParameterPairs:10201,originalTraceExportUnchanged:true,noFrameOrFetch:true,sectionOrder:true,inlineScriptsParsed:scripts};
+fs.writeFileSync(path.join(__dirname,'verification/embedded.json'),JSON.stringify(report,null,2)+'\n');
+console.log(JSON.stringify(report));

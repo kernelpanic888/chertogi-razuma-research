@@ -27,3 +27,8 @@ Aligned the section 04 introduction with the Russian original: the panel replays
 ## Measurement sandbox and state-interface network
 
 Added a self-contained browser sandbox linked from section 04. Native Lean-exported exact instrument weights, six interfaces and two record maps cover all 10201 integer-percent parameter pairs. Seven instrument and ten graph theorems are audited. Browser JavaScript performs independent density-matrix calculations and finite-shot sampling; it does not execute Lean. All outcomes remain in the accounting; counts import stays in browser. Original local sources, independent verification and a reproducible export are retained in research/edge-of-reality/physics-sandbox. No hardware measurements, spacetime metric or physical event horizon are claimed. The sandbox UI is Russian and the English reader link identifies it as RU. Homepage reader order is preserved.
+
+
+## Complete sandbox embedded in the reader
+
+Section 04B now contains the complete measurement sandbox and state-interface graph, with its own inline exact Lean export. An open shadow root scopes its existing styles and controls; no iframe, API call, local server or external runtime is required. Bilingual explanatory text gives the instrument, state/edge semantics, checked properties and physical limits. Panel controls retain their Russian labels, explicitly stated in both introductions. The standalone page remains a full-screen option. The original 24-theorem trace reader remains functional and isolated. Reader version 0.4.
