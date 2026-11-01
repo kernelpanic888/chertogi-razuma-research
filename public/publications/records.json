@@ -2,10 +2,49 @@
   "schemaVersion": "1.0.0",
   "canon": {
     "id": "IF-0.1",
-    "route": ["distinction", "transition", "trace", "return"],
+    "route": [
+      "distinction",
+      "transition",
+      "trace",
+      "return"
+    ],
     "rule": "Every publication record inherits the route and declares its own semantic voice and claim ceiling."
   },
   "records": [
+    {
+      "id": "PIM-01-RC",
+      "titleRu": "Фильм «Пи»: что находится между числами?",
+      "titleEn": "The Film Pi: What Is Between the Numbers?",
+      "kind": "formal-interpretation",
+      "voice": "interface",
+      "stage": "trace",
+      "date": "2026-09-20",
+      "status": "release-candidate",
+      "reader": "/readers/pi-interface-model/",
+      "readerSource": "https://github.com/kernelpanic888/chertogi-razuma-research/blob/main/public/readers/pi-interface-model/index.html",
+      "journal": [
+        "https://github.com/kernelpanic888/chertogi-razuma-research/blob/main/journal/2026-09-20-pim-01-pi-interface-model.md",
+        "https://github.com/kernelpanic888/chertogi-razuma-research/blob/main/journal/2026-09-20-pim-01-pi-interface-model-ru.md"
+      ],
+      "formal": {
+        "commit": "8cc0d188b4ede393ca2957877eb4bc98f2b23d2a",
+        "source": "https://github.com/kernelpanic888/TMI-Lean-Formal-Library/blob/8cc0d188b4ede393ca2957877eb4bc98f2b23d2a/lean/TMI/InterfaceMathematics/PiInterfaceModel.lean",
+        "audit": "https://github.com/kernelpanic888/TMI-Lean-Formal-Library/blob/8cc0d188b4ede393ca2957877eb4bc98f2b23d2a/lean/TMI/InterfaceMathematics/PiInterfaceModelAudit.lean",
+        "kernel": "Lean 4.31.0-rc1",
+        "auditResult": "10 named declarations depend on no axioms"
+      },
+      "claimCeiling": "conditional interface-relative preservation of meaning under explicitly preserved relevant relations and aligned interpretations",
+      "notProved": [
+        "the film discovered a hidden numerical code of nature",
+        "Aronofsky used the term interface or asserted this formalism",
+        "the selected relational structure is objective or unique",
+        "gematria preserves semantic content",
+        "every change of representation preserves meaning"
+      ],
+      "doi": null,
+      "orcidWorkId": null,
+      "releaseTag": null
+    },
     {
       "id": "ITC-01-RC",
       "titleRu": "Дисбалансный оборот",

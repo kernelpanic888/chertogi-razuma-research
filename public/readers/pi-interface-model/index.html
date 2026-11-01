@@ -1,0 +1,446 @@
+<!doctype html>
+<html lang="en" data-lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="A bilingual interactive reader of Darren Aronofsky's film Pi as an interface model: carrier, relation, representation change, meaning, and explicit claim boundaries.">
+  <link rel="canonical" href="https://chertogi-razuma-research.kernelpanic888.chatgpt.site/readers/pi-interface-model/">
+  <link rel="icon" href="../../favicon.svg" type="image/svg+xml">
+  <title>PIM-01 · The Film Pi as an Interface Model</title>
+  <style>
+    :root{
+      color-scheme:dark;
+      --void:#010806;
+      --field:#03130c;
+      --panel:#071b12;
+      --panel-2:#0a2418;
+      --ink:#ecfff3;
+      --muted:#98b4a4;
+      --line:rgba(143,255,210,.26);
+      --green:#31ef7d;
+      --mint:#91ffd1;
+      --cyan:#61dcff;
+      --gold:#ffd35a;
+      --red:#ff6b5d;
+      --serif:"Iowan Old Style","Baskerville","Palatino Linotype","Book Antiqua",serif;
+      --mono:"IBM Plex Mono","SFMono-Regular","Cascadia Code","Liberation Mono",monospace;
+      --sans:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth;background:var(--void)}
+    body{margin:0;min-height:100vh;overflow-x:hidden;color:var(--ink);background:
+      radial-gradient(circle at 72% 8%,rgba(97,220,255,.09),transparent 26rem),
+      radial-gradient(circle at 28% 24%,rgba(49,239,125,.09),transparent 31rem),
+      linear-gradient(180deg,var(--field),var(--void));font-family:var(--sans)}
+    body::before{content:"";position:fixed;z-index:-1;inset:0;pointer-events:none;background-image:
+      linear-gradient(rgba(49,239,125,.045) 1px,transparent 1px),
+      linear-gradient(90deg,rgba(49,239,125,.045) 1px,transparent 1px);background-size:44px 44px;mask-image:linear-gradient(to bottom,#000,transparent 86%)}
+    a{color:inherit}
+    button{font:inherit}
+    .shell{width:min(1180px,calc(100% - 30px));margin:0 auto}
+    .topbar{position:sticky;z-index:40;top:0;display:flex;align-items:center;justify-content:space-between;gap:18px;padding:12px max(15px,calc((100vw - 1180px)/2));border-bottom:1px solid rgba(145,255,209,.22);background:rgba(1,8,6,.88);backdrop-filter:blur(16px);font-family:var(--mono)}
+    .return{color:var(--mint);font-size:.72rem;font-weight:900;letter-spacing:.11em;text-decoration:none;text-transform:uppercase}
+    .tools{display:flex;align-items:center;gap:12px}
+    .status{color:var(--muted);font-size:.67rem;letter-spacing:.1em;text-transform:uppercase}
+    .lang{display:flex;padding:3px;border:1px solid var(--line);border-radius:999px;background:rgba(7,27,18,.92)}
+    .lang button{border:0;border-radius:999px;padding:7px 10px;background:transparent;color:var(--muted);font:900 .68rem/1 var(--mono);cursor:pointer}
+    .lang button[aria-pressed="true"]{background:var(--cyan);color:#00100b}
+    .hero{display:grid;grid-template-columns:minmax(0,.86fr) minmax(460px,1.14fr);grid-template-areas:"copy orbit" "quote orbit";gap:clamp(22px,4vw,54px);align-items:start;padding:clamp(52px,7vw,94px) 0 40px}
+    .hero-copy{grid-area:copy;padding-top:22px}
+    .eyebrow{margin:0 0 16px;color:var(--cyan);font:900 .72rem/1.4 var(--mono);letter-spacing:.17em;text-transform:uppercase}
+    h1{margin:0;font:600 clamp(3.2rem,8vw,7.3rem)/.86 var(--serif);letter-spacing:-.065em}
+    h1 em{display:block;color:var(--mint);font-style:normal}
+    .hero-question{margin:18px 0 0;color:var(--gold);font:900 .76rem/1.4 var(--mono);letter-spacing:.13em;text-transform:uppercase}
+    .subtitle{margin:24px 0 0;max-width:760px;color:var(--muted);font:clamp(1.02rem,1.8vw,1.28rem)/1.63 var(--sans)}
+    .subtitle a{color:var(--mint);text-decoration-color:rgba(145,255,209,.48);text-underline-offset:.16em}
+    .notation-note{margin:14px 0 0;color:var(--muted);font:.76rem/1.55 var(--mono)}
+    .notation-note strong{color:var(--gold)}
+    .code-orbit{grid-area:orbit;position:relative;min-height:720px;overflow:hidden;border:1px solid var(--line);background:
+      radial-gradient(circle at 50% 44%,rgba(97,220,255,.12),transparent 35%),
+      linear-gradient(rgba(97,220,255,.035) 1px,transparent 1px),
+      linear-gradient(90deg,rgba(97,220,255,.035) 1px,transparent 1px),rgba(0,10,8,.92);background-size:auto,28px 28px,28px 28px,auto;box-shadow:0 34px 100px rgba(0,0,0,.38)}
+    .code-orbit::after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(180deg,rgba(0,8,5,.94),transparent 18%,transparent 74%,rgba(0,8,5,.96))}
+    #lean-orbit-canvas{position:absolute;z-index:1;inset:0;width:100%;height:100%;touch-action:none;cursor:grab}
+    #lean-orbit-canvas:active{cursor:grabbing}
+    .orbit-head{position:absolute;z-index:3;left:20px;right:20px;top:18px;display:flex;align-items:flex-start;justify-content:space-between;gap:16px}
+    .orbit-title span{display:block;margin-bottom:8px;color:var(--cyan);font:900 .65rem/1 var(--mono);letter-spacing:.14em;text-transform:uppercase}
+    .orbit-head code{color:var(--mint);font:800 .75rem/1.35 var(--mono)}
+    .orbit-controls{display:flex;justify-content:flex-end;gap:6px;flex-wrap:wrap}
+    .orbit-toggle{flex:0 0 auto;padding:8px 10px;border:1px solid var(--line);background:rgba(4,24,16,.9);color:var(--muted);font:900 .62rem/1 var(--mono);letter-spacing:.08em;cursor:pointer}
+    .orbit-toggle[aria-pressed="true"]{border-color:var(--green);color:var(--green)}
+    .orbit-toggle:disabled{cursor:default;opacity:.72}
+    .orbit-transition-note{position:absolute;z-index:3;top:76px;left:50%;transform:translateX(-50%);margin:0;padding:7px 10px;border:1px solid rgba(97,220,255,.34);background:rgba(1,14,10,.78);color:var(--cyan);font:800 .61rem/1.2 var(--mono);letter-spacing:.08em;text-align:center;white-space:nowrap}
+    .orbit-equation{position:absolute;z-index:3;left:20px;right:20px;bottom:56px;padding:14px 16px;border-left:3px solid var(--gold);background:rgba(0,12,8,.84);backdrop-filter:blur(8px);font-family:var(--mono)}
+    .orbit-equation small{display:block;margin-bottom:8px;color:var(--gold);font:900 .61rem/1 var(--mono);letter-spacing:.12em;text-transform:uppercase}
+    .orbit-equation code{display:inline;color:var(--ink);font:800 clamp(.66rem,1.15vw,.8rem)/1.5 var(--mono)}
+    .orbit-equation b{padding:0 7px;color:var(--gold)}
+    .orbit-caption{position:absolute;z-index:3;left:20px;right:20px;bottom:16px;margin:0;color:var(--muted);font:.69rem/1.4 var(--sans)}
+    .quote{grid-area:quote;position:relative;padding:22px;border:1px solid var(--line);background:linear-gradient(145deg,rgba(11,47,31,.84),rgba(2,16,10,.96));box-shadow:0 28px 72px rgba(0,0,0,.28)}
+    .quote::before{content:"π";position:absolute;right:18px;top:5px;color:rgba(145,255,209,.1);font:700 8rem/1 var(--serif)}
+    .quote-label{display:block;margin-bottom:18px;color:var(--green);font:900 .66rem/1 var(--mono);letter-spacing:.14em;text-transform:uppercase}
+    blockquote{position:relative;margin:0;font:600 clamp(1.18rem,2vw,1.6rem)/1.34 var(--serif)}
+    .quote-note{position:relative;margin:20px 0 0;padding-top:16px;border-top:1px solid var(--line);color:var(--muted);font:.84rem/1.55 var(--sans)}
+    .thesis{margin:14px 0 0;padding:18px 20px;border-left:4px solid var(--gold);background:rgba(255,211,90,.06);font:700 clamp(1rem,1.8vw,1.2rem)/1.55 var(--sans)}
+    .lab{margin-top:10px;padding:clamp(20px,3vw,34px);border:1px solid var(--line);border-radius:28px;background:radial-gradient(circle at 50% 42%,rgba(49,239,125,.1),transparent 36%),rgba(3,17,11,.92);box-shadow:0 30px 90px rgba(0,0,0,.32)}
+    .lab-head{display:flex;justify-content:space-between;gap:24px;align-items:end;margin-bottom:22px}
+    .lab-head h2,.section h2{margin:0;font:600 clamp(2rem,4.6vw,3.8rem)/1 var(--serif);letter-spacing:-.035em}
+    .lab-head p{max-width:510px;margin:0;color:var(--muted);font:1rem/1.6 var(--sans)}
+    .pipeline{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:7px;margin-bottom:18px}
+    .pipeline span{position:relative;padding:11px 8px;border:1px solid rgba(97,220,255,.2);background:rgba(4,27,22,.8);color:var(--muted);font:800 .68rem/1.25 var(--mono);text-align:center;text-transform:uppercase}
+    .pipeline span:not(:last-child)::after{content:"→";position:absolute;z-index:2;right:-9px;top:50%;transform:translateY(-50%);color:var(--cyan)}
+    .stages{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin-bottom:14px}
+    .stages button{min-height:58px;padding:10px 12px;border:1px solid var(--line);border-radius:12px;background:rgba(7,27,18,.9);color:var(--muted);font:800 .76rem/1.25 var(--mono);text-align:left;cursor:pointer;transition:.18s ease}
+    .stages button:hover{transform:translateY(-1px);border-color:var(--cyan)}
+    .stages button[aria-current="step"]{border-color:var(--green);background:rgba(19,65,40,.86);color:var(--ink);box-shadow:inset 0 -3px 0 var(--green)}
+    .stages b{display:block;margin-bottom:5px;color:var(--green);font-size:.65rem;letter-spacing:.12em}
+    .surface{display:grid;grid-template-columns:minmax(0,1.28fr) minmax(280px,.72fr);gap:12px}
+    .relation-plane{position:relative;min-height:430px;overflow:hidden;border:1px solid var(--line);border-radius:20px;background:linear-gradient(rgba(97,220,255,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(97,220,255,.03) 1px,transparent 1px),rgba(0,10,8,.88);background-size:28px 28px}
+    #relation-canvas{position:absolute;inset:0;width:100%;height:100%}
+    .row-label{position:absolute;left:18px;color:var(--muted);font:800 .68rem/1 var(--mono);letter-spacing:.1em;text-transform:uppercase}
+    .row-label--source{top:28px}.row-label--target{bottom:30px}
+    .token-row{position:absolute;left:50%;width:min(84%,620px);display:grid;grid-template-columns:repeat(8,1fr);gap:clamp(4px,1vw,10px);transform:translateX(-50%)}
+    .token-row--source{top:72px}.token-row--target{bottom:72px}
+    .token{position:relative;z-index:3;display:grid;place-items:center;aspect-ratio:1;border:1px solid rgba(145,255,209,.42);border-radius:50%;background:#04150e;color:var(--ink);font:900 clamp(.86rem,2vw,1.25rem)/1 var(--mono);box-shadow:0 0 0 5px rgba(49,239,125,.025);transition:.2s ease}
+    .token-row--target .token{border-color:rgba(97,220,255,.58);color:var(--cyan)}
+    .relation-plane[data-stage="0"] .token{border-color:rgba(236,255,243,.28);box-shadow:none}
+    .relation-plane[data-stage="3"] .token{box-shadow:0 0 22px rgba(49,239,125,.16)}
+    .transform-mark{position:absolute;z-index:3;left:50%;top:50%;display:grid;place-items:center;width:52px;height:52px;border:1px solid var(--gold);border-radius:50%;transform:translate(-50%,-50%);background:#07150e;color:var(--gold);font:900 1rem/1 var(--mono);box-shadow:0 0 28px rgba(255,211,90,.14)}
+    .lab-readout{padding:clamp(22px,3vw,34px);border:1px solid var(--line);border-radius:20px;background:rgba(7,27,18,.78);display:flex;flex-direction:column;justify-content:center}
+    .lab-kicker{color:var(--green);font:900 .68rem/1 var(--mono);letter-spacing:.14em;text-transform:uppercase}
+    .lab-formula{margin:20px 0;color:var(--ink);font:900 clamp(1.25rem,2.8vw,2rem)/1.42 var(--mono);letter-spacing:-.04em;overflow-wrap:anywhere}
+    .lab-explain{margin:0;color:var(--muted);font:1rem/1.65 var(--sans)}
+    .invariant{margin-top:20px;padding:14px;border:1px solid rgba(255,211,90,.34);background:rgba(255,211,90,.06);color:var(--gold);font:800 .76rem/1.5 var(--mono)}
+    .section{padding:clamp(72px,10vw,128px) 0 0}
+    .section-head{display:grid;grid-template-columns:minmax(260px,.72fr) minmax(0,1.28fr);gap:clamp(28px,6vw,76px);align-items:start;margin-bottom:28px}
+    .section-head p{margin:0;color:var(--muted);font:1.06rem/1.72 var(--sans)}
+    .film-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+    .film-card{min-height:260px;padding:24px;border:1px solid var(--line);background:linear-gradient(145deg,rgba(11,43,28,.84),rgba(3,18,12,.94))}
+    .film-card span,.term span{color:var(--cyan);font:900 .66rem/1 var(--mono);letter-spacing:.13em;text-transform:uppercase}
+    .film-card h3{margin:20px 0 12px;font:600 1.7rem/1.08 var(--serif)}
+    .film-card p{margin:0;color:var(--muted);font:.94rem/1.65 var(--sans)}
+    .dictionary{display:grid;grid-template-columns:repeat(5,1fr);gap:9px}
+    .term{padding:20px 17px;border:1px solid var(--line);background:rgba(7,27,18,.78)}
+    .term strong{display:block;margin:15px 0 9px;color:var(--mint);font:900 1.55rem/1 var(--mono)}
+    .term p{margin:0;color:var(--muted);font:.85rem/1.55 var(--sans)}
+    .formula-band{margin-top:12px;padding:clamp(24px,4vw,42px);border:1px solid rgba(145,255,209,.42);background:radial-gradient(circle at 82% 40%,rgba(97,220,255,.1),transparent 27%),#061b12}
+    .formula-band code{display:block;color:var(--mint);font:900 clamp(1.4rem,4vw,3.1rem)/1.3 var(--mono);letter-spacing:-.05em;overflow-wrap:anywhere}
+    .formula-band p{margin:18px 0 0;max-width:820px;color:var(--muted);font:1rem/1.65 var(--sans)}
+    .split{display:grid;grid-template-columns:1fr auto 1fr;gap:14px;align-items:stretch}
+    .split-card{padding:26px;border:1px solid var(--line);background:var(--panel)}
+    .split-card--world{border-top:4px solid var(--gold)}
+    .split-card--view{border-top:4px solid var(--cyan)}
+    .split-card small{color:var(--muted);font:800 .67rem/1 var(--mono);letter-spacing:.12em;text-transform:uppercase}
+    .split-card h3{margin:18px 0 12px;font:600 1.7rem/1.1 var(--serif)}
+    .split-card p{margin:0;color:var(--muted);font:.96rem/1.66 var(--sans)}
+    .split-interface{display:grid;place-items:center;align-self:center;width:76px;height:76px;border:1px solid var(--green);border-radius:50%;background:#0b2c1c;color:var(--green);font:900 1.25rem/1 var(--mono);box-shadow:0 0 36px rgba(49,239,125,.16)}
+    .formal{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(280px,.8fr);gap:12px}
+    pre{margin:0;padding:clamp(20px,3vw,30px);border:1px solid var(--line);background:#000805;color:#ddffea;overflow:auto;font:clamp(.78rem,1.3vw,.92rem)/1.72 var(--mono)}
+    .audit{padding:28px;border:1px solid var(--line);background:var(--panel)}
+    .audit strong{display:block;color:var(--green);font:600 2rem/1 var(--serif)}
+    .audit ul{margin:20px 0 0;padding-left:19px;color:var(--muted);font:.94rem/1.65 var(--sans)}
+    .boundary{margin-top:12px;padding:24px;border:1px solid rgba(255,107,93,.42);border-left:6px solid var(--red);background:rgba(255,107,93,.055)}
+    .boundary h3{margin:0 0 13px;color:var(--red);font:900 .72rem/1 var(--mono);letter-spacing:.14em;text-transform:uppercase}
+    .boundary p{margin:0;color:var(--muted);font:.98rem/1.68 var(--sans)}
+    .source-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+    .source-card{min-height:180px;padding:22px;border:1px solid var(--line);background:var(--panel);text-decoration:none;transition:.18s ease}
+    a.source-card:hover{transform:translateY(-2px);border-color:var(--mint);background:var(--panel-2)}
+    .source-card small{color:var(--cyan);font:900 .65rem/1 var(--mono);letter-spacing:.13em;text-transform:uppercase}
+    .source-card strong{display:block;margin:20px 0 10px;font:600 1.35rem/1.18 var(--serif)}
+    .source-card span{color:var(--muted);font:.84rem/1.5 var(--sans)}
+    .source-card--pending{opacity:.62;border-style:dashed}
+    .credits{margin:clamp(72px,10vw,120px) 0 28px;padding:24px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);display:grid;grid-template-columns:1fr auto;gap:24px;align-items:center}
+    .credits p{margin:0;color:var(--muted);font:.88rem/1.65 var(--sans)}
+    .credits nav{display:flex;gap:8px;flex-wrap:wrap}
+    .credits a{padding:9px 11px;border:1px solid var(--line);color:var(--mint);font:900 .66rem/1 var(--mono);letter-spacing:.08em;text-decoration:none;text-transform:uppercase}
+    footer{padding:0 0 46px;color:#6d8979;font:.7rem/1.6 var(--mono)}
+    [data-lang="en"] .ru,[data-lang="ru"] .en{display:none!important}
+    @media(max-width:900px){.hero{grid-template-columns:1fr;grid-template-areas:"copy" "orbit" "quote"}.section-head,.surface,.formal{grid-template-columns:1fr}.code-orbit{min-height:650px}.film-grid{grid-template-columns:1fr}.dictionary{grid-template-columns:repeat(2,1fr)}.source-grid{grid-template-columns:repeat(2,1fr)}.lab-head{align-items:start;flex-direction:column}.status{display:none}}
+    @media(max-width:680px){.code-orbit{min-height:600px}.orbit-head{left:14px;right:14px;gap:10px;flex-direction:column}.orbit-head code{font-size:.66rem}.orbit-controls{justify-content:flex-start}.orbit-toggle{padding:7px 8px;font-size:.56rem}.orbit-transition-note{top:112px;max-width:calc(100% - 28px);white-space:normal}.orbit-equation{left:14px;right:14px;bottom:70px}.orbit-equation code{display:block}.orbit-equation b{display:block;padding:2px 0}.orbit-caption{left:14px;right:14px}.pipeline{grid-template-columns:repeat(3,1fr)}.pipeline span:nth-child(3)::after{display:none}.stages{grid-template-columns:1fr 1fr}.relation-plane{min-height:360px}.token-row{width:92%;gap:3px}.split{grid-template-columns:1fr}.split-interface{margin:0 auto}.dictionary,.source-grid{grid-template-columns:1fr}.credits{grid-template-columns:1fr}.topbar{padding:11px 14px}h1{font-size:clamp(3rem,17vw,5.3rem)}}
+    @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important}}
+  </style>
+</head>
+<body data-lang="en">
+  <nav class="topbar" aria-label="Reader navigation">
+    <a class="return" href="../../index.html">← <span class="ru">К карте</span><span class="en">Research map</span></a>
+    <div class="tools">
+      <span class="status">PIM-01 · FORMAL INTERPRETATION · RC</span>
+      <div class="lang" role="group" aria-label="Language">
+        <button type="button" data-set-lang="ru" aria-pressed="false">RU</button>
+        <button type="button" data-set-lang="en" aria-pressed="true">EN</button>
+      </div>
+    </div>
+  </nav>
+
+  <main class="shell">
+    <header class="hero">
+      <div class="hero-copy">
+        <p class="eyebrow"><span class="ru">PIM-01 · ФИЛЬМ «ПИ» КАК ИНТЕРФЕЙСНАЯ МОДЕЛЬ</span><span class="en">PIM-01 · THE FILM PI AS AN INTERFACE MODEL</span></p>
+        <h1><span class="ru">Фильм</span><span class="en">The Film</span> <em><span class="ru">«Пи»</span><span class="en">Pi</span></em></h1>
+        <p class="hero-question"><span class="ru">Что находится между числами?</span><span class="en">What is between the numbers?</span></p>
+        <p class="subtitle ru">«Пи» — фильм <a href="https://www.patheos.com/blogs/filmchat/1998/08/interview-darren-aronofsky-%CF%80-1998.html" target="_blank" rel="noopener noreferrer">Даррена Аронофски</a> о математике Максе Коэне, который ищет числовой порядок за видимым хаосом природы и рынка. Фильм не решает за зрителя, находит ли Макс структуру мира или производит её способом наблюдения, выбором данных и одержимостью.</p>
+        <p class="subtitle en"><a href="https://www.patheos.com/blogs/filmchat/1998/08/interview-darren-aronofsky-%CF%80-1998.html" target="_blank" rel="noopener noreferrer">Darren Aronofsky</a>'s <em>Pi</em> follows the mathematician Max Cohen as he searches for numerical order beneath the apparent chaos of nature and the market. The film never decides for the viewer whether Max discovers a structure of the world or produces it through observation, data selection, and obsession.</p>
+        <p class="thesis ru">Интерфейс — наше формальное имя для того, о чём говорит Макс: не для отдельных чисел, а для отбора, синтаксиса и отношений, через которые числа становятся читаемыми как смысл.</p>
+        <p class="thesis en">Interface is our formal name for what Max is talking about: not isolated numbers, but the selection, syntax, and relations through which numbers become readable as meaning.</p>
+        <p class="notation-note ru"><strong>Не смешиваем обозначения:</strong> «Пи» — название фильма; число π — один из математических мотивов мира Макса; ρ в формулах ниже — введённый нами оператор отбора значимых отношений.</p>
+        <p class="notation-note en"><strong>Notation boundary:</strong> <em>Pi</em> is the film title; the number π is one mathematical motif in Max's world; ρ below is our operator for selecting relevant relations.</p>
+      </div>
+      <section class="code-orbit" id="lean-orbit" data-orbit-view="projection" aria-label="Breathing transformation between a spatial projection and the exact open-list mapping diagram from the Lean model">
+        <div class="orbit-head">
+          <div class="orbit-title"><span>LEAN WITNESS · PROJECTION ↔ SLICE</span><code>translate_preserves_relations</code></div>
+          <div class="orbit-controls">
+            <button class="orbit-toggle" id="orbit-toggle" type="button" aria-pressed="true">BREATHING · PAUSE</button>
+          </div>
+        </div>
+        <canvas id="lean-orbit-canvas" role="img" aria-label="An automatic breathing loop between the spatial projection and exact open-list Lean mapping diagram. Drag to change the viewpoint."></canvas>
+        <p class="orbit-transition-note" id="orbit-transition-note" aria-live="polite"><span class="ru">ПРОЕКЦИЯ ↔ РАСКРЫТИЕ ↔ СРЕЗ</span><span class="en">PROJECTION ↔ UNFOLDING ↔ SLICE</span></p>
+        <div class="orbit-equation"><small><span class="ru">точная теорема Lean</span><span class="en">exact Lean theorem</span></small><code>letterRelations (xs.map translate)</code><b>=</b><code>numericRelations xs</code></div>
+        <p class="orbit-caption ru">Дыхание переводит прежнюю пространственную проекцию в точный срез отображений Lean: <code>X → Y</code>, <code>Rₓ/Rᵧ</code> к одному Boolean-слою и <code>Φ</code> к одному смыслу. Кольца — лишь раскладка конечных списков; замыкание окружности и топология пространства теоремой не утверждаются. В срезе список остаётся открытым.</p>
+        <p class="orbit-caption en">The breathing loop carries the earlier spatial projection into the exact Lean map slice: <code>X → Y</code>, <code>Rₓ/Rᵧ</code> to one Boolean layer, and <code>Φ</code> to one meaning. Rings only lay out finite lists; neither a closed circle nor a topology of space is claimed by the theorem. In the slice, the list remains open.</p>
+      </section>
+      <aside class="quote">
+        <span class="quote-label"><span class="ru">реплика Макса · ближе к финалу</span><span class="en">Max · near the end</span></span>
+        <blockquote>“The number is nothing. It’s the meaning. The syntax. It’s what’s between the numbers.”</blockquote>
+        <p class="quote-note ru">Слово <code>interface</code> в проверенном транскрипте не произносится. Это наша формальная интерпретация реплики, а не приписывание Аронофски готовой теории.</p>
+        <p class="quote-note en">The word <code>interface</code> is not spoken in the audited transcript. It is our formal interpretation of the line, not a claim that Aronofsky stated this theory.</p>
+      </aside>
+    </header>
+
+    <section class="lab" aria-labelledby="lab-title">
+      <header class="lab-head">
+        <div><p class="eyebrow">LIVE RELATIONAL SURFACE</p><h2 id="lab-title"><span class="ru">Знаки меняются.<br>Отношения остаются.</span><span class="en">Signs change.<br>Relations remain.</span></h2></div>
+        <p class="ru">Пройдите четыре стадии. Это игрушечный пример, а не расшифровка 216-значного числа из фильма: он показывает только форму условия сохранения смысла.</p>
+        <p class="en">Move through four stages. This is a toy witness, not a decoding of the film's 216-digit number: it shows only the shape of a meaning-preservation condition.</p>
+      </header>
+      <div class="pipeline" aria-label="Interface pipeline">
+        <span><span class="ru">мир</span><span class="en">world</span></span><span><span class="ru">наблюдение</span><span class="en">observe</span></span><span><span class="ru">отбор</span><span class="en">select</span></span><span><span class="ru">кодирование</span><span class="en">encode</span></span><span><span class="ru">носитель</span><span class="en">carrier</span></span><span><span class="ru">смысл</span><span class="en">meaning</span></span>
+      </div>
+      <nav class="stages" aria-label="Model stages">
+        <button type="button" data-stage-pick="0" aria-current="step"><b>00</b><span class="ru">носители</span><span class="en">carriers</span></button>
+        <button type="button" data-stage-pick="1"><b>01</b><span class="ru">смена знаков</span><span class="en">sign change</span></button>
+        <button type="button" data-stage-pick="2"><b>02</b><span class="ru">сохранённые отношения</span><span class="en">preserved relations</span></button>
+        <button type="button" data-stage-pick="3"><b>03</b><span class="ru">инвариант смысла</span><span class="en">meaning invariant</span></button>
+      </nav>
+      <div class="surface">
+        <div class="relation-plane" id="relation-plane" data-stage="0">
+          <canvas id="relation-canvas" aria-label="Two alphabets linked by a representation change while their selected relational pattern stays the same"></canvas>
+          <span class="row-label row-label--source">x · NUMERIC SIGNS</span>
+          <div class="token-row token-row--source" aria-label="Source carrier: one zero one one zero zero one zero">
+            <span class="token">1</span><span class="token">0</span><span class="token">1</span><span class="token">1</span><span class="token">0</span><span class="token">0</span><span class="token">1</span><span class="token">0</span>
+          </div>
+          <span class="transform-mark" aria-hidden="true">T</span>
+          <div class="token-row token-row--target" aria-label="Target carrier: stroke circle stroke stroke circle circle stroke circle">
+            <span class="token">│</span><span class="token">○</span><span class="token">│</span><span class="token">│</span><span class="token">○</span><span class="token">○</span><span class="token">│</span><span class="token">○</span>
+          </div>
+          <span class="row-label row-label--target">T(x) · GLYPH SIGNS</span>
+        </div>
+        <aside class="lab-readout" aria-live="polite">
+          <span class="lab-kicker" id="stage-kicker">STAGE 00 · CARRIER</span>
+          <div class="lab-formula" id="stage-formula">x ≠ μ(x)</div>
+          <p class="lab-explain" id="stage-explain">The visible signs are carriers. A carrier alone does not determine its meaning.</p>
+          <div class="invariant" id="stage-invariant">ρ(Rᵧ(T(x))) ?= ρ(Rₓ(x))</div>
+        </aside>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="film-title">
+      <header class="section-head">
+        <h2 id="film-title"><span class="ru">Почему именно «Пи»?</span><span class="en">Why <em>Pi</em>?</span></h2>
+        <p class="ru">Фильм снова и снова меняет способ предъявления одного материала. Вопрос возникает не только о числах, но и о переходах, которые делают паттерн видимым.</p>
+        <p class="en">The film repeatedly changes how one body of material is presented. The question concerns not only numbers, but also the transitions that make a pattern visible.</p>
+      </header>
+      <div class="film-grid">
+        <article class="film-card"><span>01 · REPRESENTATION</span><h3><span class="ru">Природа → числа → график</span><span class="en">Nature → numbers → graph</span></h3><p class="ru">Макс предполагает, что структура проходит через несколько представлений. Сам переход ещё не доказывает, что структура сохранилась.</p><p class="en">Max assumes that one structure passes through several representations. The transition alone does not prove that the structure survived.</p></article>
+        <article class="film-card"><span>02 · MAPPING</span><h3><span class="ru">Буква → число</span><span class="en">Letter → number</span></h3><p class="ru">Гематрия сопоставляет буквам еврейского алфавита числовые значения. Побуквенная кодировка и сумма слова сохраняют разные отношения.</p><p class="en">Gematria assigns numerical values to Hebrew letters. A letterwise encoding and a word sum preserve different relations.</p></article>
+        <article class="film-card"><span>03 · OBSERVATION</span><h3><span class="ru">Масштаб → видимая форма</span><span class="en">Scale → visible form</span></h3><p class="ru">Увеличение, POV, монтаж и внимание меняют доступную структуру. Паттерн может принадлежать миру, интерфейсу наблюдения — или их связи.</p><p class="en">Magnification, POV, editing, and attention change the available structure. A pattern may belong to the world, the observing interface, or their coupling.</p></article>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="dictionary-title">
+      <header class="section-head">
+        <h2 id="dictionary-title"><span class="ru">Формальный словарь</span><span class="en">Formal dictionary</span></h2>
+        <p class="ru">Модель отделяет предъявленный знак от отношений, способа наблюдения, интерпретации и смены представления.</p>
+        <p class="en">The model separates a presented sign from its relations, mode of observation, interpretation, and change of representation.</p>
+      </header>
+      <div class="dictionary">
+        <article class="term"><span>CARRIER</span><strong>x</strong><p><span class="ru">предъявленные цифры, буквы, график или сигнал</span><span class="en">presented digits, letters, graph, or signal</span></p></article>
+        <article class="term"><span>RELATIONS</span><strong>Rₓ</strong><p><span class="ru">порядок, соседство, повторение и переходы</span><span class="en">order, adjacency, recurrence, and transitions</span></p></article>
+        <article class="term"><span>INTERFACE</span><strong>I</strong><p><span class="ru">наблюдение, отбор, кодирование и интерпретация</span><span class="en">observation, selection, encoding, and interpretation</span></p></article>
+        <article class="term"><span>MEANING</span><strong>μ</strong><p><span class="ru">смысл относительно интерфейса и контекста</span><span class="en">meaning relative to an interface and context</span></p></article>
+        <article class="term"><span>TRANSFORM</span><strong>T</strong><p><span class="ru">смена алфавита или представления</span><span class="en">change of alphabet or representation</span></p></article>
+      </div>
+      <div class="formula-band"><code>μ<sub>I</sub>(x) = Φ(ρ(Rₓ(x)))</code><p class="ru">Смысл факторизуется через выбранный слой отношений. Это гипотеза модели, которую нужно обосновывать для каждого конкретного преобразования.</p><p class="en">Meaning factors through a selected relational layer. This is a model premise that must be justified for every concrete transformation.</p></div>
+    </section>
+
+    <section class="section" aria-labelledby="split-title">
+      <header class="section-head">
+        <h2 id="split-title"><span class="ru">Мир ≠ наблюдение</span><span class="en">World ≠ observation</span></h2>
+        <p class="ru">Одинаковый результат интерфейса не гарантирует одинаковую структуру мира. И наоборот, паттерн после отбора не доказывает, что он существует независимо от отбора.</p>
+        <p class="en">The same interface output does not guarantee the same world structure. Conversely, a pattern visible after selection does not prove that it exists independently of that selection.</p>
+      </header>
+      <div class="split">
+        <article class="split-card split-card--world"><small>WORLD ACCOUNT · W</small><h3><span class="ru">Структура, приписанная миру</span><span class="en">Structure attributed to the world</span></h3><p class="ru">Объект, процесс и их предполагаемые отношения до конкретного способа предъявления.</p><p class="en">An object, process, and their proposed relations before a particular presentation.</p></article>
+        <div class="split-interface" aria-label="Interface I">I</div>
+        <article class="split-card split-card--view"><small>OBSERVATION · I(w)</small><h3><span class="ru">Структура, доступная наблюдателю</span><span class="en">Structure available to an observer</span></h3><p class="ru">Результат масштаба, сенсора, отбора данных, кодировки, памяти и контекста.</p><p class="en">The result of scale, sensor, data selection, encoding, memory, and context.</p></article>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="formal-title">
+      <header class="section-head">
+        <h2 id="formal-title"><span class="ru">Что проверяет TLFL</span><span class="en">What TLFL checks</span></h2>
+        <p class="ru">Lean проверяет условное следствие: если значимые отношения сохранены и интерпретации согласованы, смысл сохраняется при смене представления.</p>
+        <p class="en">Lean checks a conditional consequence: if the relevant relations are preserved and interpretations are aligned, meaning is preserved across a change of representation.</p>
+      </header>
+      <div class="formal">
+<pre><code>μI(x) = Φ(ρ(Rₓ(x)))
+μJ(y) = Φ(ρ(Rᵧ(y)))
+ρ(Rᵧ(T(x))) = ρ(Rₓ(x))
+────────────────────────
+μJ(T(x)) = μI(x)</code></pre>
+        <aside class="audit"><strong>LEAN · PASS</strong><ul><li><span class="ru">Lean 4.31.0-rc1 · 54 задачи сборки</span><span class="en">Lean 4.31.0-rc1 · 54 build jobs</span></li><li><span class="ru">10/10 именованных деклараций без зависимостей от аксиом</span><span class="en">10/10 named declarations report no axiom dependencies</span></li><li><span class="ru"><code>sorry</code>, <code>admit</code>, <code>sorryAx</code> отсутствуют</span><span class="en">No <code>sorry</code>, <code>admit</code>, or <code>sorryAx</code></span></li></ul></aside>
+      </div>
+      <aside class="boundary"><h3><span class="ru">Граница утверждения</span><span class="en">Claim boundary</span></h3><p class="ru">Модель не доказывает скрытый код природы, истинность гематрии, объективность выбранной структуры или то, что Аронофски сформулировал интерфейсную математику. Фильм даёт реплику и проблему; интерпретация связывает материалы; Lean проверяет следствия явно записанных предпосылок.</p><p class="en">The model does not prove a hidden code of nature, the semantic validity of gematria, the objectivity of the selected structure, or that Aronofsky formulated interface mathematics. The film supplies the line and problem; interpretation connects the materials; Lean checks consequences of explicit premises.</p></aside>
+    </section>
+
+    <section class="section" aria-labelledby="sources-title">
+      <header class="section-head"><h2 id="sources-title"><span class="ru">Публикация и след</span><span class="en">Publication and trace</span></h2><p class="ru">Ридер — визуальный вход. Git хранит полную аргументацию и формальный носитель; LinkedIn возвращает к публичному обсуждению.</p><p class="en">The reader is the visual entrance. Git carries the full argument and formal source; LinkedIn returns the work to public discussion.</p></header>
+      <div class="source-grid">
+        <a class="source-card" href="https://github.com/kernelpanic888/chertogi-razuma-research/blob/main/journal/2026-09-20-pim-01-pi-interface-model-ru.md" target="_blank" rel="noopener noreferrer"><small>GIT · JOURNAL RU</small><strong>Фильм «Пи» как интерфейсная модель</strong><span>Полная русская статья ↗</span></a>
+        <a class="source-card" href="https://github.com/kernelpanic888/chertogi-razuma-research/blob/main/journal/2026-09-20-pim-01-pi-interface-model.md" target="_blank" rel="noopener noreferrer"><small>GIT · JOURNAL EN</small><strong>The Film <em>Pi</em> as an Interface Model</strong><span>Complete English article ↗</span></a>
+        <a class="source-card" data-link-slot="tlfl" href="https://github.com/kernelpanic888/TMI-Lean-Formal-Library/blob/8cc0d188b4ede393ca2957877eb4bc98f2b23d2a/lean/TMI/InterfaceMathematics/PiInterfaceModel.lean" target="_blank" rel="noopener noreferrer"><small>TLFL · LEAN 4</small><strong><span class="ru">Формальный код</span><span class="en">Formal source</span></strong><span>8cc0d18 · Lean 4.31.0-rc1 ↗</span></a>
+        <div class="source-card source-card--pending" data-link-slot="linkedin"><small>LINKEDIN · POST</small><strong><span class="ru">Публичное обсуждение</span><span class="en">Public discussion</span></strong><span><span class="ru">Ссылка активируется после публикации поста</span><span class="en">The link activates after the post is published</span></span></div>
+      </div>
+    </section>
+
+    <section class="credits">
+      <p><strong><span class="ru">Салкуцан Алексей</span><span class="en">Salkutsan Aleksey</span></strong> — <span class="ru">автор и направление исследования.</span><span class="en">author and research direction.</span><br><strong><span class="ru">Лина Аметист</span><span class="en">Lina Amethyst</span></strong> — <span class="ru">ИИ-ассистент.</span><span class="en">AI assistant.</span></p>
+      <nav aria-label="Research coordinates"><a href="../corpus-interface/index.html">Corpus ↗</a><a href="https://github.com/kernelpanic888/chertogi-razuma-research/blob/main/public/readers/pi-interface-model/index.html" target="_blank" rel="noopener noreferrer">Source ↗</a><a href="https://orcid.org/0009-0006-8717-0492" target="_blank" rel="noopener noreferrer">ORCID ↗</a></nav>
+    </section>
+    <footer>PIM-01 · <span class="ru">двуязычный интерактивный ридер · формальная интерпретация</span><span class="en">bilingual interactive reader · formal interpretation</span></footer>
+  </main>
+
+  <script>
+  (()=>{"use strict";
+    const LANGUAGE_KEY="chambers-language";
+    const body=document.body,root=document.documentElement,buttons=[...document.querySelectorAll("[data-set-lang]")];
+    let language="en",stage=0,raf=0;
+    const text={
+      en:[
+        ["STAGE 00 · CARRIER","x ≠ μ(x)","The visible signs are carriers. A carrier alone does not determine its meaning.","ρ(Rᵧ(T(x))) ?= ρ(Rₓ(x))"],
+        ["STAGE 01 · TRANSFORM","T : X → Y","The alphabet changes. The vertical traces show which target sign replaces each source sign.","T changes signs; preservation is still an obligation."],
+        ["STAGE 02 · RELATIONS","ρ(Rᵧ(T(x))) = ρ(Rₓ(x))","The selected adjacency pattern is the same in both carriers. Other structures may still be lost.","RELEVANT RELATION · PRESERVED"],
+        ["STAGE 03 · MEANING","μJ(T(x)) = μI(x)","Meaning is preserved only because both interpretations factor through the preserved relational layer.","CONDITIONAL INVARIANT · ESTABLISHED"]
+      ],
+      ru:[
+        ["СТАДИЯ 00 · НОСИТЕЛЬ","x ≠ μ(x)","Видимые знаки — носители. Сам носитель ещё не определяет свой смысл.","ρ(Rᵧ(T(x))) ?= ρ(Rₓ(x))"],
+        ["СТАДИЯ 01 · ПРЕОБРАЗОВАНИЕ","T : X → Y","Алфавит меняется. Вертикальные следы показывают, какой знак заменяет каждый исходный знак.","T меняет знаки; сохранение ещё требует проверки."],
+        ["СТАДИЯ 02 · ОТНОШЕНИЯ","ρ(Rᵧ(T(x))) = ρ(Rₓ(x))","Выбранный паттерн соседства одинаков в обоих носителях. Другие структуры всё ещё могут быть потеряны.","ЗНАЧИМОЕ ОТНОШЕНИЕ · СОХРАНЕНО"],
+        ["СТАДИЯ 03 · СМЫСЛ","μJ(T(x)) = μI(x)","Смысл сохраняется только потому, что обе интерпретации факторизуются через сохранённый слой отношений.","УСЛОВНЫЙ ИНВАРИАНТ · УСТАНОВЛЕН"]
+      ]
+    };
+    const $=id=>document.getElementById(id),plane=$("relation-plane"),canvas=$("relation-canvas"),ctx=canvas.getContext("2d"),leanOrbit=$("lean-orbit"),orbitCanvas=$("lean-orbit-canvas"),orbitCtx=orbitCanvas.getContext("2d"),orbitToggle=$("orbit-toggle");
+    function setLanguage(next){language=next==="ru"?"ru":"en";body.dataset.lang=language;root.dataset.lang=language;root.lang=language;buttons.forEach(button=>button.setAttribute("aria-pressed",String(button.dataset.setLang===language)));try{localStorage.setItem(LANGUAGE_KEY,language)}catch{}updateReadout();updateOrbitButton();draw();drawOrbit()}
+    buttons.forEach(button=>button.addEventListener("click",()=>setLanguage(button.dataset.setLang)));
+    function updateReadout(){const row=text[language][stage];$("stage-kicker").textContent=row[0];$("stage-formula").textContent=row[1];$("stage-explain").textContent=row[2];$("stage-invariant").textContent=row[3];plane.dataset.stage=String(stage);document.querySelectorAll("[data-stage-pick]").forEach(button=>button.setAttribute("aria-current",button.dataset.stagePick===String(stage)?"step":"false"))}
+    document.querySelectorAll("[data-stage-pick]").forEach(button=>button.addEventListener("click",()=>{stage=Number(button.dataset.stagePick);updateReadout();draw()}));
+    function center(element,box){const r=element.getBoundingClientRect();return{x:r.left-box.left+r.width/2,y:r.top-box.top+r.height/2}}
+    function line(a,b,color,width=2,dash=[]){ctx.save();ctx.strokeStyle=color;ctx.lineWidth=width;ctx.setLineDash(dash);ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(b.x,b.y);ctx.stroke();ctx.restore()}
+    function curve(a,b,lift,color,width=2){ctx.save();ctx.strokeStyle=color;ctx.lineWidth=width;ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.quadraticCurveTo((a.x+b.x)/2,(a.y+b.y)/2+lift,b.x,b.y);ctx.stroke();ctx.restore()}
+    function draw(){cancelAnimationFrame(raf);raf=requestAnimationFrame(()=>{const box=plane.getBoundingClientRect(),d=Math.min(devicePixelRatio||1,2);canvas.width=Math.max(1,Math.round(box.width*d));canvas.height=Math.max(1,Math.round(box.height*d));ctx.setTransform(d,0,0,d,0,0);ctx.clearRect(0,0,box.width,box.height);const source=[...plane.querySelectorAll(".token-row--source .token")].map(el=>center(el,box)),target=[...plane.querySelectorAll(".token-row--target .token")].map(el=>center(el,box));if(stage>=1)source.forEach((point,index)=>line(point,target[index],"rgba(97,220,255,.34)",1.5,[5,6]));if(stage>=2){for(let i=0;i<source.length-1;i++){const color=i%3===0?"rgba(255,211,90,.8)":"rgba(49,239,125,.72)";curve(source[i],source[i+1],-30,color,2.4);curve(target[i],target[i+1],30,color,2.4)}}if(stage>=3){source.forEach((point,index)=>{ctx.fillStyle=index%2?"rgba(97,220,255,.22)":"rgba(49,239,125,.24)";ctx.beginPath();ctx.arc(point.x,point.y,18,0,Math.PI*2);ctx.fill();ctx.beginPath();ctx.arc(target[index].x,target[index].y,18,0,Math.PI*2);ctx.fill()})}})}
+    const witness=[1,0,1,1,0,0,1,0],letters=witness.map(value=>value?"│":"○"),bools=witness.map(value=>value?"T":"F"),reduced=matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const orbit={mode:reduced?"topology":"projection",yaw:reduced?-.1:-.48,pitch:reduced?-.055:-.18,roll:reduced?0:.04,viewYaw:reduced?-.1:-.48,viewPitch:reduced?-.055:-.18,viewRoll:reduced?0:.04,phase:0,breathPhase:reduced?Math.PI:0,running:!reduced,dragging:false,lastX:0,lastY:0,lastTime:0,focus:0,raf:0};
+    function theme(name){return getComputedStyle(root).getPropertyValue(name).trim()}
+    function rotate3(point){let{x,y,z}=point,c=Math.cos(orbit.viewYaw),s=Math.sin(orbit.viewYaw);[x,z]=[x*c-z*s,x*s+z*c];c=Math.cos(orbit.viewPitch);s=Math.sin(orbit.viewPitch);[y,z]=[y*c-z*s,y*s+z*c];c=Math.cos(orbit.viewRoll);s=Math.sin(orbit.viewRoll);[x,y]=[x*c-y*s,x*s+y*c];return{x,y,z}}
+    function orbitProject(point,box){const q=rotate3(point),base=Math.max(32,Math.min((box.width-54)/8.9,(box.height-190)/5.8)),depth=Math.max(.76,1+q.z*.055);return{x:box.width*.54+q.x*base*depth,y:box.height*.46+q.y*base*depth,z:q.z,scale:base*depth}}
+    function orbitPath(points,box,color,width=1,dash=[]){orbitCtx.save();orbitCtx.beginPath();points.forEach((point,index)=>{const p=orbitProject(point,box);index?orbitCtx.lineTo(p.x,p.y):orbitCtx.moveTo(p.x,p.y)});orbitCtx.strokeStyle=color;orbitCtx.lineWidth=width;orbitCtx.setLineDash(dash);orbitCtx.stroke();orbitCtx.restore()}
+    function orbitArrow(a,b,box,color,width=1.2){const p=orbitProject(a,box),q=orbitProject(b,box),angle=Math.atan2(q.y-p.y,q.x-p.x),size=5;orbitCtx.save();orbitCtx.strokeStyle=color;orbitCtx.fillStyle=color;orbitCtx.lineWidth=width;orbitCtx.beginPath();orbitCtx.moveTo(p.x,p.y);orbitCtx.lineTo(q.x,q.y);orbitCtx.stroke();orbitCtx.beginPath();orbitCtx.moveTo(q.x,q.y);orbitCtx.lineTo(q.x-Math.cos(angle-.55)*size,q.y-Math.sin(angle-.55)*size);orbitCtx.lineTo(q.x-Math.cos(angle+.55)*size,q.y-Math.sin(angle+.55)*size);orbitCtx.closePath();orbitCtx.fill();orbitCtx.restore()}
+    function orbitLabel(text,point,box,color,align="center",size=10){const p=orbitProject(point,box);orbitCtx.fillStyle=color;orbitCtx.font=`800 ${size}px ${theme("--mono")}`;orbitCtx.textAlign=align;orbitCtx.textBaseline="middle";orbitCtx.fillText(text,p.x,p.y)}
+    function projectionProject(point,box){const q=rotate3(point),camera=7.4,scale=Math.min(box.width,box.height)*.8/(camera-q.z);return{x:box.width*.64+q.x*scale,y:box.height*.46+q.y*scale,z:q.z,scale}}
+    function projectionPath(points,box,color,width=1){orbitCtx.beginPath();points.forEach((point,index)=>{const p=projectionProject(point,box);index?orbitCtx.lineTo(p.x,p.y):orbitCtx.moveTo(p.x,p.y)});orbitCtx.strokeStyle=color;orbitCtx.lineWidth=width;orbitCtx.stroke()}
+    function drawProjection(box,colors){
+      const levels=[
+        {y:-2.05,label:"xs : List NumericSign",short:"xs",values:witness.map(String),color:colors.mint},
+        {y:-.72,label:"xs.map translate",short:"T(xs)",values:letters,color:colors.cyan},
+        {y:.72,label:"numericRelations xs",short:"Rₓ(xs)",values:bools,color:colors.green},
+        {y:2.05,label:"letterRelations (xs.map translate)",short:"Rᵧ(T(xs))",values:bools,color:colors.gold}
+      ],radius=1.52,count=witness.length,points=levels.map(level=>level.values.map((value,index)=>{const angle=index*Math.PI*2/count;return{x:Math.cos(angle)*radius,y:level.y,z:Math.sin(angle)*radius,value,color:level.color}}));
+      orbitCtx.lineCap="round";levels.forEach(level=>{const ring=[];for(let i=0;i<=72;i++){const angle=i*Math.PI*2/72;ring.push({x:Math.cos(angle)*radius,y:level.y,z:Math.sin(angle)*radius})}projectionPath(ring,box,"rgba(145,255,209,.18)",1)});
+      const edges=[];for(let i=0;i<count;i++){edges.push([points[0][i],points[1][i],"rgba(97,220,255,.31)",1.2]);edges.push([points[0][i],points[2][i],"rgba(49,239,125,.16)",.8]);edges.push([points[1][i],points[3][i],"rgba(49,239,125,.16)",.8]);edges.push([points[2][i],points[3][i],"rgba(255,211,90,.42)",1.5])}edges.sort((a,b)=>(rotate3(a[0]).z+rotate3(a[1]).z)-(rotate3(b[0]).z+rotate3(b[1]).z)).forEach(([a,b,color,width])=>projectionPath([a,b],box,color,width));
+      const nodes=points.flat().map((point,index)=>({...point,index,projected:projectionProject(point,box)})).sort((a,b)=>a.projected.z-b.projected.z);nodes.forEach(node=>{const p=node.projected,r=Math.max(9,Math.min(15,p.scale*.23));orbitCtx.beginPath();orbitCtx.arc(p.x,p.y,r+4,0,Math.PI*2);orbitCtx.fillStyle="rgba(0,14,9,.78)";orbitCtx.fill();orbitCtx.beginPath();orbitCtx.arc(p.x,p.y,r,0,Math.PI*2);orbitCtx.fillStyle="rgba(4,30,19,.96)";orbitCtx.fill();orbitCtx.strokeStyle=node.color;orbitCtx.lineWidth=node.index>=count*3?2:1.2;orbitCtx.stroke();orbitCtx.fillStyle=node.color;orbitCtx.font=`800 ${Math.max(10,Math.min(13,r*.9))}px ${theme("--mono")}`;orbitCtx.textAlign="center";orbitCtx.textBaseline="middle";orbitCtx.fillText(node.value,p.x,p.y+.5)});
+      levels.forEach(level=>{const p=projectionProject({x:0,y:level.y,z:0},box);orbitCtx.fillStyle=level.color;orbitCtx.font=`800 ${box.width<430?9:10}px ${theme("--mono")}`;orbitCtx.textAlign="left";orbitCtx.textBaseline="middle";orbitCtx.fillText(box.width<430?level.short:level.label,16,p.y)});const center=projectionProject({x:0,y:0,z:0},box);orbitCtx.fillStyle=colors.ink;orbitCtx.font=`800 12px ${theme("--mono")}`;orbitCtx.textAlign="center";orbitCtx.fillText("T · Rₓ · Rᵧ · ρ · Φ",center.x,center.y)
+    }
+    function drawTransition(box,colors,progress){
+      const opening=Math.min(1,progress*2),settling=Math.max(0,Math.min(1,(progress-.5)*2)),openEase=opening*opening*(3-2*opening),settleEase=settling*settling*(3-2*settling),ease=progress<.5?openEase:settleEase,edgeFactor=progress<.5?.12:.12+settleEase*.88;
+      const groups=[
+        {key:"x",center:{x:-2.25,y:-1.42,z:0},label:"X · xs : List NumericSign",values:witness.map(String),color:colors.mint,level:-2.05},
+        {key:"y",center:{x:2.25,y:-1.42,z:0},label:"Y · xs.map translate",values:letters,color:colors.cyan,level:-.72},
+        {key:"rx",center:{x:-2.25,y:.82,z:0},label:"ρRₓ · numericRelations xs",values:bools,color:colors.green,level:.72},
+        {key:"ry",center:{x:2.25,y:.82,z:0},label:"ρRᵧ · letterRelations T(xs)",values:bools,color:colors.gold,level:2.05}
+      ];
+      const count=witness.length,radius=1.52;
+      const points=groups.map(group=>group.values.map((value,index)=>{
+        const angle=index*Math.PI*2/count,start=projectionProject({x:Math.cos(angle)*radius,y:group.level,z:Math.sin(angle)*radius},box),flat=orbitProject({x:(index-3.5)*.6,y:group.level,z:0},box),target=orbitProject({x:group.center.x+(index-3.5)*.6,y:group.center.y,z:(index-3.5)*.018},box),from=progress<.5?start:flat,to=progress<.5?flat:target,t=progress<.5?openEase:settleEase;
+        return{value,color:group.color,group:group.key,index,start,flat,target,p:{x:from.x+(to.x-from.x)*t,y:from.y+(to.y-from.y)*t,z:from.z+(to.z-from.z)*t,scale:from.scale+(to.scale-from.scale)*t}};
+      }));
+      orbitCtx.lineCap="round";
+      groups.forEach((group,row)=>{
+        const rail=[];
+        for(let i=0;i<=72;i++){
+          const angle=i*Math.PI*2/72,source=projectionProject({x:Math.cos(angle)*radius,y:group.level,z:Math.sin(angle)*radius},box),flat=orbitProject({x:(i/72*(count-1)-3.5)*.6,y:group.level,z:0},box),target=orbitProject({x:group.center.x+(i/72*(count-1)-3.5)*.6,y:group.center.y,z:0},box),from=progress<.5?source:flat,to=progress<.5?flat:target,t=progress<.5?openEase:settleEase;
+          rail.push({x:from.x+(to.x-from.x)*t,y:from.y+(to.y-from.y)*t});
+        }
+        orbitCtx.beginPath();rail.forEach((p,i)=>i?orbitCtx.lineTo(p.x,p.y):orbitCtx.moveTo(p.x,p.y));orbitCtx.strokeStyle=`rgba(145,255,209,${.18*(1-settleEase*.82)})`;orbitCtx.lineWidth=1;orbitCtx.stroke();
+        const p0=projectionProject({x:0,y:group.level,z:0},box),flatLabel=orbitProject({x:-1.47,y:group.level,z:0},box),targetLabel=orbitProject({x:group.center.x-1.47,y:group.center.y,z:0},box),from=progress<.5?p0:flatLabel,to=progress<.5?flatLabel:targetLabel,t=progress<.5?openEase:settleEase,p={x:from.x+(to.x-from.x)*t,y:from.y+(to.y-from.y)*t};
+        orbitCtx.globalAlpha=.42+ease*.42;orbitCtx.fillStyle=group.color;orbitCtx.font=`800 ${box.width<950?9:10}px ${theme("--mono")}`;orbitCtx.textAlign="left";orbitCtx.textBaseline="middle";orbitCtx.fillText(box.width<950?group.key.toUpperCase():group.label,p.x-48,p.y-22);orbitCtx.globalAlpha=1;
+      });
+      const pairs=[];for(let i=0;i<count;i++){pairs.push([points[0][i],points[1][i],`rgba(97,220,255,${.54*edgeFactor})`,1.35],[points[0][i],points[2][i],`rgba(49,239,125,${.28*edgeFactor})`,.9],[points[1][i],points[3][i],`rgba(49,239,125,${.28*edgeFactor})`,.9],[points[2][i],points[3][i],`rgba(255,211,90,${.56*edgeFactor})`,1.5])}
+      pairs.forEach(([a,b,color,width])=>{orbitCtx.beginPath();orbitCtx.moveTo(a.p.x,a.p.y);orbitCtx.lineTo(b.p.x,b.p.y);orbitCtx.strokeStyle=color;orbitCtx.lineWidth=width;orbitCtx.stroke()});
+      const transitionRadius=node=>{let nearest=Infinity;points.forEach(row=>row.forEach(other=>{if(other!==node)nearest=Math.min(nearest,Math.hypot(node.p.x-other.p.x,node.p.y-other.p.y))}));return Math.max(4,Math.min(15,node.p.scale*.23,nearest*.45))};
+      const nodes=points.flat().sort((a,b)=>a.p.z-b.p.z);nodes.forEach(node=>{const p=node.p,r=transitionRadius(node),alpha=Math.max(0,Math.min(1,(r-4)/5));if(!alpha)return;orbitCtx.globalAlpha=alpha;orbitCtx.beginPath();orbitCtx.arc(p.x,p.y,r+2,0,Math.PI*2);orbitCtx.fillStyle="rgba(0,14,9,.78)";orbitCtx.fill();orbitCtx.beginPath();orbitCtx.arc(p.x,p.y,r,0,Math.PI*2);orbitCtx.fillStyle="rgba(4,30,19,.96)";orbitCtx.fill();orbitCtx.strokeStyle=node.color;orbitCtx.lineWidth=1.4;orbitCtx.stroke();orbitCtx.fillStyle=node.color;orbitCtx.font=`800 ${Math.max(7,Math.min(13,r*.9))}px ${theme("--mono")}`;orbitCtx.textAlign="center";orbitCtx.textBaseline="middle";orbitCtx.fillText(node.value,p.x,p.y+.5)});orbitCtx.globalAlpha=1;
+      if(settling>.05){
+        const alpha=Math.min(1,(settleEase-.05)/.55);orbitCtx.globalAlpha=alpha;const project=p=>orbitProject(p,box),arrow=(a,b,color)=>{const p=project(a),q=project(b),angle=Math.atan2(q.y-p.y,q.x-p.x),size=5;orbitCtx.strokeStyle=color;orbitCtx.fillStyle=color;orbitCtx.lineWidth=1.4;orbitCtx.beginPath();orbitCtx.moveTo(p.x,p.y);orbitCtx.lineTo(q.x,q.y);orbitCtx.stroke();orbitCtx.beginPath();orbitCtx.moveTo(q.x,q.y);orbitCtx.lineTo(q.x-Math.cos(angle-.55)*size,q.y-Math.sin(angle-.55)*size);orbitCtx.lineTo(q.x-Math.cos(angle+.55)*size,q.y-Math.sin(angle+.55)*size);orbitCtx.closePath();orbitCtx.fill()};
+        arrow({x:-.64,y:-1.42,z:0},{x:.64,y:-1.42,z:0},colors.cyan);arrow({x:-2.25,y:-.98,z:0},{x:-2.25,y:.38,z:0},colors.green);arrow({x:2.25,y:-.98,z:0},{x:2.25,y:.38,z:0},colors.gold);arrow({x:-.64,y:.82,z:0},{x:.64,y:.82,z:0},colors.gold);
+        orbitCtx.fillStyle=colors.gold;orbitCtx.font=`900 14px ${theme("--mono")}`;orbitCtx.textAlign="center";orbitCtx.fillText("=",box.width*.54,project({x:0,y:.58,z:0}).y);orbitCtx.globalAlpha=1;
+      }
+    }
+    function drawOrbit(time=0){
+      cancelAnimationFrame(orbit.raf);const tick=typeof time==="number"?time:0,box=orbitCanvas.parentElement.getBoundingClientRect(),d=Math.min(devicePixelRatio||1,2);if(!box.width||!box.height)return;orbitCanvas.width=Math.round(box.width*d);orbitCanvas.height=Math.round(box.height*d);orbitCtx.setTransform(d,0,0,d,0,0);orbitCtx.clearRect(0,0,box.width,box.height);
+      if(orbit.running&&!orbit.dragging){const delta=orbit.lastTime&&tick?Math.max(0,Math.min(40,tick-orbit.lastTime)):0;orbit.phase+=delta*.00034;orbit.breathPhase+=delta*Math.PI*2/12000;orbit.focus=Math.floor((tick||0)/950)%witness.length}if(tick)orbit.lastTime=tick;
+      const breath=(1-Math.cos(orbit.breathPhase))/2,eased=breath*breath*(3-2*breath),dragYaw=orbit.yaw-(reduced?-.1:-.48),dragPitch=orbit.pitch-(reduced?-.055:-.18),dragRoll=orbit.roll-(reduced?0:.04),projectionYaw=-.48+dragYaw+orbit.phase*.7,projectionPitch=-.18+dragPitch+Math.sin(orbit.phase*.63)*.1,projectionRoll=.04+dragRoll+Math.sin(orbit.phase*.47)*.06,topologyYaw=-.1+dragYaw+Math.sin(orbit.phase)*.13,topologyPitch=-.055+dragPitch+Math.cos(orbit.phase*.83)*.045,topologyRoll=dragRoll+Math.sin(orbit.phase*.57)*.018;orbit.viewYaw=projectionYaw+(topologyYaw-projectionYaw)*eased;orbit.viewPitch=projectionPitch+(topologyPitch-projectionPitch)*eased;orbit.viewRoll=projectionRoll+(topologyRoll-projectionRoll)*eased;
+      const nextMode=reduced||breath>.94?"topology":breath<.06?"projection":"transition";if(nextMode!==orbit.mode){orbit.mode=nextMode;updateOrbitControls()}
+      const colors={ink:theme("--ink"),muted:theme("--muted"),cyan:theme("--cyan"),mint:theme("--mint"),green:theme("--green"),gold:theme("--gold")},count=witness.length;
+      if(orbit.mode==="projection"){drawProjection(box,colors);if(orbit.running)orbit.raf=requestAnimationFrame(drawOrbit);return}
+      if(orbit.mode==="transition"){drawTransition(box,colors,breath);if(orbit.running)orbit.raf=requestAnimationFrame(drawOrbit);return}
+      const groups=[
+        {key:"x",center:{x:-2.25,y:-1.42,z:0},label:"X · xs : List NumericSign",short:"X · xs",values:witness.map(String),color:colors.mint},
+        {key:"y",center:{x:2.25,y:-1.42,z:0},label:"Y · xs.map translate",short:"Y · T(xs)",values:letters,color:colors.cyan},
+        {key:"rx",center:{x:-2.25,y:.82,z:0},label:"ρRₓ · numericRelations xs",short:"ρRₓ(xs)",values:bools,color:colors.green},
+        {key:"ry",center:{x:2.25,y:.82,z:0},label:"ρRᵧ · letterRelations T(xs)",short:"ρRᵧ(T(xs))",values:bools,color:colors.gold}
+      ];
+      const points=groups.map(group=>group.values.map((value,index)=>({x:group.center.x+(index-3.5)*.6,y:group.center.y,z:(index-3.5)*.018,value,color:group.color,group:group.key,index})));
+      orbitCtx.lineCap="round";
+      points.forEach((row,rowIndex)=>orbitPath(row,box,rowIndex<2?"rgba(145,255,209,.20)":"rgba(255,211,90,.20)",1.1));
+      for(let i=0;i<count;i++){
+        const active=i===orbit.focus,alpha=active ? .8 : .16,strong=active ? 2.2 : .8;
+        orbitPath([points[0][i],points[1][i]],box,`rgba(97,220,255,${alpha})`,strong);
+        orbitPath([points[0][i],points[2][i]],box,`rgba(49,239,125,${active ? .68 : .14})`,active ? 1.8 : .8);
+        orbitPath([points[1][i],points[3][i]],box,`rgba(255,211,90,${active ? .68 : .14})`,active ? 1.8 : .8);
+        orbitPath([points[2][i],points[3][i]],box,`rgba(255,211,90,${active ? .84 : .24})`,active ? 2.4 : 1.1);
+      }
+      const tA={x:-.64,y:-1.42,z:0},tB={x:.64,y:-1.42,z:0},rxA={x:-2.25,y:-.98,z:0},rxB={x:-2.25,y:.38,z:0},ryA={x:2.25,y:-.98,z:0},ryB={x:2.25,y:.38,z:0},eqA={x:-.64,y:.82,z:0},eqB={x:.64,y:.82,z:0},meaning={x:0,y:2.18,z:0};
+      orbitArrow(tA,tB,box,colors.cyan,1.7);orbitArrow(rxA,rxB,box,colors.green,1.4);orbitArrow(ryA,ryB,box,colors.gold,1.4);orbitArrow(eqA,eqB,box,colors.gold,1.8);orbitArrow({x:-1.05,y:1.1,z:0},{x:-.22,y:1.94,z:0},box,colors.ink,1.2);orbitArrow({x:1.05,y:1.1,z:0},{x:.22,y:1.94,z:0},box,colors.ink,1.2);
+      orbitLabel("T",{x:0,y:-1.68,z:0},box,colors.cyan,"center",12);orbitLabel("Rₓ",{x:-2.52,y:-.28,z:0},box,colors.green,"center",11);orbitLabel("Rᵧ",{x:2.52,y:-.28,z:0},box,colors.gold,"center",11);orbitLabel("=",{x:0,y:.58,z:0},box,colors.gold,"center",14);orbitLabel("Φ",{x:-.72,y:1.64,z:0},box,colors.ink,"center",11);orbitLabel("Φ",{x:.72,y:1.64,z:0},box,colors.ink,"center",11);
+      const meaningP=orbitProject(meaning,box),meaningR=Math.max(15,Math.min(22,meaningP.scale*.3));orbitCtx.beginPath();orbitCtx.arc(meaningP.x,meaningP.y,meaningR+5,0,Math.PI*2);orbitCtx.fillStyle="rgba(255,211,90,.10)";orbitCtx.fill();orbitCtx.beginPath();orbitCtx.arc(meaningP.x,meaningP.y,meaningR,0,Math.PI*2);orbitCtx.fillStyle="rgba(0,18,11,.95)";orbitCtx.fill();orbitCtx.strokeStyle=colors.gold;orbitCtx.lineWidth=1.8;orbitCtx.stroke();orbitCtx.fillStyle=colors.ink;orbitCtx.font=`800 13px ${theme("--mono")}`;orbitCtx.textAlign="center";orbitCtx.textBaseline="middle";orbitCtx.fillText("μ",meaningP.x,meaningP.y+.5);
+      const nodes=points.flat().map(point=>({...point,projected:orbitProject(point,box)})).sort((a,b)=>a.projected.z-b.projected.z);nodes.forEach(node=>{const p=node.projected,r=Math.max(8,Math.min(12,p.scale*.18)),active=node.index===orbit.focus;orbitCtx.beginPath();orbitCtx.arc(p.x,p.y,r+(active?6:3),0,Math.PI*2);orbitCtx.fillStyle=active?"rgba(255,211,90,.18)":"rgba(0,14,9,.76)";orbitCtx.fill();orbitCtx.beginPath();orbitCtx.arc(p.x,p.y,r,0,Math.PI*2);orbitCtx.fillStyle="rgba(4,30,19,.97)";orbitCtx.fill();orbitCtx.strokeStyle=node.color;orbitCtx.lineWidth=active?2:1.15;orbitCtx.stroke();orbitCtx.fillStyle=node.color;orbitCtx.font=`800 ${Math.max(9,Math.min(12,r*.95))}px ${theme("--mono")}`;orbitCtx.textAlign="center";orbitCtx.textBaseline="middle";orbitCtx.fillText(node.value,p.x,p.y+.5)});
+      groups.forEach(group=>orbitLabel(box.width<520?group.short:group.label,{x:group.center.x-1.48,y:group.center.y-.48,z:0},box,group.color,"left",box.width<520?8:9));
+      const focusText=`i=${orbit.focus} · ${witness[orbit.focus]} → ${letters[orbit.focus]} · ${bools[orbit.focus]} = ${bools[orbit.focus]}`;orbitCtx.fillStyle=colors.muted;orbitCtx.font=`800 10px ${theme("--mono")}`;orbitCtx.textAlign="center";orbitCtx.textBaseline="middle";orbitCtx.fillText(focusText,box.width*.54,box.height*.46);
+      if(orbit.running&&!reduced)orbit.raf=requestAnimationFrame(drawOrbit)
+    }
+    function updateOrbitControls(){leanOrbit.dataset.orbitView=orbit.mode;const viewRu=orbit.mode==="projection"?"Прежняя пространственная проекция конечных списков; кольца не входят в теорему Lean.":orbit.mode==="topology"?"Точная схема отображений Lean в плоском срезе; список остаётся открытым.":"Переход между пространственной проекцией и плоским срезом схемы Lean.",viewEn=orbit.mode==="projection"?"Earlier spatial projection of finite lists; rings are not part of the Lean theorem.":orbit.mode==="topology"?"Exact Lean mapping diagram in a flat slice; the list remains open.":"Transition between the spatial projection and the flat slice of the Lean diagram.";orbitCanvas.setAttribute("aria-label",`${language==="ru"?viewRu:viewEn} ${language==="ru"?"Перетащите, чтобы изменить ракурс.":"Drag to change the viewpoint."}`)}
+    function updateOrbitButton(){orbitToggle.setAttribute("aria-pressed",String(orbit.running));orbitToggle.disabled=reduced;orbitToggle.textContent=language==="ru"?(reduced?"ДЫХАНИЕ · ОТКЛЮЧЕНО · REDUCED MOTION":orbit.running?"ДЫХАНИЕ · ПАУЗА":"ДЫХАНИЕ · ВКЛЮЧИТЬ"):(reduced?"BREATHING · OFF · REDUCED MOTION":orbit.running?"BREATHING · PAUSE":"BREATHING · RESUME");updateOrbitControls()}
+    function setOrbitRunning(next){orbit.running=next&&!reduced;updateOrbitButton();orbit.lastTime=0;drawOrbit()}
+    orbitToggle.addEventListener("click",()=>setOrbitRunning(!orbit.running));orbitCanvas.addEventListener("pointerdown",event=>{orbit.dragging=true;orbit.lastX=event.clientX;orbit.lastY=event.clientY;orbitCanvas.setPointerCapture(event.pointerId)});orbitCanvas.addEventListener("pointermove",event=>{if(!orbit.dragging)return;orbit.yaw+=(event.clientX-orbit.lastX)*.008;orbit.pitch=Math.max(-1.05,Math.min(1.05,orbit.pitch+(event.clientY-orbit.lastY)*.008));orbit.lastX=event.clientX;orbit.lastY=event.clientY;drawOrbit()});orbitCanvas.addEventListener("pointerup",event=>{orbit.dragging=false;orbitCanvas.releasePointerCapture(event.pointerId);drawOrbit()});orbitCanvas.addEventListener("pointercancel",()=>{orbit.dragging=false;drawOrbit()});
+    new ResizeObserver(draw).observe(plane);new ResizeObserver(()=>drawOrbit()).observe(orbitCanvas.parentElement);window.addEventListener("pagehide",()=>{cancelAnimationFrame(raf);cancelAnimationFrame(orbit.raf)},{once:true});let saved="en";try{saved=localStorage.getItem(LANGUAGE_KEY)||"en"}catch{}setLanguage(saved);updateReadout();draw();updateOrbitButton();if(!reduced)orbit.raf=requestAnimationFrame(t=>{orbit.lastTime=t;drawOrbit(t)});else drawOrbit();
+  })();
+  </script>
+</body>
+</html>

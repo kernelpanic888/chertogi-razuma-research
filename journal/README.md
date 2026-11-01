@@ -18,6 +18,9 @@ Versioned research states are fixed in the formal home through the [reader relea
 
 ## Entries / Записи
 
+- [2026-09-20 · PIM-01: The Film *Pi* — What Is Between the Numbers?](./2026-09-20-pim-01-pi-interface-model.md)
+- [2026-09-20 · PIM-01: Фильм «Пи» — что находится между числами?](./2026-09-20-pim-01-pi-interface-model-ru.md)
+
 - [2026-08-25 · AMF-02 + D-EXP-01: Living Market Hypothesis Steward / Second Observer](./2026-08-25-amf-02-living-market-hypothesis.md)
 - [2026-08-25 · AMF-02 + D-EXP-01: Жизнь рыночной гипотезы / Второй наблюдатель](./2026-08-25-amf-02-living-market-hypothesis-ru.md)
 

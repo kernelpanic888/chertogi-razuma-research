@@ -30,6 +30,25 @@
   },
   "readers": [
     {
+      "id": "PIM-01",
+      "titleRu": "Фильм «Пи»: что находится между числами?",
+      "titleEn": "The Film Pi: What Is Between the Numbers?",
+      "publicPath": "/readers/pi-interface-model/",
+      "sourcePath": "public/readers/pi-interface-model/index.html",
+      "journalPaths": [
+        "journal/2026-09-20-pim-01-pi-interface-model.md",
+        "journal/2026-09-20-pim-01-pi-interface-model-ru.md"
+      ],
+      "formalUrls": [
+        "https://github.com/kernelpanic888/TMI-Lean-Formal-Library/blob/8cc0d188b4ede393ca2957877eb4bc98f2b23d2a/lean/TMI/InterfaceMathematics/PiInterfaceModel.lean",
+        "https://github.com/kernelpanic888/TMI-Lean-Formal-Library/blob/8cc0d188b4ede393ca2957877eb4bc98f2b23d2a/lean/TMI/InterfaceMathematics/PiInterfaceModelAudit.lean"
+      ],
+      "runtimeUrls": [
+        "https://chertogi-razuma-research.kernelpanic888.chatgpt.site/readers/pi-interface-model/"
+      ],
+      "status": "release-candidate"
+    },
+    {
       "id": "IF-P01B",
       "titleRu": "Почему существует нечто, а не ничто?",
       "titleEn": "Why is there something rather than nothing?",
@@ -454,6 +473,21 @@
       "from": "ER-01",
       "to": "CI-01",
       "kind": "return"
+    },
+    {
+      "from": "IF-P01B",
+      "to": "PIM-01",
+      "relation": "distinction-to-interface-reading"
+    },
+    {
+      "from": "PIM-01",
+      "to": "ITC-01",
+      "relation": "relational-invariant-to-transport"
+    },
+    {
+      "from": "PIM-01",
+      "to": "M-01",
+      "relation": "representation-to-readable-trace"
     }
   ]
 }
