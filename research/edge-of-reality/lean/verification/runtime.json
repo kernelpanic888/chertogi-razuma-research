@@ -1,0 +1,17 @@
+{
+  "status": "PASS",
+  "exactCases": 3872,
+  "invalidInputsRejected": 9,
+  "prefixLengthsChecked": 5,
+  "reference": "Python Fraction; independent exact arithmetic",
+  "checks": [
+    "mass budget",
+    "posterior",
+    "phase closure",
+    "terminal fixed point",
+    "tick monotonicity",
+    "readout separation",
+    "observation does not alter masses",
+    "no zero-weight normalization"
+  ]
+}

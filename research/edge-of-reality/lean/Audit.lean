@@ -1,0 +1,25 @@
+import ER01.Core
+#print axioms ER01.posterior_none_iff
+#print axioms ER01.posterior_exists_iff
+#print axioms ER01.branch_mass_conservation
+#print axioms ER01.positive_mass_iff
+#print axioms ER01.normalization_bounds
+#print axioms ER01.normalization_denominator
+#print axioms ER01.step_tick_monotone
+#print axioms ER01.returned_is_fixed
+#print axioms ER01.rejected_is_fixed
+#print axioms ER01.filtered_mass_retained
+#print axioms ER01.zero_rejects
+#print axioms ER01.positive_admits
+#print axioms ER01.four_steps_close
+#print axioms ER01.coarse_indistinguishable
+#print axioms ER01.resolved_distinguishable
+#print axioms ER01.coarse_not_injective
+#print axioms ER01.observation_mass_conserved
+#print axioms ER01.coarse_observation_only_total
+#print axioms ER01.denominator_positive
+#print axioms ER01.filter_does_not_create_mass
+#print axioms ER01.initial_valid
+#print axioms ER01.step_valid
+#print axioms ER01.evolve_valid
+#print axioms ER01.reachable_observation_has_posterior

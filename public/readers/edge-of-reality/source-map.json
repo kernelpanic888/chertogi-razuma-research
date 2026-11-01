@@ -1,14 +1,34 @@
 {
   "id": "ER-01",
-  "version": "0.1",
+  "version": "0.2",
   "date": "2026-11-01",
   "status": "open-physical-bridge",
-  "readerSha256": "b37b64aca8b7d7578dc12823e3648c8b32106e0259699d20d646663a4d11eacd",
+  "readerSha256": "6889fe85a251da99102c42dbe44c3f247a028469394f72be73ea1d1cea4bd4a6",
   "sourcePath": "public/readers/edge-of-reality/index.html",
   "journalPath": "journal/2026-11-01-er-01-edge-of-reality.md",
-  "formalStatus": "No new Lean theorem",
-  "runtimeModel": "Diagonal qubit conditional filter; w=p+lambda^2*(1-p); undefined at zero weight",
+  "formalStatus": "24 Lean theorems; standard axioms only; no sorryAx or custom axioms",
+  "runtimeModel": "Offline replay of 10201 exact Lean-exported trace pairs; no JavaScript transition model",
   "doi": null,
   "orcidWorkId": null,
-  "releaseTag": null
+  "releaseTag": null,
+  "formalSourcePath": "research/edge-of-reality/lean/ER01/Core.lean",
+  "traceExport": {
+    "status": "PASS",
+    "source": "Lean Export.lean using ER01.trace and ER01.observation",
+    "parameterPairs": 10201,
+    "modes": 2,
+    "framesPerTrace": 5,
+    "independentGridCheck": "integer exact masses, phases, clocks, observations, posterior; all pairs",
+    "gridSha256": "0925cfe30af75ffc27d7ff506243f2b177279c01a4dae77e196b4544e7249b7f",
+    "coreSha256": "14ac95e1c92d81ad1929514d4cb2fd1eda9d301c9c5d197188270eed4e6fd56e",
+    "exportSha256": "a99c2479ac58f6c1e15b90fe80c1b45427be63f277728ae55e1899c9b2136825",
+    "runtime": "offline replay; no server-side Lean",
+    "customAxioms": false,
+    "standardAxioms": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ]
+  },
+  "traceEncoding": "base64(gzip(JSON)); decompressed in browser, no external resource"
 }

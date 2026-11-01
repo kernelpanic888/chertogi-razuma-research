@@ -288,7 +288,9 @@
       "journalPaths": [
         "journal/2026-11-01-er-01-edge-of-reality.md"
       ],
-      "formalUrls": [],
+      "formalUrls": [
+        "https://github.com/kernelpanic888/chertogi-razuma-research/blob/main/research/edge-of-reality/lean/ER01/Core.lean"
+      ],
       "runtimeUrls": [
         "https://chertogi-razuma-research.kernelpanic888.chatgpt.site/readers/edge-of-reality/"
       ],

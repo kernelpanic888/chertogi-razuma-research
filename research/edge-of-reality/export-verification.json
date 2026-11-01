@@ -1,0 +1,18 @@
+{
+  "status": "PASS",
+  "source": "Lean Export.lean using ER01.trace and ER01.observation",
+  "parameterPairs": 10201,
+  "modes": 2,
+  "framesPerTrace": 5,
+  "independentGridCheck": "integer exact masses, phases, clocks, observations, posterior; all pairs",
+  "gridSha256": "0925cfe30af75ffc27d7ff506243f2b177279c01a4dae77e196b4544e7249b7f",
+  "coreSha256": "14ac95e1c92d81ad1929514d4cb2fd1eda9d301c9c5d197188270eed4e6fd56e",
+  "exportSha256": "a99c2479ac58f6c1e15b90fe80c1b45427be63f277728ae55e1899c9b2136825",
+  "runtime": "offline replay; no server-side Lean",
+  "customAxioms": false,
+  "standardAxioms": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+  ]
+}

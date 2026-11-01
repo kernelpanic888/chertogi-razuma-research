@@ -1,0 +1,10 @@
+name = "er01_simulation"
+version = "0.1.0"
+defaultTargets = ["er01"]
+
+[[lean_lib]]
+name = "ER01"
+
+[[lean_exe]]
+name = "er01"
+root = "Main"

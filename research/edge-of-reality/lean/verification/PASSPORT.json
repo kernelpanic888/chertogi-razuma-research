@@ -1,0 +1,41 @@
+{
+  "status": "PASS",
+  "scope": "ER-01 v0.1 finite diagonal-qubit filter and observation kernel",
+  "toolchain": "leanprover/lean4:v4.31.0-rc1",
+  "theorems": 24,
+  "customAxioms": [],
+  "sorryAx": false,
+  "standardAxioms": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+  ],
+  "directCompilation": "PASS with warningAsError",
+  "independentDirectoryCompilation": "PASS; source bytes and axiom output match",
+  "runtime": {
+    "status": "PASS",
+    "exactCases": 3872,
+    "invalidInputsRejected": 9,
+    "prefixLengthsChecked": 5,
+    "reference": "Python Fraction; independent exact arithmetic",
+    "checks": [
+      "mass budget",
+      "posterior",
+      "phase closure",
+      "terminal fixed point",
+      "tick monotonicity",
+      "readout separation",
+      "observation does not alter masses",
+      "no zero-weight normalization"
+    ]
+  },
+  "finalCliGuardRegression": "PASS; see resource-bounds.json",
+  "sourceManifest": "SHA256SUMS.json",
+  "notEstablished": [
+    "full coherent quantum dynamics",
+    "P-CTC realization",
+    "spacetime geometry",
+    "physical time reversal",
+    "cosmological hypothesis"
+  ]
+}
