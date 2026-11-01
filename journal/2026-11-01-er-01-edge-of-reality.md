@@ -17,3 +17,8 @@ Source: public/readers/edge-of-reality/index.html
 ## v0.2 / Lean simulation
 
 Added 24-theorem finite diagonal-filter Lean kernel and an offline visual replay. Export.lean produced 10201 parameter pairs in both observation modes, five frames each. Every exported row was independently checked for exact masses, admission, terminal clocks, readout and posterior. Browser decodes supplied frames; no JS transition engine or server-side Lean is claimed. Standard Lean axioms only; no sorryAx or user axioms. Core, exporter, original CLI verification and export SHA256 are archived under research/edge-of-reality/. Physical/cosmological bridge remains open. The earlier v0.1 no-new-Lean statement is superseded for the finite model only.
+
+
+## English translation correction
+
+Aligned the section 04 introduction with the Russian original: the panel replays traces without a local server. Removed the added language qualifier and replaced the broader word “offline”. No simulation data or mathematical claims changed. Updated the reader SHA256.

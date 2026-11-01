@@ -3,7 +3,7 @@
   "version": "0.2",
   "date": "2026-11-01",
   "status": "open-physical-bridge",
-  "readerSha256": "6889fe85a251da99102c42dbe44c3f247a028469394f72be73ea1d1cea4bd4a6",
+  "readerSha256": "0351611247035bb7b59f75419b16904202fcfa431cc423677a18e2ab0f9a6dfb",
   "sourcePath": "public/readers/edge-of-reality/index.html",
   "journalPath": "journal/2026-11-01-er-01-edge-of-reality.md",
   "formalStatus": "24 Lean theorems; standard axioms only; no sorryAx or custom axioms",
