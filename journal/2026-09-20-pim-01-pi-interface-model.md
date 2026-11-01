@@ -250,7 +250,7 @@ The qualification does not weaken the idea. It makes the idea inspectable.
 ## Source coordinates
 
 - [Bilingual interactive reader](https://chertogi-razuma-research.kernelpanic888.chatgpt.site/readers/pi-interface-model/).
-- [Public discussion on LinkedIn](https://www.linkedin.com/feed/update/urn:li:activity:7522778207243268096/).
+- [Public discussion on LinkedIn](https://lnkd.in/p/emhvfJSU).
 - Darren Aronofsky, *Pi* (1998), quoted line at approximately
   `01:12:34–01:12:48` in the audited English subtitle track.
 - [Shooting script, September 1996](https://imsdb.com/scripts/Pi.html).
