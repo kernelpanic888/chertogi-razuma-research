@@ -1,0 +1,14 @@
+{
+  "id": "ER-01",
+  "version": "0.1",
+  "date": "2026-11-01",
+  "status": "open-physical-bridge",
+  "readerSha256": "b37b64aca8b7d7578dc12823e3648c8b32106e0259699d20d646663a4d11eacd",
+  "sourcePath": "public/readers/edge-of-reality/index.html",
+  "journalPath": "journal/2026-11-01-er-01-edge-of-reality.md",
+  "formalStatus": "No new Lean theorem",
+  "runtimeModel": "Diagonal qubit conditional filter; w=p+lambda^2*(1-p); undefined at zero weight",
+  "doi": null,
+  "orcidWorkId": null,
+  "releaseTag": null
+}

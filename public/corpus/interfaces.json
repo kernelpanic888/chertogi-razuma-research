@@ -278,6 +278,21 @@
         "Separate MI-01 DOI, ORCID work, formal-home tag and training provenance are unconfirmed."
       ],
       "formalPath": "research/mirror-interface/MirrorInterface.lean"
+    },
+    {
+      "id": "ER-01",
+      "titleRu": "Край реальности",
+      "titleEn": "The Edge of Reality",
+      "publicPath": "/readers/edge-of-reality/",
+      "sourcePath": "public/readers/edge-of-reality/index.html",
+      "journalPaths": [
+        "journal/2026-11-01-er-01-edge-of-reality.md"
+      ],
+      "formalUrls": [],
+      "runtimeUrls": [
+        "https://chertogi-razuma-research.kernelpanic888.chatgpt.site/readers/edge-of-reality/"
+      ],
+      "status": "open-physical-bridge"
     }
   ],
   "releases": [
@@ -425,6 +440,16 @@
     },
     {
       "from": "MI-01",
+      "to": "CI-01",
+      "kind": "return"
+    },
+    {
+      "from": "IF-P01B",
+      "to": "ER-01",
+      "kind": "reader"
+    },
+    {
+      "from": "ER-01",
       "to": "CI-01",
       "kind": "return"
     }
