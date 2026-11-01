@@ -1,0 +1,20 @@
+{
+  "status": "PASS",
+  "leanTheoremsAdded": 17,
+  "parameterPairs": 10201,
+  "exactClassicalAgreement": true,
+  "quantumMaxAbsoluteError": 2.220446049250313e-16,
+  "controlledRyDecompositionsChecked": 101,
+  "seedReproducibility": true,
+  "zeroSuccessPosteriorAbsent": true,
+  "importValidation": true,
+  "hardwareExecuted": false,
+  "sourceHashes": {
+    "ER01/Core.lean": "14ac95e1c92d81ad1929514d4cb2fd1eda9d301c9c5d197188270eed4e6fd56e",
+    "ER01/Instrument.lean": "f6060f1aab601be3b921bee6f7b4f656d222eba9a7862ea766012658507813e3",
+    "InstrumentMain.lean": "a5c2ec8b6352fdddafc2dc3bd33e71a715a7ef614e92a8b931e79cb6024082fd",
+    "physics.py": "480e6ca80297b728bc5ce61096d72d143015e5bc43921ba6930f1f4c5410f090",
+    "ER01/InterfaceGraph.lean": "4ecc87d8f2fcf901b05b25d268fccbf410f28b9177d722f60b8d858ad481a7d9",
+    "graph.js": "ca0b63aff92ef03d0da2dcf923aeeb0f06f4f485bafba59edf02d692169498cc"
+  }
+}

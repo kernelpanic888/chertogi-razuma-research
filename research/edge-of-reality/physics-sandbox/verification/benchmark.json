@@ -1,0 +1,110 @@
+{
+  "schema": "ER01-PHYSICS/1",
+  "pPercent": 50,
+  "lambdaPercent": 50,
+  "shots": 10000,
+  "seed": 42,
+  "lean": {
+    "d": 100,
+    "denominator": 1000000,
+    "failureMass": 375000,
+    "l": 50,
+    "masses": [
+      500000,
+      125000,
+      0,
+      375000
+    ],
+    "p": 50,
+    "posteriorZero": {
+      "denominator": 625000,
+      "numerator": 500000
+    },
+    "q": 100,
+    "schema": "ER01-INSTRUMENT/1",
+    "successMass": 625000
+  },
+  "reference": {
+    "exactClassicalMatch": true,
+    "quantumMaxError": 5.551115123125783e-17,
+    "probabilities": [
+      0.5,
+      0.125,
+      0.0,
+      0.37499999999999994
+    ]
+  },
+  "quantum": {
+    "shots": 10000,
+    "counts": {
+      "success0": 4990,
+      "success1": 1218,
+      "failure0": 0,
+      "failure1": 3792
+    },
+    "successRate": 0.6208,
+    "successInterval95": [
+      0.6112458164887273,
+      0.6302614095049173
+    ],
+    "conditionalZero": 0.8038015463917526,
+    "conditionalInterval95": [
+      0.7937363625598209,
+      0.8134909829874216
+    ],
+    "expectedCounts": {
+      "success0": 5000.0,
+      "success1": 1250.0,
+      "failure0": 0.0,
+      "failure1": 3750.0
+    },
+    "expectedSuccess": 0.625,
+    "expectedConditionalZero": 0.8,
+    "impossibleOutcomeCounts": 0
+  },
+  "classical": {
+    "shots": 10000,
+    "counts": {
+      "success0": 5014,
+      "success1": 1250,
+      "failure0": 0,
+      "failure1": 3736
+    },
+    "successRate": 0.6264,
+    "successInterval95": [
+      0.6168716513241009,
+      0.6358312738877919
+    ],
+    "conditionalZero": 0.8004469987228607,
+    "conditionalInterval95": [
+      0.7903668590939904,
+      0.8101588601235795
+    ],
+    "expectedCounts": {
+      "success0": 5000.0,
+      "success1": 1250.0,
+      "failure0": 0.0,
+      "failure1": 3750.0
+    },
+    "expectedSuccess": 0.625,
+    "expectedConditionalZero": 0.8,
+    "impossibleOutcomeCounts": 0
+  },
+  "protocol": {
+    "pPercent": 50,
+    "lambdaPercent": 50,
+    "theta": 2.0943951023931953,
+    "preparation": "Randomly select preparation 0 with probability p/100 for each trial; otherwise preparation 1. Count every trial, including failures. Fixed shot allocations are a different sampling design.",
+    "preparation0": "OPENQASM 2.0;\ninclude \"qelib1.inc\";\ngate cry(theta) c,t { ry(theta/2) t; cx c,t; ry(-theta/2) t; cx c,t; }\nqreg q[2];\ncreg c[2];\ncry(2.0943951023931953) q[0],q[1];\nmeasure q[0] -> c[0];\nmeasure q[1] -> c[1];\n",
+    "preparation1": "OPENQASM 2.0;\ninclude \"qelib1.inc\";\ngate cry(theta) c,t { ry(theta/2) t; cx c,t; ry(-theta/2) t; cx c,t; }\nqreg q[2];\ncreg c[2];\nx q[0];\ncry(2.0943951023931953) q[0],q[1];\nmeasure q[0] -> c[0];\nmeasure q[1] -> c[1];\n",
+    "bitstrings": {
+      "00": "success0",
+      "01": "success1",
+      "10": "failure0",
+      "11": "failure1"
+    },
+    "bitOrder": "c[1]c[0] = ancilla,system",
+    "status": "Circuit specification only; not submitted to hardware"
+  },
+  "provenance": "LOCAL_SIMULATION_NOT_HARDWARE"
+}

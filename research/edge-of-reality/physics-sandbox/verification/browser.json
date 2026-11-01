@@ -1,0 +1,203 @@
+{
+  "status": "PASS",
+  "parameterPairs": 10201,
+  "maxQuantumError": 2.220446049250313e-16,
+  "seedReproducibility": true,
+  "zeroPosteriorAbsent": true,
+  "importValidation": true,
+  "embeddedGridRoundtrip": true,
+  "inlineSyntax": true,
+  "samplingEngine": "mulberry32-v1",
+  "benchmark": {
+    "schema": "ER01-PHYSICS/1",
+    "pPercent": 50,
+    "lambdaPercent": 50,
+    "shots": 10000,
+    "seed": 42,
+    "lean": {
+      "d": 100,
+      "denominator": 1000000,
+      "failureMass": 375000,
+      "interfaces": [
+        {
+          "admissible": true,
+          "coarseRecord": null,
+          "id": "filterSuccess",
+          "mass": 625000,
+          "resolvedRecord": null,
+          "source": "prepared",
+          "target": "success"
+        },
+        {
+          "admissible": true,
+          "coarseRecord": null,
+          "id": "filterFailure",
+          "mass": 375000,
+          "resolvedRecord": null,
+          "source": "prepared",
+          "target": "failure"
+        },
+        {
+          "admissible": true,
+          "coarseRecord": [
+            true,
+            0
+          ],
+          "id": "readSuccess0",
+          "mass": 500000,
+          "resolvedRecord": [
+            true,
+            0
+          ],
+          "source": "success",
+          "target": "success0"
+        },
+        {
+          "admissible": true,
+          "coarseRecord": [
+            true,
+            0
+          ],
+          "id": "readSuccess1",
+          "mass": 125000,
+          "resolvedRecord": [
+            true,
+            1
+          ],
+          "source": "success",
+          "target": "success1"
+        },
+        {
+          "admissible": false,
+          "coarseRecord": [
+            false,
+            0
+          ],
+          "id": "readFailure0",
+          "mass": 0,
+          "resolvedRecord": [
+            false,
+            0
+          ],
+          "source": "failure",
+          "target": "failure0"
+        },
+        {
+          "admissible": true,
+          "coarseRecord": [
+            false,
+            0
+          ],
+          "id": "readFailure1",
+          "mass": 375000,
+          "resolvedRecord": [
+            false,
+            1
+          ],
+          "source": "failure",
+          "target": "failure1"
+        }
+      ],
+      "l": 50,
+      "masses": [
+        500000,
+        125000,
+        0,
+        375000
+      ],
+      "p": 50,
+      "posteriorZero": {
+        "denominator": 625000,
+        "numerator": 500000
+      },
+      "q": 100,
+      "schema": "ER01-INSTRUMENT/1",
+      "successMass": 625000
+    },
+    "reference": {
+      "exactClassicalMatch": true,
+      "quantumMaxError": 5.551115123125783e-17,
+      "probabilities": [
+        0.5,
+        0.125,
+        0,
+        0.37499999999999994
+      ]
+    },
+    "quantum": {
+      "shots": 10000,
+      "counts": {
+        "success0": 5022,
+        "success1": 1234,
+        "failure0": 0,
+        "failure1": 3744
+      },
+      "successRate": 0.6256,
+      "successInterval95": [
+        0.6160678778670441,
+        0.6350356617422421
+      ],
+      "conditionalZero": 0.8027493606138107,
+      "conditionalInterval95": [
+        0.7927043491499993,
+        0.8124227974269093
+      ],
+      "expectedCounts": {
+        "success0": 5000,
+        "success1": 1250,
+        "failure0": 0,
+        "failure1": 3750
+      },
+      "expectedSuccess": 0.625,
+      "expectedConditionalZero": 0.8,
+      "impossibleOutcomeCounts": 0
+    },
+    "classical": {
+      "shots": 10000,
+      "counts": {
+        "success0": 4933,
+        "success1": 1257,
+        "failure0": 0,
+        "failure1": 3810
+      },
+      "successRate": 0.619,
+      "successInterval95": [
+        0.6094377985406209,
+        0.6284708098471582
+      ],
+      "conditionalZero": 0.7969305331179322,
+      "conditionalInterval95": [
+        0.7867262311065872,
+        0.8067665188192252
+      ],
+      "expectedCounts": {
+        "success0": 5000,
+        "success1": 1250,
+        "failure0": 0,
+        "failure1": 3750
+      },
+      "expectedSuccess": 0.625,
+      "expectedConditionalZero": 0.8,
+      "impossibleOutcomeCounts": 0
+    },
+    "protocol": {
+      "pPercent": 50,
+      "lambdaPercent": 50,
+      "theta": 2.0943951023931957,
+      "preparation": "Choose preparation 0 independently on each trial with probability p/100; otherwise choose preparation 1. Count all trials, including failures. Fixed shot allocations require a different statistical analysis.",
+      "preparation0": "OPENQASM 2.0;\ninclude \"qelib1.inc\";\ngate cry(theta) c,t { ry(theta/2) t; cx c,t; ry(-theta/2) t; cx c,t; }\nqreg q[2];\ncreg c[2];\ncry(2.0943951023931957) q[0],q[1];\nmeasure q[0] -> c[0];\nmeasure q[1] -> c[1];\n",
+      "preparation1": "OPENQASM 2.0;\ninclude \"qelib1.inc\";\ngate cry(theta) c,t { ry(theta/2) t; cx c,t; ry(-theta/2) t; cx c,t; }\nqreg q[2];\ncreg c[2];\nx q[0];\ncry(2.0943951023931957) q[0],q[1];\nmeasure q[0] -> c[0];\nmeasure q[1] -> c[1];\n",
+      "bitstrings": {
+        "10": "failure0",
+        "11": "failure1",
+        "00": "success0",
+        "01": "success1"
+      },
+      "bitOrder": "c[1]c[0] = ancilla,system",
+      "status": "Circuit specification only; not submitted to hardware"
+    },
+    "provenance": "BROWSER_SIMULATION_NOT_HARDWARE",
+    "samplingEngine": "mulberry32-v1",
+    "predictionSource": "frozen Lean export; no server-side Lean"
+  }
+}

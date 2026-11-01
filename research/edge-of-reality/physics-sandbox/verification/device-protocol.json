@@ -1,0 +1,16 @@
+{
+  "pPercent": 50,
+  "lambdaPercent": 50,
+  "theta": 2.0943951023931953,
+  "preparation": "Randomly select preparation 0 with probability p/100 for each trial; otherwise preparation 1. Count every trial, including failures. Fixed shot allocations are a different sampling design.",
+  "preparation0": "OPENQASM 2.0;\ninclude \"qelib1.inc\";\ngate cry(theta) c,t { ry(theta/2) t; cx c,t; ry(-theta/2) t; cx c,t; }\nqreg q[2];\ncreg c[2];\ncry(2.0943951023931953) q[0],q[1];\nmeasure q[0] -> c[0];\nmeasure q[1] -> c[1];\n",
+  "preparation1": "OPENQASM 2.0;\ninclude \"qelib1.inc\";\ngate cry(theta) c,t { ry(theta/2) t; cx c,t; ry(-theta/2) t; cx c,t; }\nqreg q[2];\ncreg c[2];\nx q[0];\ncry(2.0943951023931953) q[0],q[1];\nmeasure q[0] -> c[0];\nmeasure q[1] -> c[1];\n",
+  "bitstrings": {
+    "00": "success0",
+    "01": "success1",
+    "10": "failure0",
+    "11": "failure1"
+  },
+  "bitOrder": "c[1]c[0] = ancilla,system",
+  "status": "Circuit specification only; not submitted to hardware"
+}

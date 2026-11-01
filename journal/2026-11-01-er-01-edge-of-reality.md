@@ -22,3 +22,8 @@ Added 24-theorem finite diagonal-filter Lean kernel and an offline visual replay
 ## English translation correction
 
 Aligned the section 04 introduction with the Russian original: the panel replays traces without a local server. Removed the added language qualifier and replaced the broader word “offline”. No simulation data or mathematical claims changed. Updated the reader SHA256.
+
+
+## Measurement sandbox and state-interface network
+
+Added a self-contained browser sandbox linked from section 04. Native Lean-exported exact instrument weights, six interfaces and two record maps cover all 10201 integer-percent parameter pairs. Seven instrument and ten graph theorems are audited. Browser JavaScript performs independent density-matrix calculations and finite-shot sampling; it does not execute Lean. All outcomes remain in the accounting; counts import stays in browser. Original local sources, independent verification and a reproducible export are retained in research/edge-of-reality/physics-sandbox. No hardware measurements, spacetime metric or physical event horizon are claimed. The sandbox UI is Russian and the English reader link identifies it as RU. Homepage reader order is preserved.

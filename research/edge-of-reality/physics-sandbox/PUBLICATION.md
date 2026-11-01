@@ -1,0 +1,3 @@
+# Public browser edition
+
+The archived README_RU.md describes the original local stage. The published edition is public/readers/edge-of-reality/sandbox/index.html and is linked from ER-01 section 04. It embeds an exact native Lean export and runs the independent numerical reference and finite-shot sampling in browser JavaScript. The server.py and Python sampling sources are retained for reproducibility, not deployed as a service. Counts import is local browser processing. Browser sampling uses Mulberry32; Python uses its own random generator, so equal seeds do not promise equal samples across editions. Neither edition contains hardware data or a spacetime model.

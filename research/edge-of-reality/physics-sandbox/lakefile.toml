@@ -1,0 +1,10 @@
+name = "er01_physics_sandbox"
+version = "0.1.0"
+defaultTargets = ["instrument"]
+
+[[lean_lib]]
+name = "ER01"
+
+[[lean_exe]]
+name = "instrument"
+root = "InstrumentMain"

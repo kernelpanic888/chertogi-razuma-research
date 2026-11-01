@@ -1,0 +1,20 @@
+{
+  "id": "ER-01-SANDBOX",
+  "version": "0.2",
+  "date": "2026-11-01",
+  "pageSha256": "ab961fa90f169f60965d7422a71f18011d1ab8a4456bf2c027c12b9b7f8e447d",
+  "gridSha256": "1e28899fb25391da1cf2e3ccab596769bfc98a4ce9cf8a2d35021611498c2f1e",
+  "gridGzipSha256": "7fbff1c1b0be3a5e6eca57078f96a472613e54946cc7a4f7a6d33df0aea1c84f",
+  "parameterPairs": 10201,
+  "instrumentTheorems": 7,
+  "graphTheorems": 10,
+  "coreTheoremsPreviouslyChecked": 24,
+  "formalSource": "research/edge-of-reality/physics-sandbox/",
+  "predictionRuntime": "Replay exact native Lean-exported masses and interface maps",
+  "samplingRuntime": "Browser JavaScript, Mulberry32; not Lean-verified sampling",
+  "quantumReference": "Numerical 4x4 density-matrix evolution in browser; checked against native Lean grid",
+  "hardwareExecuted": false,
+  "physicalHorizonDefined": false,
+  "claimBoundary": "Diagonal input has a classical statistical realization. DAG rank is not physical time. No spacetime metric or quantum time machine is established.",
+  "uploadPolicy": "Counts file parsed locally in browser; no API upload"
+}

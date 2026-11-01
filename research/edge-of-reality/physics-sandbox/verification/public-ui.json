@@ -1,0 +1,11 @@
+{
+  "status": "PASS",
+  "defaultMatrixAndSampling": true,
+  "zeroSuccess": true,
+  "coarseReadout": true,
+  "browserLocalCountsImport": true,
+  "syntheticCountsNotHardware": true,
+  "previewUrl": "http://127.0.0.1:4194/readers/edge-of-reality/sandbox/",
+  "networkFreeStaticBoundary": "PASS",
+  "inlineScriptSyntax": "PASS"
+}

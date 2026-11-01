@@ -1,0 +1,11 @@
+{
+  "status": "PASS",
+  "nodes": 7,
+  "interfaces": 6,
+  "positiveSupportReachability": true,
+  "coarseRecordLabelsMerge": true,
+  "distinctVerticesRetained": true,
+  "graphClientWidth": 542,
+  "graphScrollWidth": 542,
+  "preview": "interface-graph.jpg"
+}

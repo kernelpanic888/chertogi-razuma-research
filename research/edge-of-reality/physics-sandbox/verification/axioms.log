@@ -1,0 +1,17 @@
+'ER01.Instrument.success_agrees_with_core' does not depend on any axioms
+'ER01.Instrument.instrument_complete' depends on axioms: [propext]
+'ER01.Instrument.all_outcomes_complete' depends on axioms: [propext]
+'ER01.Instrument.failure_bounded' depends on axioms: [propext, Quot.sound]
+'ER01.Instrument.transparent_filter_never_fails' depends on axioms: [propext]
+'ER01.Instrument.pure_zero_never_fails' depends on axioms: [propext]
+'ER01.Instrument.blocked_pure_one_has_no_posterior' depends on axioms: [propext, Quot.sound]
+'ER01.InterfaceGraph.interface_advances_rank' depends on axioms: [propext]
+'ER01.InterfaceGraph.path_rank_monotone' depends on axioms: [propext, Quot.sound]
+'ER01.InterfaceGraph.no_return_to_prepared' depends on axioms: [propext, Quot.sound]
+'ER01.InterfaceGraph.failure_zero_is_disabled' depends on axioms: [propext]
+'ER01.InterfaceGraph.success_readout_mass_preserved' does not depend on any axioms
+'ER01.InterfaceGraph.failure_readout_mass_preserved' depends on axioms: [propext]
+'ER01.InterfaceGraph.filter_cut_complete' depends on axioms: [propext]
+'ER01.InterfaceGraph.zero_success_disables_filter' depends on axioms: [propext]
+'ER01.InterfaceGraph.coarse_records_merge' depends on axioms: [propext]
+'ER01.InterfaceGraph.resolved_records_distinct' depends on axioms: [propext]
