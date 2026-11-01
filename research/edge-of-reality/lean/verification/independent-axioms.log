@@ -1,0 +1,24 @@
+'ER01.posterior_none_iff' depends on axioms: [propext, Quot.sound]
+'ER01.posterior_exists_iff' depends on axioms: [propext, Quot.sound]
+'ER01.branch_mass_conservation' does not depend on any axioms
+'ER01.positive_mass_iff' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ER01.normalization_bounds' does not depend on any axioms
+'ER01.normalization_denominator' does not depend on any axioms
+'ER01.step_tick_monotone' depends on axioms: [propext, Quot.sound]
+'ER01.returned_is_fixed' depends on axioms: [propext]
+'ER01.rejected_is_fixed' depends on axioms: [propext]
+'ER01.filtered_mass_retained' depends on axioms: [propext]
+'ER01.zero_rejects' depends on axioms: [propext]
+'ER01.positive_admits' depends on axioms: [propext, Quot.sound]
+'ER01.four_steps_close' depends on axioms: [propext]
+'ER01.coarse_indistinguishable' does not depend on any axioms
+'ER01.resolved_distinguishable' does not depend on any axioms
+'ER01.coarse_not_injective' does not depend on any axioms
+'ER01.observation_mass_conserved' depends on axioms: [propext]
+'ER01.coarse_observation_only_total' depends on axioms: [propext]
+'ER01.denominator_positive' does not depend on any axioms
+'ER01.filter_does_not_create_mass' depends on axioms: [propext, Quot.sound]
+'ER01.initial_valid' depends on axioms: [propext]
+'ER01.step_valid' depends on axioms: [propext, Quot.sound]
+'ER01.evolve_valid' depends on axioms: [propext, Quot.sound]
+'ER01.reachable_observation_has_posterior' depends on axioms: [propext, Quot.sound]

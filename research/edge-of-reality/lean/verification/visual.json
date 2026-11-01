@@ -1,0 +1,18 @@
+{
+  "status": "PASS",
+  "backend": "native Lean executable via loopback HTTP",
+  "apiChecks": [
+    "resolved readout",
+    "coarse aggregate",
+    "zero rejection",
+    "invalid input 400"
+  ],
+  "browserChecks": [
+    "three transitions to observed",
+    "coarse single label",
+    "zero rejection blocks next transition",
+    "80/20 display matches 4/5 and 1/5",
+    "no horizontal overflow at 1910px"
+  ],
+  "publication": "local only"
+}

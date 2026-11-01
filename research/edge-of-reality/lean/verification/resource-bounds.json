@@ -1,0 +1,9 @@
+{
+  "status": "PASS",
+  "maximumDenominator": 10000,
+  "successMassUpperBound": 1000000000000,
+  "jsonSafeIntegerLimit": 9007199254740991,
+  "validBoundaryCases": 2,
+  "overLimitRejected": 2,
+  "changeSinceExhaustiveGrid": "Only CLI maximum denominator tightened from 1000000 to 10000. Core and all grid behaviour unchanged."
+}
