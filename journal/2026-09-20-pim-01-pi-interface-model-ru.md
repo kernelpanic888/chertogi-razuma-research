@@ -251,7 +251,7 @@ hₜ₊₁ = update(hₜ, xₜ).
 ## Координаты источников
 
 - [Двуязычный интерактивный ридер](https://chertogi-razuma-research.kernelpanic888.chatgpt.site/readers/pi-interface-model/).
-- [Публичное обсуждение в LinkedIn](__LINKEDIN_POST_URL__).
+- [Публичное обсуждение в LinkedIn](https://www.linkedin.com/feed/update/urn:li:activity:7522778207243268096/).
 - Даррен Аронофски, «Пи» (1998): цитируемая реплика примерно на
   `01:12:34–01:12:48` в проверенной английской дорожке субтитров.
 - [Shooting script, сентябрь 1996](https://imsdb.com/scripts/Pi.html).
