@@ -1,0 +1,11 @@
+{
+  "baselineCommit": "c6e9b7d75ea0cbdbe581c86a9b8a53d8a57fc823",
+  "baselineExit": 1,
+  "baselineFailures": [
+    "not ok 1 - serves one indexable canonical research map at the root",
+    "not ok 3 - keeps the complete corpus and its discovery metadata",
+    "not ok 4 - orders all homepage reader banners by their latest update",
+    "not ok 5 - publishes ITC-01 as a canonical but individually voiced interactive chamber"
+  ],
+  "conclusion": "Same four homepage assertions fail on unchanged version132 source; OH01-specific checks and current build pass. Existing failures are retained and disclosed, not repaired in unrelated content."
+}

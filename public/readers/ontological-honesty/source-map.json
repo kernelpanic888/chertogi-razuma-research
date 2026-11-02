@@ -1,0 +1,66 @@
+{
+  "readerId": "OH-01",
+  "version": "0.1",
+  "date": "2026-11-03",
+  "formalCommit": "8c7a43c308b4238763c04baa3961bcb8370415e6",
+  "kernel": "Lean 4.35.0",
+  "formalPath": "research/ontological-honesty",
+  "readerPath": "public/readers/ontological-honesty/index.html",
+  "theorems": [
+    "incompatible_iff",
+    "confirmed_iff",
+    "refuted_iff",
+    "undetermined_iff",
+    "complete",
+    "exclusive",
+    "confirmed_refinement",
+    "refuted_refinement",
+    "resolve_uncertainty",
+    "rename_invariant"
+  ],
+  "axioms": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+  ],
+  "newPostulatedAxioms": false,
+  "finiteWorldCount": 4,
+  "exportRows": 256,
+  "statuses": {
+    "0": "incompatible",
+    "1": "confirmed",
+    "2": "refuted",
+    "3": "undetermined"
+  },
+  "files": {
+    "research/ontological-honesty/Core.lean": "02cc7321dcf9723990a6a13b790e79561118cd192973102cead920ae4140d138",
+    "research/ontological-honesty/Export.lean": "0ce87718ae8e3cad1a685becf091d4991cea3eee7130cfa5b247d35a6006e270",
+    "research/ontological-honesty/Audit.lean": "4e6b2edeb4f82c9fc131a5a5f693d44ab60126b4dba7c757c7f75b0ad636f9ef",
+    "research/ontological-honesty/axiom-audit.txt": "41a8955cd285cc3c324f06a2fa976932c7fb4c629b07d2a2fd113b82a2627318",
+    "research/ontological-honesty/export.json": "445ab2662a47cdcb2f32c5a4731e28aac7f301aa7e8810adbfd41726590aa9e0",
+    "public/readers/ontological-honesty/index.html": "001d605b5ece2debb7eb133b429ddb62785dae596a92c6687990683b3a50cb8f",
+    "public/readers/ontological-honesty/poster.webp": "14fd6a32e0b81321a2fd10853d533c51ce3b34630a29b6ebfdafa77d7dd8baa7"
+  },
+  "claimCeiling": "Finite model classification and conditional preservation; no theorem establishes human honesty, intent, moral obligation or the completeness of the world model.",
+  "doi": null,
+  "orcidWorkId": null,
+  "releaseTag": null,
+  "sources": [
+    {
+      "url": "https://gramota.ru/biblioteka/spravochniki/slovar-trudnostey/antologiya-i-ontologiya",
+      "role": "Dictionary paraphrase; search-index text verified; direct fetch returned 403",
+      "checked": "2026-11-03"
+    },
+    {
+      "url": "https://classics.mit.edu/Aristotle/metaphysics.4.iv.html",
+      "role": "Primary philosophical text, IV.1 and IV.3, paraphrase; no attributed honesty doctrine",
+      "checked": "2026-11-03"
+    }
+  ],
+  "poster": {
+    "provenance": "AI-generated original punk poster, ImageGen, 2026-11-03",
+    "embedded": true,
+    "text": "ONTOLOGICAL HONESTY / OH-01",
+    "notEvidence": true
+  }
+}

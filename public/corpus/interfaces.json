@@ -30,6 +30,23 @@
   },
   "readers": [
     {
+      "id": "OH-01",
+      "titleRu": "Онтологическая честность",
+      "titleEn": "Ontological Honesty",
+      "publicPath": "/readers/ontological-honesty/",
+      "sourcePath": "public/readers/ontological-honesty/index.html",
+      "journalPaths": [
+        "journal/2026-11-03-oh-01-ontological-honesty.md"
+      ],
+      "formalUrls": [
+        "https://github.com/kernelpanic888/chertogi-razuma-research/blob/8c7a43c308b4238763c04baa3961bcb8370415e6/research/ontological-honesty/Core.lean"
+      ],
+      "runtimeUrls": [
+        "https://chertogi-razuma-research.kernelpanic888.chatgpt.site/readers/ontological-honesty/"
+      ],
+      "status": "release-candidate"
+    },
+    {
       "id": "PIM-01",
       "titleRu": "Фильм «Пи»: что находится между числами?",
       "titleEn": "The Film Pi: What Is Between the Numbers?",
@@ -488,6 +505,16 @@
       "from": "PIM-01",
       "to": "M-01",
       "relation": "representation-to-readable-trace"
+    },
+    {
+      "from": "IF-P01B",
+      "to": "OH-01",
+      "relation": "naming-to-explicit-conditions"
+    },
+    {
+      "from": "OH-01",
+      "to": "CI-01",
+      "relation": "checked-trace-to-return"
     }
   ]
 }

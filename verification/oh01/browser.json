@@ -1,0 +1,10 @@
+{
+  "status": "PASS",
+  "method": "cua_repl browser controls and DOM inspection",
+  "url": "http://127.0.0.1:4197/readers/ontological-honesty/",
+  "checks": ["four statuses", "RU/EN controls and text", "consistent renaming", "keyboard Space changes E checkbox", "offline confirmation to refutation", "390px no horizontal overflow", "embedded poster loaded 1024px", "desktop title wraps at word boundary"],
+  "consoleErrors": [],
+  "offlineConditionsRestored": true,
+  "viewportOverrideCleared": true,
+  "boundary": "Browser observations of local preview; deployment is verified separately."
+}

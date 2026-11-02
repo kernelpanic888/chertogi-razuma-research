@@ -12,6 +12,32 @@
   },
   "records": [
     {
+      "id": "OH-01-RC",
+      "titleRu": "Онтологическая честность",
+      "titleEn": "Ontological Honesty",
+      "kind": "formal-interpretation",
+      "voice": "interface",
+      "stage": "trace",
+      "date": "2026-11-03",
+      "status": "release-candidate",
+      "reader": "/readers/ontological-honesty/",
+      "formal": {
+        "commit": "8c7a43c308b4238763c04baa3961bcb8370415e6",
+        "source": "https://github.com/kernelpanic888/chertogi-razuma-research/blob/8c7a43c308b4238763c04baa3961bcb8370415e6/research/ontological-honesty/Core.lean",
+        "audit": "https://github.com/kernelpanic888/chertogi-razuma-research/blob/8c7a43c308b4238763c04baa3961bcb8370415e6/research/ontological-honesty/axiom-audit.txt",
+        "kernel": "Lean 4.35.0"
+      },
+      "claimCeiling": "Finite model classification and conditional preservation; no theorem establishes human honesty, intent, moral obligation or the completeness of the world model.",
+      "notProved": [
+        "human honesty or intent",
+        "moral obligation derived from mathematics",
+        "completeness or real-world truth of the selected possibilities"
+      ],
+      "doi": null,
+      "orcidWorkId": null,
+      "releaseTag": null
+    },
+    {
       "id": "PIM-01-RC",
       "titleRu": "Фильм «Пи»: что находится между числами?",
       "titleEn": "The Film Pi: What Is Between the Numbers?",

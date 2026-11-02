@@ -1,0 +1,122 @@
+{
+  "status": "PASS",
+  "rows": 256,
+  "renamings": 6144,
+  "refinements": 1040,
+  "inlineJavaScript": "parsed",
+  "staticBoundary": {
+    "checks": [
+      {
+        "id": "scripts-inline-only",
+        "pass": true,
+        "detail": "only the registered local PM-01 wrapper script is allowed"
+      },
+      {
+        "id": "styles-inline-only",
+        "pass": true,
+        "detail": "external stylesheets and remote CSS imports are forbidden"
+      },
+      {
+        "id": "network-fetch",
+        "pass": true,
+        "detail": "/\\bfetch\\s*\\(/ is forbidden in executable script"
+      },
+      {
+        "id": "network-xhr",
+        "pass": true,
+        "detail": "/\\bXMLHttpRequest\\b/ is forbidden in executable script"
+      },
+      {
+        "id": "network-websocket",
+        "pass": true,
+        "detail": "/\\bWebSocket\\s*\\(/ is forbidden in executable script"
+      },
+      {
+        "id": "network-event-source",
+        "pass": true,
+        "detail": "/\\bEventSource\\s*\\(/ is forbidden in executable script"
+      },
+      {
+        "id": "network-beacon",
+        "pass": true,
+        "detail": "/\\b(?:navigator\\.)?sendBeacon\\s*\\(/ is forbidden in executable script"
+      },
+      {
+        "id": "network-webtransport",
+        "pass": true,
+        "detail": "/\\bWebTransport\\s*\\(/ is forbidden in executable script"
+      },
+      {
+        "id": "dynamic-script-create",
+        "pass": true,
+        "detail": "/\\bcreateElement\\s*\\(\\s*[\"']script[\"']\\s*\\)/i is forbidden in executable script"
+      },
+      {
+        "id": "dynamic-source-assignment",
+        "pass": true,
+        "detail": "/\\.\\s*src\\s*=\\s*[\"'`][^\"'`]+[\"'`]/i is forbidden in executable script"
+      },
+      {
+        "id": "dynamic-source-attribute",
+        "pass": true,
+        "detail": "/\\bsetAttribute\\s*\\(\\s*[\"']src[\"']\\s*,/i is forbidden in executable script"
+      },
+      {
+        "id": "no-cookie-api",
+        "pass": true,
+        "detail": "document.cookie is forbidden"
+      },
+      {
+        "id": "no-service-worker",
+        "pass": true,
+        "detail": "service-worker registration is forbidden"
+      },
+      {
+        "id": "no-collector-route",
+        "pass": true,
+        "detail": "collector route literal is forbidden"
+      },
+      {
+        "id": "html-form",
+        "pass": true,
+        "detail": "/<form\\b/i is forbidden in the public document"
+      },
+      {
+        "id": "html-iframe",
+        "pass": true,
+        "detail": "/<iframe\\b/i is forbidden in the public document"
+      },
+      {
+        "id": "html-object",
+        "pass": true,
+        "detail": "/<object\\b/i is forbidden in the public document"
+      },
+      {
+        "id": "html-embed",
+        "pass": true,
+        "detail": "/<embed\\b/i is forbidden in the public document"
+      },
+      {
+        "id": "no-admin-navigation",
+        "pass": true,
+        "detail": "public admin navigation is forbidden"
+      },
+      {
+        "id": "registered-local-storage-only",
+        "pass": true,
+        "detail": "browser storage keys: none"
+      },
+      {
+        "id": "d1-counter-only",
+        "pass": true,
+        "detail": "hosting.d1 must be exactly DB for the anonymous page-view counter"
+      },
+      {
+        "id": "r2-unbound",
+        "pass": true,
+        "detail": "hosting.r2 must remain null in P0"
+      }
+    ],
+    "ok": true
+  }
+}
