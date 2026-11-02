@@ -1,0 +1,6 @@
+name = "oh01"
+version = "0.1.0"
+defaultTargets = ["OH01"]
+[[lean_lib]]
+name = "OH01"
+roots = ["Core", "Audit"]
