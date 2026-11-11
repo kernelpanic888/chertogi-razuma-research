@@ -1,0 +1,21 @@
+{
+  "readerId": "NS-01",
+  "date": "2026-11-11",
+  "kind": "philosophical-reader",
+  "voice": "argument",
+  "readerPath": "public/readers/nothingness-and-speech/index.html",
+  "publicPath": "/readers/nothingness-and-speech/",
+  "journalPath": "journal/2026-11-11-nothingness-and-speech.md",
+  "returnPath": "/",
+  "claimCeiling": "The argument concerns the conditions for describing absence of a specified feature within a frame.",
+  "openSeams": [
+    "Formal or executable model"
+  ],
+  "files": {
+    "public/readers/nothingness-and-speech/index.html": "ccb787d78b0e674820a7c38d32791f171fc0f84dd7f22ef714590e42e35af848",
+    "public/readers/nothingness-and-speech/nichto-infographic.png": "472b92467f79abddcf64b80340724468a01d4ab10401cf2b640204263ffc239f"
+  },
+  "doi": null,
+  "orcidWorkId": null,
+  "releaseTag": null
+}

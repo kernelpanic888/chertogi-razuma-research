@@ -30,6 +30,21 @@
   },
   "readers": [
     {
+      "id": "NS-01",
+      "titleRu": "Ничто ускользает там, где начинается речь: назвать его — уже подменить отсутствие образом",
+      "titleEn": "Nothingness slips away where speech begins: to name it is already to substitute an image for absence",
+      "publicPath": "/readers/nothingness-and-speech/",
+      "sourcePath": "public/readers/nothingness-and-speech/index.html",
+      "journalPaths": [
+        "journal/2026-11-11-nothingness-and-speech.md"
+      ],
+      "formalUrls": [],
+      "status": "open-formal-model",
+      "openSeams": [
+        "The framing illustration is a conceptual trace. No formal or executable model has been specified for this argument."
+      ]
+    },
+    {
       "id": "OH-01",
       "titleRu": "Онтологическая честность",
       "titleEn": "Ontological Honesty",
@@ -371,6 +386,16 @@
     }
   ],
   "edges": [
+    {
+      "from": "IF-P01B",
+      "to": "NS-01",
+      "kind": "reader"
+    },
+    {
+      "from": "NS-01",
+      "to": "CI-01",
+      "kind": "return"
+    },
     {
       "from": "IF-P01B",
       "to": "M-01",

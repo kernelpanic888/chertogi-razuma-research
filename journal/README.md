@@ -18,6 +18,8 @@ Versioned research states are fixed in the formal home through the [reader relea
 
 ## Entries / Записи
 
+- [2026-11-11 · Ничто ускользает там, где начинается речь: назвать его — уже подменить отсутствие образом / Nothingness and speech](./2026-11-11-nothingness-and-speech.md)
+
 - [2026-09-20 · PIM-01: The Film *Pi* — What Is Between the Numbers?](./2026-09-20-pim-01-pi-interface-model.md)
 - [2026-09-20 · PIM-01: Фильм «Пи» — что находится между числами?](./2026-09-20-pim-01-pi-interface-model-ru.md)
 

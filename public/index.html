@@ -4407,6 +4407,19 @@
     </div>
   </nav>
 
+  <aside class="research-lab-gate" id="nothingness-and-speech-entry" data-updated="2026-11-11">
+    <a class="research-lab-gate__link" href="readers/nothingness-and-speech/index.html">
+      <span>
+        <span class="research-lab-gate__title research-lab-gate__ru">Ничто ускользает там, где начинается речь: назвать его — уже подменить отсутствие образом</span>
+        <span class="research-lab-gate__title research-lab-gate__en">Nothingness slips away where speech begins: to name it is already to substitute an image for absence</span>
+        <span class="research-lab-gate__code research-lab-gate__ru">Философский ридер · различие, рамка и условия, при которых можно говорить об отсутствии</span>
+        <span class="research-lab-gate__code research-lab-gate__en">Philosophical reader · distinction, framing, and the conditions for describing absence</span>
+      </span>
+      <span class="research-lab-gate__cta research-lab-gate__ru">ОТКРЫТЬ РИДЕР ↗</span>
+      <span class="research-lab-gate__cta research-lab-gate__en">OPEN READER ↗</span>
+    </a>
+  </aside>
+
   <aside class="research-lab-gate" id="ontological-honesty-entry" data-updated="2026-11-03" aria-label="ОН-01 · Онтологическая честность">
     <a class="research-lab-gate__link" href="readers/ontological-honesty/index.html">
       <span>
@@ -4487,7 +4500,14 @@
     body[data-lang=en] .research-lab-gate__ru,html[lang^=en] .research-lab-gate__ru{display:none}
     body[data-lang=en] .research-lab-gate__en,html[lang^=en] .research-lab-gate__en{display:inline}
     @media(max-width:720px){.research-lab-gate__link{grid-template-columns:1fr}.research-lab-gate__cta{white-space:normal}}
-  </style>
+
+    /* Static amber highlight for the newest reader. */
+    #nothingness-and-speech-entry{border-color:rgba(255,210,88,.88);border-left-color:#ffe080;background:radial-gradient(ellipse at 18% 45%,rgba(255,210,88,.15),transparent 68%),linear-gradient(110deg,#09543e,#032b20 70%,#062d23);box-shadow:0 0 0 1px rgba(255,210,88,.16),0 0 28px rgba(255,210,88,.2),0 16px 48px rgba(0,0,0,.28),inset 0 0 32px rgba(133,255,213,.055)}
+    #nothingness-and-speech-entry .research-lab-gate__title{color:#ffe080;text-shadow:0 0 22px rgba(255,210,88,.25)}
+    #nothingness-and-speech-entry .research-lab-gate__code{color:#b9e8ca}
+    #nothingness-and-speech-entry .research-lab-gate__cta{color:#ffe080;text-shadow:0 0 14px rgba(255,210,88,.3)}
+    #nothingness-and-speech-entry:hover,#nothingness-and-speech-entry:focus-within{border-color:#ffe8a3;box-shadow:0 0 0 1px rgba(255,210,88,.3),0 0 36px rgba(255,210,88,.3),0 16px 48px rgba(0,0,0,.28)}
+</style>
   <!-- ACTIVATION_RELIC_READER_GATE_AR_01 -->
   <aside class="research-lab-gate research-lab-gate--relic" aria-label="Реликт активации: теневая граница и проблема времени / Activation Relic: Shadow Boundary and the Problem of Time">
     <a class="research-lab-gate__link" href="readers/activation-relic-shadow-boundary/index.html">
