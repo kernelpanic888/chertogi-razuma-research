@@ -30,6 +30,23 @@
   },
   "readers": [
     {
+      "id": "PC-01",
+      "titleRu": "От ответа — к доказательству",
+      "titleEn": "From an answer to a proof",
+      "publicPath": "/readers/lean-proof-companion/",
+      "sourcePath": "public/readers/lean-proof-companion/index.html",
+      "journalPaths": [
+        "journal/2026-11-18-pc01-lean-proof-companion.md"
+      ],
+      "formalUrls": [
+        "https://github.com/kernelpanic888/lean-proof-companion/tree/main/reader/research"
+      ],
+      "status": "open-independent-evaluation",
+      "openSeams": [
+        "The local dialogue model is not a proof authority; complete parent R01–R18 acceptance and independent model evaluation remain open."
+      ]
+    },
+    {
       "id": "NS-01",
       "titleRu": "Ничто ускользает там, где начинается речь: назвать его — уже подменить отсутствие образом",
       "titleEn": "Nothingness slips away where speech begins: to name it is already to substitute an image for absence",
@@ -540,6 +557,11 @@
       "from": "OH-01",
       "to": "CI-01",
       "relation": "checked-trace-to-return"
+    },
+    {
+      "from": "PC-01",
+      "to": "CI-01",
+      "kind": "corpus-return"
     }
   ]
 }

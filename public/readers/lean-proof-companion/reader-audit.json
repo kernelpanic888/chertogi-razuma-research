@@ -1,0 +1,95 @@
+{
+  "schema_version": 1,
+  "reader": "PC-01",
+  "date": "2026-11-18",
+  "source_sha256": "c2627ccefb59143ff45d285b82c648534524d4135c3b61f2dabc06bdf67fb0b0",
+  "proofs": [
+    {
+      "task_name": "Scorecard.no_double_write",
+      "task_id": "42fb1f29319a5c1e7f648f11f729526d972a39cd55bb85134f39ec4ae5d7f1f2",
+      "status": "VERIFIED_STANDARD",
+      "accepted": true,
+      "axioms": [
+        "propext"
+      ],
+      "run_id": "20261118T003915-71d0208854d548b8a4553f87fd6a12c7",
+      "lean_version": "Lean (version 4.31.0-rc1, arm64-apple-darwin24.6.0, commit fd009949156901e6cf15b6d9bf1122294b8e697a, Release)",
+      "checker_sha256": "5d3216050ddc9398309d4d0bf760def0c69db5fc38150624b458982275e6cc1d"
+    },
+    {
+      "task_name": "Scorecard.unused_is_recordable",
+      "task_id": "4b33447f20371fc04c5fd03aa1c80e1a2f865c0527f372a2d73aa88f4bcdf082",
+      "status": "VERIFIED_STANDARD",
+      "accepted": true,
+      "axioms": [
+        "propext",
+        "Quot.sound"
+      ],
+      "run_id": "20261118T003924-736d03752b714cf9b69e122db14564be",
+      "lean_version": "Lean (version 4.31.0-rc1, arm64-apple-darwin24.6.0, commit fd009949156901e6cf15b6d9bf1122294b8e697a, Release)",
+      "checker_sha256": "5d3216050ddc9398309d4d0bf760def0c69db5fc38150624b458982275e6cc1d"
+    },
+    {
+      "task_name": "Scorecard.record_marks_used",
+      "task_id": "c2b6ce67e1c6c5e40e63ee57c448413ad82360fb9ed3875bb162e6c84561576c",
+      "status": "VERIFIED_STANDARD",
+      "accepted": true,
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "run_id": "20261118T003932-844dbbd2237b4853b5e9432dbad52bd4",
+      "lean_version": "Lean (version 4.31.0-rc1, arm64-apple-darwin24.6.0, commit fd009949156901e6cf15b6d9bf1122294b8e697a, Release)",
+      "checker_sha256": "5d3216050ddc9398309d4d0bf760def0c69db5fc38150624b458982275e6cc1d"
+    },
+    {
+      "task_name": "Scorecard.record_preserves_other",
+      "task_id": "646aef2dc6e1d4341609354396cdf79d3811b5b9d679204d9891605bd4bc4eb4",
+      "status": "VERIFIED_STANDARD",
+      "accepted": true,
+      "axioms": [
+        "propext"
+      ],
+      "run_id": "20261118T003940-23bc32486eb94d679ede7368d3752150",
+      "lean_version": "Lean (version 4.31.0-rc1, arm64-apple-darwin24.6.0, commit fd009949156901e6cf15b6d9bf1122294b8e697a, Release)",
+      "checker_sha256": "5d3216050ddc9398309d4d0bf760def0c69db5fc38150624b458982275e6cc1d"
+    }
+  ],
+  "scope": "Small 13-category scorecard; not the full MG-01 engine or model quality.",
+  "oracle": {
+    "states": 8192,
+    "categories": 13,
+    "transitions": 106496,
+    "sha256_ndjson": "1380babcaaf6d1f7a3b6af08b457dde3d860d3b54b9d8cd19e685f64dd31c477",
+    "source": "Scorecard.lean plus Oracle.lean"
+  },
+  "differential": {
+    "status": "PASS",
+    "states": 8192,
+    "categories": 13,
+    "checks": 106496,
+    "range_rejections": 5,
+    "html_anchors": "PASS",
+    "external_runtime": "NONE"
+  },
+  "browser_checks": {
+    "languages_ru_en": "PASS",
+    "recorded_cases": 7,
+    "strict_statuses": "PASS",
+    "repeat_write_rejected": "PASS",
+    "keyboard_space_records_slot": "PASS",
+    "finite_comparison_in_browser": 106496,
+    "copy_capsule": "PASS",
+    "download_capsule": "PASS",
+    "download_standalone_html": "PASS",
+    "horizontal_overflow_actual_widths": [
+      346,
+      746
+    ]
+  },
+  "limitations": {
+    "saved_file_browser_open": "NOT_RUN: automation policy blocks file protocol; downloaded HTML validated statically",
+    "print_dialog": "NOT_RUN"
+  }
+}
